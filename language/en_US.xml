@@ -5,4 +5,8 @@
         Posting facility
     </description>
     
+    <browser>
+        <menu_caption>Posts</menu_caption>
+    </browser>
+    
 </language>

@@ -10,5 +10,9 @@
         <enable>true</enable>
         <disable>true</disable>
     </working_flags>
-
+    
+    <template_includes>
+        <header_menu>header_buttons.inc</header_menu>
+    </template_includes>
+    
 </module>
