@@ -18,7 +18,7 @@ $template->add_menu_item(
     "
     <a class='main_menu_item {$added_class}' href='{$config->full_root_path}/posts/'>
         <span class='fa fa-newspaper-o'></span>
-        {$this_module->language->browser->menu_caption}
+        {$this_module->language->index->menu_caption}
     </a>
     "
 );

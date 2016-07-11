@@ -12,6 +12,7 @@
     </working_flags>
     
     <template_includes>
+        <html_head>global_header.inc</html_head>
         <header_menu>header_buttons.inc</header_menu>
     </template_includes>
     

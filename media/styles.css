@@ -1,0 +1,4 @@
+
+.post_addons_bar .post_addon          { font-size: 24pt; }
+.post_addons_bar .post_addon .caption { display: none; }
+.post_addons_bar .post_buttons button { font-size: 12pt; line-height: 24pt; }

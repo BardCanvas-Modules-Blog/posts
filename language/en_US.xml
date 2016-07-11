@@ -5,8 +5,108 @@
         Posting facility
     </description>
     
-    <browser>
+    <index>
+        <title>Posts</title>
         <menu_caption>Posts</menu_caption>
-    </browser>
+        <buttons>
+            <add>New</add>
+        </buttons>
+    </index>
+
+    <record_nav>
+        <search_placeholder>Search by id, parent, slug, title, excerpt or content</search_placeholder>
+        <columns>
+            <title>
+                <caption>Title</caption>
+            </title>
+            <excerpt>
+                <caption>Excerpt</caption>
+            </excerpt>
+            <author>
+                <caption>Author</caption>
+                <order_asc  id="7">Order by author id ascending</order_asc>
+                <order_desc id="8">Order by author id descending</order_desc>
+            </author>
+            <categories>
+                <caption>Categories</caption>
+            </categories>
+            <categories>
+                <caption>Tags</caption>
+            </categories>
+            <publishing_date>
+                <caption>Published</caption>
+                <order_asc  id="1">Order by publishing date ascending</order_asc>
+                <order_desc id="2">Order by publishing date descending</order_desc>
+            </publishing_date>
+            <last_update>
+                <caption>Last activity update</caption>
+                <order_asc  id="3">Order by last activity update ascending</order_asc>
+                <order_desc id="4">Order by last activity update descending</order_desc>
+            </last_update>
+            <views>
+                <caption>Views</caption>
+                <order_asc  id="5">Order by views ascending</order_asc>
+                <order_desc id="6">Order by views descending</order_desc>
+            </views>
+            <comments>
+                <caption>Comments</caption>
+            </comments>
+            <featured_image>
+                <caption>Featured image</caption>
+            </featured_image>
+        </columns>
+        <actions>
+            <edit>Edit</edit>
+            <delete>Delete</delete>
+            <copy>Copy</copy>
+        </actions>
+    </record_nav>
+    
+    <form>
+        <add_title>New post</add_title>
+        <edit_title>Editing post</edit_title>
+        <fields>
+            <title>
+                <placeholder>Enter a title for the post</placeholder>
+            </title>
+            <excerpt>
+                <placeholder>Type an excerpt of the contents. Leave it blank for automatic generation.</placeholder>
+            </excerpt>
+        </fields>
+        
+        <post_addons>
+            <addon function="toggle_post_excerpt_textarea" data_related_field="excerpt" icon="fa-bolt">
+                <caption>Excerpt</caption>
+                <title>Toggle excerpt introduction area on/off</title>
+            </addon>
+            <!--
+            TODO: Put these as extensions
+            <addon function="insert_gallery_image_in_post_editor" icon="fa-file-image-o">
+                <caption>Image</caption>
+                <title>Insert image from media gallery</title>
+            </addon>
+            <addon function="insert_gallery_video_in_post_editor" icon="fa-file-video-o">
+                <caption>Video</caption>
+                <title>Insert video from media gallery</title>
+            </addon>
+            <addon function="embed_youtube_link_in_post_editor" icon="fa-youtube">
+                <caption>YouTube</caption>
+                <title>Embed YouTube video</title>
+            </addon>
+            <addon function="embed_giphy_image_in_post_editor" icon="fa-film">
+                <caption>Giphy</caption>
+                <title>Embed GIF from Giphy</title>
+            </addon>
+            -->
+        </post_addons>
+    </form>
+    
+    <messages>
+        <missing>
+            <title>Please specify a title for the post</title>
+            <slug>Please specify a slug for the post</slug>
+            <content>Post contents shouldn't be empty</content>
+        </missing>
+    </messages>
     
 </language>

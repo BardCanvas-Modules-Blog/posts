@@ -16,9 +16,8 @@
 
 use hng2_base\module;
 
-if( $module_install_action == "install" )
-{
-    $query = "
+$tables = array(
+    "posts" => "
         create table if not exists posts (
             
             id_post           bigint unsigned not null auto_increment,
@@ -30,6 +29,11 @@ if( $module_install_action == "install" )
             excerpt           varchar(255) not null default '',
             content           longtext,
             
+            tags_cache        varchar(255) not null default '',
+            categories_cache  varchar(255) not null default '',
+            media_cache       varchar(255) not null default '',
+            mentions_cache    varchar(255) not null default '',
+            
             visibility        enum('public', 'private', 'users', 'friends', 'level_based') not null default 'public',
             status            enum('draft', 'published', 'reviewing', 'hidden', 'trashed') not null default 'draft',
             password          varchar(32) not null default '',
@@ -40,13 +44,15 @@ if( $module_install_action == "install" )
             creation_details  varchar(255) not null default '',
             
             publishing_date   datetime,
-            last_update       datetime,
-            
-            last_viewed       datetime,
-            views             datetime,
-            
+            views             int unsigned not null default 0,
             allow_comments    tinyint unsigned not null default 1,
-            last_comment_date datetime,
+            comments_count    int unsigned not null default 0,
+            
+            last_update       datetime,
+            last_viewed       datetime,
+            last_commented    datetime,
+            
+            id_featured_image bigint unsigned not null default 0,
             
             primary key        ( id_post ),
             index   posts_tree ( id_post, parent_post ),
@@ -54,20 +60,70 @@ if( $module_install_action == "install" )
             index   by_author  ( id_author )
             
         ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
-    ";
-    
-    try
+    ",
+    "post_media" => "
+        create table if not exists post_media (
+            
+            id_post       bigint unsigned not null default 0,
+            id_media      bigint unsigned not null default 0,
+            date_attached datetime,
+            
+            primary key ( id_post, id_media )
+            
+        ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
+    ",
+    "post_tags" => "
+        create table if not exists post_tags (
+            
+            id_post       bigint unsigned not null default 0,
+            tag           varchar(100) not null default '',
+            date_attached datetime,
+            
+            primary key ( id_post, tag )
+            
+        ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
+    ",
+    "post_categories" => "
+        create table if not exists post_categories (
+            
+            id_post       bigint unsigned not null default 0,
+            id_category   varchar(32) not null default '',
+            date_attached datetime,
+            
+            primary key ( id_post, id_category )
+            
+        ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
+    ",
+    "post_mentions" => "
+        create table if not exists post_mentions (
+            
+            id_post       bigint unsigned not null default 0,
+            id_account    varchar(32) not null default '',
+            date_attached datetime,
+            
+            primary key ( id_post, id_account )
+            
+        ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
+    ",
+);
+
+if( $module_install_action == "install" )
+{
+    foreach($tables as $table_name => $query)
     {
-        $database->exec($query);
-        $messages[] = replace_escaped_vars($language->install_messages->table_created_ok, '{$table_name}', 'posts');
-    }
-    catch( \Exception $e )
-    {
-        $errors[] = replace_escaped_vars(
-            $language->install_messages->table_created_ko,
-            array( '{$table_name}', '{$error}' ),
-            array( 'posts',           $e->getMessage()  )
-        );
+        try
+        {
+            $database->exec($query);
+            $messages[] = replace_escaped_vars($language->install_messages->table_created_ok, '{$table_name}', $table_name);
+        }
+        catch( \Exception $e )
+        {
+            $errors[] = replace_escaped_vars(
+                $language->install_messages->table_created_ko,
+                array( '{$table_name}', '{$error}' ),
+                array(   $table_name,     $e->getMessage()  )
+            );
+        }
     }
     
     return;
@@ -75,20 +131,21 @@ if( $module_install_action == "install" )
 
 if( $module_install_action == "uninstall" )
 {
-    $query = "DROP TABLE if exists posts";
-    
-    try
+    foreach($tables as $table_name => $query)
     {
-        $database->exec($query);
-        $messages[] = replace_escaped_vars($language->install_messages->table_deleted_ok, '{$table_name}', 'posts');
-    }
-    catch( \Exception $e )
-    {
-        $errors[] = replace_escaped_vars(
-            $language->install_messages->table_deleted_ko,
-            array( '{$table_name}', '{$error}' ),
-            array( 'posts',           $e->getMessage()  )
-        );
+        try
+        {
+            $database->exec("DROP TABLE if exists {$table_name}");
+            $messages[] = replace_escaped_vars($language->install_messages->table_deleted_ok, '{$table_name}', $table_name);
+        }
+        catch( \Exception $e )
+        {
+            $errors[] = replace_escaped_vars(
+                $language->install_messages->table_deleted_ko,
+                array( '{$table_name}', '{$error}' ),
+                array(   $table_name,     $e->getMessage() )
+            );
+        }
     }
     
     return;
