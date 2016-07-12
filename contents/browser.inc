@@ -170,19 +170,19 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
         <? foreach( $records as $row ): ?>
             <tr data-record-id="<?= $row->id_post ?>">
                 <td>
-                    <div class="principal_data"><?= $row->title ?></div>
+                    <div class="principal_data"><?= convert_emojis($row->title) ?></div>
                 </td>
                 <td>
-                    <?= empty($row->excerpt) ? "―" : make_excerpt_of($row->excerpt, 60) ?>
+                    <?= empty($row->excerpt) ? "―" : convert_emojis(make_excerpt_of($row->excerpt, 60)) ?>
                 </td>
                 <td>
-                    [<?= $config->user_levels_by_level[$row->author_level] ?>] <?= $row->author_display_name ?>
+                    [<?= $config->user_levels_by_level[$row->author_level] ?>] <?= convert_emojis($row->author_display_name) ?>
                 </td>
                 <td>
-                    <?= $row->categories_cache ?>
+                    <?= $row->categories_list ?>
                 </td>
                 <td>
-                    <?= $row->tags_cache ?>
+                    <?= $row->tags_list ?>
                 </td>
                 <td>
                     <?= $row->publishing_date ?>
