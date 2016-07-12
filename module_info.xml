@@ -14,6 +14,7 @@
     <template_includes>
         <html_head>global_header.inc</html_head>
         <header_menu>header_buttons.inc</header_menu>
+        <post_footer>global_post_footer.inc</post_footer>
     </template_includes>
     
 </module>

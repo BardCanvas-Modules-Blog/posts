@@ -37,7 +37,7 @@ $categories_tree = $categories_repository->get_as_tree_for_select($tree_filter, 
     
     <? $style = count($categories_tree) == 0 ? "display: none" : ""; ?>
     <div class="field" data-field="category" style="<?= $style ?>">
-        <select name="id_category" class="fixed_font">
+        <select name="main_category" class="fixed_font">
             <option selected value="<?= $default_category->id_category ?>">
                 <?= $default_category->title ?>: <?= $default_category->description ?>
             </option>

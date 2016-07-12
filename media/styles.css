@@ -1,3 +1,10 @@
+/**
+ * Post styles
+ *
+ * @package    HNG2
+ * @subpackage posts
+ * @author     Alejandro Caballero - lava.caballero@gmail.com
+ */
 
 .post_addons_bar .post_addon          { font-size: 24pt; }
 .post_addons_bar .post_addon .caption { display: none; }

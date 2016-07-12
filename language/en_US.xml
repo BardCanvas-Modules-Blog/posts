@@ -80,6 +80,13 @@
                 <title>Toggle excerpt introduction area on/off</title>
             </addon>
             <!--
+            <addon function="embed_youtube_link_in_post_editor" icon="fa-youtube">
+                <caption>YouTube</caption>
+                <title>Embed YouTube video</title>
+            </addon>
+            -->
+            
+            <!--
             TODO: Put these as extensions
             <addon function="insert_gallery_image_in_post_editor" icon="fa-file-image-o">
                 <caption>Image</caption>
@@ -88,10 +95,6 @@
             <addon function="insert_gallery_video_in_post_editor" icon="fa-file-video-o">
                 <caption>Video</caption>
                 <title>Insert video from media gallery</title>
-            </addon>
-            <addon function="embed_youtube_link_in_post_editor" icon="fa-youtube">
-                <caption>YouTube</caption>
-                <title>Embed YouTube video</title>
             </addon>
             <addon function="embed_giphy_image_in_post_editor" icon="fa-film">
                 <caption>Giphy</caption>
@@ -106,7 +109,16 @@
             <title>Please specify a title for the post</title>
             <slug>Please specify a slug for the post</slug>
             <content>Post contents shouldn't be empty</content>
+            <main_category>Please specify a main category for the post</main_category>
         </missing>
     </messages>
+    
+    <tinymce>
+        <youtube_embedder>
+            <title>Embed Youtube link</title>
+            <caption>Paste Youtube video URL</caption>
+            <invalid_link>The link you entered is invalid</invalid_link>
+        </youtube_embedder>
+    </tinymce>
     
 </language>

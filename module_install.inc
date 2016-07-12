@@ -20,53 +20,51 @@ $tables = array(
     "posts" => "
         create table if not exists posts (
             
-            id_post           bigint unsigned not null auto_increment,
-            parent_post       bigint unsigned not null default 0,
+            id_post           varchar(32) not null default '',
+            parent_post       varchar(32) not null default '',
             id_author         varchar(32) not null default '',
             
             slug              varchar(128) not null default '',
             title             varchar(255) not null default '',
             excerpt           varchar(255) not null default '',
             content           longtext,
-            
-            tags_cache        varchar(255) not null default '',
-            categories_cache  varchar(255) not null default '',
-            media_cache       varchar(255) not null default '',
-            mentions_cache    varchar(255) not null default '',
+            main_category     varchar(32) not null default '',
             
             visibility        enum('public', 'private', 'users', 'friends', 'level_based') not null default 'public',
             status            enum('draft', 'published', 'reviewing', 'hidden', 'trashed') not null default 'draft',
             password          varchar(32) not null default '',
+            allow_comments    tinyint unsigned not null default 1,
             
-            creation_date     datetime,
+            creation_date     datetime default null,
+            creation_ip       varchar(15) not null default '',
             creation_host     varchar(255) not null default '',
             creation_location varchar(255) not null default '',
-            creation_details  varchar(255) not null default '',
             
-            publishing_date   datetime,
+            publishing_date   date default null,
             views             int unsigned not null default 0,
-            allow_comments    tinyint unsigned not null default 1,
             comments_count    int unsigned not null default 0,
             
-            last_update       datetime,
-            last_viewed       datetime,
-            last_commented    datetime,
+            last_update       datetime default null,
+            last_viewed       datetime default null,
+            last_commented    datetime default null,
             
-            id_featured_image bigint unsigned not null default 0,
+            id_featured_image varchar(32) not null default '',
             
             primary key        ( id_post ),
             index   posts_tree ( id_post, parent_post ),
             index   by_slug    ( slug(5) ),
-            index   by_author  ( id_author )
+            index   by_author  ( id_author ),
+            index   by_ip      ( creation_ip(7) )
             
         ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
     ",
     "post_media" => "
         create table if not exists post_media (
             
-            id_post       bigint unsigned not null default 0,
-            id_media      bigint unsigned not null default 0,
-            date_attached datetime,
+            id_post        varchar(32) not null default '',
+            id_media       varchar(32) not null default '',
+            date_attached  datetime,
+            order_attached tinyint unsigned not null default 0,
             
             primary key ( id_post, id_media )
             
@@ -75,9 +73,10 @@ $tables = array(
     "post_tags" => "
         create table if not exists post_tags (
             
-            id_post       bigint unsigned not null default 0,
-            tag           varchar(100) not null default '',
-            date_attached datetime,
+            id_post        varchar(32) not null default '',
+            tag            varchar(100) not null default '',
+            date_attached  datetime,
+            order_attached tinyint unsigned not null default 0,
             
             primary key ( id_post, tag )
             
@@ -86,9 +85,10 @@ $tables = array(
     "post_categories" => "
         create table if not exists post_categories (
             
-            id_post       bigint unsigned not null default 0,
-            id_category   varchar(32) not null default '',
-            date_attached datetime,
+            id_post        varchar(32) not null default '',
+            id_category    varchar(32) not null default '',
+            date_attached  datetime,
+            order_attached tinyint unsigned not null default 0,
             
             primary key ( id_post, id_category )
             
@@ -97,14 +97,19 @@ $tables = array(
     "post_mentions" => "
         create table if not exists post_mentions (
             
-            id_post       bigint unsigned not null default 0,
-            id_account    varchar(32) not null default '',
-            date_attached datetime,
+            id_post        varchar(32) not null default '',
+            id_account     varchar(32) not null default '',
+            date_attached  datetime,
+            order_attached tinyint unsigned not null default 0,
             
             primary key ( id_post, id_account )
             
         ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
     ",
+);
+
+$init_settings = array(
+    "modules:posts.excerpt_length" => 255
 );
 
 if( $module_install_action == "install" )
@@ -123,8 +128,14 @@ if( $module_install_action == "install" )
                 array( '{$table_name}', '{$error}' ),
                 array(   $table_name,     $e->getMessage()  )
             );
+            
+            return;
         }
     }
+    
+    foreach($init_settings as $key => $val)
+        if( $settings->get($key) != "" )
+            $settings->set($key, $val);
     
     return;
 }
@@ -147,6 +158,8 @@ if( $module_install_action == "uninstall" )
             );
         }
     }
+    
+    foreach($init_settings as $key => $val) $settings->set($key, "");
     
     return;
 }

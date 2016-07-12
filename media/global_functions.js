@@ -2,18 +2,48 @@
 if( typeof $_POST_ADDON_FUNCTIONS == 'undefined' )
     var $_POST_ADDON_FUNCTIONS = {};
 
-$(document).ready(function()
+$_POST_ADDON_FUNCTIONS['toggle_post_excerpt_textarea'] = function($trigger, $form)
 {
-    $_POST_ADDON_FUNCTIONS['toggle_post_excerpt_textarea'] = function($trigger, $form)
-    {
-        $form
-            .find('.field[data-field="excerpt"]')
-            .show('fast', function()
+    $form
+        .find('.field[data-field="excerpt"]')
+        .show('fast', function()
+        {
+            $trigger.fadeOut('fast');
+        });
+};
+
+/*
+$_POST_ADDON_FUNCTIONS['embed_youtube_link_in_post_editor'] = function($trigger, $form)
+{
+    var $messages = $('#post_composer_messages');
+    var _title    = $messages.find('.tinymce .youtube_embedder .title').text();
+    var _caption  = $messages.find('.tinymce .youtube_embedder .caption').text();
+    var _invalid  = $messages.find('.tinymce .youtube_embedder .invalid_link').text();
+    
+    var editor_id = $form.find('textarea.tinymce').attr('id');
+    var editor    = tinymce.get(editor_id);
+    editor.windowManager.open({
+        title: _title,
+        body: [
+            {type: 'textbox', name: 'yt_link', label: _caption}
+        ],
+        onsubmit: function(e) {
+            var link = e.data.yt_link;
+            if( link.match(/^((https:\/\/)?(www\.)?youtube\.com\/watch\?v=.*)|((https:\/\/)?youtu\.be\/.*)/i) == null )
             {
-                $trigger.fadeOut('fast');
-            });
-    };
-});
+                alert( _invalid );
+                return;
+            }
+            
+            if( link.match(/^https:\/\//i) == null ) link = 'https://' + link;
+            
+            editor.insertContent(
+                '<a class="youtube_link" href="' + link + '">' + link + '</a>'
+            );
+        }
+    });
+};
+*/
 
 /**
  * Triggers the addon function tied to the form addon button being clicked

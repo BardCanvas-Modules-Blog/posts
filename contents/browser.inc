@@ -173,19 +173,22 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     <div class="principal_data"><?= $row->title ?></div>
                 </td>
                 <td>
-                    <?= $row->excerpt ?>
+                    <?= empty($row->excerpt) ? "―" : make_excerpt_of($row->excerpt, 60) ?>
                 </td>
                 <td>
-                    <?= $row->id_author ?>
+                    [<?= $config->user_levels_by_level[$row->author_level] ?>] <?= $row->author_display_name ?>
                 </td>
                 <td>
                     <?= $row->categories_cache ?>
                 </td>
                 <td>
+                    <?= $row->tags_cache ?>
+                </td>
+                <td>
                     <?= $row->publishing_date ?>
                 </td>
                 <td>
-                    <?= $row->last_update ?>
+                    <?= time_elapsed_string($row->last_update) ?>
                 </td>
                 <td>
                     <?= $row->views ?>

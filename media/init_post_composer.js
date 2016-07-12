@@ -7,7 +7,7 @@ var post_composer_tinymce_defaults = {
     toolbar:                  'bold italic strikethrough forecolor fontsizeselect removeformat | alignleft aligncenter alignright | bullist numlist outdent indent | link image',
     contextmenu:              'cut copy paste | link image',
     fontsize_formats:         '10pt 12pt 14pt 18pt 24pt 36pt',
-    content_css:              $_TEMPLATE_URL + '/media/styles~v' + $_SCRIPTS_VERSION + '.css',
+    content_css:              $_TEMPLATE_URL   + '/media/styles~v' + $_SCRIPTS_VERSION + '.css',
     autoresize_bottom_margin: 0,
     autoresize_min_height:    200,
     codemirror: {

@@ -186,7 +186,7 @@ function process_post_form_response(response)
     }
     
     hide_post_form();
-    $('#refresh_post_browser').click();
+    $('#refresh_posts_browser').click();
 }
 
 $(document).ready(function()
