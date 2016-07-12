@@ -35,6 +35,10 @@ class post_record extends abstract_record
     
     public $id_featured_image ; # varchar(32) not null default '',
     
+    # TODO:                                                                                                  
+    # TODO:  IMPORTANT! All dinamically generated members should be undefined in get_for_database_insertion! 
+    # TODO:                                                                                                  
+    
     # Dynamically added:
     public $author_user_name;
     public $author_display_name;
@@ -42,10 +46,10 @@ class post_record extends abstract_record
     public $author_level;
     
     # Taken with a group_concat from other tables:
-    public $tags_list         ; # from post_tags
-    public $categories_list   ; # from post_categories
-    public $media_list        ; # from post_media
-    public $mentions_list     ; # from post_mentions
+    public $tags_list       = array(); # from post_tags
+    public $categories_list = array(); # from post_categories
+    public $media_list      = array(); # from post_media
+    public $mentions_list   = array(); # from post_mentions
     
     protected function set_from_object($object_or_array)
     {
@@ -62,10 +66,38 @@ class post_record extends abstract_record
             
             unset($this->_author_data);
         }
+        
+        if( is_string($this->tags_list) )       $this->tags_list       = explode(",", $this->tags_list);
+        if( is_string($this->categories_list) ) $this->categories_list = explode(",", $this->categories_list);
+        if( is_string($this->media_list) )      $this->media_list      = explode(",", $this->media_list);
+        if( is_string($this->mentions_list) )   $this->mentions_list   = explode(",", $this->mentions_list);
     }
     
     public function set_new_id()
     {
         $this->id_post = uniqid();
+    }
+    
+    /**
+     * @return object
+     */
+    public function get_for_database_insertion()
+    {
+        $return = (array) $this;
+        
+        unset(
+            $return["author_user_name"],
+            $return["author_display_name"],
+            $return["author_email"],
+            $return["author_level"],
+            $return["tags_list"],
+            $return["categories_list"],
+            $return["media_list"],
+            $return["mentions_list"]
+        );
+        
+        foreach( $return as $key => &$val ) $val = addslashes($val);
+        
+        return (object) $return;
     }
 }

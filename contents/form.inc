@@ -5,11 +5,8 @@
  * @package    BardCanvas
  * @subpackage posts
  * @author     Alejandro Caballero - lava.caballero@gmail.com
- *             
- * @var module $current_module
  */
 
-use hng2_base\module;
 use hng2_modules\categories\categories_repository;
 
 $categories_repository = new categories_repository();
@@ -19,8 +16,7 @@ $tree_filter = array(
     "id_category <> '0000000000000'",
     "( visibility = 'public' or visibility = 'users' or (visibility  = 'level_based' and '{$account->level}' >= min_level) )"
 );
-
-$categories_tree = $categories_repository->get_as_tree_for_select($tree_filter, "title asc", true);
+$categories_count = $categories_repository->get_record_count($tree_filter);
 ?>
 
 <div id="post_form_target" style="display: none;"></div>
@@ -35,15 +31,12 @@ $categories_tree = $categories_repository->get_as_tree_for_select($tree_filter, 
                   placeholder="<?= $current_module->language->form->fields->title->placeholder ?>"></textarea>
     </div>
     
-    <? $style = count($categories_tree) == 0 ? "display: none" : ""; ?>
-    <div class="field" data-field="category" style="<?= $style ?>">
+    <? $style = $categories_count == 0 ? "display: none" : ""; ?>
+    <div class="field" id="main_category_selector_container" data-field="category" style="<?= $style ?>">
         <select name="main_category" class="fixed_font">
             <option selected value="<?= $default_category->id_category ?>">
                 <?= $default_category->title ?>: <?= $default_category->description ?>
             </option>
-            <? foreach($categories_tree as $key => $val): ?>
-                <option value="<?= $key ?>"><?= $val ?></option>
-            <? endforeach; ?>
         </select>
     </div>
     

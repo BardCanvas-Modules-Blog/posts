@@ -24,7 +24,7 @@ $repository = new posts_repository();
 $built_vars = $browser->build_vars(20, 3);
 foreach($built_vars as $key => $val) $$key = $val;
 
-$where = array();
+$where = array("status <> 'trashed'");
 if( $account->level < 200 ) $where[] = "id_author = '{$account->id_account}'";
 
 $search_for = empty($search_for) ? "" : trim($search_for);
@@ -171,6 +171,21 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
             <tr data-record-id="<?= $row->id_post ?>">
                 <td>
                     <div class="principal_data"><?= convert_emojis($row->title) ?></div>
+                    
+                    <div class="actions">
+                        <span class="action pseudo_link" onclick="edit_post('<?= $row->id_post ?>')">
+                            <span class="fa fa-pencil"></span>
+                            <?= $current_module->language->record_nav->actions->edit ?>
+                        </span>
+                        <span class="action pseudo_link" onclick="copy_post('<?= $row->id_post ?>')">
+                            <span class="fa fa-copy"></span>
+                            <?= $current_module->language->record_nav->actions->copy ?>
+                        </span>
+                        <span class="action pseudo_link" onclick="trash_post('<?= $row->id_post ?>')">
+                            <span class="fa fa-trash"></span>
+                            <?= $current_module->language->record_nav->actions->trash ?>
+                        </span>
+                    </div>
                 </td>
                 <td>
                     <?= empty($row->excerpt) ? "―" : convert_emojis(make_excerpt_of($row->excerpt, 60)) ?>
@@ -179,10 +194,12 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     [<?= $config->user_levels_by_level[$row->author_level] ?>] <?= convert_emojis($row->author_display_name) ?>
                 </td>
                 <td>
-                    <?= $row->categories_list ?>
+                    <? foreach($repository->get_attached_categories($row->id_post) as $category): ?>
+                        <span class="framed_content inlined"><?= $category->title ?></span>
+                    <? endforeach; ?>
                 </td>
                 <td>
-                    <?= $row->tags_list ?>
+                    <?= empty($row->tags_list) ? "―" : implode(", ", $row->tags_list); ?>
                 </td>
                 <td>
                     <?= $row->publishing_date ?>

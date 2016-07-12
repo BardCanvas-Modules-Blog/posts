@@ -19,6 +19,9 @@ if( empty($_POST["content"]) )       die($current_module->language->messages->mi
 if( empty($_POST["main_category"]) ) die($current_module->language->messages->missing->main_category);
 
 $repository = new posts_repository();
+
+$old_post = empty($_POST["id_post"]) ? null : $repository->get($_POST["id_post"]);
+
 $post       = new post_record();
 $post->set_from_post();
 
@@ -43,5 +46,13 @@ if( empty($post->slug) ) $post->slug = sanitize_file_name($post->title);
 $existing_slugs = $repository->get_record_count(array("slug like '{$post->slug}%'"));
 if( $existing_slugs > 0 ) $post->slug .= "_" . $existing_slugs;
 
+if( $post->main_category != $old_post->main_category )
+    $repository->unset_category($old_post->main_category, $post->id_post);
+$repository->set_category($_POST["main_category"], $post->id_post);
+
+if( $post->publishing_date < $old_post->publishing_date )
+    $post->publishing_date = date("Y-m-d");
+
 $repository->save($post);
+
 echo "OK";

@@ -18,16 +18,21 @@ function paginate(value)
 
 function prepare_post_addition()
 {
-    $('#form_workarea')
-        .find('.for_edition').hide()
-        .find('.for_addition').show()
-    ;
+    var $workarea = $('#form_workarea');
+    $workarea.find('.for_edition').hide();
+    $workarea.find('.for_addition').show();
+    
     reset_post_form();
     show_post_form();
+    update_category_selector();
 }
 
 function edit_post(id_post)
 {
+    var $workarea = $('#form_workarea');
+    $workarea.find('.for_edition').show();
+    $workarea.find('.for_addition').hide();
+    
     var url    = $_FULL_ROOT_PATH + '/posts/scripts/get_as_json.php';
     var params = {
         'id_post': id_post,
@@ -52,11 +57,16 @@ function edit_post(id_post)
         fill_post_form($form, record);
         $.unblockUI();
         show_post_form();
+        update_category_selector(record.main_category);
     });
 }
 
 function copy_post(id_post)
 {
+    var $workarea = $('#form_workarea');
+    $workarea.find('.for_edition').hide();
+    $workarea.find('.for_addition').show();
+    
     var url    = $_FULL_ROOT_PATH + '/posts/scripts/get_as_json.php';
     var params = {
         'id_post': id_post,
@@ -84,6 +94,7 @@ function copy_post(id_post)
         fill_post_form($form, record);
         $.unblockUI();
         show_post_form();
+        update_category_selector(record.main_category);
     });
 }
 
@@ -94,30 +105,77 @@ function copy_post(id_post)
  */
 function fill_post_form($form, record)
 {
-    //TODO: Implement fill_post_form() method
+    $form.find('input[name="id_post"]').val( record.id_post );
+    $form.find('textarea[name="title"]').val( record.title );
+    
+    var editor = tinymce.get('post_content_editor');
+    editor.setContent(record.content, {format : 'raw'});
+    
+    if( record.excerpt.length > 0 )
+    {
+        $form.find('textarea[name="excerpt"]').val( record.excerpt );
+        $form.find('.field[data-field="excerpt"]').show();
+        $form.find('.post_addons_bar[data-related-field="excerpt"]').hide();
+    }
 }
 
-function delete_post(id_post)
+function update_category_selector(preselected_id)
 {
-    var url = $_FULL_ROOT_PATH + '/posts/scripts/delete.php';
+    if( typeof preselected_id == 'undefined' ) preselected_id = '';
+    
+    var $container = $('#main_category_selector_container');
+    $container.block(blockUI_smallest_params);
+    
+    var url = $_FULL_ROOT_PATH + '/categories/scripts/tree_as_json.php'
+            + '?with_description=true'
+            + '&wasuuup=' + parseInt(Math.random() * 1000000000000000);
+    $.getJSON(url, function(data)
+    {
+        if( data.message != 'OK' )
+        {
+            alert(data.message);
+            $container.unblock();
+            
+            return;
+        }
+        
+        var $select = $container.find('select');
+        $select.find('option').remove();
+        
+        var selected;
+        for( var key in data.data )
+        {
+            selected = key == preselected_id ? 'selected' : '';
+            $select.append('<option ' + selected + ' value="' + key + '">' + data.data[key] + '</option>');
+        }
+        
+        $container.unblock();
+    });
+}
+
+function trash_post(id_post)
+{
+    var url = $_FULL_ROOT_PATH + '/posts/scripts/trash.php';
     var params = {
         'id_post': id_post,
         'wasuuup': parseInt(Math.random() * 1000000000000000)
     };
     
-    $.blockUI(blockUI_smallest_params);
+    var $row = $('#posts_browser_table').find('tr[data-record-id="' + id_post + '"]');
+    
+    $row.block(blockUI_smallest_params);
     $.get(url, params, function(response)
     {
         if( response != 'OK' )
         {
             alert(response);
-            $.unblockUI();
+            $row.unblock();
             
             return;
         }
     
-        $.unblockUI();
-        $('#refresh_post_browser').click();
+        $row.unblock();
+        $('#refresh_posts_browser').click();
     });
 }
 

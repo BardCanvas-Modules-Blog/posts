@@ -18,46 +18,56 @@
         <columns>
             <title>
                 <caption>Title</caption>
+                <layout xnowrap="true" />
             </title>
             <excerpt>
                 <caption>Excerpt</caption>
+                <layout xnowrap="true" />
             </excerpt>
             <author>
                 <caption>Author</caption>
+                <layout xnowrap="true" />
                 <order_asc  id="7">Order by author id ascending</order_asc>
                 <order_desc id="8">Order by author id descending</order_desc>
             </author>
             <categories>
                 <caption>Categories</caption>
+                <layout xnowrap="true" />
             </categories>
             <categories>
                 <caption>Tags</caption>
+                <layout xnowrap="true" />
             </categories>
             <publishing_date>
                 <caption>Published</caption>
+                <layout xnowrap="true" />
                 <order_asc  id="1">Order by publishing date ascending</order_asc>
                 <order_desc id="2">Order by publishing date descending</order_desc>
             </publishing_date>
             <last_update>
-                <caption>Last activity update</caption>
+                <caption>Last activity</caption>
+                <layout xnowrap="true" />
                 <order_asc  id="3">Order by last activity update ascending</order_asc>
                 <order_desc id="4">Order by last activity update descending</order_desc>
             </last_update>
             <views>
                 <caption>Views</caption>
+                <layout xnowrap="true" />
                 <order_asc  id="5">Order by views ascending</order_asc>
                 <order_desc id="6">Order by views descending</order_desc>
             </views>
             <comments>
                 <caption>Comments</caption>
+                <layout xnowrap="true" />
             </comments>
             <featured_image>
                 <caption>Featured image</caption>
+                <layout xnowrap="true" />
             </featured_image>
         </columns>
         <actions>
             <edit>Edit</edit>
-            <delete>Delete</delete>
+            <trash>Trash</trash>
             <copy>Copy</copy>
         </actions>
     </record_nav>
@@ -106,11 +116,13 @@
     
     <messages>
         <missing>
+            <id>Please provide a post id</id>
             <title>Please specify a title for the post</title>
             <slug>Please specify a slug for the post</slug>
             <content>Post contents shouldn't be empty</content>
             <main_category>Please specify a main category for the post</main_category>
         </missing>
+        <post_not_found>The post wasn't found in the database</post_not_found>
     </messages>
     
     <tinymce>

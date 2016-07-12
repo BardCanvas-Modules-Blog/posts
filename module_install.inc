@@ -64,7 +64,7 @@ $tables = array(
             id_post        varchar(32) not null default '',
             id_media       varchar(32) not null default '',
             date_attached  datetime,
-            order_attached tinyint unsigned not null default 0,
+            order_attached double unsigned not null default 0,
             
             primary key ( id_post, id_media )
             
@@ -76,7 +76,7 @@ $tables = array(
             id_post        varchar(32) not null default '',
             tag            varchar(100) not null default '',
             date_attached  datetime,
-            order_attached tinyint unsigned not null default 0,
+            order_attached double unsigned not null default 0,
             
             primary key ( id_post, tag )
             
@@ -88,7 +88,7 @@ $tables = array(
             id_post        varchar(32) not null default '',
             id_category    varchar(32) not null default '',
             date_attached  datetime,
-            order_attached tinyint unsigned not null default 0,
+            order_attached double unsigned not null default 0,
             
             primary key ( id_post, id_category )
             
@@ -100,7 +100,7 @@ $tables = array(
             id_post        varchar(32) not null default '',
             id_account     varchar(32) not null default '',
             date_attached  datetime,
-            order_attached tinyint unsigned not null default 0,
+            order_attached double unsigned not null default 0,
             
             primary key ( id_post, id_account )
             

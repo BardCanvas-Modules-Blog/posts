@@ -2,6 +2,7 @@
 namespace hng2_modules\posts;
 
 use hng2_base\repository\abstract_repository;
+use hng2_modules\categories\category_record;
 
 class posts_repository extends abstract_repository
 {
@@ -60,6 +61,8 @@ class posts_repository extends abstract_repository
         
         $this->validate_record($record);
         $obj = $record->get_for_database_insertion();
+        
+        $obj->last_update = date("Y-m-d H:i:s");
         
         return $database->exec("
             insert into {$this->table_name}
@@ -155,5 +158,83 @@ class posts_repository extends abstract_repository
             throw new \Exception(
                 "Invalid object class! Expected: {$this->row_class}, received: " . get_class($record)
             );
+    }
+    
+    public function set_category($id_category, $id_post)
+    {
+        global $database;
+        
+        $attached = $this->get_attached_categories($id_post);
+        if( isset($attached[$id_category]) ) return;
+        
+        $order = microtime(true);
+        $date  = date("Y-m-d H:i:s");
+        return $database->exec("
+            insert into post_categories set
+            id_post        = '$id_post',
+            id_category    = '$id_category',
+            date_attached  = '$date',
+            order_attached = '$order'
+        ");
+    }
+    
+    public function unset_category($id_category, $id_post)
+    {
+        global $database;
+        
+        return $database->exec("
+            delete from post_categories where
+            id_post     = '$id_post' and
+            id_category = '$id_category'
+        ");
+    }
+    
+    /**
+     * @param $id_post
+     *
+     * @return category_record[]
+     * 
+     * @throws \Exception
+     */
+    public function get_attached_categories($id_post)
+    {
+        global $database;
+        
+        $res = $database->query("
+            select
+                post_categories.order_attached,
+                categories.*
+            from
+                post_categories, categories
+            where
+                post_categories.id_post = '$id_post' and
+                categories.id_category  = post_categories.id_category
+            order by
+                order_attached
+        ");
+        
+        if( $database->num_rows($res) == 0 ) return array();
+        
+        $return = array();
+        while($row = $database->fetch_object($res))
+            $return[$row->id_category] = new category_record($row);
+        
+        return $return;
+    }
+    
+    public function trash($id_post)
+    {
+        global $database;
+        
+        # TODO: Hide all attached media?
+        
+        $date = date("Y-m-d H:i:s");
+        return $database->exec("
+            update posts set
+                status      = 'trashed',
+                last_update = '$date'
+            where
+                id_post = '$id_post'
+        ");
     }
 }
