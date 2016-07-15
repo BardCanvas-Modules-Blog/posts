@@ -40,7 +40,7 @@ $tables = array(
             creation_host     varchar(255) not null default '',
             creation_location varchar(255) not null default '',
             
-            publishing_date   date default null,
+            publishing_date   datetime default null,
             views             int unsigned not null default 0,
             comments_count    int unsigned not null default 0,
             

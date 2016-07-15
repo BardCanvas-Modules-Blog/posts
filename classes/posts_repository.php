@@ -13,6 +13,12 @@ class posts_repository extends abstract_repository
         "( select concat(user_name, '\\t', display_name, '\\t', email, '\\t', level)
            from account where account.id_account = posts.id_author )
            as _author_data",
+        "( select slug
+           from categories where categories.id_category = posts.main_category )
+           as main_category_slug",
+        "( select title
+           from categories where categories.id_category = posts.main_category )
+           as main_category_title",
         "( select group_concat(tag order by order_attached asc separator ',')
            from post_tags where post_tags.id_post = posts.id_post )
            as tags_list",
@@ -165,7 +171,7 @@ class posts_repository extends abstract_repository
         global $database;
         
         $attached = $this->get_attached_categories($id_post);
-        if( isset($attached[$id_category]) ) return;
+        if( isset($attached[$id_category]) ) return 0;
         
         $order = microtime(true);
         $date  = date("Y-m-d H:i:s");
@@ -236,5 +242,71 @@ class posts_repository extends abstract_repository
             where
                 id_post = '$id_post'
         ");
+    }
+    
+    /**
+     * @return object {where:array, limit:int, offset:int, order:string}
+     */
+    public function build_find_params_for_home()
+    {
+        global $settings;
+        
+        $today = date("Y-m-d H:i:s");
+        $where = array();
+        $where[] = "status = 'published'";
+        $where[] = "visibility <> 'private'";
+        $where[] = "(publishing_date <> '0000-00-00 00:00:00' and publishing_date <= '$today')";
+    
+        # Added to EXCLUDE featured posts
+        $where[] = "id_post not in (
+                        select post_tags.id_post from post_tags
+                        where post_tags.id_post = posts.id_post
+                        and post_tags.tag = '{$settings->get("modules:posts.featured_posts_tag")}'
+                    )";
+        
+        $order  = "publishing_date desc";
+        $limit  = $settings->get("modules:posts.posts_per_page_home", 30);
+        $offset = (int) $_GET["offset"]; 
+        
+        return (object) array(
+            "where"  => $where,
+            "limit"  => $limit,
+            "offset" => $offset,
+            "order"  => $order
+        );
+    }
+    
+    /**
+     * @return object {where:array, limit:int, offset:int, order:string}
+     */
+    public function build_find_params_for_featured_posts()
+    {
+        global $settings;
+        
+        // TODO: Add expiration date to posts
+        
+        $today = date("Y-m-d H:i:s");
+        $where = array();
+        $where[] = "status = 'published'";
+        $where[] = "visibility <> 'private'";
+        $where[] = "(publishing_date <> '0000-00-00 00:00:00' and publishing_date <= '$today')";
+        
+        # Added for featured posts
+        $where[] = "id_post in (
+                        select post_tags.id_post from post_tags
+                        where post_tags.id_post = posts.id_post
+                        and post_tags.tag = '{$settings->get("modules:posts.featured_posts_tag")}'
+                    )";
+        
+        $order  = "publishing_date desc";
+        $limit  = $settings->get("modules:posts.posts_per_page_home", 30);
+        $offset = (int) $_GET["offset"];
+        
+        return (object) array(
+            "where"  => $where,
+            "limit"  => $limit,
+            "offset" => $offset,
+            "order"  => $order
+        );
     }
 }

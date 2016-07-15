@@ -170,7 +170,7 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
         <? foreach( $records as $row ): ?>
             <tr data-record-id="<?= $row->id_post ?>">
                 <td>
-                    <div class="principal_data"><?= convert_emojis($row->title) ?></div>
+                    <div class="principal_data"><?= $row->title ?></div>
                     
                     <div class="actions">
                         <span class="action pseudo_link" onclick="edit_post('<?= $row->id_post ?>')">
@@ -188,10 +188,10 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     </div>
                 </td>
                 <td>
-                    <?= empty($row->excerpt) ? "―" : convert_emojis(make_excerpt_of($row->excerpt, 60)) ?>
+                    <?= empty($row->excerpt) ? "―" : make_excerpt_of($row->excerpt, 60) ?>
                 </td>
                 <td>
-                    [<?= $config->user_levels_by_level[$row->author_level] ?>] <?= convert_emojis($row->author_display_name) ?>
+                    [<?= $config->user_levels_by_level[$row->author_level] ?>] <?= $row->author_display_name ?>
                 </td>
                 <td>
                     <? foreach($repository->get_attached_categories($row->id_post) as $category): ?>
@@ -202,7 +202,7 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     <?= empty($row->tags_list) ? "―" : implode(", ", $row->tags_list); ?>
                 </td>
                 <td>
-                    <?= $row->publishing_date ?>
+                    <?= time_elapsed_string($row->publishing_date) ?>
                 </td>
                 <td>
                     <?= time_elapsed_string($row->last_update) ?>

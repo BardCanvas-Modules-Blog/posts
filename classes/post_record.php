@@ -1,6 +1,7 @@
 <?php
 namespace hng2_modules\posts;
 
+use hng2_base\account;
 use hng2_base\repository\abstract_record;
 
 class post_record extends abstract_record
@@ -44,6 +45,9 @@ class post_record extends abstract_record
     public $author_display_name;
     public $author_email;
     public $author_level;
+    
+    public $main_category_slug;
+    public $main_category_title;
     
     # Taken with a group_concat from other tables:
     public $tags_list       = array(); # from post_tags
@@ -99,5 +103,41 @@ class post_record extends abstract_record
         foreach( $return as $key => &$val ) $val = addslashes($val);
         
         return (object) $return;
+    }
+    
+    /**
+     * @return account
+     */
+    public function get_author()
+    {
+        // TODO: Implement accounts repository for caching
+        
+        return new account($this->id_author);
+    }
+    
+    /**
+     * Returns the title with all output processing.
+     */
+    public function get_processed_title()
+    {
+        $contents = $this->title;
+        $contents = convert_emojis($contents);
+        
+        # TODO: Add get_processed_title() extension point
+        
+        return $contents;
+    }
+    
+    /**
+     * Returns the excerpt with all output processing. 
+     */
+    public function get_processed_excerpt()
+    {
+        $contents = $this->excerpt;
+        $contents = convert_emojis($contents);
+        
+        # TODO: Add get_processed_excerpt() extension point
+        
+        return $contents;
     }
 }

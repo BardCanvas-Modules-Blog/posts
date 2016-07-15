@@ -33,13 +33,14 @@ if( empty($post->id_post) )
     $post->creation_ip       = get_remote_address();
     $post->creation_host     = gethostbyaddr($post->creation_ip);
     $post->creation_location = forge_geoip_location($post->creation_ip);
-    $post->publishing_date   = date("Y-m-d");
+    $post->publishing_date   = date("Y-m-d H:i:s");
     $post->last_update       = date("Y-m-d H:i:s");
 }
 
+$excerpt_length = (int) $settings->get("modules:posts.excerpt_length");
 if( empty($post->excerpt) ) $post->excerpt = make_excerpt_of(
-    strip_tags($post->content),
-    $settings->get("modules:posts.excerpt_length", 255)
+    $post->content,
+    empty($excerpt_length) ? 255 : $excerpt_length
 );
 
 if( empty($post->slug) ) $post->slug = sanitize_file_name($post->title);
@@ -51,7 +52,7 @@ if( $post->main_category != $old_post->main_category )
 $repository->set_category($_POST["main_category"], $post->id_post);
 
 if( $post->publishing_date < $old_post->publishing_date )
-    $post->publishing_date = date("Y-m-d");
+    $post->publishing_date = date("Y-m-d H:i:s");
 
 $repository->save($post);
 
