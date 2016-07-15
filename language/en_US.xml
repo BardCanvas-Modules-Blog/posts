@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <language>
     
+    <display_name>Posts subsystem</display_name>
     <description>
-        Posting facility
+        Blogging capability.
     </description>
     
     <index>
