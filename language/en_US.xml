@@ -13,7 +13,7 @@
             <add>New</add>
         </buttons>
     </index>
-
+    
     <record_nav>
         <search_placeholder>Search by id, parent, slug, title, excerpt or content</search_placeholder>
         <columns>
@@ -25,6 +25,9 @@
                 <caption><![CDATA[ Excerpt &amp; details ]]></caption>
                 <layout xnowrap="true" />
             </excerpt>
+            <status>
+                <caption>Status</caption>
+            </status>
             <author>
                 <caption>Author</caption>
                 <layout xnowrap="true" />
@@ -65,6 +68,14 @@
         </actions>
     </record_nav>
     
+    <status_labels>
+        <draft>Draft</draft>
+        <published>Published</published>
+        <reviewing>Reviewing</reviewing>
+        <hidden>Hidden</hidden>
+        <trashed>Trashed</trashed>
+    </status_labels>
+    
     <form>
         <add_title>New post</add_title>
         <edit_title>Editing post</edit_title>
@@ -73,9 +84,15 @@
                 <placeholder>Enter a title for the post</placeholder>
             </title>
             <excerpt>
+                <caption>Excerpt:</caption>
                 <placeholder>Type an excerpt of the contents. Leave it blank for automatic generation.</placeholder>
             </excerpt>
         </fields>
+        
+        <buttons>
+            <save_draft>Save draft</save_draft>
+            <publish>Publish</publish>
+        </buttons>
         
         <post_addons>
             <addon function="toggle_post_excerpt_textarea" data_related_field="excerpt" icon="fa-bolt">

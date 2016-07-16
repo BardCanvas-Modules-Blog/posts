@@ -1,26 +1,14 @@
 
-function reset_filter()
-{
-    var $form = $('#filter_form');
-    $form.find('input[name="search_for"]').val('');
-    $form.find('select[name="limit"] options:first').prop('selected', true);
-    $form.find('input[name="offset"]').val('0');
-    $form.find('input[name="order"]').val('3');
-}
-
-//noinspection JSUnusedGlobalSymbols
-function paginate(value)
-{
-    var $form = $('#filter_form');
-    $form.find('input[name="offset"]').val(value);
-    $form.submit();
-}
-
 function prepare_post_addition()
 {
     var $workarea = $('#form_workarea');
     $workarea.find('.for_edition').hide();
     $workarea.find('.for_addition').show();
+    
+    var $form = $('#post_form');
+    $form.find('.post_buttons button[data-save-type="save_draft"]').show();
+    $form.find('.post_buttons button[data-save-type="save"]').hide();
+    $form.find('.post_buttons button[data-save-type="publish"]').show();
     
     reset_post_form();
     show_post_form();
@@ -52,6 +40,14 @@ function edit_post(id_post)
         
         var record = data.data;
         var $form  = $('#post_form');
+        
+        $form.find('.post_buttons button[data-save-type="save_draft"]').hide();
+        $form.find('.post_buttons button[data-save-type="save"]').show();
+        
+        if( record.status == 'draft' )
+            $form.find('.post_buttons button[data-save-type="publish"]').show();
+        else
+            $form.find('.post_buttons button[data-save-type="publish"]').hide();
         
         reset_post_form();
         fill_post_form($form, record);
@@ -106,6 +102,7 @@ function copy_post(id_post)
 function fill_post_form($form, record)
 {
     $form.find('input[name="id_post"]').val( record.id_post );
+    $form.find('input[name="status"]').val( record.status );
     $form.find('textarea[name="title"]').val( record.title );
     
     var editor = tinymce.get('post_content_editor');

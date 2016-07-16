@@ -25,6 +25,7 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
       action="<?= $config->full_root_path ?>/posts/scripts/save.php">
     
     <input type="hidden" name="id_post" value="">
+    <input type="hidden" name="status" value="draft">
     
     <div class="field" data-field="title">
         <textarea name="title" class="expandible_textarea no_fw_font" 
@@ -45,8 +46,11 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
     </div>
     
     <div class="field" data-field="excerpt" style="display: none;">
-        <textarea name="excerpt" class="expandible_textarea no_fw_font"
-                  placeholder="<?= $current_module->language->form->fields->excerpt->placeholder ?>"></textarea>
+        <div class="caption"><?= $current_module->language->form->fields->excerpt->caption ?></div>
+        <div class="input">
+            <textarea name="excerpt" class="expandible_textarea no_fw_font"
+                      placeholder="<?= $current_module->language->form->fields->excerpt->placeholder ?>"></textarea>
+        </div>
     </div>
     
     <div class="field post_addons_bar clearfix">
@@ -63,9 +67,20 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
                 <span class="fa fa-ban"></span>
                 <?= $language->cancel ?>
             </button>
-            <button type="submit">
+            
+            <button type="submit" data-save-type="save_draft"
+                    onclick="$('#post_form').find('input[name=status]').val('draft')">
+                <span class="fa fa-check"></span>
+                <?= $current_module->language->form->buttons->save_draft ?>
+            </button>
+            <button type="submit" data-save-type="save">
                 <span class="fa fa-check"></span>
                 <?= $language->save ?>
+            </button>
+            <button type="submit" data-save-type="publish"
+                    onclick="$('#post_form').find('input[name=status]').val('published')">
+                <span class="fa fa-check"></span>
+                <?= $current_module->language->form->buttons->publish ?>
             </button>
         </span>
     </div>

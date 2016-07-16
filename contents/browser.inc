@@ -21,7 +21,7 @@ $repository = new posts_repository();
  * @var string $search_for
  */
 #region Nav filters
-$built_vars = $browser->build_vars(20, 3);
+$built_vars = $browser->build_vars(20, 4);
 foreach($built_vars as $key => $val) $$key = $val;
 
 $where = array("status <> 'trashed'");
@@ -85,6 +85,25 @@ switch( $order )
 $records = $repository->find($where, $limit, $offset, $sqlorder);
 #endregion
 ?>
+
+<script type="text/javascript">
+    function reset_filter()
+    {
+        var $form = $('#filter_form');
+        $form.find('input[name="search_for"]').val('');
+        $form.find('select[name="limit"] options:first').prop('selected', true);
+        $form.find('input[name="offset"]').val('0');
+        $form.find('input[name="order"]').val('');
+    }
+    
+    //noinspection JSUnusedGlobalSymbols
+    function paginate(value)
+    {
+        var $form = $('#filter_form');
+        $form.find('input[name="offset"]').val(value);
+        $form.submit();
+    }
+</script>
 
 <h1 class="clearfix">
     <button id="refresh_posts_browser" class="pull-right" onclick="$('#filter_form').submit()">
@@ -154,13 +173,13 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     src='{$config->full_root_path}/media/icons/order_asc" . ($order == $this_cell->sort_asc->order ? "_this" : "") . ".gif' 
                     align='absmiddle' width='7' height='7'  style='cursor: pointer;'
                     alt='{$this_cell->sort_asc->alt}' title='{$this_cell->sort_asc->alt}'
-                    onclick=\"document.filter_form.order.value='{$this_cell->sort_asc->order}'; document.filter_form.submit();\">&nbsp;";
+                    onclick=\"document.filter_form.order.value='{$this_cell->sort_asc->order}'; $('#filter_form').submit();\">&nbsp;";
                     ?><?= $this_cell->content ?><?
                     if( $this_cell->sort_desc->enabled == true ) echo "&nbsp;<img
                     src='{$config->full_root_path}/media/icons/order_desc" . ($order == $this_cell->sort_desc->order ? "_this" : "") . ".gif' 
                     align='absmiddle' width='7' height='7'  style='cursor: pointer;'
                     alt='{$this_cell->sort_desc->alt}' title='{$this_cell->sort_desc->alt}'
-                    onclick=\"document.filter_form.order.value='{$this_cell->sort_desc->order}'; document.filter_form.submit();\">";
+                    onclick=\"document.filter_form.order.value='{$this_cell->sort_desc->order}'; $('#filter_form').submit();\">";
                     ?></th>
             <? endforeach; ?>
         </tr>
@@ -188,15 +207,18 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     </div>
                 </td>
                 <td>
-                    <?= empty($row->excerpt) ? "―" : make_excerpt_of($row->excerpt, 60) ?><br>
+                    <?= empty($row->excerpt) ? "―" : make_excerpt_of($row->excerpt, 100) ?><br>
                     <?
                     foreach($repository->get_attached_categories($row->id_post) as $category)
-                        echo "<span class='pseudo_link category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
+                        echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
                     
                     if( ! empty($row->tags_list) )
                         foreach($row->tags_list as $tag)
-                            echo "<span class='pseudo_link hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}</span> ";
+                            echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}</span> ";
                     ?>
+                </td>
+                <td>
+                    <?= $current_module->language->status_labels->{$row->status} ?>
                 </td>
                 <td>
                     <?= $row->author_display_name ?>
