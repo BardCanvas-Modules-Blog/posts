@@ -188,18 +188,18 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     </div>
                 </td>
                 <td>
-                    <?= empty($row->excerpt) ? "―" : make_excerpt_of($row->excerpt, 60) ?>
+                    <?= empty($row->excerpt) ? "―" : make_excerpt_of($row->excerpt, 60) ?><br>
+                    <?
+                    foreach($repository->get_attached_categories($row->id_post) as $category)
+                        echo "<span class='pseudo_link category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
+                    
+                    if( ! empty($row->tags_list) )
+                        foreach($row->tags_list as $tag)
+                            echo "<span class='pseudo_link hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}</span> ";
+                    ?>
                 </td>
                 <td>
-                    [<?= $config->user_levels_by_level[$row->author_level] ?>] <?= $row->author_display_name ?>
-                </td>
-                <td>
-                    <? foreach($repository->get_attached_categories($row->id_post) as $category): ?>
-                        <span class="framed_content inlined"><?= $category->title ?></span>
-                    <? endforeach; ?>
-                </td>
-                <td>
-                    <?= empty($row->tags_list) ? "―" : implode(", ", $row->tags_list); ?>
+                    <?= $row->author_display_name ?>
                 </td>
                 <td>
                     <?= time_elapsed_string($row->publishing_date) ?>
@@ -207,13 +207,13 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                 <td>
                     <?= time_elapsed_string($row->last_update) ?>
                 </td>
-                <td>
+                <td align="right">
                     <?= $row->views ?>
                 </td>
-                <td>
+                <td align="right">
                     <?= $row->comments_count ?>
                 </td>
-                <td>
+                <td width="200">
                     <?= $row->id_featured_image ?>
                 </td>
             </tr>

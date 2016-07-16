@@ -22,7 +22,7 @@
                 <layout xnowrap="true" />
             </title>
             <excerpt>
-                <caption>Excerpt</caption>
+                <caption><![CDATA[ Excerpt &amp; details ]]></caption>
                 <layout xnowrap="true" />
             </excerpt>
             <author>
@@ -31,14 +31,6 @@
                 <order_asc  id="7">Order by author id ascending</order_asc>
                 <order_desc id="8">Order by author id descending</order_desc>
             </author>
-            <categories>
-                <caption>Categories</caption>
-                <layout xnowrap="true" />
-            </categories>
-            <categories>
-                <caption>Tags</caption>
-                <layout xnowrap="true" />
-            </categories>
             <publishing_date>
                 <caption>Published</caption>
                 <layout xnowrap="true" />
@@ -52,18 +44,18 @@
                 <order_desc id="4">Order by last activity update descending</order_desc>
             </last_update>
             <views>
-                <caption>Views</caption>
+                <caption><![CDATA[ <span class="fa fa-eye fa-fw"></span> ]]></caption>
                 <layout xnowrap="true" />
                 <order_asc  id="5">Order by views ascending</order_asc>
                 <order_desc id="6">Order by views descending</order_desc>
             </views>
             <comments>
-                <caption>Comments</caption>
+                <caption><![CDATA[ <span class="fa fa-comments-o fa-fw"></span> ]]></caption>
                 <layout xnowrap="true" />
             </comments>
             <featured_image>
                 <caption>Featured image</caption>
-                <layout xnowrap="true" />
+                <layout xnowrap="true" xalign="center"/>
             </featured_image>
         </columns>
         <actions>
