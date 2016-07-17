@@ -245,28 +245,29 @@ class posts_repository extends abstract_repository
     }
     
     /**
+     * Posts index builder
+     * Used to build indexes by user/category/tag/date
+     *
+     * @param array $where Initial params
+     *
+     * @param bool  $skip_date_check
+     *
      * @return object {where:array, limit:int, offset:int, order:string}
      */
-    public function build_find_params_for_home()
+    protected function build_find_params($where = array(), $skip_date_check = false)
     {
         global $settings;
         
         $today = date("Y-m-d H:i:s");
-        $where = array();
         $where[] = "status = 'published'";
         $where[] = "visibility <> 'private'";
-        $where[] = "(publishing_date <> '0000-00-00 00:00:00' and publishing_date <= '$today')";
-    
-        # Added to EXCLUDE featured posts
-        $where[] = "id_post not in (
-                        select post_tags.id_post from post_tags
-                        where post_tags.id_post = posts.id_post
-                        and post_tags.tag = '{$settings->get("modules:posts.featured_posts_tag")}'
-                    )";
+        
+        if( ! $skip_date_check )
+            $where[] = "(publishing_date <> '0000-00-00 00:00:00' and publishing_date <= '$today')";
         
         $order  = "publishing_date desc";
         $limit  = $settings->get("modules:posts.posts_per_page_home", 30);
-        $offset = (int) $_GET["offset"]; 
+        $offset = (int) $_GET["offset"];
         
         return (object) array(
             "where"  => $where,
@@ -279,34 +280,87 @@ class posts_repository extends abstract_repository
     /**
      * @return object {where:array, limit:int, offset:int, order:string}
      */
+    public function build_find_params_for_home()
+    {
+        global $settings;
+        
+        $return = $this->build_find_params();
+        
+        # Added to EXCLUDE featured posts
+        $return->where[]
+            = "id_post not in
+               (
+                   select post_tags.id_post from post_tags
+                   where post_tags.id_post = posts.id_post
+                   and post_tags.tag = '{$settings->get("modules:posts.featured_posts_tag")}'
+               )";
+        
+        return $return;
+    }
+    
+    /**
+     * @return object {where:array, limit:int, offset:int, order:string}
+     */
     public function build_find_params_for_featured_posts()
     {
         global $settings;
         
-        // TODO: Add expiration date to posts
+        // TODO: Add expiration date to posts and implement it here
+    
+        $return = $this->build_find_params();
+    
+        # Added to LIST ONLY featured posts
+        $return->where[]
+            = "id_post in
+               (
+                 select post_tags.id_post from post_tags
+                 where post_tags.id_post = posts.id_post
+                 and post_tags.tag = '{$settings->get("modules:posts.featured_posts_tag")}'
+               )";
+    
+        return $return;
+    }
+    
+    /**
+     * @param $id_category
+     *
+     * @return object {where:array, limit:int, offset:int, order:string}
+     */
+    public function build_find_params_for_category($id_category)
+    {
+        $return = $this->build_find_params();
         
-        $today = date("Y-m-d H:i:s");
-        $where = array();
-        $where[] = "status = 'published'";
-        $where[] = "visibility <> 'private'";
-        $where[] = "(publishing_date <> '0000-00-00 00:00:00' and publishing_date <= '$today')";
+        # Added to EXCLUDE featured posts
+        $return->where[]
+            = "( main_category = '{$id_category}' or id_post in
+                 ( select id_post from post_categories
+                   where post_categories.id_category = '{$id_category}' )
+               )";
         
-        # Added for featured posts
-        $where[] = "id_post in (
-                        select post_tags.id_post from post_tags
-                        where post_tags.id_post = posts.id_post
-                        and post_tags.tag = '{$settings->get("modules:posts.featured_posts_tag")}'
-                    )";
+        return $return;
+    }
+    
+    public function build_find_params_for_date_archive($start_date, $end_date)
+    {
+        $return = $this->build_find_params(array(), true);
+    
+        $return->where[] = "publishing_date >= '$start_date'";
+        $return->where[] = "publishing_date <= '$end_date'";
         
-        $order  = "publishing_date desc";
-        $limit  = $settings->get("modules:posts.posts_per_page_home", 30);
-        $offset = (int) $_GET["offset"];
+        return $return;
+    }
+    
+    /**
+     * @param $id_account
+     *
+     * @return object {where:array, limit:int, offset:int, order:string}
+     */
+    public function build_find_params_for_author($id_account)
+    {
+        $return = $this->build_find_params();
         
-        return (object) array(
-            "where"  => $where,
-            "limit"  => $limit,
-            "offset" => $offset,
-            "order"  => $order
-        );
+        $return->where[] = "id_author = '$id_account'";
+        
+        return $return;
     }
 }

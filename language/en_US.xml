@@ -14,6 +14,21 @@
         </buttons>
     </index>
     
+    <pages>
+        <by_category>
+            <title>Posts in {$category}</title>
+            <no_records>No posts have been found for this category.</no_records>
+        </by_category>
+        <by_date>
+            <title>Posts published on {$date}</title>
+            <no_records>No posts have been found for this date range.</no_records>
+        </by_date>
+        <by_author>
+            <title>Posts published by {$author}</title>
+            <no_records>No posts have been published by this author.</no_records>
+        </by_author>
+    </pages>
+    
     <record_nav>
         <search_placeholder>Search by id, parent, slug, title, excerpt or content</search_placeholder>
         <columns>

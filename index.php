@@ -1,6 +1,6 @@
 <?php
 /**
- * Posts index
+ * Posts browser
  *
  * @package    BardCanvas
  * @subpackage posts
