@@ -40,9 +40,6 @@
                 <caption><![CDATA[ Excerpt &amp; details ]]></caption>
                 <layout xnowrap="true" />
             </excerpt>
-            <status>
-                <caption>Status</caption>
-            </status>
             <author>
                 <caption>Author</caption>
                 <layout xnowrap="true" />

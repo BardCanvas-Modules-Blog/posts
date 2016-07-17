@@ -105,6 +105,25 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
     }
 </script>
 
+<style type="text/css">
+    @media all and (max-width: 800px)
+    {
+        #posts_browser_table tr th:nth-child(4) { display: none; }
+        #posts_browser_table tr td:nth-child(4) { display: none; }
+    }
+    @media all and (max-width: 600px)
+    {
+        #posts_browser_table tr th:nth-child(3) { display: none; }
+        #posts_browser_table tr td:nth-child(3) { display: none; }
+        #posts_browser_table tr th:nth-child(4) { display: none; }
+        #posts_browser_table tr td:nth-child(4) { display: none; }
+        #posts_browser_table tr th:nth-child(5) { display: none; }
+        #posts_browser_table tr td:nth-child(5) { display: none; }
+        #posts_browser_table tr th:nth-child(8) { display: none; }
+        #posts_browser_table tr td:nth-child(8) { display: none; }
+    }
+</style>
+
 <h1 class="clearfix">
     <button id="refresh_posts_browser" class="pull-right" onclick="$('#filter_form').submit()">
         <span class="fa fa-refresh"></span>
@@ -188,7 +207,7 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
         <tbody>
         <? foreach( $records as $row ): ?>
             <tr data-record-id="<?= $row->id_post ?>">
-                <td>
+                <td width="25%">
                     <div class="principal_data"><?= $row->title ?></div>
                     
                     <div class="actions">
@@ -208,6 +227,7 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                 </td>
                 <td>
                     <?= empty($row->excerpt) ? "―" : make_excerpt_of($row->excerpt, 100) ?><br>
+                    <span class="framed_content"><?= $current_module->language->status_labels->{$row->status} ?></span>
                     <?
                     foreach($repository->get_attached_categories($row->id_post) as $category)
                         echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
@@ -216,9 +236,6 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                         foreach($row->tags_list as $tag)
                             echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}</span> ";
                     ?>
-                </td>
-                <td>
-                    <?= $current_module->language->status_labels->{$row->status} ?>
                 </td>
                 <td>
                     <?= $row->author_display_name ?>
