@@ -94,6 +94,10 @@ class post_record extends abstract_record
             $return["author_display_name"],
             $return["author_email"],
             $return["author_level"],
+            
+            $return["main_category_slug"],
+            $return["main_category_title"],
+            
             $return["tags_list"],
             $return["categories_list"],
             $return["media_list"],

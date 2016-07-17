@@ -18,6 +18,44 @@
 <link rel="stylesheet" type="text/css" href="<?= $config->full_root_path ?>/posts/media/styles~v<?=$config->scripts_version?>.css">
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/posts/media/functions~v<?=$config->scripts_version?>.js"></script>
 
+<script type="text/javascript">
+    function reset_filter()
+    {
+        var $form = $('#filter_form');
+        $form.find('input[name="search_for"]').val('');
+        $form.find('select[name="limit"] options:first').prop('selected', true);
+        $form.find('input[name="offset"]').val('0');
+        $form.find('input[name="order"]').val('');
+    }
+    
+    //noinspection JSUnusedGlobalSymbols
+    function paginate(value)
+    {
+        var $form = $('#filter_form');
+        $form.find('input[name="offset"]').val(value);
+        $form.submit();
+    }
+</script>
+
+<style type="text/css">
+    @media all and (max-width: 800px)
+    {
+        #posts_browser_table tr th:nth-child(4) { display: none; }
+        #posts_browser_table tr td:nth-child(4) { display: none; }
+    }
+    @media all and (max-width: 600px)
+    {
+        #posts_browser_table tr th:nth-child(3) { display: none; }
+        #posts_browser_table tr td:nth-child(3) { display: none; }
+        #posts_browser_table tr th:nth-child(4) { display: none; }
+        #posts_browser_table tr td:nth-child(4) { display: none; }
+        #posts_browser_table tr th:nth-child(5) { display: none; }
+        #posts_browser_table tr td:nth-child(5) { display: none; }
+        #posts_browser_table tr th:nth-child(8) { display: none; }
+        #posts_browser_table tr td:nth-child(8) { display: none; }
+    }
+</style>
+
 <div id="main_workarea">
     
     <? $url = "browser.php?wasuuup=" . md5(mt_rand(1, 65535)); ?>

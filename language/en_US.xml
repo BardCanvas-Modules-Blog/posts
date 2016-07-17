@@ -43,8 +43,6 @@
             <author>
                 <caption>Author</caption>
                 <layout xnowrap="true" />
-                <order_asc  id="7">Order by author id ascending</order_asc>
-                <order_desc id="8">Order by author id descending</order_desc>
             </author>
             <publishing_date>
                 <caption>Published</caption>
@@ -67,6 +65,8 @@
             <comments>
                 <caption><![CDATA[ <span class="fa fa-comments-o fa-fw"></span> ]]></caption>
                 <layout xnowrap="true" />
+                <order_asc  id="7">Order by comments count ascending</order_asc>
+                <order_desc id="8">Order by comments count descending</order_desc>
             </comments>
             <featured_image>
                 <caption>Featured image</caption>
@@ -157,6 +157,18 @@
     
     <settings_data>
         <title>Posts reading/writing options</title>
+        <specs key="items_per_page">
+            <title>Posts to show per index page</title>
+            <description><![CDATA[
+                Amount of posts to show per index (home, archives, etc.).
+                Defaults to 30.
+            ]]></description>
+            <type>number</type>
+            <options>
+                <min>1</min>
+                <max>255</max>
+            </options>
+        </specs>
         <specs key="excerpt_length">
             <title>Excerpt length</title>
             <description><![CDATA[

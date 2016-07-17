@@ -94,13 +94,7 @@ class posts_repository extends abstract_repository
                 creation_location,
                 
                 publishing_date  ,
-                views            ,
-                comments_count   ,
-                
                 last_update      ,
-                last_viewed      ,
-                last_commented   ,
-                
                 id_featured_image
             ) values (
                 '{$obj->id_post          }',
@@ -124,13 +118,7 @@ class posts_repository extends abstract_repository
                 '{$obj->creation_location}',
                 
                 '{$obj->publishing_date  }',
-                '{$obj->views            }',
-                '{$obj->comments_count   }',
-                
                 '{$obj->last_update      }',
-                '{$obj->last_viewed      }',
-                '{$obj->last_commented   }',
-                
                 '{$obj->id_featured_image}'
             ) on duplicate key update
                 parent_post       = '{$obj->parent_post      }',
@@ -146,9 +134,7 @@ class posts_repository extends abstract_repository
                 password          = '{$obj->password         }',
                 allow_comments    = '{$obj->allow_comments   }',
                 
-                publishing_date   = '{$obj->publishing_date  }',
                 last_update       = '{$obj->last_update      }',
-                
                 id_featured_image = '{$obj->id_featured_image}'
         ");
     }
@@ -265,8 +251,10 @@ class posts_repository extends abstract_repository
         if( ! $skip_date_check )
             $where[] = "(publishing_date <> '0000-00-00 00:00:00' and publishing_date <= '$today')";
         
+        // TODO: Complement where[] with additional filters (per user level, etc.)
+        
         $order  = "publishing_date desc";
-        $limit  = $settings->get("modules:posts.posts_per_page_home", 30);
+        $limit  = $settings->get("modules:posts.items_per_page", 30);
         $offset = (int) $_GET["offset"];
         
         return (object) array(

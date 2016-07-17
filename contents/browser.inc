@@ -7,6 +7,7 @@
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  */
 
+use hng2_base\config;
 use hng2_modules\posts\posts_repository;
 use hng2_tools\record_browser;
 
@@ -25,7 +26,7 @@ $built_vars = $browser->build_vars(20, 4);
 foreach($built_vars as $key => $val) $$key = $val;
 
 $where = array("status <> 'trashed'");
-if( $account->level < 200 ) $where[] = "id_author = '{$account->id_account}'";
+if( $account->level < config::MODERATOR_USER_LEVEL ) $where[] = "id_author = '{$account->id_account}'";
 
 $search_for = empty($search_for) ? "" : trim($search_for);
 if( ! empty($search_for) )
@@ -78,51 +79,13 @@ switch( $order )
     case  4: $sqlorder = "last_update desc";     break;
     case  5: $sqlorder = "views asc";            break;
     case  6: $sqlorder = "views desc";           break;
-    case  7: $sqlorder = "id_author asc";        break;
-    case  8: $sqlorder = "id_author desc";       break;
+    case  7: $sqlorder = "comments_count asc";   break;
+    case  8: $sqlorder = "comments_count desc";  break;
 }
 
 $records = $repository->find($where, $limit, $offset, $sqlorder);
 #endregion
 ?>
-
-<script type="text/javascript">
-    function reset_filter()
-    {
-        var $form = $('#filter_form');
-        $form.find('input[name="search_for"]').val('');
-        $form.find('select[name="limit"] options:first').prop('selected', true);
-        $form.find('input[name="offset"]').val('0');
-        $form.find('input[name="order"]').val('');
-    }
-    
-    //noinspection JSUnusedGlobalSymbols
-    function paginate(value)
-    {
-        var $form = $('#filter_form');
-        $form.find('input[name="offset"]').val(value);
-        $form.submit();
-    }
-</script>
-
-<style type="text/css">
-    @media all and (max-width: 800px)
-    {
-        #posts_browser_table tr th:nth-child(4) { display: none; }
-        #posts_browser_table tr td:nth-child(4) { display: none; }
-    }
-    @media all and (max-width: 600px)
-    {
-        #posts_browser_table tr th:nth-child(3) { display: none; }
-        #posts_browser_table tr td:nth-child(3) { display: none; }
-        #posts_browser_table tr th:nth-child(4) { display: none; }
-        #posts_browser_table tr td:nth-child(4) { display: none; }
-        #posts_browser_table tr th:nth-child(5) { display: none; }
-        #posts_browser_table tr td:nth-child(5) { display: none; }
-        #posts_browser_table tr th:nth-child(8) { display: none; }
-        #posts_browser_table tr td:nth-child(8) { display: none; }
-    }
-</style>
 
 <h1 class="clearfix">
     <button id="refresh_posts_browser" class="pull-right" onclick="$('#filter_form').submit()">

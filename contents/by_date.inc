@@ -31,8 +31,6 @@ $template->set("pagination_url_prefix", $pagination_url_prefix);
     <span class="pull-right"><?= $pagination["this_page_number"]; ?>/<?= $pagination["total_pages"]; ?></span>
 </h1>
 
-<pre><?= $posts_repository->get_last_query() ?></pre>
-
 <? if($posts_count == 0)
 {
     echo "
