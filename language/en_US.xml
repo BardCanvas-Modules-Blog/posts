@@ -154,7 +154,7 @@
             <invalid_link>The link you entered is invalid</invalid_link>
         </youtube_embedder>
     </tinymce>
-
+    
     <settings_data>
         <title>Posts reading/writing options</title>
         <specs key="excerpt_length">
@@ -176,5 +176,5 @@
             <type>text</type>
         </specs>
     </settings_data>
-
+    
 </language>
