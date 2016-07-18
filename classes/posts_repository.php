@@ -251,8 +251,8 @@ class posts_repository extends abstract_repository
         
         if( ! $skip_date_checks )
         {
-            $where[] = "(publishing_date <> '0000-00-00 00:00:00' and publishing_date <= '$today')";
-            $where[] = "(expiration_date <> '0000-00-00 00:00:00' and expiration_date >  '$today')";
+            $where[] = "publishing_date <= '$today'";
+            $where[] = "(expiration_date = '0000-00-00 00:00:00' or expiration_date > '$today' )";
         }
         
         // TODO: Complement where[] with additional filters (per user level, etc.)
