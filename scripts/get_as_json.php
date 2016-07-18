@@ -10,15 +10,13 @@
  * @param string "id_post"
  */
 
-use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\posts_repository;
 
 include "../../config.php";
 include "../../includes/bootstrap.inc";
 
 header("Content-Type: application/json; charset=utf-8");
-
-if( ! $account->_is_admin ) die(json_encode(array("message" => $language->errors->page_requires_login )));
+if( ! $account->_exists ) die(json_encode(array("message" => $language->errors->page_requires_login )));
 
 if( empty($_GET["id_post"]) ) die(json_encode(array("message" => $current_module->language->messages->missing->id )));
 

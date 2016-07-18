@@ -257,6 +257,8 @@ class posts_repository extends abstract_repository
         $limit  = $settings->get("modules:posts.items_per_page", 30);
         $offset = (int) $_GET["offset"];
         
+        if( empty($limit) ) $limit = 30;
+        
         return (object) array(
             "where"  => $where,
             "limit"  => $limit,
