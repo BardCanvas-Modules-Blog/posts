@@ -96,6 +96,9 @@
             <title>
                 <placeholder>Enter a title for the post</placeholder>
             </title>
+            <content>
+                <placeholder>Type or paste the contents of your post. Use the buttons below this editor to insert images/videos, tag users and add hashtags among other options.</placeholder>
+            </content>
             <excerpt>
                 <caption>Excerpt:</caption>
                 <placeholder>Type an excerpt of the contents. Leave it blank for automatic generation.</placeholder>

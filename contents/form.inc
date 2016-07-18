@@ -42,7 +42,8 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
     </div>
     
     <div class="field" data-field="content">
-        <textarea name="content" id="post_content_editor" class="tinymce"></textarea>
+        <textarea name="content" id="post_content_editor" class="tinymce"
+                  placeholder="<?= $current_module->language->form->fields->content->placeholder ?>"></textarea>
     </div>
     
     <div class="field" data-field="excerpt" style="display: none;">
