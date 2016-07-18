@@ -190,7 +190,24 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                 </td>
                 <td>
                     <?= empty($row->excerpt) ? "―" : convert_emojis(make_excerpt_of($row->excerpt, 100)) ?><br>
-                    <span class="framed_content"><?= $current_module->language->status_labels->{$row->status} ?></span>
+                    <?
+                    if( $row->expiration_date != "0000-00-00 00:00:00")
+                    {
+                        if( date("Y-m-d H:i:s") <= $row->expiration_date )
+                            echo "<span class='framed_content inlined state_active'>" 
+                                . $current_module->language->record_nav->extras->expires . ": "
+                                . time_remaining_string($row->expiration_date)
+                                . "</span><br>"
+                            ;
+                        else
+                            echo "<span class='framed_content inlined state_highlight'>"
+                                . $current_module->language->record_nav->extras->expired . ": "
+                                . time_elapsed_string($row->expiration_date)
+                                . "</span><br>"
+                            ;
+                    }
+                    ?>
+                    <span class="framed_content inlined"><?= $current_module->language->status_labels->{$row->status} ?></span>
                     <?
                     foreach($repository->get_attached_categories($row->id_post) as $category)
                         echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";

@@ -7,6 +7,7 @@
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  */
 
+use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\post_record;
 use hng2_modules\posts\posts_repository;
 
@@ -55,8 +56,26 @@ if( $post->main_category != $old_post->main_category )
     $repository->unset_category($old_post->main_category, $post->id_post);
 $repository->set_category($_POST["main_category"], $post->id_post);
 
-if( $item->status == "published" && $old_item->status != $item->status )
-    $item->publishing_date = date("Y-m-d H:i:s");
+if( $post->status == "published" && $old_post->status != $post->status )
+{
+    $post->publishing_date = date("Y-m-d H:i:s");
+    
+    $res = $settings->get("modules:posts.enforced_expiration_by_category");
+    if( ! empty($res) )
+    {
+        $categories_repository = new categories_repository();
+        $entries = explode("\n", $res);
+        foreach($entries as $entry)
+        {
+            list($slug, $hours) = preg_split('/\s*-\s*/', $entry);
+            $id = $categories_repository->get_id_by_slug($slug);
+            if( $post->main_category != $id ) continue;
+            
+            $post->expiration_date = date("Y-m-d H:i:s", strtotime($post->publishing_date) + ($hours * 3600));
+            break;
+        }
+    }
+}
 
 $repository->save($post);
 

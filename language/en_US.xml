@@ -79,6 +79,10 @@
             <trash>Trash</trash>
             <copy>Copy</copy>
         </actions>
+        <extras>
+            <expires>Expires in</expires>
+            <expired>Expired</expired>
+        </extras>
     </record_nav>
     
     <status_labels>
@@ -190,6 +194,18 @@
                 Set the tag (without the #) to use for the featured posts functionality in the home layout.
             ]]></description>
             <type>text</type>
+        </specs>
+        <specs key="enforced_expiration_by_category">
+            <title>Enforced post expiration by category</title>
+            <description><![CDATA[
+                Specify a list of <code>category_slug - time_to_live</code>, one per line, to specify for how many
+                hours the posts that have one of the listed categories as main will be available.
+                Once the time expires, posts will no longer appear
+                on indexes and a "not found" error will be thrown when opened directly.<br>
+                <span class="fa fa-info-circle"></span> Note: this setting will override any expiration manually set
+                by the post author.
+            ]]></description>
+            <type>textarea</type>
         </specs>
     </settings_data>
     
