@@ -71,6 +71,16 @@ class post_record extends abstract_record
             unset($this->_author_data);
         }
         
+        if( ! empty($this->_main_category_data) )
+        {
+            $parts = explode("\t", $this->_author_data);
+    
+            $this->main_category_slug  = $parts[0];
+            $this->main_category_title = $parts[1];
+    
+            unset($this->_main_category_data);
+        }
+        
         if( is_string($this->tags_list) )       $this->tags_list       = explode(",", $this->tags_list);
         if( is_string($this->categories_list) ) $this->categories_list = explode(",", $this->categories_list);
         if( is_string($this->media_list) )      $this->media_list      = explode(",", $this->media_list);
@@ -141,6 +151,19 @@ class post_record extends abstract_record
         $contents = convert_emojis($contents);
         
         # TODO: Add get_processed_excerpt() extension point
+        
+        return $contents;
+    }
+    
+    /**
+     * Returns the display name with all output processing
+     */
+    public function get_processed_author_display_name()
+    {
+        $contents = $this->author_display_name;
+        $contents = convert_emojis($contents);
+        
+        # TODO: Add get_processed_author_display_name() extension point
         
         return $contents;
     }

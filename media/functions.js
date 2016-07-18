@@ -182,6 +182,7 @@ function reset_post_form()
     $form[0].reset();
     $form.find('.field[data-field="excerpt"]').hide();
     $form.find('.post_addons_bar .post_addon[data-related-field="excerpt"]').show();
+    $form.find('input[name="id_post"]').val('');
     $form.find('input[name="slug"]').data('modified', false);
 }
 

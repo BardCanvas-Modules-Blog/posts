@@ -13,12 +13,10 @@ class posts_repository extends abstract_repository
         "( select concat(user_name, '\\t', display_name, '\\t', email, '\\t', level)
            from account where account.id_account = posts.id_author )
            as _author_data",
-        "( select slug
+        "( select concat(slug, '\\t', title)
            from categories where categories.id_category = posts.main_category )
-           as main_category_slug",
-        "( select title
-           from categories where categories.id_category = posts.main_category )
-           as main_category_title",
+           as _main_category_data",
+        
         "( select group_concat(tag order by order_attached asc separator ',')
            from post_tags where post_tags.id_post = posts.id_post )
            as tags_list",
