@@ -196,7 +196,7 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                         if( date("Y-m-d H:i:s") <= $row->expiration_date )
                             echo "<span class='framed_content inlined state_active'>" 
                                 . $current_module->language->record_nav->extras->expires . ": "
-                                . time_remaining_string($row->expiration_date)
+                                . preg_replace('/\d+s/', "", time_remaining_string($row->expiration_date))
                                 . "</span><br>"
                             ;
                         else

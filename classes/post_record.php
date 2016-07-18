@@ -74,7 +74,7 @@ class post_record extends abstract_record
         
         if( ! empty($this->_main_category_data) )
         {
-            $parts = explode("\t", $this->_author_data);
+            $parts = explode("\t", $this->_main_category_data);
     
             $this->main_category_slug  = $parts[0];
             $this->main_category_title = $parts[1];
