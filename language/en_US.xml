@@ -2,6 +2,7 @@
 <language>
     
     <display_name>Posts subsystem</display_name>
+    <icon>fa-newspaper-o</icon>
     <description>
         Blogging capability.
     </description>
