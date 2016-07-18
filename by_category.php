@@ -28,4 +28,5 @@ $template->page_contents_include = "by_category.inc";
 $template->set_page_title(replace_escaped_vars(
     $current_module->language->pages->by_category->title, '{$category}', $category->title
 ));
+$template->append("additional_body_attributes", " data-listing-type='archive'");
 include "{$template->abspath}/main.php";

@@ -25,4 +25,5 @@ $template->page_contents_include = "by_author.inc";
 $template->set_page_title(replace_escaped_vars(
     $current_module->language->pages->by_author->title, '{$author}', $author->display_name
 ));
+$template->append("additional_body_attributes", " data-listing-type='archive'");
 include "{$template->abspath}/main.php";

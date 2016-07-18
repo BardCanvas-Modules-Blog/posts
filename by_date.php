@@ -73,4 +73,5 @@ $template->page_contents_include = "by_date.inc";
 $template->set_page_title(replace_escaped_vars(
     $current_module->language->pages->by_date->title, '{$date}', $template->get("showing_date")
 ));
+$template->append("additional_body_attributes", " data-listing-type='archive'");
 include "{$template->abspath}/main.php";
