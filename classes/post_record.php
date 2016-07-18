@@ -26,7 +26,8 @@ class post_record extends abstract_record
     public $creation_host     ; # varchar(255) not null default '',
     public $creation_location ; # varchar(255) not null default '',
     
-    public $publishing_date   ; # date,
+    public $publishing_date   ; # datetime,
+    public $expiration_date   ; # datetime,
     public $views             ; # int unsigned not null default 0,
     public $comments_count    ; # int unsigned not null default 0,
     

@@ -92,6 +92,7 @@ class posts_repository extends abstract_repository
                 creation_location,
                 
                 publishing_date  ,
+                expiration_date  ,
                 last_update      ,
                 id_featured_image
             ) values (
@@ -116,6 +117,7 @@ class posts_repository extends abstract_repository
                 '{$obj->creation_location}',
                 
                 '{$obj->publishing_date  }',
+                '{$obj->expiration_date  }',
                 '{$obj->last_update      }',
                 '{$obj->id_featured_image}'
             ) on duplicate key update
@@ -132,6 +134,7 @@ class posts_repository extends abstract_repository
                 password          = '{$obj->password         }',
                 allow_comments    = '{$obj->allow_comments   }',
                 
+                expiration_date   = '{$obj->expiration_date  }',
                 last_update       = '{$obj->last_update      }',
                 id_featured_image = '{$obj->id_featured_image}'
         ");
@@ -234,11 +237,11 @@ class posts_repository extends abstract_repository
      *
      * @param array $where Initial params
      *
-     * @param bool  $skip_date_check
+     * @param bool  $skip_date_checks
      *
      * @return object {where:array, limit:int, offset:int, order:string}
      */
-    protected function build_find_params($where = array(), $skip_date_check = false)
+    protected function build_find_params($where = array(), $skip_date_checks = false)
     {
         global $settings;
         
@@ -246,8 +249,11 @@ class posts_repository extends abstract_repository
         $where[] = "status = 'published'";
         $where[] = "visibility <> 'private'";
         
-        if( ! $skip_date_check )
+        if( ! $skip_date_checks )
+        {
             $where[] = "(publishing_date <> '0000-00-00 00:00:00' and publishing_date <= '$today')";
+            $where[] = "(expiration_date <> '0000-00-00 00:00:00' and expiration_date >  '$today')";
+        }
         
         // TODO: Complement where[] with additional filters (per user level, etc.)
         

@@ -41,6 +41,7 @@ $tables = array(
             creation_location varchar(255) not null default '',
             
             publishing_date   datetime default null,
+            expiration_date   datetime default null,
             views             int unsigned not null default 0,
             comments_count    int unsigned not null default 0,
             
