@@ -125,7 +125,7 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
         <?= $language->record_nav->show ?>
         <select name="limit">
             <? foreach(array(5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500) as $recs): ?>
-                <option <? if($limit == $recs) echo "selected" ?>><?= $recs ?></option>
+                <option <? if($limit == $recs) echo "selected" ?> value="<?= $recs ?>"><?= $recs ?></option>
             <? endforeach; ?>
         </select>
         <?= $language->record_nav->recs_per_page ?>
