@@ -123,18 +123,6 @@
                 <caption>Image</caption>
                 <title>Insert image from media gallery</title>
             </addon>
-            
-            <!--
-            TODO: Put these as extensions
-            <addon function="insert_gallery_video_in_post_editor" icon="fa-file-video-o">
-                <caption>Video</caption>
-                <title>Insert video from media gallery</title>
-            </addon>
-            <addon function="embed_giphy_image_in_post_editor" icon="fa-film">
-                <caption>Giphy</caption>
-                <title>Embed GIF from Giphy</title>
-            </addon>
-            -->
         </post_addons>
     </form>
     
