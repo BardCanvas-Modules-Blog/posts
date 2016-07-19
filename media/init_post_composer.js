@@ -2,10 +2,13 @@
 var post_composer_tinymce_defaults = {
     menubar:                  false,
     statusbar:                false,
+    relative_urls:            false,
+    remove_script_host:       false,
+    convert_urls:             false,
     selector:                 '.tinymce',
     plugins:                  'placeholder autoresize advlist contextmenu autolink lists link image anchor searchreplace table paste codemirror textcolor',
-    toolbar:                  'bold italic strikethrough forecolor fontsizeselect removeformat | alignleft aligncenter alignright | bullist numlist outdent indent | link image',
-    contextmenu:              'cut copy paste | link image',
+    toolbar:                  'bold italic strikethrough forecolor fontsizeselect removeformat | alignleft aligncenter alignright | bullist numlist outdent indent | link',
+    contextmenu:              'cut copy paste | link',
     fontsize_formats:         '10pt 12pt 14pt 18pt 24pt 36pt',
     content_css:              $_FULL_ROOT_PATH  + '/media/styles~v' + $_SCRIPTS_VERSION + '.css'
                               + ',' +

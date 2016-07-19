@@ -119,6 +119,10 @@
                 <caption>Excerpt</caption>
                 <title>Toggle excerpt introduction area on/off</title>
             </addon>
+            <addon function="insert_gallery_image_in_post_editor" icon="fa-file-image-o">
+                <caption>Image</caption>
+                <title>Insert image from media gallery</title>
+            </addon>
             <!--
             <addon function="embed_youtube_link_in_post_editor" icon="fa-youtube">
                 <caption>YouTube</caption>
@@ -128,10 +132,6 @@
             
             <!--
             TODO: Put these as extensions
-            <addon function="insert_gallery_image_in_post_editor" icon="fa-file-image-o">
-                <caption>Image</caption>
-                <title>Insert image from media gallery</title>
-            </addon>
             <addon function="insert_gallery_video_in_post_editor" icon="fa-file-video-o">
                 <caption>Video</caption>
                 <title>Insert video from media gallery</title>

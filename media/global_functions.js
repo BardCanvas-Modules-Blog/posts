@@ -12,6 +12,14 @@ $_POST_ADDON_FUNCTIONS['toggle_post_excerpt_textarea'] = function($trigger, $for
         });
 };
 
+$_POST_ADDON_FUNCTIONS['insert_gallery_image_in_post_editor'] = function($trigger, $form)
+{
+    var editor_id = $form.find('textarea.tinymce').attr('id');
+    var editor    = tinymce.get(editor_id);
+    
+    load_media_browser_in_tinymce_dialog(editor, $(window).width() - 20, $(window).height() - 60, 'image');
+};
+
 /*
 $_POST_ADDON_FUNCTIONS['embed_youtube_link_in_post_editor'] = function($trigger, $form)
 {
