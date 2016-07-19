@@ -123,12 +123,6 @@
                 <caption>Image</caption>
                 <title>Insert image from media gallery</title>
             </addon>
-            <!--
-            <addon function="embed_youtube_link_in_post_editor" icon="fa-youtube">
-                <caption>YouTube</caption>
-                <title>Embed YouTube video</title>
-            </addon>
-            -->
             
             <!--
             TODO: Put these as extensions
@@ -154,14 +148,6 @@
         </missing>
         <post_not_found>The post wasn't found in the database</post_not_found>
     </messages>
-    
-    <tinymce>
-        <youtube_embedder>
-            <title>Embed Youtube link</title>
-            <caption>Paste Youtube video URL</caption>
-            <invalid_link>The link you entered is invalid</invalid_link>
-        </youtube_embedder>
-    </tinymce>
     
     <settings_data>
         <title>Posts reading/writing options</title>

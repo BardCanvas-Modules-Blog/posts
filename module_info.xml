@@ -27,7 +27,7 @@
         <content_top>slider.inc</content_top>
         <home_content>home_index.inc</home_content>
         <!--<content_bottom></content_bottom>-->
-        <post_footer>global_post_footer.inc</post_footer>
+        <!--<post_footer>global_post_footer.inc</post_footer>-->
         <!--<footer_top></footer_top>-->
         <!--<footer_bottom></footer_bottom>-->
         <!--<post_footer></post_footer>-->
