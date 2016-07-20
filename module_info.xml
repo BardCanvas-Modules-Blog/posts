@@ -31,7 +31,7 @@
         <!--<footer_top></footer_top>-->
         <!--<footer_bottom></footer_bottom>-->
         <!--<post_footer></post_footer>-->
-        <!--<pre_eof></pre_eof>-->
+        <pre_eof>global_messages.inc</pre_eof>
         <!--<post_rendering></post_rendering>-->
     </template_includes>
 

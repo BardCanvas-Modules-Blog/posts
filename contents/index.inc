@@ -37,25 +37,6 @@
     }
 </script>
 
-<style type="text/css">
-    @media all and (max-width: 800px)
-    {
-        #posts_browser_table tr th:nth-child(4) { display: none; }
-        #posts_browser_table tr td:nth-child(4) { display: none; }
-    }
-    @media all and (max-width: 600px)
-    {
-        #posts_browser_table tr th:nth-child(3) { display: none; }
-        #posts_browser_table tr td:nth-child(3) { display: none; }
-        #posts_browser_table tr th:nth-child(4) { display: none; }
-        #posts_browser_table tr td:nth-child(4) { display: none; }
-        #posts_browser_table tr th:nth-child(5) { display: none; }
-        #posts_browser_table tr td:nth-child(5) { display: none; }
-        #posts_browser_table tr th:nth-child(8) { display: none; }
-        #posts_browser_table tr td:nth-child(8) { display: none; }
-    }
-</style>
-
 <div id="main_workarea">
     
     <? $url = "browser.php?wasuuup=" . md5(mt_rand(1, 65535)); ?>

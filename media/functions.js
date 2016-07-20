@@ -49,6 +49,8 @@ function edit_post(id_post)
         else
             $form.find('.post_buttons button[data-save-type="publish"]').hide();
         
+        $form.find('.post_addons_bar .post_addon[data-related-field="excerpt"]').hide();
+        
         reset_post_form();
         fill_post_form($form, record);
         $.unblockUI();

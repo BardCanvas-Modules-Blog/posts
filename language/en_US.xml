@@ -117,11 +117,15 @@
         <post_addons>
             <addon function="toggle_post_excerpt_textarea" data_related_field="excerpt" icon="fa-bolt">
                 <caption>Excerpt</caption>
-                <title>Toggle excerpt introduction area on/off</title>
+                <title>View/hide post excerpt introduction area</title>
             </addon>
             <addon function="insert_gallery_image_in_post_editor" icon="fa-file-image-o">
                 <caption>Image</caption>
                 <title>Insert image from media gallery</title>
+            </addon>
+            <addon function="insert_gallery_video_in_post_editor" icon="fa-file-video-o">
+                <caption>Video</caption>
+                <title>Insert video from media gallery</title>
             </addon>
         </post_addons>
     </form>
@@ -135,6 +139,10 @@
             <main_category>Please specify a main category for the post</main_category>
         </missing>
         <post_not_found>The post wasn't found in the database</post_not_found>
+        <gallery_embeds>
+            <invalid_type_for_image></invalid_type_for_image>
+            <invalid_type_for_video></invalid_type_for_video>
+        </gallery_embeds>
     </messages>
     
     <settings_data>

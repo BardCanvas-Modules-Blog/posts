@@ -37,9 +37,9 @@ class post_record extends abstract_record
     
     public $id_featured_image ; # varchar(32) not null default '',
     
-    # TODO:                                                                                                  
-    # TODO:  IMPORTANT! All dinamically generated members should be undefined in get_for_database_insertion! 
-    # TODO:                                                                                                  
+    # TODO:                                                                                                        :
+    # TODO:  IMPORTANT! All dinamically generated members below should be undefined in get_for_database_insertion! :
+    # TODO:                                                                                                        :
     
     # Dynamically added:
     public $author_user_name;
