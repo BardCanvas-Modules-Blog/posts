@@ -14,7 +14,7 @@
 .post_addons_bar .post_addon .caption { display: none; }
 .post_addons_bar .post_buttons button { font-size: 12pt; line-height: 24pt; }
 
-/* Browser specific */
+/* Record browser specific */
 
 @media all and (max-width: 800px)
 {

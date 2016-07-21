@@ -103,10 +103,37 @@
             <content>
                 <placeholder>Type or paste the contents of your post. Use the buttons below this editor to insert images/videos, tag users and add hashtags among other options.</placeholder>
             </content>
+            
+            <controls_toggle>
+                <caption>Options</caption>
+                <title>Show/hide advanced post controls area</title>
+            </controls_toggle>
             <excerpt>
                 <caption>Excerpt:</caption>
                 <placeholder>Type an excerpt of the contents. Leave it blank for automatic generation.</placeholder>
             </excerpt>
+            <visibility>
+                <caption>Visibility:</caption>
+                <options>
+                    <option value="public">Public</option>
+                    <option value="private">Only me</option>
+                    <option value="users">Only registered users (any level)</option>
+                    <option value="friends">Only people in my friends list</option>
+                    <option value="level_based">Users in my level and above</option>
+                </options>
+            </visibility>
+            <password>
+                <caption>Password:</caption>
+                <placeholder>Type a password to protect this post</placeholder>
+            </password>
+            <allow_comments>
+                <caption>Allow people to leave comments?</caption>
+            </allow_comments>
+            <featured_image>
+                <caption>Featured image (click to set/change):</caption>
+                <set>Set</set>
+                <remove>Remove</remove>
+            </featured_image>
         </fields>
         
         <buttons>
@@ -115,10 +142,6 @@
         </buttons>
         
         <post_addons>
-            <addon function="toggle_post_excerpt_textarea" data_related_field="excerpt" icon="fa-bolt">
-                <caption>Excerpt</caption>
-                <title>View/hide post excerpt introduction area</title>
-            </addon>
             <addon function="insert_gallery_image_in_post_editor" icon="fa-file-image-o">
                 <caption>Image</caption>
                 <title>Insert image from media gallery</title>

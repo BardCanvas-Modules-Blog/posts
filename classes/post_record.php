@@ -50,6 +50,8 @@ class post_record extends abstract_record
     public $main_category_slug;
     public $main_category_title;
     
+    public $featured_image_thumbnail;
+    
     # Taken with a group_concat from other tables:
     public $tags_list       = array(); # from post_tags
     public $categories_list = array(); # from post_categories
@@ -58,6 +60,8 @@ class post_record extends abstract_record
     
     protected function set_from_object($object_or_array)
     {
+        global $config;
+        
         parent::set_from_object($object_or_array);
         
         if( ! empty($this->_author_data) )
@@ -81,6 +85,9 @@ class post_record extends abstract_record
     
             unset($this->_main_category_data);
         }
+        
+        if( ! empty($this->featured_image_thumbnail) )
+            $this->featured_image_thumbnail = "{$config->full_root_path}/mediaserver/{$this->featured_image_thumbnail}";
         
         if( is_string($this->tags_list) )       $this->tags_list       = explode(",", $this->tags_list);
         if( is_string($this->categories_list) ) $this->categories_list = explode(",", $this->categories_list);
@@ -108,6 +115,8 @@ class post_record extends abstract_record
             
             $return["main_category_slug"],
             $return["main_category_title"],
+            
+            $return["featured_image_thumbnail"],
             
             $return["tags_list"],
             $return["categories_list"],

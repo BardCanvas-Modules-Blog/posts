@@ -16,6 +16,9 @@ class posts_repository extends abstract_repository
         "( select concat(slug, '\\t', title)
            from categories where categories.id_category = posts.main_category )
            as _main_category_data",
+        "( select thumbnail
+           from media where media.id_media = posts.id_featured_image )
+           as featured_image_thumbnail",
         
         "( select group_concat(tag order by order_attached asc separator ',')
            from post_tags where post_tags.id_post = posts.id_post )

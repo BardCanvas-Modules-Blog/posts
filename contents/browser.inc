@@ -233,7 +233,12 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     <?= $row->comments_count ?>
                 </td>
                 <td width="200">
-                    <?= $row->id_featured_image ?>
+                    <div class="thumbnail">
+                        <? $src = empty($row->featured_image_thumbnail)
+                            ? "{$config->full_root_path}/media/missing_image.png"
+                            : $row->featured_image_thumbnail; ?>
+                        <img src="<?= $src ?>">
+                    </div>
                 </td>
             </tr>
         <? endforeach; ?>

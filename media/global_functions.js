@@ -1,16 +1,7 @@
 
-if( typeof $_POST_ADDON_FUNCTIONS == 'undefined' )
-    var $_POST_ADDON_FUNCTIONS = {};
-
-$_POST_ADDON_FUNCTIONS['toggle_post_excerpt_textarea'] = function($trigger, $form)
-{
-    $form
-        .find('.field[data-field="excerpt"]')
-        .show('fast', function()
-        {
-            $trigger.fadeOut('fast');
-        });
-};
+// This definition should be set if used
+// if( typeof $_POST_ADDON_FUNCTIONS == 'undefined' )
+//     var $_POST_ADDON_FUNCTIONS = {};
 
 /**
  * Triggers the addon function tied to the form addon button being clicked

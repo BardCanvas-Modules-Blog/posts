@@ -49,8 +49,6 @@ function edit_post(id_post)
         else
             $form.find('.post_buttons button[data-save-type="publish"]').hide();
         
-        $form.find('.post_addons_bar .post_addon[data-related-field="excerpt"]').hide();
-        
         reset_post_form();
         fill_post_form($form, record);
         $.unblockUI();
@@ -106,16 +104,16 @@ function fill_post_form($form, record)
     $form.find('input[name="id_post"]').val( record.id_post );
     $form.find('input[name="status"]').val( record.status );
     $form.find('textarea[name="title"]').val( record.title );
+    $form.find('textarea[name="excerpt"]').val( record.excerpt );
+    
+    $form.find('input[name="id_featured_image"]').val( record.id_featured_image );
+    $form.find('.subfield.featured_image .thumbnail img').attr('src', record.featured_image_thumbnail);
     
     var editor = tinymce.get('post_content_editor');
     editor.setContent(record.content, {format : 'raw'});
     
-    if( record.excerpt.length > 0 )
-    {
-        $form.find('textarea[name="excerpt"]').val( record.excerpt );
-        $form.find('.field[data-field="excerpt"]').show();
-        $form.find('.post_addons_bar[data-related-field="excerpt"]').hide();
-    }
+    $form.find('.field[data-field="controls"]').show();
+    $form.find('.post_addons_bar[data-related-field="controls"]').hide();
 }
 
 function update_category_selector(preselected_id)
@@ -152,6 +150,49 @@ function update_category_selector(preselected_id)
     });
 }
 
+function set_post_featured_image()
+{
+    var $form     = $('#post_form');
+    var editor_id = $form.find('textarea.tinymce').attr('id');
+    var editor    = tinymce.get(editor_id);
+    
+    load_media_browser_in_tinymce_dialog(
+        editor,
+        $(window).width() - 20,
+        $(window).height() - 60,
+        'image',
+        'top.' + 'set_selected_gallery_image_as_featured_image'
+    );
+}
+
+function set_selected_gallery_image_as_featured_image(
+    id_media, type, file_url, thumbnail_url, width, height, embed_width
+) {
+    var $strings = $('#post_gallery_embed_strings');
+    
+    if( type != 'image' )
+    {
+        var message = $strings.find('.invalid_type_for_image').text();
+        alert( message );
+        
+        return;
+    }
+    
+    top.tinymce.activeEditor.windowManager.close();
+    
+    var $form = $('#post_form');
+    $form.find('input[name="id_featured_image"]').val(id_media);
+    $form.find('.subfield.featured_image .thumbnail img').attr('src', thumbnail_url);
+}
+
+function remove_post_featured_image()
+{
+    var $form     = $('#post_form');
+    var empty_src = $form.find('.subfield.featured_image .thumbnail img').attr('data-empty-src');
+    $form.find('input[name="id_featured_image"]').val('');
+    $form.find('.subfield.featured_image .thumbnail img').attr('src', empty_src);
+}
+
 function trash_post(id_post)
 {
     var url = $_FULL_ROOT_PATH + '/posts/scripts/trash.php';
@@ -182,8 +223,8 @@ function reset_post_form()
 {
     var $form = $('#post_form');
     $form[0].reset();
-    $form.find('.field[data-field="excerpt"]').hide();
-    $form.find('.post_addons_bar .post_addon[data-related-field="excerpt"]').show();
+    $form.find('.field[data-field="controls"]').hide();
+    $form.find('.post_addons_bar .post_addon[data-related-field="controls"]').show();
     $form.find('input[name="id_post"]').val('');
     $form.find('input[name="slug"]').data('modified', false);
 }
