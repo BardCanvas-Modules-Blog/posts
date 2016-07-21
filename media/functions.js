@@ -94,6 +94,16 @@ function copy_post(id_post)
     });
 }
 
+function reset_post_form()
+{
+    var $form = $('#post_form');
+    $form[0].reset();
+    $form.find('.field[data-field="controls"]').hide();
+    $form.find('.post_addons_bar .post_addon[data-related-field="controls"]').show();
+    $form.find('input[name="id_post"]').val('');
+    $form.find('input[name="slug"]').data('modified', false);
+}
+
 /**
  * 
  * @param {jQuery} $form
@@ -217,16 +227,6 @@ function trash_post(id_post)
         $row.unblock();
         $('#refresh_posts_browser').click();
     });
-}
-
-function reset_post_form()
-{
-    var $form = $('#post_form');
-    $form[0].reset();
-    $form.find('.field[data-field="controls"]').hide();
-    $form.find('.post_addons_bar .post_addon[data-related-field="controls"]').show();
-    $form.find('input[name="id_post"]').val('');
-    $form.find('input[name="slug"]').data('modified', false);
 }
 
 function show_post_form()
