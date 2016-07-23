@@ -11,11 +11,10 @@
         <disable>true</disable>
     </working_flags>
     
-    <!--
     <php_includes>
-        <bootstrap></bootstrap>
+        <!--<bootstrap></bootstrap>-->
+        <document_handler>extenders/document_handler.inc</document_handler>
     </php_includes>
-    -->
     
     <template_includes>
         <pre_rendering>pre_rendering_presets.inc</pre_rendering>

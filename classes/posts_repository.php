@@ -58,6 +58,20 @@ class posts_repository extends abstract_repository
     }
     
     /**
+     * @param $id_or_slug
+     *
+     * @return post_record|null
+     */
+    public function get_by_id_or_slug($id_or_slug)
+    {
+        $res = $this->find(array("id_post = '$id_or_slug' or slug = '$id_or_slug'"), 0, 0, "");
+        
+        if( empty($res) ) return null;
+        
+        return current($res);
+    }
+    
+    /**
      * @param post_record $record
      *
      * @return int

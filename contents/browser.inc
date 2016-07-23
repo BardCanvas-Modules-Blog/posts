@@ -174,6 +174,10 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     <div class="principal_data"><?= convert_emojis($row->title) ?></div>
                     
                     <div class="actions">
+                        <a class="action" href="<?= "{$config->full_root_url}/{$row->id_post}" ?>" target="_blank">
+                            <span class="fa fa-external-link"></span>
+                            <?= $language->view ?>
+                        </a>
                         <span class="action pseudo_link" onclick="edit_post('<?= $row->id_post ?>')">
                             <span class="fa fa-pencil"></span>
                             <?= $current_module->language->record_nav->actions->edit ?>

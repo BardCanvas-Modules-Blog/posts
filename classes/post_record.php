@@ -177,4 +177,14 @@ class post_record extends abstract_record
         
         return $contents;
     }
+    
+    public function get_processed_content()
+    {
+        $contents = $this->content;
+        $contents = convert_emojis($contents);
+        
+        # TODO: Add get_processed_content() extension point
+        
+        return $contents;
+    }
 }
