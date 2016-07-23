@@ -84,11 +84,11 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
                 <div class="caption"><?= $current_module->language->form->fields->allow_comments->caption ?></div>
                 <div class="input">
                     <?= $language->no ?>
-                    <span class='fa-pseudo-switch' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
-                    <input type='hidden' name='allow_comments' value='1'>
-                    <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
-                    <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
-                </span>
+                    <span class='fa-pseudo-switch' data-input-name='allow_comments' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
+                        <input type='hidden' name='allow_comments' value='1'>
+                        <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
+                        <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
+                    </span>
                     <?= $language->yes ?>
                 </div>
             </div>
@@ -96,23 +96,22 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
             <div class="col subfield featured_image">
                 <input type="hidden" name="id_featured_image" value="">
                 <div class="caption">
-                    <span class="pull-right">
-                        <span class="pseudo_link" onclick="set_post_featured_image()">
-                            <span class="fa fa-arrow-right"></span>
-                            <?= $current_module->language->form->fields->featured_image->set ?>
-                        </span>
-                        <span class="pseudo_link" onclick="remove_post_featured_image()">
-                            <span class="fa fa-trash"></span>
-                            <?= $current_module->language->form->fields->featured_image->remove ?>
-                        </span>
-                    </span>
                     <?= $current_module->language->form->fields->featured_image->caption ?>
                 </div>
                 <div class="input">
                     <div class="thumbnail preview featured_image pseudo_link" 
-                         onclick="set_post_featured_image()" style="width: 100%; height: 150px;">
+                         onclick="set_post_featured_image()" style="width: 100%; height: 130px;">
                         <img src="<?= $config->full_root_path ?>/media/missing_image.png"
                              data-empty-src="<?= $config->full_root_path ?>/media/missing_image.png">
+                    </div>
+                    <div align="center">
+                        <span class="pseudo_link" onclick="set_post_featured_image()">
+                            <?= $current_module->language->form->fields->featured_image->set ?>
+                        </span>
+                        &nbsp;
+                        <span class="pseudo_link" onclick="remove_post_featured_image()">
+                            <?= $current_module->language->form->fields->featured_image->remove ?>
+                        </span>
                     </div>
                 </div>
             </div>

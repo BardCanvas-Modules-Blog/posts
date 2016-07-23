@@ -130,8 +130,8 @@
                 <caption>Allow people to leave comments?</caption>
             </allow_comments>
             <featured_image>
-                <caption>Featured image (click to set/change):</caption>
-                <set>Set</set>
+                <caption>Featured image:</caption>
+                <set>Set…</set>
                 <remove>Remove</remove>
             </featured_image>
         </fields>

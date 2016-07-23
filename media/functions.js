@@ -97,11 +97,20 @@ function copy_post(id_post)
 function reset_post_form()
 {
     var $form = $('#post_form');
+    
     $form[0].reset();
-    $form.find('.field[data-field="controls"]').hide();
-    $form.find('.post_addons_bar .post_addon[data-related-field="controls"]').show();
+    
     $form.find('input[name="id_post"]').val('');
     $form.find('input[name="slug"]').data('modified', false);
+    
+    $form.find('.subfield select[name="visibility"] option:first').prop('selected', true);
+    toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="allow_comments"]'), true);
+    
+    var thumbnail = $form.find('.subfield.featured_image .thumbnail img').attr('data-empty-src');
+    $form.find('.subfield.featured_image .thumbnail img').attr('src', thumbnail);
+    $form.find('input[name="id_featured_image"]').val('');
+    
+    $form.find('.field[data-field="controls"]').hide();
 }
 
 /**
@@ -116,14 +125,23 @@ function fill_post_form($form, record)
     $form.find('textarea[name="title"]').val( record.title );
     $form.find('textarea[name="excerpt"]').val( record.excerpt );
     
+    $form.find('input[name="password"]').val( record.password );
+    
+    $form.find('.subfield select[name="visibility"] option[value="' + record.visibility + '"]').prop('selected', true);
+    
+    var allow_comments = record.allow_comments == '1';
+    toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="allow_comments"]'), allow_comments);
+    
+    var thumbnail = record.featured_image_thumbnail == ''
+        ? $form.find('.subfield.featured_image .thumbnail img').attr('data-empty-src')
+        : record.featured_image_thumbnail;
+    $form.find('.subfield.featured_image .thumbnail img').attr('src', thumbnail);
     $form.find('input[name="id_featured_image"]').val( record.id_featured_image );
-    $form.find('.subfield.featured_image .thumbnail img').attr('src', record.featured_image_thumbnail);
     
     var editor = tinymce.get('post_content_editor');
     editor.setContent(record.content, {format : 'raw'});
     
     $form.find('.field[data-field="controls"]').show();
-    $form.find('.post_addons_bar[data-related-field="controls"]').hide();
 }
 
 function update_category_selector(preselected_id)
