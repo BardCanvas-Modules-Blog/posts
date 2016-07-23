@@ -7,9 +7,9 @@
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  */
 
-if ( ! $account->_exists) return;
+if( ! $account->_exists ) return;
 
-$added_class = $current_module->name == $this_module->name ? "current" : "";
+$added_class = $current_module->name == $this_module->name && ! $template->get("is_single_post") ? "current" : "";
 if( $template->get("showing_archive") ) $added_class = "";
 
 $wasuuup     = md5(mt_rand(1, 65535));

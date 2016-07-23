@@ -21,7 +21,9 @@ $post = $repository->get_by_id_or_slug($handle);
 
 if( is_null($post) ) return;
 
-$template->page_contents_include = "single.inc";
 $template->set_page_title($post->title);
+$template->set("is_single_post", true);
+# The definition below is a hack that shouldn't be repeated unless strictly neccesary :P
+$template->page_contents_include = "../../templates/{$template->name}/segments/single_post_renderer.inc";
 include "{$template->abspath}/main.php";
 exit;
