@@ -283,7 +283,6 @@ function prepare_post_form_serialization()
         var id      = $(this).attr('id');
         var editor  = tinymce.get(id);
         var content = editor.getContent();
-        console.log( content );
         $(this).val( content );
     });
 }

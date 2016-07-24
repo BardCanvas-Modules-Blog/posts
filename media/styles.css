@@ -6,13 +6,9 @@
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  */
 
-.post_buttons button { font-size: 12pt; line-height: 24pt; }
-
 /* Editor insertable items */
 
-.post_addons_bar .post_addon          { font-size: 24pt; }
-.post_addons_bar .post_addon .caption { display: none; }
-.post_addons_bar .post_buttons button { font-size: 12pt; line-height: 24pt; }
+.tinymce_addons_bar .post_buttons button { font-size: 12pt; line-height: 24pt; }
 
 /* Record browser specific */
 

@@ -140,17 +140,6 @@
             <save_draft>Save draft</save_draft>
             <publish>Publish</publish>
         </buttons>
-        
-        <post_addons>
-            <addon function="insert_gallery_image_in_post_editor" icon="fa-file-image-o">
-                <caption>Image</caption>
-                <title>Insert image from media gallery</title>
-            </addon>
-            <addon function="insert_gallery_video_in_post_editor" icon="fa-file-video-o">
-                <caption>Video</caption>
-                <title>Insert video from media gallery</title>
-            </addon>
-        </post_addons>
     </form>
     
     <messages>
@@ -163,8 +152,8 @@
         </missing>
         <post_not_found>The post wasn't found in the database</post_not_found>
         <gallery_embeds>
-            <invalid_type_for_image></invalid_type_for_image>
-            <invalid_type_for_video></invalid_type_for_video>
+            <invalid_type_for_image>Please select an image.</invalid_type_for_image>
+            <invalid_type_for_video>Please select a video file.</invalid_type_for_video>
         </gallery_embeds>
     </messages>
     

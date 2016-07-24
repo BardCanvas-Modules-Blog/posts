@@ -5,7 +5,7 @@ var post_composer_tinymce_defaults = {
     relative_urls:            false,
     remove_script_host:       false,
     convert_urls:             false,
-    selector:                 '.tinymce',
+    selector:                 '.tinymce_post_composer',
     plugins:                  'placeholder autoresize advlist contextmenu autolink lists link image anchor searchreplace table paste codemirror textcolor',
     toolbar:                  'bold italic strikethrough forecolor fontsizeselect removeformat | alignleft aligncenter alignright | bullist numlist outdent indent | link',
     contextmenu:              'cut copy paste | link',

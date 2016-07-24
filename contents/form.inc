@@ -5,6 +5,8 @@
  * @package    BardCanvas
  * @subpackage posts
  * @author     Alejandro Caballero - lava.caballero@gmail.com
+ * 
+ * @var \SimpleXMLElement $language
  */
 
 use hng2_modules\categories\categories_repository;
@@ -42,18 +44,12 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
     </div>
     
     <div class="field" data-field="content">
-        <textarea name="content" id="post_content_editor" class="tinymce"
+        <textarea name="content" id="post_content_editor" class="tinymce_post_composer"
                   placeholder="<?= $current_module->language->form->fields->content->placeholder ?>"></textarea>
     </div>
     
-    <div class="field post_addons_bar clearfix">
-        <? foreach($current_module->language->form->post_addons->addon as $addon): ?>
-            <span class="post_addon pseudo_link" title="<?= $addon->title ?>"
-                  data-function="<?= $addon["function"] ?>" data-related-field="<?= $addon["data_related_field"] ?>"
-                  onclick="trigger_post_form_addon(this)"><span 
-                    class="fa <?= $addon["icon"] ?> fa-fw"></span><span 
-                    class="caption"><?= $addon->caption ?></span></span>
-        <? endforeach; ?>
+    <div class="field tinymce_addons_bar">
+        <? render_tinymce_addons_bar(); ?>
     </div>
     
     <div class="field framed_content" data-field="controls" style="display: none;">
