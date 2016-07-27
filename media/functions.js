@@ -181,7 +181,7 @@ function update_category_selector(preselected_id)
 function set_post_featured_image()
 {
     var $form     = $('#post_form');
-    var editor_id = $form.find('textarea.tinymce').attr('id');
+    var editor_id = $form.find('textarea[class*="tinymce"]').attr('id');
     var editor    = tinymce.get(editor_id);
     
     load_media_browser_in_tinymce_dialog(
@@ -278,7 +278,7 @@ function update_slug()
 function prepare_post_form_serialization()
 {
     var $form = $('#post_form');
-    $form.find('textarea.tinymce').each(function()
+    $form.find('textarea[class*="tinymce"]').each(function()
     {
         var id      = $(this).attr('id');
         var editor  = tinymce.get(id);
