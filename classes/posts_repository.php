@@ -3,6 +3,7 @@ namespace hng2_modules\posts;
 
 use hng2_base\repository\abstract_repository;
 use hng2_modules\categories\category_record;
+use hng2_tools\record_browser;
 
 class posts_repository extends abstract_repository
 {
@@ -291,7 +292,7 @@ class posts_repository extends abstract_repository
     /**
      * @return object {where:array, limit:int, offset:int, order:string}
      */
-    public function build_find_params_for_home()
+    protected function build_find_params_for_home()
     {
         global $settings;
         
@@ -312,7 +313,7 @@ class posts_repository extends abstract_repository
     /**
      * @return object {where:array, limit:int, offset:int, order:string}
      */
-    public function build_find_params_for_featured_posts()
+    protected function build_find_params_for_featured_posts()
     {
         global $settings;
         
@@ -371,6 +372,25 @@ class posts_repository extends abstract_repository
         $return = $this->build_find_params();
         
         $return->where[] = "id_author = '$id_account'";
+        
+        return $return;
+    }
+    
+    /**
+     * @return home_posts_data
+     */
+    public function get_for_home()
+    {
+        $return = new home_posts_data();
+        
+        $find_params         = $this->build_find_params_for_home();
+        $return->browser     = new record_browser("");
+        $return->count       = $this->get_record_count($find_params->where);
+        $return->pagination  = $return->browser->build_pagination($return->count, $find_params->limit, $find_params->offset);
+        $return->posts       = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+    
+        $find_params            = $this->build_find_params_for_featured_posts();
+        $return->featured_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
         
         return $return;
     }
