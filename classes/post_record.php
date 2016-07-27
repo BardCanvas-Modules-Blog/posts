@@ -58,6 +58,8 @@ class post_record extends abstract_record
     public $media_list      = array(); # from post_media
     public $mentions_list   = array(); # from post_mentions
     
+    private $_author_account;
+    
     protected function set_from_object($object_or_array)
     {
         global $config;
@@ -130,11 +132,24 @@ class post_record extends abstract_record
     }
     
     /**
+     * @param null|account $prefetched_author_record
+     */
+    public function set_author($prefetched_author_record = null)
+    {
+        if( ! is_null($prefetched_author_record) )
+            $this->_author_account = $prefetched_author_record;
+        else
+            $this->_author_account = new account($this->id_author);
+    }
+    
+    /**
      * @return account
      */
     public function get_author()
     {
         // TODO: Implement accounts repository for caching
+        
+        if( is_object($this->_author_account) ) return $this->_author_account;
         
         return new account($this->id_author);
     }

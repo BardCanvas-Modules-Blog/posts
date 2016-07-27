@@ -2,6 +2,7 @@
 namespace hng2_modules\posts;
 
 use hng2_base\repository\abstract_repository;
+use hng2_base\repository\accounts_repository;
 use hng2_modules\categories\category_record;
 use hng2_tools\record_browser;
 
@@ -381,17 +382,39 @@ class posts_repository extends abstract_repository
      */
     public function get_for_home()
     {
-        $return = new home_posts_data();
+        global $modules, $config;
         
-        $find_params         = $this->build_find_params_for_home();
-        $return->browser     = new record_browser("");
-        $return->count       = $this->get_record_count($find_params->where);
-        $return->pagination  = $return->browser->build_pagination($return->count, $find_params->limit, $find_params->offset);
-        $return->posts       = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
-    
-        $find_params            = $this->build_find_params_for_featured_posts();
-        $return->featured_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+        $home_posts = new home_posts_data();
         
-        return $return;
+        $find_params             = $this->build_find_params_for_home();
+        $home_posts->browser     = new record_browser("");
+        $home_posts->count       = $this->get_record_count($find_params->where);
+        $home_posts->pagination  = $home_posts->browser->build_pagination($home_posts->count, $find_params->limit, $find_params->offset);
+        $home_posts->posts       = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+        
+        $find_params                = $this->build_find_params_for_featured_posts();
+        $home_posts->featured_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+        
+        # Author preloads
+        $author_ids = array();
+        foreach($home_posts->posts          as $post) $author_ids[] = $post->id_author;
+        foreach($home_posts->featured_posts as $post) $author_ids[] = $post->id_author;
+        if( count($author_ids) > 0 )
+        {
+            $author_ids = array_unique($author_ids);
+            $authors_repository = new accounts_repository();
+            $authors = $authors_repository->get_multiple($author_ids);
+            
+            foreach($home_posts->posts as $index => &$post)
+                $post->set_author($authors[$post->id_author]);
+            
+            foreach($home_posts->featured_posts as $index => &$post)
+                $post->set_author($authors[$post->id_author]);
+        }
+        
+        $config->globals["home_posts"] = $home_posts;
+        $modules["posts"]->load_extensions("index_builders", "home");
+        
+        return $home_posts;
     }
 }

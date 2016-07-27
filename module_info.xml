@@ -37,6 +37,7 @@
     <extension_areas_info><![CDATA[
         Front pages: single post, after contents
         Front pages: indexes, after post excerpt
+        index_builders / home
     ]]></extension_areas_info>
     
 </module>
