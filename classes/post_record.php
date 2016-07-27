@@ -189,4 +189,20 @@ class post_record extends abstract_record
         
         return $contents;
     }
+    
+    /**
+     * Returns the permalink to the post
+     *
+     * @param bool $fully_qualified
+     *
+     * @return string
+     */
+    public function get_permalink($fully_qualified = false)
+    {
+        global $config;
+        
+        if( $fully_qualified ) return "{$config->full_root_url}/{$this->id_post}";
+        
+        return "{$config->full_root_path}/{$this->id_post}";
+    }
 }
