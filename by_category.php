@@ -5,6 +5,8 @@
  * @package    BardCanvas
  * @subpackage posts
  * @author     Alejandro Caballero - lava.caballero@gmail.com
+ *
+ * @var template $template
  * 
  * $_GET params:
  * @param slug
@@ -13,6 +15,7 @@
 include "../config.php";
 include "../includes/bootstrap.inc";
 
+use hng2_base\template;
 use hng2_modules\categories\categories_repository;
 
 $categories_repository = new categories_repository();

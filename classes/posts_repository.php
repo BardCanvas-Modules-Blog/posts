@@ -339,7 +339,7 @@ class posts_repository extends abstract_repository
      *
      * @return object {where:array, limit:int, offset:int, order:string}
      */
-    public function build_find_params_for_category($id_category)
+    protected function build_find_params_for_category($id_category)
     {
         $return = $this->build_find_params();
         
@@ -368,7 +368,7 @@ class posts_repository extends abstract_repository
      *
      * @return object {where:array, limit:int, offset:int, order:string}
      */
-    public function build_find_params_for_author($id_account)
+    protected function build_find_params_for_author($id_account)
     {
         $return = $this->build_find_params();
         
@@ -378,43 +378,94 @@ class posts_repository extends abstract_repository
     }
     
     /**
-     * @return home_posts_data
+     * @return posts_data
      */
     public function get_for_home()
     {
+        $find_params = $this->build_find_params_for_home();
+        
+        return $this->get_posts_data($find_params, "index_builders", "home");
+    }
+    
+    /**
+     * @param $id_account
+     *
+     * @return posts_data
+     */
+    public function get_for_author($id_account)
+    {
+        $find_params = $this->build_find_params_for_author($id_account);
+        
+        return $this->get_posts_data($find_params, "index_builders", "author_index");
+    }
+    
+    /**
+     * @param $id_category
+     *
+     * @return posts_data
+     */
+    public function get_for_category($id_category)
+    {
+        $find_params = $this->build_find_params_for_category($id_category);
+        
+        return $this->get_posts_data($find_params, "index_builders", "category_index");
+    }
+    
+    /**
+     * @param $start_date
+     * @param $end_date
+     *
+     * @return posts_data
+     */
+    public function get_for_date_range($start_date, $end_date)
+    {
+        $find_params = $this->build_find_params_for_date_archive($start_date, $end_date);
+        
+        return $this->get_posts_data($find_params, "index_builders", "date_archive");
+    }
+    
+    /**
+     * @param $find_params
+     * @param $extensions_hook
+     * @param $extensions_marker
+     *
+     * @return posts_data
+     */
+    private function get_posts_data($find_params, $extensions_hook, $extensions_marker)
+    {
         global $modules, $config;
         
-        $home_posts = new home_posts_data();
+        $posts_data = new posts_data();
         
-        $find_params             = $this->build_find_params_for_home();
-        $home_posts->browser     = new record_browser("");
-        $home_posts->count       = $this->get_record_count($find_params->where);
-        $home_posts->pagination  = $home_posts->browser->build_pagination($home_posts->count, $find_params->limit, $find_params->offset);
-        $home_posts->posts       = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+        $posts_data->browser     = new record_browser("");
+        $posts_data->count       = $this->get_record_count($find_params->where);
+        $posts_data->pagination  = $posts_data->browser->build_pagination($posts_data->count, $find_params->limit, $find_params->offset);
+        $posts_data->posts       = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
         
-        $find_params                = $this->build_find_params_for_featured_posts();
-        $home_posts->featured_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+        $this->preload_authors($posts_data);
         
-        # Author preloads
+        $config->globals["posts_data"] = $posts_data;
+        $modules["posts"]->load_extensions($extensions_hook, $extensions_marker);
+        
+        return $posts_data;
+    }
+    
+    private function preload_authors(posts_data &$posts_data)
+    {
         $author_ids = array();
-        foreach($home_posts->posts          as $post) $author_ids[] = $post->id_author;
-        foreach($home_posts->featured_posts as $post) $author_ids[] = $post->id_author;
+        foreach($posts_data->posts          as $post) $author_ids[] = $post->id_author;
+        foreach($posts_data->featured_posts as $post) $author_ids[] = $post->id_author;
         if( count($author_ids) > 0 )
         {
             $author_ids = array_unique($author_ids);
             $authors_repository = new accounts_repository();
             $authors = $authors_repository->get_multiple($author_ids);
-            
-            foreach($home_posts->posts as $index => &$post)
+        
+            foreach($posts_data->posts as $index => &$post)
                 $post->set_author($authors[$post->id_author]);
-            
-            foreach($home_posts->featured_posts as $index => &$post)
+        
+            foreach($posts_data->featured_posts as $index => &$post)
                 $post->set_author($authors[$post->id_author]);
         }
-        
-        $config->globals["home_posts"] = $home_posts;
-        $modules["posts"]->load_extensions("index_builders", "home");
-        
-        return $home_posts;
     }
 }

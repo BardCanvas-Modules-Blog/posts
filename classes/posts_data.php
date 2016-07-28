@@ -3,7 +3,7 @@ namespace hng2_modules\posts;
 
 use hng2_tools\record_browser;
 
-class home_posts_data
+class posts_data
 {
     /**
      * @var record_browser

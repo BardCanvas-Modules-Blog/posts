@@ -5,12 +5,15 @@
  * @package    BardCanvas
  * @subpackage posts
  * @author     Alejandro Caballero - lava.caballero@gmail.com
+ *
+ * @var template $template
  * 
  * $_GET params:
  * @param slug
  */
 
 use hng2_base\account;
+use hng2_base\template;
 
 include "../config.php";
 include "../includes/bootstrap.inc";
