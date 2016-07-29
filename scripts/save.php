@@ -83,6 +83,9 @@ if( $post->status == "published" && $old_post->status != $post->status )
     }
 }
 
+$tags = extract_hash_tags($post->title . " " . $post->content);
+if( ! empty($tags) ) $repository->set_tags($tags, $post->id_post);
+
 $repository->save($post);
 
 echo "OK";

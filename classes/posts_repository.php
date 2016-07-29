@@ -190,6 +190,57 @@ class posts_repository extends abstract_repository
         ");
     }
     
+    /**
+     * @param $id_post
+     *
+     * @return post_tag[]
+     * 
+     * @throws \Exception
+     */
+    public function get_tags($id_post)
+    {
+        global $database;
+        
+        $res = $database->query("select * from post_tags where id_post = '$id_post'");
+        if( $database->num_rows($res) == 0 ) return array();
+        
+        $rows = array();
+        while($row = $database->fetch_object($res))
+            $rows[$row->tag] = new post_tag($row);
+        
+        return $rows;
+    }
+    
+    public function set_tags(array $list, $id_post)
+    {
+        global $database;
+        
+        $actual_tags = $this->get_tags($id_post);
+        
+        if( empty($actual_tags) && empty($list) ) return;
+        
+        $date = date("Y-m-d H:i:s");
+        $inserts = array();
+        foreach($list as $tag)
+        {
+            if( ! isset($actual_tags[$tag]) ) $inserts[] = "('$id_post', '$tag', '$date', '". microtime(true) . "')";
+            unset($actual_tags[$tag]);
+        }
+        
+        if( ! empty($inserts) )
+            $database->exec(
+                "insert into post_tags (id_post, tag, date_attached, order_attached) " .
+                "values " . implode(", ", $inserts)
+            );
+        
+        if( ! empty($actual_tags) )
+        {
+            $deletes = array();
+            foreach($actual_tags as $tag => $object) $deletes[] = "'$tag'";
+            $database->exec("delete from post_tags where tag in (" . implode(", ", $deletes) . ")");
+        }
+    }
+    
     public function unset_category($id_category, $id_post)
     {
         global $database;
