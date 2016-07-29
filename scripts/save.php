@@ -5,8 +5,14 @@
  * @package    BardCanvas
  * @subpackage categories
  * @author     Alejandro Caballero - lava.caballero@gmail.com
+ *
+ * @var account           $account
+ * @var settings          $settings
+ * @var \SimpleXMLElement $language
  */
 
+use hng2_base\account;
+use hng2_base\settings;
 use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\post_record;
 use hng2_modules\posts\posts_repository;
@@ -52,9 +58,9 @@ if( empty($post->slug) ) $post->slug = sanitize_file_name($post->title);
 $existing_slugs = $repository->get_record_count(array("slug like '{$post->slug}%'"));
 if( $existing_slugs > 0 ) $post->slug .= "_" . $existing_slugs;
 
-if( $post->main_category != $old_post->main_category )
-    $repository->unset_category($old_post->main_category, $post->id_post);
-$repository->set_category($_POST["main_category"], $post->id_post);
+# if( $post->main_category != $old_post->main_category )
+#     $repository->unset_category($old_post->main_category, $post->id_post);
+# $repository->set_category($_POST["main_category"], $post->id_post);
 
 if( $post->status == "published" && $old_post->status != $post->status )
 {
