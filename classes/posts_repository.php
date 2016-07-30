@@ -434,8 +434,12 @@ class posts_repository extends abstract_repository
     public function get_for_home()
     {
         $find_params = $this->build_find_params_for_home();
+        $posts_data = $this->get_posts_data($find_params, "index_builders", "home");
         
-        return $this->get_posts_data($find_params, "index_builders", "home");
+        $find_params                = $this->build_find_params_for_featured_posts();
+        $posts_data->featured_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+        
+        return $posts_data;
     }
     
     /**
