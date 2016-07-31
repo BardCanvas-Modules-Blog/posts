@@ -96,7 +96,7 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
                 </div>
                 <div class="input">
                     <div class="thumbnail preview featured_image pseudo_link" 
-                         onclick="set_post_featured_image()" style="width: 100%; height: 130px;">
+                         onclick="set_post_featured_image()">
                         <img src="<?= $config->full_root_path ?>/media/missing_image.png"
                              data-empty-src="<?= $config->full_root_path ?>/media/missing_image.png">
                     </div>
