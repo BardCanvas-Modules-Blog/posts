@@ -202,5 +202,9 @@
             <type>textarea</type>
         </specs>
     </settings_data>
-    
+
+    <user_profile_tabs>
+        <tab mode="posts" priority="100">Posts</tab>
+    </user_profile_tabs>
+
 </language>

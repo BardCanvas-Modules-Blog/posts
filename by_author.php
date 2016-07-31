@@ -24,6 +24,9 @@ $author = new account($_GET["slug"]);
 if( ! $author->_exists ) throw_fake_404();
 
 $template->set("showing_archive", true);
+$template->set("show_user_profile_heading", true);
+$template->set("user_profile_account", $author);
+$template->set("current_user_profile_tab", "posts");
 $template->page_contents_include = "by_author.inc";
 $template->set_page_title(replace_escaped_vars(
     $current_module->language->pages->by_author->title, '{$author}', $author->display_name
