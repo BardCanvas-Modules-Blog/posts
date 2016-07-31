@@ -43,14 +43,14 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
         </select>
     </div>
     
-    <div class="field" data-field="content">
+    <div class="field tinymce_container" data-field="content">
         <textarea name="content" id="post_content_editor" class="tinymce_post_composer"
                   placeholder="<?= $current_module->language->form->fields->content->placeholder ?>"></textarea>
+        <div class="tinymce_addons_bar">
+            <? render_tinymce_addons_bar(); ?>
+        </div>
     </div>
     
-    <div class="field tinymce_addons_bar">
-        <? render_tinymce_addons_bar(); ?>
-    </div>
     
     <div class="field framed_content" data-field="controls" style="display: none;">
         <div class="multicol cols-3 biggest-col">
