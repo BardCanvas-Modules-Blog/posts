@@ -7,7 +7,7 @@ $(document).ready(function()
 {
     post_composer_tinymce_defaults = $.extend({}, tinymce_defaults);
     
-    post_composer_tinymce_defaults.toolbar  = 'bold italic strikethrough forecolor fontsizeselect removeformat | alignleft aligncenter alignright | bullist numlist outdent indent | link';
+    post_composer_tinymce_defaults.toolbar  = 'bold italic strikethrough forecolor fontsizeselect removeformat | alignleft aligncenter alignright | bullist numlist outdent indent | link | fullscreen';
     post_composer_tinymce_defaults.selector = '.tinymce_post_composer';
     
     if( $_CURRENT_USER_IS_ADMIN )
