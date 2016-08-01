@@ -72,6 +72,7 @@ else
     $end_date      = "{$evaling_date}-12-31 23:59:59";
 }
 
+$template->set("page_tag", "post_archive");
 $template->set("showing_archive", true);
 $template->page_contents_include = "by_date.inc";
 $template->set_page_title(replace_escaped_vars(

@@ -25,6 +25,7 @@ if( empty($_GET["slug"]) ) throw_fake_404();
 $category = $categories_repository->get($_GET["slug"]);
 if( is_null($category) ) throw_fake_404();
 
+$template->set("page_tag", "post_category_index");
 $template->set("showing_archive", true);
 $template->set("current_category_slug", $category->slug);
 $template->page_contents_include = "by_category.inc";

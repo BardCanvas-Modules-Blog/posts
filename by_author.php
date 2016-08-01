@@ -23,6 +23,7 @@ if( empty($_GET["slug"]) ) throw_fake_404();
 $author = new account($_GET["slug"]);
 if( ! $author->_exists ) throw_fake_404();
 
+$template->set("page_tag", "post_author_index");
 $template->set("showing_archive", true);
 $template->set("show_user_profile_heading", true);
 $template->set("user_profile_account", $author);
