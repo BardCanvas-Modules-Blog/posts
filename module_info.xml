@@ -39,5 +39,15 @@
         Front pages: indexes, after post excerpt
         index_builders / home
     ]]></extension_areas_info>
-    
+
+    <widgets>
+        
+        <widget for="right_sidebar" id="other_posts_in_category" type="php" is_clonable="true"
+                file="other_posts_in_category/widget.inc" config="other_posts_in_category/config.inc" />
+        
+        <widget for="right_sidebar" id="posts_by_tag" type="php" is_clonable="true"
+                file="posts_by_tag/widget.inc" config="posts_by_tag/config.inc" />
+        
+    </widgets>
+
 </module>
