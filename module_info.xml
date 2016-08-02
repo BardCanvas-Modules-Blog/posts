@@ -14,6 +14,7 @@
     <php_includes>
         <!--<bootstrap></bootstrap>-->
         <document_handler>extenders/document_handler.inc</document_handler>
+        <rss_feed_generator handle_pattern="^_none_|author/.*|user/.*|category/.*$">extenders/rss_feed_generator.inc</rss_feed_generator>
     </php_includes>
     
     <template_includes>
