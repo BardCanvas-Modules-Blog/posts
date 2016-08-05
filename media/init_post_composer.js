@@ -7,8 +7,12 @@ $(document).ready(function()
 {
     post_composer_tinymce_defaults = $.extend({}, tinymce_defaults);
     
-    post_composer_tinymce_defaults.toolbar  = 'bold italic strikethrough forecolor fontsizeselect removeformat | alignleft aligncenter alignright | bullist numlist outdent indent | link | fullscreen';
+    post_composer_tinymce_defaults.toolbar  = 'bold italic strikethrough forecolor fontsizeselect removeformat | alignleft aligncenter alignright | bullist numlist outdent indent | link';
     post_composer_tinymce_defaults.selector = '.tinymce_post_composer';
+    
+    if( tinymce_custom_toolbar_buttons.length > 0 )
+        post_composer_tinymce_defaults.toolbar = post_composer_tinymce_defaults.toolbar + ' ' + tinymce_custom_toolbar_buttons.join(' ');
+    post_composer_tinymce_defaults.toolbar = post_composer_tinymce_defaults.toolbar  + ' | fullscreen';
     
     if( $_CURRENT_USER_IS_ADMIN )
     {
