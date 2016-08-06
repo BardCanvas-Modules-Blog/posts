@@ -573,4 +573,46 @@ class posts_repository extends abstract_repository
         
         return $return;
     }
+    
+    /**
+     * @param bool $with_counts
+     *
+     * @return array 2-dimensional: year, month
+     */
+    public function get_archive_dates($with_counts = true)
+    {
+        global $database;
+        
+        $find_params = $this->build_find_params();
+    
+        $counts_addition = $with_counts
+            ? ", count(id_post) as `count`"
+            : "";
+        
+        $where = parent::convert_where($find_params->where);
+        
+        $query = "
+            select
+                year(publishing_date) as `year`,
+                month(publishing_date) as `month`
+                $counts_addition
+            from {$this->table_name}
+            where $where
+            group by
+                year(publishing_date),
+                month(publishing_date)
+            order by
+                year(publishing_date) desc,
+                month(publishing_date) desc
+        ";
+        
+        $res = $database->query($query);
+        if( $database->num_rows($res) == 0 ) return array();
+        
+        $return = array();
+        while($row = $database->fetch_object($res))
+            $return[$row->year][$row->month] = $row->count;
+        
+        return $return;
+    }
 }

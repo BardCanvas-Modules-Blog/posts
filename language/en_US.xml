@@ -202,9 +202,15 @@
             <type>textarea</type>
         </specs>
     </settings_data>
-
+    
     <user_profile_tabs>
         <tab mode="posts" priority="100">Posts</tab>
     </user_profile_tabs>
-
+    
+    <widgets>
+        <left_sidebar_archives_tree>
+            <title>Archives</title>
+        </left_sidebar_archives_tree>
+    </widgets>
+    
 </language>

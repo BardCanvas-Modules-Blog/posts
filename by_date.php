@@ -59,7 +59,7 @@ elseif( strlen($evaling_date) == 7 ) # Month
     $end_timestamp = strtotime("{$start_date} + 1 month");
     $end_date      = date("Y-m-d 23:59:59", $end_timestamp - 86400);
 }
-else
+else # Year
 {
     if( ! is_numeric($evaling_date) ) throw_fake_404();
     if( $evaling_date > date("Y") ) throw_fake_404();
@@ -68,12 +68,13 @@ else
         throw_fake_404();
     
     $showing_date = $evaling_date;
-    $start_date    = "{$evaling_date}-01-01 00:00:00";
-    $end_date      = "{$evaling_date}-12-31 23:59:59";
+    $start_date   = "{$evaling_date}-01-01 00:00:00";
+    $end_date     = "{$evaling_date}-12-31 23:59:59";
 }
 
 $template->set("page_tag", "post_archive");
 $template->set("showing_archive", true);
+$template->set("raw_get_date", $_GET["date"]);
 $template->page_contents_include = "by_date.inc";
 $template->set_page_title(replace_escaped_vars(
     $current_module->language->pages->by_date->title, '{$date}', $template->get("showing_date")
