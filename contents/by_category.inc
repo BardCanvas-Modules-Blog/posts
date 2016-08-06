@@ -31,7 +31,15 @@ $template->set("pagination_url_prefix", $pagination_url_prefix);
     <div class='framed_content state_ko'>
         <span class='fa fa-warning'><?= $current_module->language->pages->by_category->no_records ?></span>
     </div>
-    <? return; ?>
 <? endif; ?>
 
+<div id="quick_post_form_container">
+    <div align="center" style="margin: 10px; color: maroon;">
+        This is the quick post form
+    </div>
+</div>
+
+<? if($posts_data->count == 0) return; ?>
+
+<? $template->set("show_quick_post_form", false); ?>
 <? include "{$template->abspath}/segments/post_index_renderer.inc"; ?>
