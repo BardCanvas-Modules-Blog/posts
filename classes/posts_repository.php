@@ -87,7 +87,7 @@ class posts_repository extends abstract_repository
         
         $obj->last_update = date("Y-m-d H:i:s");
         
-        return $database->exec("
+        $res =  $database->exec("
             insert into {$this->table_name}
             (
                 id_post          ,
@@ -157,6 +157,9 @@ class posts_repository extends abstract_repository
                 last_update       = '{$obj->last_update      }',
                 id_featured_image = '{$obj->id_featured_image}'
         ");
+        $this->last_query = $database->get_last_query();
+        
+        return $res;
     }
     
     /**
@@ -181,13 +184,16 @@ class posts_repository extends abstract_repository
         
         $order = microtime(true);
         $date  = date("Y-m-d H:i:s");
-        return $database->exec("
+        $res = $database->exec("
             insert into post_categories set
             id_post        = '$id_post',
             id_category    = '$id_category',
             date_attached  = '$date',
             order_attached = '$order'
         ");
+        $this->last_query = $database->get_last_query();
+        
+        return $res;
     }
     
     /**
@@ -202,6 +208,8 @@ class posts_repository extends abstract_repository
         global $database;
         
         $res = $database->query("select * from post_tags where id_post = '$id_post'");
+        $this->last_query = $database->get_last_query();
+        
         if( $database->num_rows($res) == 0 ) return array();
         
         $rows = array();
@@ -228,16 +236,20 @@ class posts_repository extends abstract_repository
         }
         
         if( ! empty($inserts) )
+        {
             $database->exec(
-                "insert into post_tags (id_post, tag, date_attached, order_attached) " .
-                "values " . implode(", ", $inserts)
+                "insert into post_tags (id_post, tag, date_attached, order_attached) values "
+                . implode(", ", $inserts)
             );
+            $this->last_query = $database->get_last_query();
+        }
         
         if( ! empty($actual_tags) )
         {
             $deletes = array();
             foreach($actual_tags as $tag => $object) $deletes[] = "'$tag'";
             $database->exec("delete from post_tags where tag in (" . implode(", ", $deletes) . ")");
+            $this->last_query = $database->get_last_query();
         }
     }
     
@@ -245,11 +257,14 @@ class posts_repository extends abstract_repository
     {
         global $database;
         
-        return $database->exec("
+        $res = $database->exec("
             delete from post_categories where
             id_post     = '$id_post' and
             id_category = '$id_category'
         ");
+        $this->last_query = $database->get_last_query();
+        
+        return $res;
     }
     
     /**
@@ -275,6 +290,7 @@ class posts_repository extends abstract_repository
             order by
                 order_attached
         ");
+        $this->last_query = $database->get_last_query();
         
         if( $database->num_rows($res) == 0 ) return array();
         
@@ -292,13 +308,17 @@ class posts_repository extends abstract_repository
         # TODO: Hide all attached media?
         
         $date = date("Y-m-d H:i:s");
-        return $database->exec("
+        
+        $res = $database->exec("
             update posts set
                 status      = 'trashed',
                 last_update = '$date'
             where
                 id_post = '$id_post'
         ");
+        $this->last_query = $database->get_last_query();
+        
+        return $res;
     }
     
     /**
@@ -505,12 +525,12 @@ class posts_repository extends abstract_repository
     
     /**
      * @param $find_params
-     * @param $extensions_hook
-     * @param $extensions_marker
+     * @param string $extensions_hook   optional
+     * @param string $extensions_marker optional
      *
      * @return posts_data
      */
-    private function get_posts_data($find_params, $extensions_hook, $extensions_marker)
+    protected function get_posts_data($find_params, $extensions_hook, $extensions_marker)
     {
         global $modules, $config;
         
@@ -524,7 +544,8 @@ class posts_repository extends abstract_repository
         $this->preload_authors($posts_data);
         
         $config->globals["posts_data"] = $posts_data;
-        $modules["posts"]->load_extensions($extensions_hook, $extensions_marker);
+        if( ! empty($extensions_hook) )
+            $modules["posts"]->load_extensions($extensions_hook, $extensions_marker);
         
         return $posts_data;
     }
@@ -548,23 +569,31 @@ class posts_repository extends abstract_repository
         }
     }
     
-    public function get_grouped_tag_counts($since = "")
+    public function get_grouped_tag_counts($since = "", $min_hits = 10)
     {
         global $database;
+        
+        $min_hits = empty($min_hits) ? 10 : $min_hits;
+        $having   = $min_hits == 1   ? "" : "having `count` >= '$min_hits'";
         
         if( empty($since) )
             $query = "
                 select tag, count(tag) as `count` from post_tags
-                group by tag order by `count` desc
+                group by tag
+                $having
+                order by `count` desc
             ";
         else
             $query = "
                 select tag, count(tag) as `count` from post_tags
                 where date_attached >= '{$since}'
-                group by tag order by `count` desc
+                group by tag
+                $having
+                order by `count` desc
             ";
         
         $res = $database->query($query);
+        $this->last_query = $database->get_last_query();
         if( $database->num_rows($res) == 0 ) return array();
         
         $return = array();
@@ -590,8 +619,7 @@ class posts_repository extends abstract_repository
             : "";
         
         $where = parent::convert_where($find_params->where);
-        
-        $query = "
+        $res = $database->query("
             select
                 year(publishing_date) as `year`,
                 month(publishing_date) as `month`
@@ -604,9 +632,8 @@ class posts_repository extends abstract_repository
             order by
                 year(publishing_date) desc,
                 month(publishing_date) desc
-        ";
-        
-        $res = $database->query($query);
+        ");
+        $this->last_query = $database->get_last_query();
         if( $database->num_rows($res) == 0 ) return array();
         
         $return = array();

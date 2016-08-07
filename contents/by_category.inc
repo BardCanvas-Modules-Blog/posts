@@ -41,5 +41,5 @@ $template->set("pagination_url_prefix", $pagination_url_prefix);
 
 <? if($posts_data->count == 0) return; ?>
 
-<? $template->set("show_quick_post_form", false); ?>
+<? $template->set("show_quick_post_form", true); ?>
 <? include "{$template->abspath}/segments/post_index_renderer.inc"; ?>
