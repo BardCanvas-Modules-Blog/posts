@@ -213,6 +213,7 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     ?>
                     <span class="framed_content inlined"><?= $current_module->language->status_labels->{$row->status} ?></span>
                     <?
+                    echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span> ";
                     foreach($repository->get_attached_categories($row->id_post) as $category)
                         echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
                     
