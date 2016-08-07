@@ -11,9 +11,6 @@
 <script type="text/javascript" src="<?= $config->full_root_path ?>/lib/jquery.exptextarea.js"></script>
 <script type="text/javascript">$(document).ready(function() { $('.expandible_textarea').expandingTextArea() });</script>
 
-<script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/init_post_composer~v<?=$config->scripts_version?>.js"></script>
-<script type="text/javascript"> $(document).ready(function() { tinymce.init(post_composer_tinymce_defaults); }); </script>
-
 <link rel="stylesheet" type="text/css" href="<?= $config->full_root_path ?>/posts/media/styles~v<?=$config->scripts_version?>.css">
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/posts/media/functions~v<?=$config->scripts_version?>.js"></script>
 
