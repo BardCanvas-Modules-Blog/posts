@@ -213,4 +213,19 @@
         </left_sidebar_archives_tree>
     </widgets>
     
+    <rss_feed_generator>
+        <all_posts>
+            <title>{$website_name} posts feed</title>
+            <description>Latest posts published by all authors of {$website_name}</description>
+        </all_posts>
+        <posts_by_author>
+            <title>{$website_name}/{$author}'s feed</title>
+            <description>Latest posts published by {$author} on {$website_name}</description>
+        </posts_by_author>
+        <posts_by_category>
+            <title>{$website_name}/{$category} category feed</title>
+            <description>Latest posts published in {$category} by all authors of {$website_name}</description>
+        </posts_by_category>
+    </rss_feed_generator>
+    
 </language>
