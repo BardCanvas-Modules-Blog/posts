@@ -362,6 +362,8 @@ class posts_repository extends abstract_repository
     }
     
     /**
+     * Returns find params for home EXCLUDING featured posts
+     * 
      * @return object {where:array, limit:int, offset:int, order:string}
      */
     protected function build_find_params_for_home()
@@ -370,38 +372,62 @@ class posts_repository extends abstract_repository
         
         $return = $this->build_find_params();
         
-        # Added to EXCLUDE featured posts
-        $return->where[]
-            = "id_post not in
-               (
-                   select post_tags.id_post from post_tags
-                   where post_tags.id_post = posts.id_post
-                   and post_tags.tag = '{$settings->get("modules:posts.featured_posts_tag")}'
-               )";
+        $ttl = $settings->get("modules:posts.featured_posts_ttl"); if( empty($ttl) ) $ttl = 0;
+        $now = date("Y-m-d H:i:s");
+        
+        if( $ttl > 0 )
+            $return->where[]
+                = "id_post not in
+                   (
+                       select post_tags.id_post from post_tags
+                       where post_tags.id_post = posts.id_post
+                       and post_tags.tag       = '{$settings->get("modules:posts.featured_posts_tag")}'
+                       and date_add(post_tags.date_attached, interval $ttl hour) > '$now' 
+                   )";
+        else
+            $return->where[]
+                = "id_post not in
+                   (
+                       select post_tags.id_post from post_tags
+                       where post_tags.id_post = posts.id_post
+                       and   post_tags.tag     = '{$settings->get("modules:posts.featured_posts_tag")}'
+                   )";
         
         return $return;
     }
     
     /**
+     * Returns find params for home INCLUDING ONLY featured posts
+     * 
      * @return object {where:array, limit:int, offset:int, order:string}
      */
     protected function build_find_params_for_featured_posts()
     {
         global $settings;
         
-        // TODO: Add expiration date to posts and implement it here
-    
         $return = $this->build_find_params();
-    
-        # Added to LIST ONLY featured posts
-        $return->where[]
-            = "id_post in
-               (
-                 select post_tags.id_post from post_tags
-                 where post_tags.id_post = posts.id_post
-                 and post_tags.tag = '{$settings->get("modules:posts.featured_posts_tag")}'
-               )";
-    
+        
+        $ttl = $settings->get("modules:posts.featured_posts_ttl"); if( empty($ttl) ) $ttl = 0;
+        $now = date("Y-m-d H:i:s");
+        
+        if( $ttl > 0 )
+            $return->where[]
+                = "id_post in
+                   (
+                     select post_tags.id_post from post_tags
+                     where post_tags.id_post = posts.id_post
+                     and   post_tags.tag     = '{$settings->get("modules:posts.featured_posts_tag")}'
+                     and   date_add(post_tags.date_attached, interval $ttl hour) > '$now'
+                   )";
+        else
+            $return->where[]
+                = "id_post in
+                   (
+                     select post_tags.id_post from post_tags
+                     where post_tags.id_post = posts.id_post
+                     and   post_tags.tag     = '{$settings->get("modules:posts.featured_posts_tag")}'
+                   )";
+        
         return $return;
     }
     

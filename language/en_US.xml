@@ -189,6 +189,18 @@
             ]]></description>
             <type>text</type>
         </specs>
+        <specs key="featured_posts_ttl">
+            <title>Featured posts Time To Live</title>
+            <description><![CDATA[
+                Exclude featured posts from the featured posts area specified amount of hours after the tag has been set on them.<br>
+                Set to zero to disable.
+            ]]></description>
+            <type>number</type>
+            <options>
+                <min>0</min>
+                <max>255</max>
+            </options>
+        </specs>
         <specs key="enforced_expiration_by_category">
             <title>Enforced post expiration by category</title>
             <description><![CDATA[
@@ -199,7 +211,7 @@
                 <span class="fa fa-info-circle"></span> Note: this setting will override any expiration manually set
                 by the post author.
             ]]></description>
-            <type>textarea</type>
+            <type>code</type>
         </specs>
     </settings_data>
     
