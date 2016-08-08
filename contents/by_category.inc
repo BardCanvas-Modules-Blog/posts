@@ -33,13 +33,4 @@ $template->set("pagination_url_prefix", $pagination_url_prefix);
     </div>
 <? endif; ?>
 
-<div id="quick_post_form_container">
-    <div align="center" style="margin: 10px; color: maroon;">
-        This is the quick post form
-    </div>
-</div>
-
-<? if($posts_data->count == 0) return; ?>
-
-<? $template->set("show_quick_post_form", true); ?>
 <? include "{$template->abspath}/segments/post_index_renderer.inc"; ?>
