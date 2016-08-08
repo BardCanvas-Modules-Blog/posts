@@ -28,9 +28,10 @@ $template->set_page_title($post->title);
 $template->set("is_single_post", true);
 $template->set("page_tag", "single_post");
 
-$template->set("current_post",          $post);
-$template->set("current_category_slug", $post->main_category_slug);
-$template->set("current_category_id",   $post->main_category);
+$template->set("current_post",           $post);
+$template->set("current_category_slug",  $post->main_category_slug);
+$template->set("current_category_title", $post->main_category_title);
+$template->set("current_category_id",    $post->main_category);
 
 # @hack: The definition below is a hack that shouldn't be repeated unless strictly neccesary :P
 $template->page_contents_include = "../../templates/{$template->name}/segments/single_post_renderer.inc";
