@@ -9,9 +9,17 @@
  * @var account           $account
  * @var settings          $settings
  * @var \SimpleXMLElement $language
+ * @var module            $current_module
+ *
+ * $_POST extras for quick post form:
+ * @param string $_POST["ok_with_url"] To return OK:post_url insetad of just OK
+ *                                     (Used on the quick post form)
+ * @param array $_FILES[attachments][image|video][]
  */
 
 use hng2_base\account;
+use hng2_base\module;
+use hng2_base\repository\media_repository;
 use hng2_base\settings;
 use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\post_record;
@@ -23,9 +31,14 @@ include "../../includes/bootstrap.inc";
 header("Content-Type: text/plain; charset=utf-8");
 if( ! $account->_exists ) die($language->errors->page_requires_login);
 
-if( empty($_POST["title"]) )         die($current_module->language->messages->missing->title);
-if( empty($_POST["content"]) )       die($current_module->language->messages->missing->content);
-if( empty($_POST["main_category"]) ) die($current_module->language->messages->missing->main_category);
+if( empty($_POST["title"]) )
+    die($current_module->language->messages->missing->title);
+
+if( empty($_POST["main_category"]) )
+    die($current_module->language->messages->missing->main_category);
+
+if( empty($_FILES["attachments"]) && empty($_POST["content"]) )
+    die($current_module->language->messages->missing->content);
 
 $repository = new posts_repository();
 
@@ -84,8 +97,66 @@ if( $post->status == "published" && $old_post->status != $post->status )
 }
 
 $tags = extract_hash_tags($post->title . " " . $post->content);
+
+if( ! empty($_FILES["attachments"]) )
+{
+    # Coming from quick post... contents may be empty and only images/media are coming...
+    $uploads = array();
+    
+    foreach($_FILES["attachments"] as $field => $types)
+        foreach($types as $type => $entries)
+            foreach($entries as $index => $value)
+                $uploads[$type][$index][$field] = $value;
+    
+    $media_repository = new media_repository();
+    
+    foreach($uploads as $type => $files)
+    {
+        /** @var  array $file [name, type, tmp_name, error, size] */
+        foreach($files as $index => $file)
+        {
+            $file_title = "{$account->display_name} - {$file["name"]}";
+            
+            if( $media_repository->get_record_count(array("title" => $file_title)) )
+                die( $file["name"] . "\n" . $modules["gallery"]->language->messages->item_exists );
+        }
+        
+        /** @var  array $file [name, type, tmp_name, error, size] */
+        foreach($files as $index => $file)
+        {
+            $file_title = "{$account->display_name} - {$file["name"]}";
+            
+            $item_data = array(
+                "title"          => $file_title,
+                "description"    => "{$post->title}\n\n{$post->excerpt}",
+                "main_category"  => $post->main_category,
+                "visibility"     => $post->visibility,
+                "status"         => "published",
+                "password"       => "",
+                "allow_comments" => "1",
+            );
+            $res = $media_repository->receive_and_save($item_data, $file, true);
+            
+            if( is_string($res) ) die($res);
+            
+            $item = $res;
+            
+            if( $type == "image" )
+                $post->content .= "\n<p><img src='{$item->get_item_url()}' 
+                    style='width: auto; height: 90vh;' {$item->id_media}'></p>\n";
+            else
+                $post->content .= "\n<p><img src='{$item->get_thumbnail_url()}' 
+                    style='width: auto; height: 90vh;' data-id-media='{$item->id_media}' 
+                    data-media-type='video' data-href='{$item->get_item_embeddable_url(true)}'></p>\n";
+        }
+    }
+}
+
 if( ! empty($tags) ) $repository->set_tags($tags, $post->id_post);
 
 $repository->save($post);
 
-echo "OK";
+if( $_POST["ok_with_url"] == "true" )
+    echo "OK:{$post->get_permalink()}";
+else
+    echo "OK";

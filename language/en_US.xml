@@ -99,9 +99,11 @@
         <fields>
             <title>
                 <placeholder>Enter a title for the post</placeholder>
+                <quick_form_placeholder>What's on your mind?</quick_form_placeholder>
             </title>
             <content>
-                <placeholder>Type or paste the contents of your post. Use the buttons below this editor to insert images/videos, tag users and add hashtags among other options.</placeholder>
+                <placeholder>Type or paste the contents of your post. Add hashtags by tiping a # and tag users by typing a @. Use the toolbar buttons to add/place emojis, images, videos among other items in your post.</placeholder>
+                <quick_form_placeholder>Type or paste the contents of your post. Add hashtags by tiping a # and tag users by typing a @. Use the buttons below to append images or videos automatically at the end of your contents.</quick_form_placeholder>
             </content>
             
             <controls_toggle>
@@ -134,6 +136,10 @@
                 <set>Set…</set>
                 <remove>Remove</remove>
             </featured_image>
+            <buttons>
+                <image>Add picture</image>
+                <video>Add video</video>
+            </buttons>
         </fields>
         
         <buttons>
