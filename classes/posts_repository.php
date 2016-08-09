@@ -8,33 +8,63 @@ use hng2_tools\record_browser;
 
 class posts_repository extends abstract_repository
 {
-    protected $row_class       = "hng2_modules\\posts\\post_record";
-    protected $table_name      = "posts";
-    protected $key_column_name = "id_post";
-    protected $additional_select_fields = array(
-        "( select concat(user_name, '\\t', display_name, '\\t', email, '\\t', level)
-           from account where account.id_account = posts.id_author )
-           as _author_data",
-        "( select concat(slug, '\\t', title)
-           from categories where categories.id_category = posts.main_category )
-           as _main_category_data",
-        "( select thumbnail
-           from media where media.id_media = posts.id_featured_image )
-           as featured_image_thumbnail",
+    protected $row_class                = "hng2_modules\\posts\\post_record";
+    protected $table_name               = "posts";
+    protected $key_column_name          = "id_post";
+    protected $additional_select_fields = array();
+    
+    public function __construct()
+    {
+        global $settings;
         
-        "( select group_concat(tag order by order_attached asc separator ',')
-           from post_tags where post_tags.id_post = posts.id_post )
-           as tags_list",
-        "( select group_concat(id_media order by order_attached asc separator ',')
-           from post_media where post_media.id_post = posts.id_post )
-           as media_list",
-        "( select group_concat(id_category order by order_attached asc separator ',')
-           from post_categories where post_categories.id_post = posts.id_post )
-           as categories_list",
-        "( select group_concat(id_account order by order_attached asc separator ',')
-           from post_mentions where post_mentions.id_post = posts.id_post )
-           as mentions_list",
-    );
+        $this->additional_select_fields[] = "
+        ( select concat(user_name, '\\t', display_name, '\\t', email, '\\t', level)
+           from account where account.id_account = posts.id_author
+           ) as _author_data";
+        $this->additional_select_fields[] = "
+        ( select concat(slug, '\\t', title)
+           from categories where categories.id_category = posts.main_category
+           ) as _main_category_data";
+        
+        if( $settings->get("modules:posts.automatic_featured_images") != "true" )
+        {
+            $this->additional_select_fields[] = "
+            ( select thumbnail
+               from media where media.id_media = posts.id_featured_image
+               ) as featured_image_thumbnail";
+        }
+        else
+        {
+            $this->additional_select_fields[] = "
+            if(
+              posts.id_featured_image <> '', 
+              ( select thumbnail from media where media.id_media = posts.id_featured_image ),
+              
+              ( select thumbnail from media
+                join post_media on post_media.id_media = media.id_media
+                where post_media.id_post = posts.id_post
+                order by order_attached asc limit 1 )
+                
+            ) as featured_image_thumbnail";
+        }
+        
+        $this->additional_select_fields[] = "
+        ( select group_concat(tag order by order_attached asc separator ',')
+           from post_tags where post_tags.id_post = posts.id_post
+           ) as tags_list";
+        $this->additional_select_fields[] = "
+        ( select group_concat(id_media order by order_attached asc separator ',')
+           from post_media where post_media.id_post = posts.id_post
+           ) as media_list";
+        $this->additional_select_fields[] = "
+        ( select group_concat(id_category order by order_attached asc separator ',')
+           from post_categories where post_categories.id_post = posts.id_post
+           ) as categories_list";
+        $this->additional_select_fields[] = "
+        ( select group_concat(id_account order by order_attached asc separator ',')
+           from post_mentions where post_mentions.id_post = posts.id_post
+           ) as mentions_list";
+    }
     
     /**
      * @param $id

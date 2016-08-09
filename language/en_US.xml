@@ -195,6 +195,15 @@
             ]]></description>
             <type>text</type>
         </specs>
+        <specs key="automatic_featured_images">
+            <title>Automatic featured images</title>
+            <description><![CDATA[
+                If a post has no featured image but at least one has been inserted from the media gallery,
+                the thumbnail of the first inserted image will be used as featured image for the post on all indexes.<br>
+                <span class="fa fa-info-circle"></span> Note: this setting may be affected by module extenders.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
         <specs key="default_featured_image">
             <title>Default featured posts thumbnail</title>
             <description><![CDATA[

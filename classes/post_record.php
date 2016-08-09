@@ -62,7 +62,7 @@ class post_record extends abstract_record
     
     protected function set_from_object($object_or_array)
     {
-        global $config;
+        global $config, $modules;
         
         parent::set_from_object($object_or_array);
         
@@ -95,6 +95,11 @@ class post_record extends abstract_record
         if( is_string($this->categories_list) ) $this->categories_list = explode(",", $this->categories_list);
         if( is_string($this->media_list) )      $this->media_list      = explode(",", $this->media_list);
         if( is_string($this->mentions_list) )   $this->mentions_list   = explode(",", $this->mentions_list);
+        
+        # Data overrides
+        $config->globals["current_post_record"] =& $this;
+        $modules["posts"]->load_extensions("post_record_class", "set_from_object");
+        unset( $config->globals["current_post_record"] );
     }
     
     public function set_new_id()
