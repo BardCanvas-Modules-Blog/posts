@@ -129,13 +129,13 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
             <?= $current_module->language->form->buttons->save_draft ?>
         </button>
         <button type="submit" data-save-type="save">
-            <span class="fa fa-check"></span>
+            <span class="fa fa-save"></span>
             <?= $language->save ?>
         </button>
         <button type="submit" data-save-type="publish"
                 onclick="$('#post_form').find('input[name=status]').val('published')">
-            <span class="fa fa-check"></span>
             <?= $current_module->language->form->buttons->publish ?>
+            <span class="fa fa-play"></span>
         </button>
     </div>
 </form>
