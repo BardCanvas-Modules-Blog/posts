@@ -22,7 +22,7 @@ use hng2_base\account;
 use hng2_base\module;
 use hng2_base\repository\account_record;
 use hng2_base\repository\accounts_repository;
-use hng2_base\repository\media_repository;
+use hng2_media\media_repository;
 use hng2_base\template;
 use hng2_modules\categories\categories_repository;
 use hng2_modules\categories\category_record;
