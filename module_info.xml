@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
-
-    <version>0.1 beta</version>
+    
+    <version>0.1 alpha</version>
     <group>BardCanvas</group>
     
     <working_flags>
@@ -34,7 +34,7 @@
         <pre_eof>global_messages.inc</pre_eof>
         <!--<post_rendering></post_rendering>-->
     </template_includes>
-
+    
     <extension_areas_info><![CDATA[
         Front pages: single post, after contents
         Front pages: indexes, after post excerpt
