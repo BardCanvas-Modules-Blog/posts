@@ -43,25 +43,25 @@ class posts_repository extends abstract_repository
               ( select thumbnail from media
                 join post_media on post_media.id_media = media.id_media
                 where post_media.id_post = posts.id_post
-                order by order_attached asc limit 1 )
+                order by date_attached asc, order_attached asc limit 1 )
                 
             ) as featured_image_thumbnail";
         }
         
         $this->additional_select_fields[] = "
-        ( select group_concat(tag order by order_attached asc separator ',')
+        ( select group_concat(tag order by date_attached asc, order_attached asc separator ',')
            from post_tags where post_tags.id_post = posts.id_post
            ) as tags_list";
         $this->additional_select_fields[] = "
-        ( select group_concat(id_media order by order_attached asc separator ',')
+        ( select group_concat(id_media order by date_attached asc, order_attached asc separator ',')
            from post_media where post_media.id_post = posts.id_post
            ) as media_list";
         $this->additional_select_fields[] = "
-        ( select group_concat(id_category order by order_attached asc separator ',')
+        ( select group_concat(id_category order by date_attached asc, order_attached asc separator ',')
            from post_categories where post_categories.id_post = posts.id_post
            ) as categories_list";
         $this->additional_select_fields[] = "
-        ( select group_concat(id_account order by order_attached asc separator ',')
+        ( select group_concat(id_account order by date_attached asc, order_attached asc separator ',')
            from post_mentions where post_mentions.id_post = posts.id_post
            ) as mentions_list";
     }
@@ -259,10 +259,12 @@ class posts_repository extends abstract_repository
         
         $date = date("Y-m-d H:i:s");
         $inserts = array();
+        $index   = 1;
         foreach($list as $tag)
         {
-            if( ! isset($actual_tags[$tag]) ) $inserts[] = "('$id_post', '$tag', '$date', '". microtime(true) . "')";
+            if( ! isset($actual_tags[$tag]) ) $inserts[] = "('$id_post', '$tag', '$date', '$index')";
             unset($actual_tags[$tag]);
+            $index++;
         }
         
         if( ! empty($inserts) )
@@ -278,7 +280,70 @@ class posts_repository extends abstract_repository
         {
             $deletes = array();
             foreach($actual_tags as $tag => $object) $deletes[] = "'$tag'";
-            $database->exec("delete from post_tags where tag in (" . implode(", ", $deletes) . ")");
+            $database->exec(
+                "delete from post_tags where id_post = '$id_post' and tag in (" . implode(", ", $deletes) . ")"
+            );
+            $this->last_query = $database->get_last_query();
+        }
+    }
+    
+    /**
+     * @param $id_post
+     *
+     * @return post_media_item[]
+     *
+     * @throws \Exception
+     */
+    public function get_media_items($id_post)
+    {
+        global $database;
+        
+        $res = $database->query("select * from post_media where id_post = '$id_post' order by date_attached, order_attached");
+        $this->last_query = $database->get_last_query();
+        
+        if( $database->num_rows($res) == 0 ) return array();
+        
+        $rows = array();
+        while($row = $database->fetch_object($res))
+            $rows[$row->id_media] = new post_media_item($row);
+        
+        return $rows;
+    }
+    
+    public function set_media_items(array $list, $id_post)
+    {
+        global $database;
+        
+        $actual_items = $this->get_media_items($id_post);
+        
+        if( empty($actual_items) && empty($list) ) return;
+        
+        $date    = date("Y-m-d H:i:s");
+        $inserts = array();
+        $index   = 1;
+        foreach($list as $id)
+        {
+            if( ! isset($actual_items[$id]) ) $inserts[] = "('$id_post', '$id', '$date', '$index')";
+            unset($actual_items[$id]);
+            $index++;
+        }
+        
+        if( ! empty($inserts) )
+        {
+            $database->exec(
+                "insert into post_media (id_post, id_media, date_attached, order_attached) values "
+                . implode(", ", $inserts)
+            );
+            $this->last_query = $database->get_last_query();
+        }
+        
+        if( ! empty($actual_items) )
+        {
+            $deletes = array();
+            foreach($actual_items as $id => $object) $deletes[] = "'$id'";
+            $database->exec(
+                "delete from post_media where id_post = '$id_post' and id_media in (" . implode(", ", $deletes) . ")"
+            );
             $this->last_query = $database->get_last_query();
         }
     }
@@ -318,7 +383,7 @@ class posts_repository extends abstract_repository
                 post_categories.id_post = '$id_post' and
                 categories.id_category  = post_categories.id_category
             order by
-                order_attached
+                post_categories.date_attached, post_categories.order_attached
         ");
         $this->last_query = $database->get_last_query();
         

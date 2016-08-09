@@ -96,6 +96,7 @@ if( $post->status == "published" && (empty($post->publishing_date) || $post->pub
     }
 }
 
+# This goes here since tags are shared with media items
 $tags = extract_hash_tags($post->title . " " . $post->content);
 
 if( ! empty($_FILES["attachments"]) )
@@ -128,7 +129,8 @@ if( ! empty($_FILES["attachments"]) )
             
             $item_data = array(
                 "title"          => $file_title,
-                "description"    => "{$post->title}\n\n{$post->excerpt}",
+                "description"    => "{$post->title}\n\n{$post->excerpt}" .
+                                    (empty($tags) ? "" : "\n\n#" . implode(" #", $tags)),
                 "main_category"  => $post->main_category,
                 "visibility"     => $post->visibility,
                 "status"         => "published",
@@ -142,17 +144,28 @@ if( ! empty($_FILES["attachments"]) )
             $item = $res;
             
             if( $type == "image" )
-                $post->content .= "\n<p><img src='{$item->get_item_url()}' 
-                    style='width: auto; height: 90vh;' {$item->id_media}'></p>\n";
+                $post->content .= "\n<p><img src='{$item->get_item_url()}'
+                    data-media-type='image' data-id-media='{$item->id_media}'></p>\n";
             else
                 $post->content .= "\n<p><img src='{$item->get_thumbnail_url()}' 
-                    style='width: auto; height: 90vh;' data-id-media='{$item->id_media}' 
-                    data-media-type='video' data-href='{$item->get_item_embeddable_url(true)}'></p>\n";
+                    data-media-type='video' data-id-media='{$item->id_media}' 
+                    data-href='{$item->get_item_embeddable_url(true)}'></p>\n";
         }
     }
 }
 
 if( ! empty($tags) ) $repository->set_tags($tags, $post->id_post);
+
+$media_items = array();
+if( function_exists("extract_media_items") )
+{
+    $images = extract_media_items("image", $post->content);
+    $videos = extract_media_items("video", $post->content);
+    $media_items = array_merge($images, $videos);
+    
+    if( count($media_items) )
+        $repository->set_media_items($media_items, $post->id_post);
+}
 
 $repository->save($post);
 
