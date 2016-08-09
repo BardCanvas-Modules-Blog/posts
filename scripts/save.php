@@ -58,7 +58,7 @@ if( empty($post->id_post) )
     $post->last_update       = date("Y-m-d H:i:s");
     
     if( $post->status == "published" )
-        $post->publishing_date   = date("Y-m-d H:i:s");
+        $post->publishing_date = date("Y-m-d H:i:s");
 }
 
 $excerpt_length = (int) $settings->get("modules:posts.excerpt_length");
@@ -75,7 +75,7 @@ if( $existing_slugs > 0 ) $post->slug .= "_" . $existing_slugs;
 #     $repository->unset_category($old_post->main_category, $post->id_post);
 # $repository->set_category($_POST["main_category"], $post->id_post);
 
-if( $post->status == "published" && $old_post->status != $post->status )
+if( $post->status == "published" && (empty($post->publishing_date) || $post->publishing_date == "0000-00-00 00:00:00") )
 {
     $post->publishing_date = date("Y-m-d H:i:s");
     
