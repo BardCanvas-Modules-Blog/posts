@@ -32,7 +32,7 @@ if( ! is_object($post) ) return "";
 # TODO: Add data extractors!!!
 $category_id = $post->main_category;
 $limit       = 10;
-$order       = "";
+$order       = "publishing_date asc";
 
 $repository = new posts_repository();
 $where      = array("main_category = '$category_id'" , "id_post <> '{$post->id_post}'");
@@ -48,9 +48,9 @@ ob_start(); ?>
     <ul class="simple_entries_listing">
         <? foreach( $posts as $post ): ?>
             <li>
+                <a class="author" href="<?= $config->full_root_path ?>/author/<?= $post->author_user_name ?>"><?= $post->get_processed_author_display_name() ?></a>:
                 <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title() ?></a>
                 <span class="date"><?= time_elapsed_string($post->publishing_date) ?></span>
-                <a class="author" href="<?= $config->full_root_path ?>/author/<?= $post->author_user_name ?>"><?= $post->get_processed_author_display_name() ?></a>
             </li>
         <? endforeach; ?>
     </ul>
