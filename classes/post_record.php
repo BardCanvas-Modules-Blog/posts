@@ -2,6 +2,7 @@
 namespace hng2_modules\posts;
 
 use hng2_base\account;
+use hng2_base\module;
 use hng2_repository\abstract_record;
 
 class post_record extends abstract_record
@@ -62,6 +63,7 @@ class post_record extends abstract_record
     
     protected function set_from_object($object_or_array)
     {
+        /** @var module[] $modules */
         global $config, $modules;
         
         parent::set_from_object($object_or_array);
@@ -164,8 +166,11 @@ class post_record extends abstract_record
      */
     public function get_processed_title()
     {
+        global $config;
+        
         $contents = $this->title;
         $contents = convert_emojis($contents);
+        $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
         
         # TODO: Add get_processed_title() extension point
         
@@ -177,8 +182,11 @@ class post_record extends abstract_record
      */
     public function get_processed_excerpt()
     {
+        global $config;
+        
         $contents = $this->excerpt;
         $contents = convert_emojis($contents);
+        $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
         
         # TODO: Add get_processed_excerpt() extension point
         
@@ -190,8 +198,11 @@ class post_record extends abstract_record
      */
     public function get_processed_author_display_name()
     {
+        global $config;
+        
         $contents = $this->author_display_name;
         $contents = convert_emojis($contents);
+        $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
         
         # TODO: Add get_processed_author_display_name() extension point
         
@@ -200,10 +211,13 @@ class post_record extends abstract_record
     
     public function get_processed_content()
     {
+        global $config;
+        
         $contents = $this->content;
         $contents = convert_emojis($contents);
         
         $contents = convert_media_tags($contents);
+        $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
         
         # TODO: Add get_processed_content() extension point
         
