@@ -131,6 +131,12 @@
             <allow_comments>
                 <caption>Allow people to leave comments?</caption>
             </allow_comments>
+            <pin_to_home>
+                <caption>Pin to top of the home page?</caption>
+            </pin_to_home>
+            <pin_to_main_category_index>
+                <caption>Pin to top of the main category index?</caption>
+            </pin_to_main_category_index>
             <featured_image>
                 <caption>Featured image:</caption>
                 <set>Set…</set>

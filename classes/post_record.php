@@ -21,6 +21,9 @@ class post_record extends abstract_record
     public $status            ; # enum('draft', 'published', 'reviewing', 'hidden', 'trashed') not null default 'draft',
     public $password          ; # varchar(32) not null default '',
     public $allow_comments    ; # tinyint unsigned not null default 1,
+
+    public $pin_to_home                ; # tinyint unsigned not null default 0,
+    public $pin_to_main_category_index ; # tinyint unsigned not null default 0,
     
     public $creation_date     ; # datetime,
     public $creation_ip       ; # varchar(15) not null default '',

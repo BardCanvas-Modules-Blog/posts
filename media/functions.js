@@ -104,7 +104,10 @@ function reset_post_form()
     $form.find('input[name="slug"]').data('modified', false);
     
     $form.find('.subfield select[name="visibility"] option:first').prop('selected', true);
+    
     toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="allow_comments"]'), true);
+    toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="pin_to_home"]'), false);
+    toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="pin_to_main_category_index"]'), false);
     
     var thumbnail = $form.find('.subfield.featured_image .thumbnail img').attr('data-empty-src');
     $form.find('.subfield.featured_image .thumbnail img').attr('src', thumbnail);
@@ -129,8 +132,14 @@ function fill_post_form($form, record)
     
     $form.find('.subfield select[name="visibility"] option[value="' + record.visibility + '"]').prop('selected', true);
     
-    var allow_comments = record.allow_comments == '1';
+    var allow_comments = parseInt(record.allow_comments) == 1;
     toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="allow_comments"]'), allow_comments);
+    
+    var pin_to_home = parseInt(record.pin_to_home) == 1;
+    toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="pin_to_home"]'), pin_to_home);
+    
+    var pin_to_main_category_index = parseInt(record.pin_to_main_category_index) == 1;
+    toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="pin_to_main_category_index"]'), pin_to_main_category_index);
     
     var thumbnail = record.featured_image_thumbnail == ''
         ? $form.find('.subfield.featured_image .thumbnail img').attr('data-empty-src')

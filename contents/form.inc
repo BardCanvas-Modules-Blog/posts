@@ -79,6 +79,28 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
                     <?= $language->no ?>
                     <span class='fa-pseudo-switch' data-input-name='allow_comments' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
                         <input type='hidden' name='allow_comments' value='1'>
+                        <span class='toggler toggle-on  fa fa-toggle-on'  style='display: none'></span>
+                        <span class='toggler toggle-off fa fa-toggle-off' style=''></span>
+                    </span>
+                    <?= $language->yes ?>
+                </div>
+                
+                <div class="caption"><?= $current_module->language->form->fields->pin_to_home->caption ?></div>
+                <div class="input">
+                    <?= $language->no ?>
+                    <span class='fa-pseudo-switch' data-input-name='pin_to_home' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
+                        <input type='hidden' name='pin_to_home' value='0'>
+                        <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
+                        <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
+                    </span>
+                    <?= $language->yes ?>
+                </div>
+                
+                <div class="caption"><?= $current_module->language->form->fields->pin_to_main_category_index->caption ?></div>
+                <div class="input">
+                    <?= $language->no ?>
+                    <span class='fa-pseudo-switch' data-input-name='pin_to_main_category_index' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
+                        <input type='hidden' name='pin_to_main_category_index' value='0'>
                         <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
                         <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
                     </span>

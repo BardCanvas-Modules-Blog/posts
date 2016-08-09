@@ -135,6 +135,9 @@ class posts_repository extends abstract_repository
                 password         ,
                 allow_comments   ,
                 
+                pin_to_home                ,
+                pin_to_main_category_index ,
+                
                 creation_date    ,
                 creation_ip      ,
                 creation_host    ,
@@ -160,6 +163,9 @@ class posts_repository extends abstract_repository
                 '{$obj->password         }',
                 '{$obj->allow_comments   }',
                 
+                '{$obj->pin_to_home               }',
+                '{$obj->pin_to_main_category_index}',
+                
                 '{$obj->creation_date    }',
                 '{$obj->creation_ip      }',
                 '{$obj->creation_host    }',
@@ -182,6 +188,9 @@ class posts_repository extends abstract_repository
                 status            = '{$obj->status           }',
                 password          = '{$obj->password         }',
                 allow_comments    = '{$obj->allow_comments   }',
+                
+                pin_to_home                = '{$obj->pin_to_home               }', 
+                pin_to_main_category_index = '{$obj->pin_to_main_category_index}',
                 
                 expiration_date   = '{$obj->expiration_date  }',
                 last_update       = '{$obj->last_update      }',
@@ -535,7 +544,6 @@ class posts_repository extends abstract_repository
     {
         $return = $this->build_find_params();
         
-        # Added to EXCLUDE featured posts
         $return->where[]
             = "( main_category = '{$id_category}' or id_post in
                  ( select id_post from post_categories
@@ -570,14 +578,18 @@ class posts_repository extends abstract_repository
     }
     
     /**
+     * @param bool $pinned_first
+     *
      * @return posts_data
      */
-    public function get_for_home()
+    public function get_for_home($pinned_first = false)
     {
         $find_params = $this->build_find_params_for_home();
+        if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
         $posts_data = $this->get_posts_data($find_params, "index_builders", "home");
         
-        $find_params                = $this->build_find_params_for_featured_posts();
+        $find_params = $this->build_find_params_for_featured_posts();
+        if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
         $posts_data->featured_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
         
         return $posts_data;
@@ -596,13 +608,16 @@ class posts_repository extends abstract_repository
     }
     
     /**
-     * @param $id_category
+     * @param      $id_category
+     * @param bool $pinned_first
      *
      * @return posts_data
      */
-    public function get_for_category($id_category)
+    public function get_for_category($id_category, $pinned_first = false)
     {
         $find_params = $this->build_find_params_for_category($id_category);
+    
+        if( $pinned_first ) $find_params->order = "pin_to_main_category_index desc, publishing_date desc";
         
         return $this->get_posts_data($find_params, "index_builders", "category_index");
     }

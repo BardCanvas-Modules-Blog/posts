@@ -35,6 +35,9 @@ $tables = array(
             password          varchar(32) not null default '',
             allow_comments    tinyint unsigned not null default 1,
             
+            pin_to_home                tinyint unsigned not null default 0,
+            pin_to_main_category_index tinyint unsigned not null default 0,
+            
             creation_date     datetime default null,
             creation_ip       varchar(15) not null default '',
             creation_host     varchar(255) not null default '',

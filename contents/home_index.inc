@@ -13,5 +13,5 @@
 use hng2_base\template;
 use hng2_modules\posts\posts_repository;
 
-$posts_data = $posts_repository->get_for_home();
+$posts_data = $posts_repository->get_for_home(true);
 include "{$template->abspath}/segments/post_index_home.inc";

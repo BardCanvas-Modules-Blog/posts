@@ -17,7 +17,7 @@ use hng2_modules\categories\category_record;
 use hng2_modules\posts\posts_repository;
 
 $posts_repository      = new posts_repository();
-$posts_data            = $posts_repository->get_for_category($category->id_category);
+$posts_data            = $posts_repository->get_for_category($category->id_category, true);
 $pagination_url_prefix = "$config->full_root_url/category/{$category->slug}/";
 $template->set("pagination_url_prefix", $pagination_url_prefix);
 ?>
