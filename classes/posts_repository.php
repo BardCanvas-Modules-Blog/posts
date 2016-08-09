@@ -1,8 +1,8 @@
 <?php
 namespace hng2_modules\posts;
 
-use hng2_base\repository\abstract_repository;
-use hng2_base\repository\accounts_repository;
+use hng2_repository\abstract_repository;
+use hng2_base\accounts_repository;
 use hng2_modules\categories\category_record;
 use hng2_tools\record_browser;
 

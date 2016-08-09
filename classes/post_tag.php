@@ -1,7 +1,7 @@
 <?php
 namespace hng2_modules\posts;
 
-use hng2_base\repository\abstract_record;
+use hng2_repository\abstract_record;
 
 class post_tag extends abstract_record
 {
