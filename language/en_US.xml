@@ -31,7 +31,7 @@
         <by_tag>
             <title>Posts tagged with #{$tag}</title>
             <no_records><![CDATA[
-                No posts have been found with this tag. Try looking into <a href="{$link}">media tags</a>!
+                No posts have been found with this tag. Try looking at <a href="{$link}">tagged media</a>!
             ]]></no_records>
         </by_tag>
     </pages>
