@@ -77,6 +77,28 @@ class posts_repository extends abstract_repository
     }
     
     /**
+     * @param array $ids
+     *
+     * @return post_record[]
+     */
+    public function get_multiple(array $ids)
+    {
+        if( count($ids) == 0 ) return array();
+        
+        $prepared_ids = array();
+        foreach($ids as $id) $prepared_ids[] = "'$id'";
+        $prepared_ids = implode(", ", $prepared_ids);
+        
+        $res = $this->find(array("id_post in ($prepared_ids)"), 0, 0, "");
+        if( count($res) == 0 ) return;
+        
+        $return = array();
+        foreach($res as $post) $return[$post->id_post] = $post;
+        
+        return $return;
+    }
+    
+    /**
      * @param array  $where
      * @param int    $limit
      * @param int    $offset

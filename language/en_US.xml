@@ -36,6 +36,12 @@
         </by_tag>
     </pages>
     
+    <extenders>
+        <search_by_tag_builder>
+            <collection_heading>Posts</collection_heading>
+        </search_by_tag_builder>
+    </extenders>
+    
     <record_nav>
         <search_placeholder>Search by id, parent, slug, title, excerpt or content</search_placeholder>
         <columns>
