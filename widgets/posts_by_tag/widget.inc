@@ -43,7 +43,7 @@ ob_start(); ?>
     <ul class="simple_entries_listing">
         <? foreach($posts as $post): ?>
             <li>
-                <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title() ?></a>
+                <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title(false) ?></a>
                 <span class="date"><?= time_elapsed_string($post->publishing_date) ?></span>
                 <a class="author" href="<?= $config->full_root_path ?>/author/<?= $post->author_user_name ?>"><?= $post->get_processed_author_display_name() ?></a>
             </li>

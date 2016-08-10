@@ -166,14 +166,18 @@ class post_record extends abstract_record
     
     /**
      * Returns the title with all output processing.
+     *
+     * @param bool $include_autolinks If false, <a> tags wont be added. Useful when the title is inserted into an <a> tag.
+     *
+     * @return string
      */
-    public function get_processed_title()
+    public function get_processed_title($include_autolinks = true)
     {
         global $config;
         
         $contents = $this->title;
         $contents = convert_emojis($contents);
-        $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
+        if( $include_autolinks ) $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
         
         # TODO: Add get_processed_title() extension point
         
