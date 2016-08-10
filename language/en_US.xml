@@ -28,6 +28,12 @@
             <title>Posts published by {$author}</title>
             <no_records>No posts have been published by this author.</no_records>
         </by_author>
+        <by_tag>
+            <title>Posts tagged with #{$tag}</title>
+            <no_records><![CDATA[
+                No posts have been found with this tag. Try looking into <a href="{$link}">media tags</a>!
+            ]]></no_records>
+        </by_tag>
     </pages>
     
     <record_nav>

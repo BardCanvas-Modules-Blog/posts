@@ -578,6 +578,21 @@ class posts_repository extends abstract_repository
     }
     
     /**
+     * @param $tag
+     *
+     * @return object {where:array, limit:int, offset:int, order:string}
+     */
+    protected function build_find_params_for_tag($tag)
+    {
+        $return = $this->build_find_params();
+        
+        $return->where[]
+            = "( id_post in (select id_post from post_tags where post_tags.tag = '{$tag}') )";
+        
+        return $return;
+    }
+    
+    /**
      * @param bool $pinned_first
      *
      * @return posts_data
@@ -633,6 +648,18 @@ class posts_repository extends abstract_repository
         $find_params = $this->build_find_params_for_date_archive($start_date, $end_date);
         
         return $this->get_posts_data($find_params, "index_builders", "date_archive");
+    }
+    
+    /**
+     * @param $tag
+     *
+     * @return posts_data
+     */
+    public function get_for_tag($tag)
+    {
+        $find_params = $this->build_find_params_for_tag($tag);
+        
+        return $this->get_posts_data($find_params, "index_builders", "tag_index");
     }
     
     /**
