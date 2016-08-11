@@ -17,6 +17,8 @@ class posts_repository extends abstract_repository
     {
         global $settings;
         
+        parent::__construct();
+        
         $this->additional_select_fields[] = "
         ( select concat(user_name, '\\t', display_name, '\\t', email, '\\t', level)
            from account where account.id_account = posts.id_author
