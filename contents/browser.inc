@@ -178,10 +178,14 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                             <span class="fa fa-external-link"></span>
                             <?= $language->view ?>
                         </a>
-                        <span class="action pseudo_link" onclick="edit_post('<?= $row->id_post ?>')">
-                            <span class="fa fa-pencil"></span>
-                            <?= $current_module->language->record_nav->actions->edit ?>
-                        </span>
+                        
+                        <? if($row->can_be_edited()): ?>
+                            <span class="action pseudo_link" onclick="edit_post('<?= $row->id_post ?>')">
+                                <span class="fa fa-pencil"></span>
+                                <?= $current_module->language->record_nav->actions->edit ?>
+                            </span>
+                        <? endif ?>
+                        
                         <span class="action pseudo_link" onclick="copy_post('<?= $row->id_post ?>')">
                             <span class="fa fa-copy"></span>
                             <?= $current_module->language->record_nav->actions->copy ?>
@@ -213,7 +217,23 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     ?>
                     <span class="framed_content inlined"><?= $current_module->language->status_labels->{$row->status} ?></span>
                     <?
-                    echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span> ";
+                    if( $row->pin_to_home )
+                        echo "
+                            <span class='framed_content inlined state_highlight'>
+                                <span class='fa fa-thumb-tack'></span>{$current_module->language->record_nav->pinned_to_home}
+                            </span>
+                        ";
+                    
+                    if( $row->pin_to_main_category_index )
+                        echo "
+                            <span class='framed_content inlined state_highlight'>
+                                <span class='fa fa-thumb-tack'></span><span class='category'><span 
+                                      class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span>
+                            </span>
+                        ";
+                    else
+                        echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span> ";
+                    
                     foreach($repository->get_attached_categories($row->id_post) as $category)
                         echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
                     

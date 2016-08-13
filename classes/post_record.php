@@ -2,6 +2,7 @@
 namespace hng2_modules\posts;
 
 use hng2_base\account;
+use hng2_base\config;
 use hng2_base\module;
 use hng2_repository\abstract_record;
 
@@ -245,5 +246,21 @@ class post_record extends abstract_record
         if( $fully_qualified ) return "{$config->full_root_url}/{$this->id_post}";
         
         return "{$config->full_root_path}/{$this->id_post}";
+    }
+    
+    public function can_be_edited()
+    {
+        global $settings, $account;
+        
+        if( ! $account->_exists ) return false;
+        if( $account->level >= config::MODERATOR_USER_LEVEL ) return true;
+        if( $this->publishing_date == "0000-00-00 00:00:00" ) return true;
+        
+        $time = (int) $settings->get("modules:posts.time_allowed_for_editing_after_publishing");
+        if( empty($time) ) return false;
+        
+        $boundary = strtotime("{$this->publishing_date} + $time minutes");
+        if( time() < $boundary ) return true;
+        else                     return false;
     }
 }

@@ -43,11 +43,19 @@ if( empty($_FILES["attachments"]) && empty($_POST["content"]) )
 $repository = new posts_repository();
 
 $old_post = empty($_POST["id_post"]) ? null : $repository->get($_POST["id_post"]);
-
-$post       = new post_record();
+$post     = empty($_POST["id_post"]) ? new post_record() : $repository->get($_POST["id_post"]);
 $post->set_from_post();
 
-if( empty($post->id_post) )
+if( ! empty($post->id_post) )
+{
+    $time = (int) $settings->get("modules:posts.time_allowed_for_editing_after_publishing");
+    if( ! $post->can_be_edited() )
+    {
+        if(empty($time)) die(unindent($current_module->language->messages->post_cannot_be_edited->without_timing));
+        else             die(unindent($current_module->language->messages->post_cannot_be_edited->with_timing));
+    }
+}
+else
 {
     $post->set_new_id();
     $post->id_author         = $account->id_account;

@@ -95,6 +95,7 @@
             <expires>Expires in</expires>
             <expired>Expired</expired>
         </extras>
+        <pinned_to_home>Home</pinned_to_home>
     </record_nav>
     
     <status_labels>
@@ -179,6 +180,21 @@
             <invalid_type_for_image>Please select an image.</invalid_type_for_image>
             <invalid_type_for_video>Please select a video file.</invalid_type_for_video>
         </gallery_embeds>
+        <post_cannot_be_edited>
+            <with_timing><![CDATA[
+                Sorry, but you can't change the post for any of the next reasons:
+                • You're not a registered user
+                • The time you have to edit has been expired
+                • You're not the author
+                • You don't have the privileges to do it
+            ]]></with_timing>
+            <without_timing><![CDATA[
+                Sorry, but you can't change the post for any of the next reasons:
+                • You're not a registered user
+                • You're not the author
+                • You don't have the privileges to do it
+            ]]></without_timing>
+        </post_cannot_be_edited>
     </messages>
     
     <settings_data>
@@ -252,6 +268,14 @@
                 by the post author.
             ]]></description>
             <type>code</type>
+        </specs>
+        <specs key="time_allowed_for_editing_after_publishing">
+            <title>Time allowed for editing after publishing</title>
+            <description><![CDATA[
+                Amount of minutes a user has to edit a post once published.<br>
+                Set to <code>0</code> to disable post editing non mods/admins.
+            ]]></description>
+            <type>number</type>
         </specs>
     </settings_data>
     
