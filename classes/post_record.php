@@ -2,6 +2,7 @@
 namespace hng2_modules\posts;
 
 use hng2_base\account;
+use hng2_base\accounts_repository;
 use hng2_base\config;
 use hng2_base\module;
 use hng2_repository\abstract_record;
@@ -145,12 +146,9 @@ class post_record extends abstract_record
     /**
      * @param null|account $prefetched_author_record
      */
-    public function set_author($prefetched_author_record = null)
+    public function set_author($prefetched_author_record)
     {
-        if( ! is_null($prefetched_author_record) )
-            $this->_author_account = $prefetched_author_record;
-        else
-            $this->_author_account = new account($this->id_author);
+        $this->_author_account = $prefetched_author_record;
     }
     
     /**
@@ -161,8 +159,9 @@ class post_record extends abstract_record
         // TODO: Implement accounts repository for caching
         
         if( is_object($this->_author_account) ) return $this->_author_account;
-        
-        return new account($this->id_author);
+    
+        $repository = new accounts_repository();
+        return $repository->get($this->id_author);
     }
     
     /**
