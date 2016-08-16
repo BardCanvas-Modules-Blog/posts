@@ -92,7 +92,7 @@ class posts_repository extends abstract_repository
         $prepared_ids = implode(", ", $prepared_ids);
         
         $res = $this->find(array("id_post in ($prepared_ids)"), 0, 0, "");
-        if( count($res) == 0 ) return;
+        if( count($res) == 0 ) return array();
         
         $return = array();
         foreach($res as $post) $return[$post->id_post] = $post;
