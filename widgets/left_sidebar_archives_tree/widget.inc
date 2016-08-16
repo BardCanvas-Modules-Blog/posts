@@ -22,15 +22,26 @@ use hng2_base\module;
 use hng2_base\template;
 use hng2_modules\posts\posts_repository;
 
-global $config, $language, $account;
+global $config, $language, $account, $mem_cache, $settings;
 
 $items = array();
 
 /** @var \SimpleXMLElement $_lang */
 $_lang = $this_module->language->widgets->left_sidebar_archives_tree;
 
-$repository = new posts_repository();
-$res = $repository->get_archive_dates();
+$ttl = $settings->get("modules:posts.archives_tree_widget_cache_ttl"); if( $ttl == "" ) $ttl = 3;
+$ttl = $ttl * 60 * 60;
+$res = null;
+
+$cache_key = "archives_tree_widget";
+if($ttl > 0) $res = $mem_cache->get($cache_key);
+
+if( is_null($res) )
+{
+    $repository = new posts_repository();
+    $res = $repository->get_archive_dates();
+    if($ttl > 0) $mem_cache->set($cache_key, $res, 0, $ttl);
+}
 
 if( empty($res) ) return "";
 

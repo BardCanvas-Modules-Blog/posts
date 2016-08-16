@@ -277,6 +277,16 @@
             ]]></description>
             <type>number</type>
         </specs>
+        <specs key="archives_tree_widget_cache_ttl">
+            <title>Archives tree widget cache TTL</title>
+            <description><![CDATA[
+                Amount of hours the archives tree widget should be cached.<br>
+                Defaults to <code>3</code> hours. Set to <code>0</code> to disable.
+                Recommended value: depends on the amount of posts being published and their timing.
+                For constantly updated sites, 3-6 hours should suffice. For less updated sites, 24 hours or more.
+            ]]></description>
+            <type>number</type>
+        </specs>
     </settings_data>
     
     <user_profile_tabs>
