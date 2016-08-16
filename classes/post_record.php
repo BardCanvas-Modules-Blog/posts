@@ -2,6 +2,7 @@
 namespace hng2_modules\posts;
 
 use hng2_base\account;
+use hng2_base\account_record;
 use hng2_base\accounts_repository;
 use hng2_base\config;
 use hng2_base\module;
@@ -144,7 +145,7 @@ class post_record extends abstract_record
     }
     
     /**
-     * @param null|account $prefetched_author_record
+     * @param null|account|account_record $prefetched_author_record
      */
     public function set_author($prefetched_author_record)
     {
