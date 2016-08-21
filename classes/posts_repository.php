@@ -473,8 +473,6 @@ class posts_repository extends abstract_repository
             $where[] = "(expiration_date = '0000-00-00 00:00:00' or expiration_date > '$today' )";
         }
         
-        // TODO: Complement where[] with additional filters (per user level, etc.)
-        
         $order  = "publishing_date desc";
         $limit  = $settings->get("modules:posts.items_per_page", 30);
         $offset = (int) $_GET["offset"];
@@ -828,5 +826,15 @@ class posts_repository extends abstract_repository
             $return[$row->year][$row->month] = $row->count;
         
         return $return;
+    }
+    
+    public function change_status($id_post, $new_status)
+    {
+        global $database;
+        
+        $res = $database->exec("update {$this->table_name} set status = '$new_status' where  id_post = '$id_post'");
+        $this->last_query = $database->get_last_query();
+        
+        return $res;
     }
 }

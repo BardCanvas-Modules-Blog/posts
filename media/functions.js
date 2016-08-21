@@ -44,7 +44,7 @@ function edit_post(id_post)
         $form.find('.post_buttons button[data-save-type="save_draft"]').hide();
         $form.find('.post_buttons button[data-save-type="save"]').show();
         
-        if( record.status == 'draft' )
+        if( record.status == 'draft' || (record.status != 'published' && $_CURRENT_USER_IS_MOD) )
             $form.find('.post_buttons button[data-save-type="publish"]').show();
         else
             $form.find('.post_buttons button[data-save-type="publish"]').hide();

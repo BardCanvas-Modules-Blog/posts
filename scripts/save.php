@@ -57,6 +57,7 @@ if( ! empty($post->id_post) )
 }
 else
 {
+    $config->globals["posts:submitted_post_is_new"] = true;
     $post->set_new_id();
     $post->id_author         = $account->id_account;
     $post->creation_date     = date("Y-m-d H:i:s");
@@ -79,10 +80,13 @@ if( empty($post->slug) ) $post->slug = sanitize_file_name($post->title);
 $existing_slugs = $repository->get_record_count(array("slug like '{$post->slug}%'"));
 if( $existing_slugs > 0 ) $post->slug .= "_" . $existing_slugs;
 
+$current_module->load_extensions("save_post", "after_record_forging");
+
 # if( $post->main_category != $old_post->main_category )
 #     $repository->unset_category($old_post->main_category, $post->id_post);
 # $repository->set_category($_POST["main_category"], $post->id_post);
 
+# Enforced expiration date by category
 if( $post->status == "published" && (empty($post->publishing_date) || $post->publishing_date == "0000-00-00 00:00:00") )
 {
     $post->publishing_date = date("Y-m-d H:i:s");
@@ -162,20 +166,18 @@ if( ! empty($_FILES["attachments"]) )
     }
 }
 
-if( ! empty($tags) ) $repository->set_tags($tags, $post->id_post);
-
 $media_items = array();
 if( function_exists("extract_media_items") )
 {
     $images = extract_media_items("image", $post->content);
     $videos = extract_media_items("video", $post->content);
     $media_items = array_merge($images, $videos);
-    
-    if( count($media_items) )
-        $repository->set_media_items($media_items, $post->id_post);
 }
 
+if( ! empty($tags) ) $repository->set_tags($tags, $post->id_post);
+if( count($media_items) ) $repository->set_media_items($media_items, $post->id_post);
 $repository->save($post);
+$current_module->load_extensions("save_post", "after_saving");
 
 if( $_POST["ok_with_url"] == "true" )
     echo "OK:{$post->get_permalink()}";

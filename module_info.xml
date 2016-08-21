@@ -43,6 +43,7 @@
         Index Builders / Category index
         Index Builders / Tag index
         Post Record Class / Set from object
+        Posts saving / After record forging
     ]]></extension_areas_info>
     
     <extends_to>
