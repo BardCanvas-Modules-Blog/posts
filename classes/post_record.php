@@ -110,6 +110,13 @@ class post_record extends abstract_record
         unset( $config->globals["current_post_record"] );
     }
     
+    public function set_from_post()
+    {
+        parent::set_from_post();
+        
+        if( empty($this->visibility) ) $this->visibility = "public";
+    }
+    
     public function set_new_id()
     {
         $this->id_post = uniqid();
