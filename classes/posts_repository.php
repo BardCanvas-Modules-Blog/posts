@@ -837,4 +837,34 @@ class posts_repository extends abstract_repository
         
         return $res;
     }
+    
+    public function add_tag($id_post, $tag, $date, $order)
+    {
+        global $database;
+        
+        $res = $database->exec("
+            insert ignore into post_tags set
+            id_post        = '$id_post',
+            tag            = '$tag',
+            date_attached  = '$date',
+            order_attached = '$order'
+        ");
+        $this->last_query = $database->get_last_query();
+        
+        return $res;
+    }
+    
+    public function delete_tag($id_post, $tag)
+    {
+        global $database;
+        
+        $res = $database->exec("
+            delete from post_tags where
+            id_post = '$id_post' and
+            tag     = '$tag'
+        ");
+        $this->last_query = $database->get_last_query();
+        
+        return $res;
+    }
 }
