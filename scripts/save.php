@@ -46,6 +46,8 @@ $old_post = empty($_POST["id_post"]) ? null : $repository->get($_POST["id_post"]
 $post     = empty($_POST["id_post"]) ? new post_record() : $repository->get($_POST["id_post"]);
 $post->set_from_post();
 
+$current_module->load_extensions("save_post", "initial_validations");
+
 if( ! empty($post->id_post) )
 {
     $time = (int) $settings->get("modules:posts.time_allowed_for_editing_after_publishing");

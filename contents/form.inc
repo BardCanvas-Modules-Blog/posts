@@ -43,6 +43,8 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
         </select>
     </div>
     
+    <? $modules["posts"]->load_extensions("editor_form", "below_main_category_selector"); ?>
+    
     <div class="field tinymce_container" data-field="content">
         <textarea name="content" id="post_content_editor" class="tinymce_full"
                   placeholder="<?= $current_module->language->form->fields->content->placeholder ?>"></textarea>

@@ -9,6 +9,7 @@
  * @var config     $config
  * @var posts_data $posts_data
  * @var template   $template
+ * @var module[]   $modules
  * @var module     $this_module posts
  */
 
@@ -38,7 +39,7 @@ use hng2_modules\posts\posts_data;
     
     <div class="rest" style="display: none;">
         <? if( $template->get("current_category_id") ): ?>
-        
+            
             <input type="hidden" name="main_category" value="<?= $template->get("current_category_id") ?>">
             
         <? else:
@@ -64,6 +65,8 @@ use hng2_modules\posts\posts_data;
                 </select>
             </div>
         <? endif; ?>
+        
+        <? $modules["posts"]->load_extensions("quick_post_form", "below_main_category_selector"); ?>
         
         <div class="field tinymce_container" data-field="content">
             <textarea name="content" id="post_content_editor" class="tinymce"

@@ -1,4 +1,13 @@
 
+var fill_post_form_extensions;
+var reset_post_form_extensions;
+
+if( typeof fill_post_form_extensions == 'undefined' )
+    fill_post_form_extensions = {};
+
+if( typeof reset_post_form_extensions == 'undefined' )
+    reset_post_form_extensions = {};
+
 function prepare_post_addition()
 {
     var $workarea = $('#form_workarea');
@@ -113,6 +122,10 @@ function reset_post_form()
     $form.find('.subfield.featured_image .thumbnail img').attr('src', thumbnail);
     $form.find('input[name="id_featured_image"]').val('');
     
+    for(var fi in reset_post_form_extensions)
+        if( typeof reset_post_form_extensions[fi] == 'function' )
+            reset_post_form_extensions[fi]($form);
+    
     $form.find('.field[data-field="controls"]').hide();
 }
 
@@ -149,6 +162,10 @@ function fill_post_form($form, record)
     
     var editor = tinymce.get('post_content_editor');
     editor.setContent(record.content, {format : 'raw'});
+    
+    for(var fi in fill_post_form_extensions)
+        if( typeof fill_post_form_extensions[fi] == 'function' )
+            fill_post_form_extensions[fi]($form, record);
     
     $form.find('.field[data-field="controls"]').show();
 }

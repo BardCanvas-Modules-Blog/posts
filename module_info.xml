@@ -36,14 +36,17 @@
     </template_includes>
     
     <extension_areas_info><![CDATA[
-        Front pages: single post, after contents
-        Front pages: indexes, after post excerpt
-        Index Builders / Home
-        Index Builders / Author index
-        Index Builders / Category index
-        Index Builders / Tag index
-        Post Record Class / Set from object
-        Posts saving / After record forging
+        Front pages: single post, content additions / after contents.
+        Front pages: indexes, after post excerpt.
+        Index Builders / Home.
+        Index Builders / Author index.
+        Index Builders / Category index.
+        Index Builders / Tag index.
+        Post Record Class / Set from object.
+        Posts saving / After record forging.
+        Editor form / Below main category selector.
+        Quick post form / Below main category selector.
+        JSON record exporter / before output.
     ]]></extension_areas_info>
     
     <extends_to>

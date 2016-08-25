@@ -27,4 +27,10 @@ if( is_null($record) ) die(json_encode(array("message" => $current_module->langu
 
 if( empty($record->id_featured_image) ) $record->featured_image_thumbnail = "";
 
-echo json_encode(array("message" => "OK", "data" => $record->get_as_associative_array()));
+$data = $record->get_as_associative_array();
+$config->globals["posts:json_record_exporter/working_item"] = $data;
+$current_module->load_extensions("json_exporter", "before_output");
+$data = $config->globals["posts:json_record_exporter/working_item"];
+unset( $config->globals["posts:json_record_exporter/working_item"] );
+
+echo json_encode(array("message" => "OK", "data" => $data));
