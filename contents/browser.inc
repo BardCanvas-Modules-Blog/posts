@@ -5,6 +5,8 @@
  * @package    BardCanvas
  * @subpackage posts
  * @author     Alejandro Caballero - lava.caballero@gmail.com
+ * 
+ * @var \SimpleXMLElement $language
  */
 
 use hng2_base\config;
@@ -84,6 +86,10 @@ switch( $order )
 }
 
 $records = $repository->find($where, $limit, $offset, $sqlorder);
+
+$current_module->load_extensions("browser", "after_collection_built");
+$per_column_function_hooks = array();
+$current_module->load_extensions("browser", "per_record_function_hooks");
 #endregion
 ?>
 
@@ -196,7 +202,7 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                         </span>
                     </div>
                 </td>
-                <td>
+                <td data-column="details">
                     <?= empty($row->excerpt) ? "―" : convert_emojis(make_excerpt_of($row->excerpt, 100)) ?><br>
                     <?
                     if( $row->expiration_date != "0000-00-00 00:00:00")
@@ -240,6 +246,10 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                     if( ! empty($row->tags_list) )
                         foreach($row->tags_list as $tag)
                             echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}</span> ";
+                    
+                    if( ! empty($per_column_function_hooks["details"]) )
+                        foreach($per_column_function_hooks["details"] as $function)
+                            if( function_exists($function) ) $function($row);
                     ?>
                 </td>
                 <td>
