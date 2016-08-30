@@ -241,7 +241,8 @@
         <specs key="default_featured_image">
             <title>Default featured posts thumbnail</title>
             <description><![CDATA[
-                Show this image on featured posts when they have no featured image selected.
+                Show this image on featured posts when they have no featured image selected.<br><br>
+                <span class="fa fa-warning"></span> Important: this setting may be overriden by other modules!
             ]]></description>
             <type>@gallery:specs_renderer/image_selector</type>
         </specs>
