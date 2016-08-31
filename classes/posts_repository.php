@@ -41,12 +41,10 @@ class posts_repository extends abstract_repository
             if(
               posts.id_featured_image <> '', 
               ( select thumbnail from media where media.id_media = posts.id_featured_image ),
-              
               ( select thumbnail from media
                 join post_media on post_media.id_media = media.id_media
                 where post_media.id_post = posts.id_post
                 order by date_attached asc, order_attached asc limit 1 )
-                
             ) as featured_image_thumbnail";
         }
         
