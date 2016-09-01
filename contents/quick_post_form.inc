@@ -20,6 +20,7 @@ use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\posts_data;
 ?>
 
+<script type="text/javascript" src="<?=$config->full_root_path?>/lib/jquery.exptextarea.js"></script>
 <script type="text/javascript" src="<?= $template->url ?>/media/quick_post_functions~v<?=$config->scripts_version?>.js"></script>
 
 <div id="post_form_target" style="display: none;"></div>
