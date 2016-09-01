@@ -26,6 +26,7 @@ if( is_null($post) ) return;
 
 $template->set_page_title($post->title);
 $template->set("is_single_post", true);
+$template->set("is_post", true);
 $template->set("page_tag", "single_post");
 
 $template->set("current_post",           $post);
