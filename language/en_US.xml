@@ -288,6 +288,18 @@
             ]]></description>
             <type>number</type>
         </specs>
+        <specs key="slider_categories">
+            <title>Post categories for the home slider</title>
+            <description><![CDATA[
+                Specify the category slugs and the amount of hours that you want to show up on the home slider,
+                one per line, using the next syntax: <code>category_slug - time_to_live</code>.
+                Set time_to_live to 0 to show them always (not recommended).<br>
+                <span class="fa fa-info-circle"></span>
+                Hint: you may opt to enforce an expiration time for the posts here if you want to take
+                them out of the site AND the slider when the time runs out.
+            ]]></description>
+            <type>code</type>
+        </specs>
     </settings_data>
     
     <user_profile_tabs>

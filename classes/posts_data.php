@@ -29,4 +29,9 @@ class posts_data
      * @var post_record[]
      */
     public $featured_posts = array();
+    
+    /**
+     * @var post_record[]
+     */
+    public $slider_posts = array();
 }

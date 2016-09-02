@@ -58,6 +58,7 @@ class post_record extends abstract_record
     public $main_category_title;
     
     public $featured_image_thumbnail;
+    public $featured_image_path;
     
     # Taken with a group_concat from other tables:
     public $tags_list       = array(); # from post_tags
@@ -99,6 +100,9 @@ class post_record extends abstract_record
         if( ! empty($this->featured_image_thumbnail) )
             $this->featured_image_thumbnail = "{$config->full_root_path}/mediaserver/{$this->featured_image_thumbnail}";
         
+        if( ! empty($this->featured_image_path) )
+            $this->featured_image_path = "{$config->full_root_path}/mediaserver/{$this->featured_image_path}";
+        
         if( is_string($this->tags_list) )       $this->tags_list       = explode(",", $this->tags_list);
         if( is_string($this->categories_list) ) $this->categories_list = explode(",", $this->categories_list);
         if( is_string($this->media_list) )      $this->media_list      = explode(",", $this->media_list);
@@ -139,6 +143,7 @@ class post_record extends abstract_record
             $return["main_category_title"],
             
             $return["featured_image_thumbnail"],
+            $return["featured_image_path"],
             
             $return["tags_list"],
             $return["categories_list"],

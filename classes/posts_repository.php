@@ -40,6 +40,15 @@ class posts_repository extends abstract_repository
             $this->additional_select_fields[] = "
             if(
               posts.id_featured_image <> '', 
+              ( select path from media where media.id_media = posts.id_featured_image ),
+              ( select path from media
+                join post_media on post_media.id_media = media.id_media
+                where post_media.id_post = posts.id_post
+                order by date_attached asc, order_attached asc limit 1 )
+            ) as featured_image_path";
+            $this->additional_select_fields[] = "
+            if(
+              posts.id_featured_image <> '', 
               ( select thumbnail from media where media.id_media = posts.id_featured_image ),
               ( select thumbnail from media
                 join post_media on post_media.id_media = media.id_media
@@ -555,6 +564,57 @@ class posts_repository extends abstract_repository
         return $return;
     }
     
+    
+    /**
+     * Returns find params for home INCLUDING ONLY posts in slider categories
+     * 
+     * @return object {where:array, limit:int, offset:int, order:string}
+     */
+    protected function build_find_params_for_posts_slider()
+    {
+        global $settings;
+        
+        $return = $this->build_find_params();
+        
+        $slider_categories = trim($settings->get("modules:posts.slider_categories"));
+        
+        if( empty($slider_categories) )
+        {
+            $return->where[] = "id_post = '_NONE_'";
+            
+            return $return;
+        }
+        
+        $or = array();
+        $lines = explode("\n", $slider_categories);
+        foreach($lines as $line)
+        {
+            if( substr($line, 0, 1) == "#" ) continue;
+            
+            list($slug, $ttl) = explode(" - ", $line);
+            $slug = trim($slug);
+            $ttl  = trim($ttl); if( empty($ttl) ) $ttl = 0;
+            $now  = date("Y-m-d H:i:s");
+            
+            if( $ttl == 0 )
+            {
+                $or[] = "main_category in (select id_category from categories where categories.slug = '$slug')";
+            }
+            else
+            {
+                $boundary = date("Y-m-d H:i:s", strtotime("now - $ttl hours"));
+                $or[] = "(
+                           main_category in (select id_category from categories where categories.slug = '$slug')
+                           and posts.publishing_date >= '$boundary'
+                    )";
+            }
+        }
+        
+        $return->where[] = "\n# Slider posts start\n(\n" . implode("\nOR\n", $or) . "\n# Slider posts end\n)";
+        
+        return $return;
+    }
+    
     /**
      * @param $id_category
      *
@@ -619,6 +679,8 @@ class posts_repository extends abstract_repository
      */
     public function get_for_home($pinned_first = false)
     {
+        global $settings;
+        
         $find_params = $this->build_find_params_for_home();
         if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
         $posts_data = $this->get_posts_data($find_params, "index_builders", "home");
@@ -626,6 +688,14 @@ class posts_repository extends abstract_repository
         $find_params = $this->build_find_params_for_featured_posts();
         if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
         $posts_data->featured_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+        
+        $posts_data->slider_posts = array();
+        if( $settings->get("modules:posts.slider_categories") != "" )
+        {
+            $find_params = $this->build_find_params_for_posts_slider();
+            if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
+            $posts_data->slider_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+        }
         
         return $posts_data;
     }
