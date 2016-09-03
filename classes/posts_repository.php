@@ -693,7 +693,8 @@ class posts_repository extends abstract_repository
         if( $settings->get("modules:posts.slider_categories") != "" )
         {
             $find_params = $this->build_find_params_for_posts_slider();
-            if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
+            if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date asc";
+            else                $find_params->order = "publishing_date asc";
             $posts_data->slider_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
         }
         
