@@ -198,17 +198,24 @@ class post_record extends abstract_record
     }
     
     /**
-     * Returns the excerpt with all output processing. 
+     * Returns the excerpt with all output processing.
+     *
+     * @param bool $strip_block_tags Strips block-level tags, i.e. <div>, <blockquote>, etc.
+     * @return string
      */
-    public function get_processed_excerpt()
+    public function get_processed_excerpt($strip_block_tags = false)
     {
-        global $config;
+        global $config, $modules;
         
         $contents = $this->excerpt;
         $contents = convert_emojis($contents);
         $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
         
-        # TODO: Add get_processed_excerpt() extension point
+        $config->globals["processing_contents"] = $contents;
+        $modules["posts"]->load_extensions("post_record_class", "get_processed_excerpt");
+        $contents = $config->globals["processing_contents"];
+        
+        if( $strip_block_tags ) $contents = strip_tags($contents, "<a><b><i><span><strong><em>");
         
         return $contents;
     }
@@ -231,7 +238,7 @@ class post_record extends abstract_record
     
     public function get_processed_content()
     {
-        global $config;
+        global $config, $modules;
         
         $contents = $this->content;
         $contents = convert_emojis($contents);
@@ -239,7 +246,9 @@ class post_record extends abstract_record
         $contents = convert_media_tags($contents);
         $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
         
-        # TODO: Add get_processed_content() extension point
+        $config->globals["processing_contents"] = $contents;
+        $modules["posts"]->load_extensions("post_record_class", "get_processed_content");
+        $contents = $config->globals["processing_contents"];
         
         return $contents;
     }

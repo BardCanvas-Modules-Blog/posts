@@ -42,7 +42,7 @@
         Index Builders / Author index.
         Index Builders / Category index.
         Index Builders / Tag index.
-        Post Record Class / Set from object.
+        Post Record Class / Set from object, Get Processed Excerpt, Get Processed Content.
         Posts saving / After record forging.
         Editor form / Below main category selector.
         Quick post form / Below main category selector.
