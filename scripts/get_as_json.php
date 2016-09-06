@@ -25,6 +25,9 @@ $record = $repository->get($_GET["id_post"]);
 
 if( is_null($record) ) die(json_encode(array("message" => $current_module->language->messages->post_not_found )));
 
+if( $account->level < $config::MODERATOR_USER_LEVEL && $account->id_account != $record->id_author )
+    die(json_encode(array("message" => $current_module->language->messages->post_not_yours )));
+
 if( empty($record->id_featured_image) ) $record->featured_image_thumbnail = "";
 
 $data = $record->get_as_associative_array();

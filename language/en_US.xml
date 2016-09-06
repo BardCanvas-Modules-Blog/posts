@@ -176,6 +176,7 @@
             <main_category>Please specify a main category for the post</main_category>
         </missing>
         <post_not_found>The post wasn't found in the database</post_not_found>
+        <post_not_yours>You can't get this post this way.</post_not_yours>
         <gallery_embeds>
             <invalid_type_for_image>Please select an image.</invalid_type_for_image>
             <invalid_type_for_video>Please select a video file.</invalid_type_for_video>
