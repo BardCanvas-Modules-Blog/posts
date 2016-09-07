@@ -248,9 +248,10 @@
             <type>@gallery:specs_renderer/image_selector</type>
         </specs>
         <specs key="featured_posts_ttl">
-            <title>Featured posts Time To Live</title>
+            <title>Featured posts Time To Live (expiration time)</title>
             <description><![CDATA[
-                Exclude featured posts from the featured posts area specified amount of hours after the tag has been set on them.<br>
+                Set an expiration in hours for featured posts. They will remain there until the time goes out,
+                then they'll just appear in normal indexes.<br>
                 Set to zero to disable this feature.
             ]]></description>
             <type>number</type>
