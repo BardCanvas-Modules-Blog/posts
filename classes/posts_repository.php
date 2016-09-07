@@ -594,7 +594,6 @@ class posts_repository extends abstract_repository
             list($slug, $ttl) = explode(" - ", $line);
             $slug = trim($slug);
             $ttl  = trim($ttl); if( empty($ttl) ) $ttl = 0;
-            $now  = date("Y-m-d H:i:s");
             
             if( $ttl == 0 )
             {
@@ -825,7 +824,7 @@ class posts_repository extends abstract_repository
     
     public function get_grouped_tag_counts($since = "", $min_hits = 10)
     {
-        global $database;
+        global $database, $settings;
         
         $min_hits = empty($min_hits) ? 10 : $min_hits;
         $having   = $min_hits == 1   ? "" : "having `count` >= '$min_hits'";
@@ -854,6 +853,12 @@ class posts_repository extends abstract_repository
         while( $row = $database->fetch_object($res) )
             $return[$row->tag] = $row->count;
         
+        if( $settings->get("modules:posts.show_featured_posts_tag_everywhere") == "true" ) return $return;
+        
+        $excluded = $settings->get("modules:posts.featured_posts_tag");
+        if( empty($excluded) ) return $return;
+        
+        unset($return[$excluded]);
         return $return;
     }
     

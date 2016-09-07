@@ -18,6 +18,7 @@
  */
 
 use hng2_base\account;
+use hng2_base\config;
 use hng2_base\module;
 use hng2_media\media_repository;
 use hng2_base\settings;
@@ -110,6 +111,18 @@ if( $post->status == "published" && (empty($post->publishing_date) || $post->pub
 
 # This goes here since tags are shared with media items
 $tags = extract_hash_tags($post->title . " " . $post->content);
+$featured_posts_tag = $settings->get("modules:posts.featured_posts_tag");
+if(
+    $account->level < config::MODERATOR_USER_LEVEL
+    && $settings->get("modules:posts.show_featured_posts_tag_everywhere") != "true"
+    && ! empty($featured_posts_tag)
+    && in_array($featured_posts_tag, $tags)
+) {
+    unset($tags[array_search($featured_posts_tag, $tags)]);
+    $post->title   = str_replace("#$featured_posts_tag", $featured_posts_tag, $post->title);
+    $post->content = str_replace("#$featured_posts_tag", $featured_posts_tag, $post->content);
+    $post->excerpt = str_replace("#$featured_posts_tag", $featured_posts_tag, $post->excerpt);
+}
 
 if( ! empty($_FILES["attachments"]) )
 {

@@ -230,6 +230,16 @@
             ]]></description>
             <type>text</type>
         </specs>
+        <specs key="show_featured_posts_tag_everywhere">
+            <title>Show featured posts tag everywhere?</title>
+            <description><![CDATA[
+                By default, the tag defined for featured posts will be hidden from public view.
+                <b>You should leave this as <code>No</code></b> to prevent everyone (but mods/admins) from using it.
+                When set to <code>Yes</code>, the tag will be available in all views, and users may end up cluttering
+                your featured posts area.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
         <specs key="automatic_featured_images">
             <title>Automatic featured images</title>
             <description><![CDATA[
