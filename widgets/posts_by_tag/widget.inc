@@ -22,19 +22,32 @@ use hng2_base\module;
 use hng2_base\template;
 use hng2_modules\posts\posts_repository;
 
-global $config, $language;
+global $config, $language, $mem_cache;
 
 # TODO: Add data extractors!!!
 $tag   = "polemicas";
 $limit = 10;
 $order = "";
 
-$repository = new posts_repository();
-$where      = array("id_post in (select id_post from post_tags where tag = '$tag')");
-$posts      = $repository->lookup($where, $limit, 0, $order);
+$posts = $mem_cache->get($data_key);
+if( is_array($posts) && empty($posts) ) return "";
+if( $posts == "none" ) return "";
 
-if( empty($posts ) ) return "";
+if( empty($posts) )
+{
+    $repository = new posts_repository();
+    $where      = array("id_post in (select id_post from post_tags where tag = '$tag')");
+    $posts      = $repository->lookup($where, $limit, 0, $order);
+}
 
+if( empty($posts ) )
+{
+    $mem_cache->set($data_key, "none", 0, 60*5);
+    
+    return "";
+}
+
+$mem_cache->set($data_key, $posts);
 ob_start(); ?>
 
 <!-- posts/posts_by_tag  -->

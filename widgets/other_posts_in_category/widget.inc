@@ -23,7 +23,7 @@ use hng2_base\template;
 use hng2_modules\posts\post_record;
 use hng2_modules\posts\posts_repository;
 
-global $config, $language;
+global $config, $language, $mem_cache;
 
 /** @var post_record $post */
 $post = $template->get("current_post");
@@ -34,12 +34,25 @@ $category_id = $post->main_category;
 $limit       = 10;
 $order       = "publishing_date asc";
 
-$repository = new posts_repository();
-$where      = array("main_category = '$category_id'" , "id_post <> '{$post->id_post}'");
-$posts      = $repository->lookup($where, $limit, 0, $order);
+$posts = $mem_cache->get($data_key);
+if( is_array($posts) && empty($posts) ) return "";
+if( $posts == "none" ) return "";
 
-if( empty($posts ) ) return "";
+if( empty($posts) )
+{
+    $repository = new posts_repository();
+    $where      = array("main_category = '$category_id'", "id_post <> '{$post->id_post}'");
+    $posts      = $repository->lookup($where, $limit, 0, $order);
+}
 
+if( empty($posts ) )
+{
+    $mem_cache->set($data_key, "none", 0, 60*5);
+    
+    return "";
+}
+
+$mem_cache->set($data_key, $posts);
 ob_start(); ?>
 
 <!-- posts/other_posts_in_category  -->
