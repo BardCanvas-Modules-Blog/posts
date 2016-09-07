@@ -67,9 +67,6 @@ else
     $post->creation_host     = gethostbyaddr($post->creation_ip);
     $post->creation_location = forge_geoip_location($post->creation_ip);
     $post->last_update       = date("Y-m-d H:i:s");
-    
-    if( $post->status == "published" )
-        $post->publishing_date = date("Y-m-d H:i:s");
 }
 
 $excerpt_length = (int) $settings->get("modules:posts.excerpt_length");
@@ -89,6 +86,7 @@ $current_module->load_extensions("save_post", "after_record_forging");
 # $repository->set_category($_POST["main_category"], $post->id_post);
 
 # Enforced expiration date by category
+$set_expiration_date = "";
 if( $post->status == "published" && (empty($post->publishing_date) || $post->publishing_date == "0000-00-00 00:00:00") )
 {
     $post->publishing_date = date("Y-m-d H:i:s");
@@ -104,7 +102,7 @@ if( $post->status == "published" && (empty($post->publishing_date) || $post->pub
             $id = $categories_repository->get_id_by_slug($slug);
             if( $post->main_category != $id ) continue;
             
-            $post->expiration_date = date("Y-m-d H:i:s", strtotime($post->publishing_date) + ($hours * 3600));
+            $set_expiration_date = date("Y-m-d H:i:s", strtotime($post->publishing_date) + ($hours * 3600));
             break;
         }
     }
@@ -179,6 +177,7 @@ if( function_exists("extract_media_items") )
 if( ! empty($tags) ) $repository->set_tags($tags, $post->id_post);
 if( count($media_items) ) $repository->set_media_items($media_items, $post->id_post);
 $repository->save($post);
+if( $set_expiration_date ) $repository->set_expiration_date($post->id_post, $set_expiration_date);
 $current_module->load_extensions("save_post", "after_saving");
 
 if( $_POST["ok_with_url"] == "true" )

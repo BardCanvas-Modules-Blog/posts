@@ -223,7 +223,7 @@ class posts_repository extends abstract_repository
                 pin_to_home                = '{$obj->pin_to_home               }', 
                 pin_to_main_category_index = '{$obj->pin_to_main_category_index}',
                 
-                expiration_date   = '{$obj->expiration_date  }',
+            #   expiration_date   = '{$obj->expiration_date  }',
                 last_update       = '{$obj->last_update      }',
                 id_featured_image = '{$obj->id_featured_image}'
         ");
@@ -902,6 +902,18 @@ class posts_repository extends abstract_repository
         global $database;
         
         $res = $database->exec("update {$this->table_name} set status = '$new_status' where  id_post = '$id_post'");
+        $this->last_query = $database->get_last_query();
+        
+        return $res;
+    }
+    
+    public function set_expiration_date($id_post, $expiration_date)
+    {
+        global $database;
+        
+        $res = $database->exec(
+            "update {$this->table_name} set expiration_date = '$expiration_date' where  id_post = '$id_post'"
+        );
         $this->last_query = $database->get_last_query();
         
         return $res;
