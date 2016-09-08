@@ -13,6 +13,8 @@
  * @var module     $this_module posts
  */
 
+global $mem_cache;
+
 use hng2_base\config;
 use hng2_base\module;
 use hng2_base\template;
@@ -48,12 +50,24 @@ use hng2_modules\posts\posts_data;
             <? else:
                 $categories_repository = new categories_repository();
                 $default_category      = $categories_repository->get("0000000000000");
-            
-                $tree_filter = array(
-                    "id_category <> '0000000000000'",
-                    # "( visibility = 'public' or visibility = 'users' or (visibility  = 'level_based' and '{$account->level}' >= min_level) )"
-                );
-                $categories = $categories_repository->get_as_tree_for_select($tree_filter, "", true);
+                
+                $mem_key     = "quick_post_categories/level:{$account->level}~v{$config->scripts_version}";
+                $res         = $mem_cache->get($mem_key);
+                if( is_array($res) )
+                {
+                    $categories = $res;
+                }
+                elseif( $res == "none" )
+                {
+                    $categories = array();
+                }
+                else
+                {
+                    $tree_filter = array("id_category <> '0000000000000'");
+                    $categories = $categories_repository->get_as_tree_for_select($tree_filter, "", true);
+                    if( empty($categories) ) $mem_cache->set($mem_key, "none", 0, 60*60);
+                    else                     $mem_cache->set($mem_key, $categories, 0, 60*60);
+                }
                 $categories_count = count($categories);
                 $style = $categories_count == 0 ? "display: none" : "";
                 ?>
