@@ -115,8 +115,8 @@
                 <quick_form_placeholder>What's on your mind?</quick_form_placeholder>
             </title>
             <content>
-                <placeholder>Type or paste the contents of your post. Add hashtags by tiping a # and tag users by typing a @. Use the toolbar buttons to add/place emojis, images, videos among other items in your post.</placeholder>
-                <quick_form_placeholder>Type or paste the contents of your post. Add hashtags by tiping a # and tag users by typing a @. Use the buttons below to append images or videos automatically at the end of your contents.</quick_form_placeholder>
+                <placeholder>Type or paste the contents of your post. You can add #hashtags as you normally do everywhere. Use the toolbar buttons to add/place emojis, images, videos among other items in your post.</placeholder>
+                <quick_form_placeholder>Type or paste the contents of your post. You can add #hashtags as you normally do everywhere. Use the buttons below to append images or videos automatically at the end of your contents.</quick_form_placeholder>
             </content>
             
             <controls_toggle>
@@ -203,8 +203,8 @@
         <specs key="items_per_page">
             <title>Posts to show per index page</title>
             <description><![CDATA[
-                Amount of posts to show per index (home, archives, etc.).
-                Defaults to 30.
+                Amount of posts to show per index (home, archives, etc.).<br>
+                Defaults to <code>30</code>.
             ]]></description>
             <type>number</type>
             <options>
@@ -215,7 +215,8 @@
         <specs key="excerpt_length">
             <title>Excerpt length</title>
             <description><![CDATA[
-                Amount of characters to trim the posts excerpt to.
+                Amount of characters to trim the post excerpts to.<br>
+                Defaults to <code>30</code>.
             ]]></description>
             <type>number</type>
             <options>
@@ -226,7 +227,7 @@
         <specs key="featured_posts_tag">
             <title>Featured posts tag</title>
             <description><![CDATA[
-                Set the tag (without the #) to use for the featured posts functionality in the home layout.
+                Set the tag (without the <code>#</code>) to use for the featured posts functionality in the home layout.
             ]]></description>
             <type>text</type>
         </specs>
@@ -245,14 +246,15 @@
             <description><![CDATA[
                 If a post has no featured image but at least one has been inserted from the media gallery,
                 the thumbnail of the first inserted image will be used as featured image for the post on all indexes.<br>
-                <span class="fa fa-info-circle"></span> Note: this setting may be affected by module extenders.
+                <span class="fa fa-info-circle"></span>
+                Note: this setting may be affected by module extenders.
             ]]></description>
             <type>boolean</type>
         </specs>
         <specs key="default_featured_image">
             <title>Default featured posts thumbnail</title>
             <description><![CDATA[
-                Show this image on featured posts when they have no featured image selected.<br><br>
+                Show this image on featured posts when they have no featured image selected.<br>
                 <span class="fa fa-warning"></span> Important: this setting may be overriden by other modules!
             ]]></description>
             <type>@gallery:specs_renderer/image_selector</type>
@@ -262,7 +264,7 @@
             <description><![CDATA[
                 Set an expiration in hours for featured posts. They will remain there until the time goes out,
                 then they'll just appear in normal indexes.<br>
-                Set to zero to disable this feature.
+                Set to <code>0</code> to disable keep them until the tag is manually taken out of them.
             ]]></description>
             <type>number</type>
             <options>
@@ -277,8 +279,8 @@
                 hours the posts that have one of the listed categories as main will be available.
                 Once the time expires, posts will no longer appear
                 on indexes and a "not found" error will be thrown when opened directly.<br>
-                <span class="fa fa-info-circle"></span> Note: this setting will override any expiration manually set
-                by the post author.
+                <span class="fa fa-info-circle"></span>
+                Note: this setting will override any expiration manually set by the post author.
             ]]></description>
             <type>code</type>
         </specs>
@@ -286,7 +288,7 @@
             <title>Time allowed for editing after publishing</title>
             <description><![CDATA[
                 Amount of minutes a user has to edit a post once published.<br>
-                Set to <code>0</code> to disable post editing non mods/admins.
+                Set to <code>0</code> to disable post editing for everyone excep mods/admins.
             ]]></description>
             <type>number</type>
         </specs>
@@ -294,7 +296,7 @@
             <title>Archives tree widget cache TTL</title>
             <description><![CDATA[
                 Amount of hours the archives tree widget should be cached.<br>
-                Defaults to <code>3</code> hours. Set to <code>0</code> to disable caching.
+                Defaults to <code>3</code> hours. Set to <code>0</code> to disable caching.<br>
                 Recommended value: depends on the amount of posts being published and their timing.
                 For constantly updated sites, 3-6 hours should suffice. For less updated sites, 24 hours or more.
             ]]></description>
@@ -304,8 +306,8 @@
             <title>Post categories for the home slider</title>
             <description><![CDATA[
                 Specify the category slugs and the amount of hours that you want to show up on the home slider,
-                one per line, using the next syntax: <code>category_slug - time_to_live</code>.
-                Set time_to_live to 0 to show them always (not recommended).<br>
+                one per line, using the next syntax: <code>category_slug - time_to_live</code>.<br>
+                Set <code>time_to_live</code> to <code>0</code> to show them always (not recommended).<br>
                 <span class="fa fa-info-circle"></span>
                 Hint: you may opt to enforce an expiration time for the posts here if you want to take
                 them out of the site AND the slider when the time runs out.

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+    
+    <display_name>Subsistema de blog</display_name>
+    <icon>fa-newspaper-o</icon>
+    <description>
+        Herramientas para publicación de artículos y construcción automática de índices.
+    </description>
+    
+    <index>
+        <title>Entradas</title>
+        <menu_caption>Entradas</menu_caption>
+        <buttons>
+            <add>Crear</add>
+        </buttons>
+    </index>
+    
+    <pages>
+        <by_category>
+            <title>Entradas en {$category}</title>
+            <no_records>No se han encontrado entradas para esta categoría.</no_records>
+        </by_category>
+        <by_date>
+            <title>Entradas publicadas en {$date}</title>
+            <no_records>No se han encontrado entradas para este periodo.</no_records>
+        </by_date>
+        <by_author>
+            <title>Entradas publicadas por {$author}</title>
+            <no_records>No se han encontrado entradas por este autor.</no_records>
+        </by_author>
+        <by_tag>
+            <title>Entradas etiquetadas con #{$tag}</title>
+            <no_records><![CDATA[
+                No se han encontrado entradas con esta etiqueta. 
+                Intenta buscar en <a href="{$link}">medios</a>.
+            ]]></no_records>
+        </by_tag>
+    </pages>
+    
+    <extenders>
+        <search_by_tag_builder>
+            <collection_heading>Entradas</collection_heading>
+        </search_by_tag_builder>
+    </extenders>
+    
+    <record_nav>
+        <search_placeholder>Buscar por id, pariente, slug, título, resumen o contenido</search_placeholder>
+        <columns>
+            <title>
+                <caption>Título</caption>
+                <layout xnowrap="true" />
+            </title>
+            <excerpt>
+                <caption><![CDATA[ Resumen y detalles ]]></caption>
+                <layout xnowrap="true" />
+            </excerpt>
+            <author>
+                <caption>Autor</caption>
+                <layout xnowrap="true" />
+            </author>
+            <publishing_date>
+                <caption>Publicada</caption>
+                <layout xnowrap="true" />
+                <order_asc  id="1">Ordenar por fecha de publicación ascendente</order_asc>
+                <order_desc id="2">Ordenar por fecha de publicación descendente</order_desc>
+            </publishing_date>
+            <last_update>
+                <caption>Actividad</caption>
+                <layout xnowrap="true" />
+                <order_asc  id="3">Ordenar por última actualización de actividad ascendente</order_asc>
+                <order_desc id="4">Ordenar por última actualización de actividad descendente</order_desc>
+            </last_update>
+            <views>
+                <caption><![CDATA[ <span class="fa fa-eye fa-fw"></span> ]]></caption>
+                <layout xnowrap="true" />
+                <order_asc  id="5">Ordenar por vistas ascendente</order_asc>
+                <order_desc id="6">Ordenar por vistas descendente</order_desc>
+            </views>
+            <comments>
+                <caption><![CDATA[ <span class="fa fa-comments-o fa-fw"></span> ]]></caption>
+                <layout xnowrap="true" />
+                <order_asc  id="7">Ordenar por cantidad de comentarios ascendente</order_asc>
+                <order_desc id="8">Ordenar por cantidad de comentarios descendente</order_desc>
+            </comments>
+            <featured_image>
+                <caption>Imagen destacada</caption>
+                <layout xnowrap="true" xalign="center"/>
+            </featured_image>
+        </columns>
+        <actions>
+            <edit>Editar</edit>
+            <trash>Borrar</trash>
+            <copy>Duplicar</copy>
+        </actions>
+        <extras>
+            <expires>Expira en</expires>
+            <expired>Expirada</expired>
+        </extras>
+        <pinned_to_home>Principal</pinned_to_home>
+    </record_nav>
+    
+    <status_labels>
+        <draft>Borrador</draft>
+        <published>Publicada</published>
+        <reviewing>En revisión</reviewing>
+        <hidden>Oculta</hidden>
+        <trashed>Eliminada</trashed>
+    </status_labels>
+    
+    <form>
+        <add_title>Nueva entrada</add_title>
+        <edit_title>Editando entrada</edit_title>
+        <fields>
+            <title>
+                <placeholder>Introduce un título para la entrada</placeholder>
+                <quick_form_placeholder>Click aquí para publicar entrada</quick_form_placeholder>
+            </title>
+            <content>
+                <placeholder>Teclea o copia/pega el contenido de tu entrada. Puedes añadir #etiquetas como haces en cualquier otro lado. Usa los botones en la barra de herramientas para añadir emojis, imágenes, videos y otros elementos.</placeholder>
+                <quick_form_placeholder>Teclea o copia/pega el contenido de tu entrada. Puedes añadir #etiquetas como haces en cualquier otro lado. Usa los botones en la barra de herramientas para añadir emojis, imágenes, videos y otros elementos o los botones debajo para anexarlos automáticamente al contenido.</quick_form_placeholder>
+            </content>
+            
+            <controls_toggle>
+                <caption>Opciones</caption>
+                <title>Ver/ocultar los controles avanzados de publicación</title>
+            </controls_toggle>
+            <excerpt>
+                <caption>Resumen:</caption>
+                <placeholder>Introduce un extracto de los contenidos. Déjalo vacío para generarlo automáticamente.</placeholder>
+            </excerpt>
+            <visibility>
+                <caption>Visibilidad:</caption>
+                <options>
+                    <option value="public">Público</option>
+                    <option value="private">Sólo yo</option>
+                    <option value="users">Sólo usuarios registrados (cualquier nivel)</option>
+                    <option value="friends">Sólo amigos</option>
+                    <option value="level_based">Usuarios de mi nivel en adelante</option>
+                </options>
+            </visibility>
+            <password>
+                <caption>Contraseña:</caption>
+                <placeholder>Introduce una contraseña para proteger esta entrada</placeholder>
+            </password>
+            <allow_comments>
+                <caption>Permitir recepción de comentarios?</caption>
+            </allow_comments>
+            <pin_to_home>
+                <caption>Anclar al inicio de la página principal?</caption>
+            </pin_to_home>
+            <pin_to_main_category_index>
+                <caption>Anclar al inicio del índice de la categoría principal?</caption>
+            </pin_to_main_category_index>
+            <featured_image>
+                <caption>Imagen destacada:</caption>
+                <set>Definir…</set>
+                <remove>Remover</remove>
+            </featured_image>
+            <buttons>
+                <image>Añadir foto</image>
+                <video>Añadir video</video>
+            </buttons>
+        </fields>
+        
+        <buttons>
+            <save_draft>Guardar borrador</save_draft>
+            <publish>Publicar</publish>
+        </buttons>
+    </form>
+    
+    <messages>
+        <missing>
+            <id>No has proporcionado un identificador de entrada</id>
+            <title>Favor de especificar un título para la entrada</title>
+            <slug>Favor de especificar un slug para la entrada</slug>
+            <content>No has especificado contenido para la entrada.</content>
+            <main_category>Favor de especificar una categoría principal para la entrada</main_category>
+        </missing>
+        <post_not_found>No se ha encontrado la entrada en la base de datos</post_not_found>
+        <post_not_yours>No puedes obtener la entrada de esta forma.</post_not_yours>
+        <gallery_embeds>
+            <invalid_type_for_image>Selecciona una imagen.</invalid_type_for_image>
+            <invalid_type_for_video>Selecciona un video.</invalid_type_for_video>
+        </gallery_embeds>
+        <post_cannot_be_edited>
+            <with_timing><![CDATA[
+                Disculpa, pero no puedes cambiar la entrada por uno
+                de los siguientes motivos:
+                • Ha expirado el tiempo de gracia para correciones
+                • No eres un usuario registrado
+                • No eres autor de la entrada
+                • Careces de los privilegios para cambiarla
+            ]]></with_timing>
+            <without_timing><![CDATA[
+                Disculpa, pero no puedes cambiar la entrada por uno
+                de los siguientes motivos:
+                • No eres un usuario registrado
+                • No eres autor de la entrada
+                • Careces de los privilegios para cambiarla
+            ]]></without_timing>
+        </post_cannot_be_edited>
+    </messages>
+    
+    <settings_data>
+        <title>Entradas (lectura/escritura)</title>
+        <specs key="items_per_page">
+            <title>Entradas a mostrar por página de índice</title>
+            <description><![CDATA[
+                Cantidad de entradas a mostrar en cada página de índice principal, de histórico, de categorías, etc.<br>
+                Valor por defecto: <code>30</code>.
+            ]]></description>
+            <type>number</type>
+            <options>
+                <min>1</min>
+                <max>255</max>
+            </options>
+        </specs>
+        <specs key="excerpt_length">
+            <title>Tamaño del resumen</title>
+            <description><![CDATA[
+                Cantidad máxima de caracteres para resúmenes (manuales o automáticos).<br>
+                Valor por defecto: <code>30</code>.
+            ]]></description>
+            <type>number</type>
+            <options>
+                <min>30</min>
+                <max>255</max>
+            </options>
+        </specs>
+        <specs key="featured_posts_tag">
+            <title>Etiqueta para entradas destacadas</title>
+            <description><![CDATA[
+                Especifica la etiqueta (sin el <code>#</code>) que deseas usar para llenar el área
+                de entradas destacadas en la página principal.
+            ]]></description>
+            <type>text</type>
+        </specs>
+        <specs key="show_featured_posts_tag_everywhere">
+            <title>Mostrar etiqueta destacada en todos lados?</title>
+            <description><![CDATA[
+                Por defecto, la etiqueta elegida para entradas destacadas se ocultará de la vista pública.
+                <b>Deberías dejar esta opción desactivada</b> para evitar que cualquiera (excepto mods/admins) la use.
+                Al activarla, la etiqueta estará disponible en todas las vistas y los usuarios podrían
+                terminar saturando el área de entradas destacadas.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="automatic_featured_images">
+            <title>Imágenes destacadas automáticas</title>
+            <description><![CDATA[
+                Si una entrada no tiene una imagen destacada definida pero al menos una se ha insertado de la galería,
+                la miniatura de la primera imagen insertada se usará como imagen destacada de la entrada en los índices.<br>
+                <span class="fa fa-info-circle"></span>
+                Nota: esta opción puede ser reescrita por otros módulos.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        <specs key="default_featured_image">
+            <title>Miniatura por defecto para entradas destacadas</title>
+            <description><![CDATA[
+                Si una entrada en el área de destacadas de la página principal no tiene una imagen
+                definida, usar la que se defina aquí.<br>
+                <span class="fa fa-info-circle"></span>
+                Nota: esta opción puede ser reescrita por otros módulos.
+            ]]></description>
+            <type>@gallery:specs_renderer/image_selector</type>
+        </specs>
+        <specs key="featured_posts_ttl">
+            <title>Tiempo de vida para entradas destacadas (expiración)</title>
+            <description><![CDATA[
+                Especifica la cantidad de horas para las entradas destacadas en la página principal.
+                Una vez transcurrido el periodo, se removerán de el área y aparecerán en los índices normales.<br>
+                Especifica <code>0</code> para mantenerlas hasta que se editen y se les remueva la etiqueta.
+            ]]></description>
+            <type>number</type>
+            <options>
+                <min>0</min>
+                <max>255</max>
+            </options>
+        </specs>
+        <specs key="enforced_expiration_by_category">
+            <title>Tiempo de vida forzado por categoría</title>
+            <description><![CDATA[
+                Especifica una lista de categorías y tiempos de vida para los posts que desees limitar en los índices
+                usando la siguiente sintaxis, una por línea:<br>
+                <code>slug_de_categoria - tiempo_de_vida</code><br>
+                Una vez cumplido el plazo, las entradas no serán eliminadas, pero no aparecerán en los
+                índices ni podrán verse de forma individual.<br>
+                <span class="fa fa-info-circle"></span>
+                Nota: esta opción reescribirá cualquier valor impuesto por el autor de la entrada.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        <specs key="time_allowed_for_editing_after_publishing">
+            <title>Tiempo de gracia para edición tras publicar</title>
+            <description><![CDATA[
+                Cantidad de minutos que un usuario tiene para poder editar entradas que han sido publicadas.<br>
+                Especificar <code>0</code> para impedir que los usuarios editen las entradas (excepto mods/admins).
+            ]]></description>
+            <type>number</type>
+        </specs>
+        <specs key="archives_tree_widget_cache_ttl">
+            <title>Tiempo de vida del cache para el widget histórico (expiración)</title>
+            <description><![CDATA[
+                Cantidad de horas que se conservará el árbol de histórico en este widget.<br>
+                Valor por defecto: <code>3</code> horas. Especificar <code>0</code> para deshabilitar este caché.<br>
+                Valor recomendado: depende de la cantidad de entradas que se publican y sus tiempos.
+                Para sitios actualizados constantemente, 3-6 horas deberían ser suficientes.
+                Para sitios con menos frecuencia de actualización, 24 horas o más.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        <specs key="slider_categories">
+            <title>Categorías para el carrusel</title>
+            <description><![CDATA[
+                Especifica las categorías y la cantidad de horas que las entradas permanecerán en el carrusel
+                de la página principal, usando la siguiente sintaxis, una por línea:<br>
+                <code>slug_de_categoria - horas</code><br>
+                Establece <code>horas</code> a cero para mostrar las entradas hasta que manualmente las edites y les
+                remuevas la categoría.<br>
+                <span class="fa fa-info-circle"></span>
+                Nota: puedes establecer la expiración forzada para las entradas en las mismas
+                categorías que especifiques aquí si quieres que, al expirar, desaparezcan tanto del
+                carrusel como del sitio.
+            ]]></description>
+            <type>code</type>
+        </specs>
+    </settings_data>
+    
+    <user_profile_tabs>
+        <tab mode="posts" priority="100">Entradas</tab>
+    </user_profile_tabs>
+    
+    <widgets>
+        <left_sidebar_archives_tree>
+            <title>Históricos</title>
+        </left_sidebar_archives_tree>
+    </widgets>
+    
+    <rss_feed_generator>
+        <all_posts>
+            <title>Feed de entradas de {$website_name}</title>
+            <description>Últimas entradas publicadas por todos los usuarios de {$website_name}</description>
+        </all_posts>
+        <posts_by_author>
+            <title>Feed de {$website_name}/{$author}</title>
+            <description>Últimas entradas publicadas por {$author} en {$website_name}</description>
+        </posts_by_author>
+        <posts_by_category>
+            <title>Feed de la categoría {$category} de {$website_name}</title>
+            <description>Entradas publicadas en la categoría {$category} por todos los usuarios de {$website_name}</description>
+        </posts_by_category>
+    </rss_feed_generator>
+    
+</language>
