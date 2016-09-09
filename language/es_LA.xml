@@ -265,6 +265,9 @@
                 Nota: esta opción puede ser reescrita por otros módulos.
             ]]></description>
             <type>@gallery:specs_renderer/image_selector</type>
+            <options>
+                <image_size>thumbnail</image_size>
+            </options>
         </specs>
         <specs key="featured_posts_ttl">
             <title>Tiempo de vida para entradas destacadas (expiración)</title>

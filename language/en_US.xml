@@ -259,6 +259,9 @@
                 <span class="fa fa-warning"></span> Important: this setting may be overriden by other modules!
             ]]></description>
             <type>@gallery:specs_renderer/image_selector</type>
+            <options>
+                <image_size>thumbnail</image_size>
+            </options>
         </specs>
         <specs key="featured_posts_ttl">
             <title>Featured posts Time To Live (expiration time)</title>
