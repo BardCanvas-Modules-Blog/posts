@@ -113,6 +113,7 @@
             <title>
                 <placeholder>Enter a title for the post</placeholder>
                 <quick_form_placeholder>What's on your mind?</quick_form_placeholder>
+                <quick_form_expanded_placeholder>Enter a title for your post</quick_form_expanded_placeholder>
             </title>
             <content>
                 <placeholder>Type or paste the contents of your post. You can add #hashtags as you normally do everywhere. Use the toolbar buttons to add/place emojis, images, videos among other items in your post.</placeholder>

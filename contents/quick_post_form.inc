@@ -22,8 +22,8 @@ use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\posts_data;
 ?>
 
-<script type="text/javascript" src="<?=$config->full_root_path?>/lib/jquery.exptextarea.js"></script>
-<script type="text/javascript" src="<?= $template->url ?>/media/quick_post_functions~v<?=$config->scripts_version?>.js"></script>
+<script type="text/javascript" src="<?= $config->full_root_path ?>/lib/jquery.exptextarea.js"></script>
+<script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/quick_post_functions~v<?=$config->scripts_version?>.js"></script>
 
 <div id="quick_post_form_container">
     
@@ -39,7 +39,8 @@ use hng2_modules\posts\posts_data;
         <div class="field" data-field="title">
             <textarea name="title" class="expandible_textarea no_fw_font"
                       placeholder="<?= $this_module->language->form->fields->title->quick_form_placeholder ?>"
-                      onfocus="$(this).closest('form').find('.rest').show();"></textarea>
+                      data-expanded-placeholder="<?= $this_module->language->form->fields->title->quick_form_expanded_placeholder ?>"
+                      onfocus="$(this).closest('form').find('.rest').show(); $(this).attr('placeholder', $(this).attr('data-expanded-placeholder'));"></textarea>
         </div>
         
         <div class="rest" style="display: none;">
