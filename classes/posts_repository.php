@@ -19,15 +19,19 @@ class posts_repository extends abstract_repository
         
         parent::__construct();
         
+        # Author slug/alias/email/level
         $this->additional_select_fields[] = "
         ( select concat(user_name, '\\t', display_name, '\\t', email, '\\t', level)
            from account where account.id_account = posts.id_author
            ) as _author_data";
+        
+        # Main category slug/title
         $this->additional_select_fields[] = "
         ( select concat(slug, '\\t', title)
            from categories where categories.id_category = posts.main_category
            ) as _main_category_data";
         
+        # Featured image thumbnail
         if( $settings->get("modules:posts.automatic_featured_images") != "true" )
         {
             $this->additional_select_fields[] = "
@@ -37,6 +41,7 @@ class posts_repository extends abstract_repository
         }
         else
         {
+            # Featured image path
             $this->additional_select_fields[] = "
             if(
               posts.id_featured_image <> '', 
@@ -46,6 +51,8 @@ class posts_repository extends abstract_repository
                 where post_media.id_post = posts.id_post
                 order by date_attached asc, order_attached asc limit 1 )
             ) as featured_image_path";
+    
+            # Featured image thumbnail
             $this->additional_select_fields[] = "
             if(
               posts.id_featured_image <> '', 
@@ -57,18 +64,25 @@ class posts_repository extends abstract_repository
             ) as featured_image_thumbnail";
         }
         
+        # Tags
         $this->additional_select_fields[] = "
         ( select group_concat(tag order by date_attached asc, order_attached asc separator ',')
            from post_tags where post_tags.id_post = posts.id_post
            ) as tags_list";
+        
+        # Attachments
         $this->additional_select_fields[] = "
         ( select group_concat(id_media order by date_attached asc, order_attached asc separator ',')
            from post_media where post_media.id_post = posts.id_post
            ) as media_list";
+        
+        # Additional categories
         $this->additional_select_fields[] = "
         ( select group_concat(id_category order by date_attached asc, order_attached asc separator ',')
            from post_categories where post_categories.id_post = posts.id_post
            ) as categories_list";
+        
+        # User mentions
         $this->additional_select_fields[] = "
         ( select group_concat(id_account order by date_attached asc, order_attached asc separator ',')
            from post_mentions where post_mentions.id_post = posts.id_post
@@ -459,6 +473,7 @@ class posts_repository extends abstract_repository
     /**
      * Posts index builder
      * Used to build indexes by user/category/tag/date
+     * "Standard way" outside of the posts browser!
      *
      * @param array $where Initial params
      *
@@ -468,7 +483,7 @@ class posts_repository extends abstract_repository
      */
     protected function build_find_params($where = array(), $skip_date_checks = false)
     {
-        global $settings;
+        global $settings, $account;
         
         $today = date("Y-m-d H:i:s");
         $where[] = "status = 'published'";
@@ -479,6 +494,25 @@ class posts_repository extends abstract_repository
             $where[] = "publishing_date <= '$today'";
             $where[] = "(expiration_date = '0000-00-00 00:00:00' or expiration_date > '$today' )";
         }
+        
+        if( ! $account->_exists )
+            $where[] = "visibility = 'public'";
+        else
+            $where[] = "(
+                            visibility = 'public' or visibility = 'users' or 
+                            (
+                                visibility = 'level_based' and
+                                '{$account->level}' >= (select level from account where account.id_account = posts.id_author)
+                            ) 
+                        )";
+        
+        $where[] = "(
+            posts.main_category in (
+                select id_category from categories where
+                visibility = 'public' or visibility = 'users' or
+                (visibility = 'level_based' and '{$account->level}' >= min_level)
+            )
+        )";
         
         $order  = "publishing_date desc";
         $limit  = $settings->get("modules:posts.items_per_page", 30);

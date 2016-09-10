@@ -93,7 +93,7 @@ class post_record extends abstract_record
     
             $this->main_category_slug  = $parts[0];
             $this->main_category_title = $parts[1];
-    
+            
             unset($this->_main_category_data);
         }
         
