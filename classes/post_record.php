@@ -56,6 +56,8 @@ class post_record extends abstract_record
     
     public $main_category_slug;
     public $main_category_title;
+    public $main_category_visibility;
+    public $main_category_min_level;
     
     public $featured_image_thumbnail;
     public $featured_image_path;
@@ -91,8 +93,10 @@ class post_record extends abstract_record
         {
             $parts = explode("\t", $this->_main_category_data);
     
-            $this->main_category_slug  = $parts[0];
-            $this->main_category_title = $parts[1];
+            $this->main_category_slug       = $parts[0];
+            $this->main_category_title      = $parts[1];
+            $this->main_category_visibility = $parts[2];
+            $this->main_category_min_level  = $parts[3];
             
             unset($this->_main_category_data);
         }
@@ -141,6 +145,8 @@ class post_record extends abstract_record
             
             $return["main_category_slug"],
             $return["main_category_title"],
+            $return["main_category_visibility"],
+            $return["main_category_min_level"],
             
             $return["featured_image_thumbnail"],
             $return["featured_image_path"],

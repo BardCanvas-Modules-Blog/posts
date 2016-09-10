@@ -25,9 +25,9 @@ class posts_repository extends abstract_repository
            from account where account.id_account = posts.id_author
            ) as _author_data";
         
-        # Main category slug/title
+        # Main category data
         $this->additional_select_fields[] = "
-        ( select concat(slug, '\\t', title)
+        ( select concat(slug, '\\t', title, '\\t', visibility, '\\t', min_level)
            from categories where categories.id_category = posts.main_category
            ) as _main_category_data";
         
