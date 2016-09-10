@@ -225,7 +225,7 @@
             <type>number</type>
             <options>
                 <min>30</min>
-                <max>255</max>
+                <max>250</max>
             </options>
         </specs>
         <specs key="featured_posts_tag">

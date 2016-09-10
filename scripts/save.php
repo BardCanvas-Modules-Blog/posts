@@ -73,7 +73,7 @@ else
 $excerpt_length = (int) $settings->get("modules:posts.excerpt_length");
 if( empty($post->excerpt) ) $post->excerpt = make_excerpt_of(
     $post->content,
-    empty($excerpt_length) ? 255 : $excerpt_length
+    empty($excerpt_length) ? 250 : $excerpt_length
 );
 
 if( empty($post->slug) ) $post->slug = sanitize_file_name($post->title);

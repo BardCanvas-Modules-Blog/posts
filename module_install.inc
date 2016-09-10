@@ -113,7 +113,7 @@ $tables = array(
 );
 
 $init_settings = array(
-    "modules:posts.excerpt_length" => 255
+    "modules:posts.excerpt_length" => 250
 );
 
 if( $module_install_action == "install" )
