@@ -1005,4 +1005,20 @@ class posts_repository extends abstract_repository
                 id_post = '$id_post'
         ");
     }
+    
+    public function update_comments_count($id_post)
+    {
+        global $database;
+        
+        return $database->exec("
+            update {$this->table_name} set
+                comments_count = (
+                    select count(id_comment) from comments
+                    where comments.id_post = posts.id_post
+                    and comments.status = 'published'
+                )
+            where
+                id_post = '$id_post'
+        ");
+    }
 }
