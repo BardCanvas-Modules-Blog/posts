@@ -953,4 +953,22 @@ class posts_repository extends abstract_repository
         
         return $res;
     }
+    
+    public function increment_views($id_post)
+    {
+        global $database, $config;
+        
+        $cookie_key = "{$config->website_key}_lvp_{$id_post}";
+        if( ! empty($_COOKIE[$cookie_key]) ) return 0;
+        setcookie($cookie_key, $id_post, time() + 300, "/", $config->cookies_domain);
+        
+        $now = date("Y-m-d H:i:s");
+        return $database->exec("
+            update {$this->table_name} set
+                views       = views + 1,
+                last_viewed = '$now'
+            where
+                id_post = '$id_post'
+        ");
+    }
 }

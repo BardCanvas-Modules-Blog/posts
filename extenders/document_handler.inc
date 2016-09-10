@@ -24,6 +24,7 @@ $post = $repository->get_by_id_or_slug($handle);
 
 if( is_null($post) ) return;
 
+$repository->increment_views($post->id_post);
 $template->set_page_title($post->title);
 $template->set("is_single_post", true);
 $template->set("is_post", true);
