@@ -52,7 +52,7 @@ use hng2_modules\posts\posts_data;
                 $categories_repository = new categories_repository();
                 $default_category      = $categories_repository->get("0000000000000");
                 
-                $mem_key     = "quick_post_categories/level:{$account->level}~v{$config->scripts_version}";
+                $mem_key     = "quick_post_categories/level:{$account->level}";
                 $res         = $mem_cache->get($mem_key);
                 if( is_array($res) )
                 {
