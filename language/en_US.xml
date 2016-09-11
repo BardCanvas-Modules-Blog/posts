@@ -345,4 +345,20 @@
         </posts_by_category>
     </rss_feed_generator>
     
+    <reporting>
+        <id_not_set>You didn't specify a valid post ID to report.</id_not_set>
+        <not_found>The post you specified wasn't found. It may be already deleted.</not_found>
+        <already_processed>The post has already been processed and it was rejected. Theres' no need to report it again.</already_processed>
+        <in_review>The post is already being reviewed. There's no need to report it again.</in_review>
+        <subject>Spam/Inappropiate report for post "{$post_title}" by {$post_author}</subject>
+        <content><![CDATA[
+            <p><b>Describe why you think this post should be reviewed:</b></p>
+            <ul><li><i>Type your reasons here</i></li></ul>
+            <hr>
+            Post written by {$post_author} on {$date}:<br>
+            <a href='{$permalink}'>{$permalink}</a>
+            <blockquote>{$excerpt}</blockquote>
+        ]]></content>
+    </reporting>
+    
 </language>

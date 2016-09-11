@@ -356,4 +356,20 @@
         </posts_by_category>
     </rss_feed_generator>
     
+    <reporting>
+        <id_not_set>No has especificado un identificador válido de entrada a reportar.</id_not_set>
+        <not_found>La entrada que has especificado no se encuentra. Es posible que se haya eliminado.</not_found>
+        <already_processed>La entrada ya ha sido procesada y se ha rechazado. No hay necesidad de reportarla de nuevo.</already_processed>
+        <in_review>La entrada está siendo revisada. No hay necesidad de reportarla de nuevo.</in_review>
+        <subject>Reporte de spam/contenido inapropiado para entrada "{$post_title}" de {$post_author}</subject>
+        <content><![CDATA[
+            <p><b>Describe porqué esta entrada debería ser revisada:</b></p>
+            <ul><li><i>Escribe tus razones aquí</i></li></ul>
+            <hr>
+            Entrada escrita por {$post_author} en {$date}:<br>
+            <a href='{$permalink}'>{$permalink}</a>
+            <blockquote>{$excerpt}</blockquote>
+        ]]></content>
+    </reporting>
+    
 </language>
