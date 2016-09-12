@@ -290,4 +290,24 @@ class post_record extends abstract_record
         if( time() < $boundary ) return true;
         else                     return false;
     }
+    
+    public function get_filtered_tags_list()
+    {
+        global $settings;
+        
+        $list = $this->tags_list;
+        if( empty($list) ) return array();
+        
+        if( is_string($list) ) $list = explode(",", $list);
+        
+        $featureds_tag = $settings->get("modules:posts.featured_posts_tag");
+        if( empty($featureds_tag) ) return $list;
+        if( $settings->get("modules:posts.show_featured_posts_tag_everywhere") == "true" ) return $list;
+        
+        $key = array_search($featureds_tag, $list);
+        if( $key === false ) return $list;
+        
+        unset($list[$key]);
+        return $list;
+    }
 }

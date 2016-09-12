@@ -240,7 +240,7 @@
             <title>Mostrar etiqueta destacada en todos lados?</title>
             <description><![CDATA[
                 Por defecto, la etiqueta elegida para entradas destacadas se ocultará de la vista pública.
-                <b>Deberías dejar esta opción desactivada</b> para evitar que cualquiera (excepto mods/admins) la use.
+                <b>Deberías dejar esta opción en <code>No</code></b> para evitar que cualquiera (excepto mods/admins) la use.
                 Al activarla, la etiqueta estará disponible en todas las vistas y los usuarios podrían
                 terminar saturando el área de entradas destacadas.
             ]]></description>

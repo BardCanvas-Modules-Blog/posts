@@ -251,9 +251,13 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                     foreach($repository->get_attached_categories($row->id_post) as $category)
                         echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
                     
-                    if( ! empty($row->tags_list) )
-                        foreach($row->tags_list as $tag)
+                    if( $account->level < config::MODERATOR_USER_LEVEL )
+                        foreach( $row->get_filtered_tags_list() as $tag)
                             echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}</span> ";
+                    else
+                        if( is_array($row->tags_list) )
+                            foreach( $row->tags_list as $tag)
+                                echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}</span> ";
                     
                     if( ! empty($per_column_function_hooks["details"]) )
                         foreach($per_column_function_hooks["details"] as $function)

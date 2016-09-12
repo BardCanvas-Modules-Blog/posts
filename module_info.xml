@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     
-    <version>1.2.3</version>
+    <version>1.2.4</version>
     <group>BardCanvas</group>
     
     <working_flags>
@@ -15,6 +15,8 @@
         <!--<bootstrap></bootstrap>-->
         <document_handler>extenders/document_handler.inc</document_handler>
         <rss_feed_generator handle_pattern="^_none_|author/.*|user/.*|category/.*$">extenders/rss_feed_generator.inc</rss_feed_generator>
+        <media_record_filtering_tags_list>extenders/media_record_filtering_tags_list.inc</media_record_filtering_tags_list>
+        <webhelper_autolink_hash_tags_filter>extenders/webhelper_autolink_hash_tags.inc</webhelper_autolink_hash_tags_filter>
     </php_includes>
     
     <template_includes>
