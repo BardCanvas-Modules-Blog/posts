@@ -73,7 +73,7 @@ use hng2_modules\posts\posts_data;
                 $style = $categories_count == 0 ? "display: none" : "";
                 ?>
                 <div class="field" id="main_category_selector_container" data-field="category" style="<?= $style ?>">
-                    <select name="main_category" class="fixed_font" style="font-size: 12pt;">
+                    <select name="main_category" class="big_monospace_select">
                         <option selected value="<?= $default_category->id_category ?>">
                             <?= $default_category->title ?>: <?= $default_category->description ?>
                         </option>
