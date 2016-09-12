@@ -113,7 +113,7 @@
         <fields>
             <title>
                 <placeholder>Introduce un título para la entrada</placeholder>
-                <quick_form_placeholder>Click aquí para publicar una entrada</quick_form_placeholder>
+                <quick_form_placeholder>Click para publicar entrada rápida</quick_form_placeholder>
                 <quick_form_expanded_placeholder>Introduce un título para tu entrada</quick_form_expanded_placeholder>
             </title>
             <content>
