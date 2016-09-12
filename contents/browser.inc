@@ -97,6 +97,10 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
     <script type="text/javascript"> $(document).ready(function() { edit_post('<?= $_GET["edit_post"] ?>') }); </script>
 <? endif; ?>
 
+<? if( ! empty($_GET["create"]) ): ?>
+    <script type="text/javascript"> $(document).ready(function() { prepare_post_addition(); }); </script>
+<? endif; ?>
+
 <h1 class="clearfix">
     <button id="refresh_posts_browser" class="pull-right" onclick="$('#filter_form').submit()">
         <span class="fa fa-refresh"></span>
