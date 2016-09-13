@@ -47,7 +47,7 @@ if( empty($posts ) )
     return "";
 }
 
-$mem_cache->set($data_key, $posts);
+$mem_cache->set($data_key, $posts, 0, 60*5);
 ob_start(); ?>
 
 <!-- posts/posts_by_tag  -->

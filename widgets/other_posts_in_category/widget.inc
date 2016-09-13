@@ -29,6 +29,8 @@ global $config, $language, $mem_cache;
 $post = $template->get("current_post");
 if( ! is_object($post) ) return "";
 
+$data_key .= "/" . $post->main_category_slug;
+
 # TODO: Add data extractors!!!
 $category_id = $post->main_category;
 $limit       = 10;
@@ -52,7 +54,7 @@ if( empty($posts ) )
     return "";
 }
 
-$mem_cache->set($data_key, $posts);
+$mem_cache->set($data_key, $posts, 0, 60*5);
 ob_start(); ?>
 
 <!-- posts/other_posts_in_category  -->
