@@ -164,6 +164,7 @@
         
         <buttons>
             <save_draft>Save draft</save_draft>
+            <preview>Preview</preview>
             <publish>Publish</publish>
         </buttons>
     </form>

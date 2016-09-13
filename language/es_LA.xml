@@ -165,6 +165,7 @@
         
         <buttons>
             <save_draft>Guardar borrador</save_draft>
+            <preview>Vista previa</preview>
             <publish>Publicar</publish>
         </buttons>
     </form>

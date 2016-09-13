@@ -318,12 +318,24 @@ function prepare_post_form_submission()
     $.blockUI(blockUI_default_params);
 }
 
-function process_post_form_response(response)
+function process_post_form_response(response, status, xhr, $form)
 {
     $.unblockUI();
-    if( response != 'OK' )
+    if( response.indexOf('OK') < 0 )
     {
         alert( response );
+        return;
+    }
+    
+    id_post = response.replace('OK:', '');
+    if( id_post != '' ) $form.find('input[name="id_post"]').val( id_post );
+    
+    if( $form.attr('data-prevew-mode') == 'true' )
+    {
+        $form.attr('data-prevew-mode', '');
+        
+        var url = $_FULL_ROOT_PATH + '/' + id_post + '?preview=true&wasuuup=' + parseInt(Math.random() * 1000000000000000);
+        window.open(url, 'post_preview_' + id_post).focus();
         return;
     }
     

@@ -195,5 +195,7 @@ $current_module->load_extensions("save_post", "after_saving");
 
 if( $_POST["ok_with_url"] == "true" )
     echo "OK:{$post->get_permalink()}";
+elseif( $post->status == 'draft' )
+    echo "OK:{$post->id_post}";
 else
     echo "OK";

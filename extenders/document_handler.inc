@@ -12,6 +12,7 @@
  * @param handle
  */
 
+use hng2_base\config;
 use hng2_base\template;
 use hng2_modules\posts\posts_repository;
 
@@ -23,7 +24,8 @@ $repository = new posts_repository();
 $post = $repository->get_by_id_or_slug($handle);
 
 if( is_null($post) ) return;
-if( $post->status != "published" ) return;
+if( $post->status != "published" && empty($_GET["preview"]) ) return;
+if( $_GET["preview"] == "true" && ($account->level < config::MODERATOR_USER_LEVEL || $post->id_author != $account->id_account) ) return;
 if( $post->expiration_date != "0000-00-00 00:00:00" && date("Y-m-d H:i:s") > $post->expiration_date ) return;
 
 $repository->increment_views($post->id_post);

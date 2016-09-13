@@ -24,7 +24,7 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
 
 <div id="post_form_target" style="display: none;"></div>
 
-<form name="post_form" id="post_form" method="post"
+<form name="post_form" id="post_form" method="post" data-preview-mode=""
       action="<?= $config->full_root_path ?>/posts/scripts/save.php">
     
     <input type="hidden" name="id_post" value="">
@@ -50,7 +50,6 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
         <textarea name="content" id="post_content_editor" class="tinymce_full"
                   placeholder="<?= $current_module->language->form->fields->content->placeholder ?>"></textarea>
     </div>
-    
     
     <div class="field framed_content" data-field="controls" style="display: none;">
         <div class="multicol cols-3 biggest-col">
@@ -152,6 +151,11 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
             <?= $language->cancel ?>
         </button>
         
+        <button type="submit" data-save-type="save_draft"
+                onclick="var $form = $('#post_form'); $form.find('input[name=status]').val('draft'); $form.attr('data-prevew-mode', 'true');">
+            <span class="fa fa-search"></span>
+            <?= $current_module->language->form->buttons->preview ?>
+        </button>
         <button type="submit" data-save-type="save_draft"
                 onclick="$('#post_form').find('input[name=status]').val('draft')">
             <span class="fa fa-save"></span>
