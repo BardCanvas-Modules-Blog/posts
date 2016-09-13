@@ -282,6 +282,7 @@ class post_record extends abstract_record
         if( ! $account->_exists ) return false;
         if( $account->level >= config::MODERATOR_USER_LEVEL ) return true;
         if( $this->publishing_date == "0000-00-00 00:00:00" ) return true;
+        if( $this->comments_count > 0 ) return false;
         
         $time = (int) $settings->get("modules:posts.time_allowed_for_editing_after_publishing");
         if( empty($time) ) return false;

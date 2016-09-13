@@ -208,10 +208,12 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                             <span class="fa fa-copy"></span>
                             <?= $current_module->language->record_nav->actions->copy ?>
                         </span>
-                        <span class="action pseudo_link" onclick="trash_post('<?= $row->id_post ?>')">
-                            <span class="fa fa-trash"></span>
-                            <?= $current_module->language->record_nav->actions->trash ?>
-                        </span>
+                        <? if($row->comments_count == 0 || $account->level >= config::MODERATOR_USER_LEVEL): ?>
+                            <span class="action pseudo_link" onclick="trash_post('<?= $row->id_post ?>')">
+                                <span class="fa fa-trash"></span>
+                                <?= $current_module->language->record_nav->actions->trash ?>
+                            </span>
+                        <? endif; ?>
                     </div>
                 </td>
                 <td data-column="details">
