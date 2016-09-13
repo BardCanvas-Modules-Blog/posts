@@ -133,10 +133,10 @@
                 <caption>Visibilidad:</caption>
                 <options>
                     <option value="public">Público</option>
-                    <option value="private">Sólo yo</option>
+                    <!--<option value="private">Sólo yo</option>-->
                     <option value="users">Sólo usuarios registrados (cualquier nivel)</option>
-                    <option value="friends">Sólo amigos</option>
-                    <option value="level_based">Usuarios de mi nivel en adelante</option>
+                    <!--<option value="friends">Sólo amigos</option>-->
+                    <option value="level_based">Usuarios de mi nivel ({$level}) en adelante</option>
                 </options>
             </visibility>
             <password>

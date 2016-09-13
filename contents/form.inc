@@ -9,6 +9,7 @@
  * @var \SimpleXMLElement $language
  */
 
+use hng2_base\config;
 use hng2_modules\categories\categories_repository;
 
 $categories_repository = new categories_repository();
@@ -66,7 +67,9 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
                 <div class="input">
                     <select name="visibility">
                         <? foreach($current_module->language->form->fields->visibility->options->option as $option): ?>
-                            <option value="<?= $option["value"] ?>"><?= trim($option) ?></option>
+                            <option value="<?= $option["value"] ?>">
+                                <?= replace_escaped_vars(trim($option), '{$level}', $config->user_levels_by_level[$account->level] ) ?>
+                            </option>
                         <? endforeach; ?>
                     </select>
                 </div>
@@ -87,27 +90,29 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
                     <?= $language->yes ?>
                 </div>
                 
-                <div class="caption"><?= $current_module->language->form->fields->pin_to_home->caption ?></div>
-                <div class="input">
-                    <?= $language->no ?>
-                    <span class='fa-pseudo-switch' data-input-name='pin_to_home' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
-                        <input type='hidden' name='pin_to_home' value='0'>
-                        <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
-                        <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
-                    </span>
-                    <?= $language->yes ?>
-                </div>
-                
-                <div class="caption"><?= $current_module->language->form->fields->pin_to_main_category_index->caption ?></div>
-                <div class="input">
-                    <?= $language->no ?>
-                    <span class='fa-pseudo-switch' data-input-name='pin_to_main_category_index' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
-                        <input type='hidden' name='pin_to_main_category_index' value='0'>
-                        <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
-                        <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
-                    </span>
-                    <?= $language->yes ?>
-                </div>
+                <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
+                    <div class="caption"><?= $current_module->language->form->fields->pin_to_home->caption ?></div>
+                    <div class="input">
+                        <?= $language->no ?>
+                        <span class='fa-pseudo-switch' data-input-name='pin_to_home' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
+                            <input type='hidden' name='pin_to_home' value='0'>
+                            <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
+                            <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
+                        </span>
+                        <?= $language->yes ?>
+                    </div>
+                    
+                    <div class="caption"><?= $current_module->language->form->fields->pin_to_main_category_index->caption ?></div>
+                    <div class="input">
+                        <?= $language->no ?>
+                        <span class='fa-pseudo-switch' data-input-name='pin_to_main_category_index' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
+                            <input type='hidden' name='pin_to_main_category_index' value='0'>
+                            <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
+                            <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
+                        </span>
+                        <?= $language->yes ?>
+                    </div>
+                <? endif; ?>
             </div>
             
             <div class="col subfield featured_image">

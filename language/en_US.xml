@@ -132,10 +132,10 @@
                 <caption>Visibility:</caption>
                 <options>
                     <option value="public">Public</option>
-                    <option value="private">Only me</option>
+                    <!--<option value="private">Only me</option>-->
                     <option value="users">Only registered users (any level)</option>
-                    <option value="friends">Only people in my friends list</option>
-                    <option value="level_based">Users in my level and above</option>
+                    <!--<option value="friends">Only people in my friends list</option>-->
+                    <option value="level_based">Users in my level ({$level}) and above</option>
                 </options>
             </visibility>
             <password>
