@@ -23,6 +23,8 @@ $repository = new posts_repository();
 $post = $repository->get_by_id_or_slug($handle);
 
 if( is_null($post) ) return;
+if( $post->status != "published" ) return;
+if( $post->expiration_date != "0000-00-00 00:00:00" && date("Y-m-d H:i:s") > $post->expiration_date ) return;
 
 $repository->increment_views($post->id_post);
 $template->set_page_title($post->title);
