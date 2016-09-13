@@ -37,8 +37,9 @@
     
     <?
     $url = "browser.php?wasuuup=" . md5(mt_rand(1, 65535));
-    if( ! empty($_GET["edit_post"]) ) $url .= "&edit_post={$_GET["edit_post"]}";
-    if( ! empty($_GET["create"]) )    $url .= "&create={$_GET["create"]}";
+    if( ! empty($_GET["edit_post"]) )  $url .= "&edit_post={$_GET["edit_post"]}";
+    if( ! empty($_GET["create"]) )     $url .= "&create={$_GET["create"]}";
+    if( ! empty($_GET["trash_post"]) ) $url .= "&trash_post={$_GET["trash_post"]}";
     ?>
     <div id="posts_browser" class="ajax_record_browser" data-src="<?= $url ?>">
         <div class="framed_content state_highlight" style="padding: 100px 0; text-align: center;">
