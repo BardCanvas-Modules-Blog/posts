@@ -32,9 +32,10 @@ use hng2_modules\posts\posts_data;
     <form name="post_form" id="post_form" method="post"
           action="<?= $config->full_root_path ?>/posts/scripts/save.php" enctype="multipart/form-data">
         
-        <input type="hidden" name="id_post"     value="">
-        <input type="hidden" name="status"      value="published">
-        <input type="hidden" name="ok_with_url" value="true">
+        <input type="hidden" name="id_post"       value="">
+        <input type="hidden" name="status"        value="published">
+        <input type="hidden" name="ok_with_url"   value="true">
+        <input type="hidden" name="is_quick_post" value="true">
         
         <div class="field" data-field="title">
             <textarea name="title" class="expandible_textarea no_fw_font"
@@ -106,13 +107,11 @@ use hng2_modules\posts\posts_data;
                 </span>
                 
                 <span style="float: right">
-                    <!--
                     <button type="submit" data-save-type="save_draft"
                             onclick="$('#post_form').find('input[name=status]').val('draft')">
                         <span class="fa fa-save"></span>
                         <?= $this_module->language->form->buttons->save_draft ?>
                     </button>
-                    -->
                     
                     <button type="submit" data-save-type="publish">
                         <?= $this_module->language->form->buttons->publish ?>

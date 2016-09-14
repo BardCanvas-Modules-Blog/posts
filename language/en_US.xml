@@ -204,6 +204,7 @@
         <tag_removed><![CDATA[
             Tag #{$tag} successfully removed from post "{$post_title}".
         ]]></tag_removed>
+        <draft_saved>The draft has been saved. To edit it later, go into the posts browser and search it among your draft posts.</draft_saved>
     </messages>
     
     <settings_data>

@@ -47,6 +47,8 @@ $old_post = empty($_POST["id_post"]) ? null : $repository->get($_POST["id_post"]
 $post     = empty($_POST["id_post"]) ? new post_record() : $repository->get($_POST["id_post"]);
 $post->set_from_post();
 
+if( $_POST["is_quick_post"] == "true" ) $post->allow_comments = 1;
+
 $current_module->load_extensions("save_post", "initial_validations");
 
 if( ! empty($post->id_post) )
@@ -192,6 +194,9 @@ if( count($media_items) ) $repository->set_media_items($media_items, $post->id_p
 $repository->save($post);
 if( $set_expiration_date ) $repository->set_expiration_date($post->id_post, $set_expiration_date);
 $current_module->load_extensions("save_post", "after_saving");
+
+if( $_POST["is_quick_post"] && $post->status == "draft" )
+    send_notification($account->id_account, "success", $current_module->language->messages->draft_saved);
 
 if( $_POST["ok_with_url"] == "true" )
     echo "OK:{$post->get_permalink()}";

@@ -31,7 +31,7 @@ function process_post_form_response(response)
     var url    = response.replace('OK:', '');
     var status = $form.find('input[name="status"]').val();
     
-    if( status == 'draft' ) location.reload();
+    if( status == 'draft' ) location.href = $_REQUEST_URI;
     else                    location.href = url;
 }
 
