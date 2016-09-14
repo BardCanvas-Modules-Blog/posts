@@ -94,6 +94,8 @@
         <extras>
             <expires>Expires in</expires>
             <expired>Expired</expired>
+            <remove>Remove</remove>
+            <remove_tag>Remove tag</remove_tag>
         </extras>
         <pinned_to_home>Home</pinned_to_home>
     </record_nav>
@@ -176,6 +178,7 @@
             <slug>Please specify a slug for the post</slug>
             <content>Post contents shouldn't be empty</content>
             <main_category>Please specify a main category for the post</main_category>
+            <tag>Please provide a tag label (without the #)</tag>
         </missing>
         <post_not_found>The post wasn't found in the database</post_not_found>
         <post_not_yours>You can't get this post this way. It must be yours.</post_not_yours>
@@ -198,6 +201,9 @@
                 • You don't have the privileges to do it
             ]]></without_timing>
         </post_cannot_be_edited>
+        <tag_removed><![CDATA[
+            Tag #{$tag} successfully removed from post "{$post_title}".
+        ]]></tag_removed>
     </messages>
     
     <settings_data>

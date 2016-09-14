@@ -95,6 +95,8 @@
         <extras>
             <expires>Expira en</expires>
             <expired>Expirada</expired>
+            <remove>Remover</remove>
+            <remove_tag>Remover etiqueta</remove_tag>
         </extras>
         <pinned_to_home>Principal</pinned_to_home>
     </record_nav>
@@ -177,6 +179,7 @@
             <slug>Favor de especificar un slug para la entrada</slug>
             <content>No has especificado contenido para la entrada.</content>
             <main_category>Favor de especificar una categoría principal para la entrada</main_category>
+            <tag>Favor de proveer una etiqueta (sin el símbolo #)</tag>
         </missing>
         <post_not_found>No se ha encontrado la entrada en la base de datos</post_not_found>
         <post_not_yours>No puedes obtener la entrada de esta forma.</post_not_yours>
@@ -201,6 +204,9 @@
                 • Careces de los privilegios para cambiarla
             ]]></without_timing>
         </post_cannot_be_edited>
+        <tag_removed><![CDATA[
+            Etiqueta #{$tag} removida de entrada "{$post_title}" con éxito.
+        ]]></tag_removed>
     </messages>
     
     <settings_data>

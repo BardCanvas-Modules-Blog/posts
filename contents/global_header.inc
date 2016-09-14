@@ -38,4 +38,29 @@ use hng2_base\template;
             $parent.find('.item[data-year="' + year + '"]').toggleClass('collapsed expanded');
         });
     });
+    
+    function remove_tag_from_post(trigger, id_post, tag)
+    {
+        var $trigger = $(trigger);
+        
+        var url = $_FULL_ROOT_PATH
+                + '/posts/scripts/remove_tag.php'
+                + '?id_post=' + id_post
+                + '&tag=' + tag
+                + '&wasuuup=' + parseInt(Math.random() * 1000000000000000)
+                ;
+        $trigger.block(blockUI_smallest_params);
+        $.get(url, function(response)
+        {
+            $trigger.unblock();
+            if( response != 'OK' )
+            {
+                alert(response);
+                
+                return;
+            }
+            
+            $trigger.remove();
+        });
+    }
 </script>

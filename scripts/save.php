@@ -187,7 +187,7 @@ if( function_exists("extract_media_items") )
     $media_items = array_merge($images, $videos);
 }
 
-if( ! empty($tags) ) $repository->set_tags($tags, $post->id_post);
+$repository->set_tags($tags, $post->id_post);
 if( count($media_items) ) $repository->set_media_items($media_items, $post->id_post);
 $repository->save($post);
 if( $set_expiration_date ) $repository->set_expiration_date($post->id_post, $set_expiration_date);

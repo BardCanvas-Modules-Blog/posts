@@ -257,13 +257,30 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                     foreach($repository->get_attached_categories($row->id_post) as $category)
                         echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
                     
+                    $remove_tag_link = "";
+                    if( $row->can_be_edited() ) $remove_tag_link = "
+                        <span class='pseudo_link fa fa-times' onclick='remove_tag_from_post(\$(this).closest(\".hashtag\"), \"{$row->id_post}\", \"%tag%\")'></span>
+                    ";
+                    
                     if( $account->level < config::MODERATOR_USER_LEVEL )
+                    {
                         foreach( $row->get_filtered_tags_list() as $tag)
-                            echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}</span> ";
+                        {
+                            $link = str_replace("%tag%", $tag, $remove_tag_link);
+                            echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}{$link}</span> ";
+                        }
+                    }
                     else
+                    {
                         if( is_array($row->tags_list) )
+                        {
                             foreach( $row->tags_list as $tag)
-                                echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}</span> ";
+                            {
+                                $link = str_replace("%tag%", $tag, $remove_tag_link);
+                                echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}{$link}</span> ";
+                            }
+                        }
+                    }
                     
                     if( ! empty($per_column_function_hooks["details"]) )
                         foreach($per_column_function_hooks["details"] as $function)
