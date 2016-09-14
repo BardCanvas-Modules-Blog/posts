@@ -78,18 +78,18 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
                     <input type="password" name="password" placeholder="<?= $current_module->language->form->fields->password->placeholder ?>">
                 </div>
                 
-                <div class="caption"><?= $current_module->language->form->fields->allow_comments->caption ?></div>
-                <div class="input">
-                    <?= $language->no ?>
-                    <span class='fa-pseudo-switch' data-input-name='allow_comments' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
+                <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
+                    <div class="caption"><?= $current_module->language->form->fields->allow_comments->caption ?></div>
+                    <div class="input">
+                        <?= $language->no ?>
+                        <span class='fa-pseudo-switch' data-input-name='allow_comments' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
                         <input type='hidden' name='allow_comments' value='1'>
                         <span class='toggler toggle-on  fa fa-toggle-on'  style='display: none'></span>
                         <span class='toggler toggle-off fa fa-toggle-off' style=''></span>
                     </span>
-                    <?= $language->yes ?>
-                </div>
-                
-                <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
+                        <?= $language->yes ?>
+                    </div>
+                    
                     <div class="caption"><?= $current_module->language->form->fields->pin_to_home->caption ?></div>
                     <div class="input">
                         <?= $language->no ?>

@@ -48,6 +48,7 @@ $post     = empty($_POST["id_post"]) ? new post_record() : $repository->get($_PO
 $post->set_from_post();
 
 if( $_POST["is_quick_post"] == "true" ) $post->allow_comments = 1;
+if( $account->level < config::MODERATOR_USER_LEVEL ) $post->allow_comments = 1;
 
 $current_module->load_extensions("save_post", "initial_validations");
 
