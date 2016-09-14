@@ -389,13 +389,19 @@ class posts_repository extends abstract_repository
         return $rows;
     }
     
+    /**
+     * @param array $list
+     * @param       $id_post
+     *
+     * @return array List of removed items
+     */
     public function set_media_items(array $list, $id_post)
     {
         global $database;
         
         $actual_items = $this->get_media_items($id_post);
         
-        if( empty($actual_items) && empty($list) ) return;
+        if( empty($actual_items) && empty($list) ) return array();
         
         $date    = date("Y-m-d H:i:s");
         $inserts = array();
@@ -418,9 +424,9 @@ class posts_repository extends abstract_repository
             $update_caches = true;
         }
         
+        $deletes = array();
         if( ! empty($actual_items) )
         {
-            $deletes = array();
             foreach($actual_items as $id => $object) $deletes[] = "'$id'";
             $database->exec(
                 "delete from post_media where id_post = '$id_post' and id_media in (" . implode(", ", $deletes) . ")"
@@ -430,6 +436,14 @@ class posts_repository extends abstract_repository
         }
         
         if( $update_caches ) $this->update_cache_versions();
+        return $deletes;
+    }
+    
+    public function unset_all_media_items($id_post)
+    {
+        global $database;
+        
+        return $database->exec("delete from post_media where id_post = '$id_post'");
     }
     
     public function unset_category($id_category, $id_post)
