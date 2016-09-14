@@ -95,7 +95,7 @@
             <expires>Expires in</expires>
             <expired>Expired</expired>
             <remove>Remove</remove>
-            <remove_tag>Remove tag</remove_tag>
+            <remove_tag>Remove tag #{$tag}</remove_tag>
         </extras>
         <pinned_to_home>Home</pinned_to_home>
     </record_nav>

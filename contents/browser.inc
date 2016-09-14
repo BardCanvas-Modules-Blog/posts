@@ -10,6 +10,8 @@
  */
 
 use hng2_base\config;
+use hng2_media\media_repository;
+use hng2_modules\posts\post_record;
 use hng2_modules\posts\posts_repository;
 use hng2_tools\record_browser;
 
@@ -90,6 +92,8 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
 $current_module->load_extensions("browser", "after_collection_built");
 $per_column_function_hooks = array();
 $current_module->load_extensions("browser", "per_record_function_hooks");
+
+$media_repository = new media_repository();
 #endregion
 ?>
 
@@ -217,75 +221,25 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                     </div>
                 </td>
                 <td data-column="details">
+                    
                     <?= empty($row->excerpt) ? "―" : convert_emojis(make_excerpt_of($row->excerpt, 100)) ?><br>
-                    <?
-                    if( $row->expiration_date != "0000-00-00 00:00:00")
-                    {
-                        if( date("Y-m-d H:i:s") <= $row->expiration_date )
-                            echo "<span class='framed_content inlined state_active'>" 
-                                . $current_module->language->record_nav->extras->expires . ": "
-                                . preg_replace('/\d+s/', "", time_remaining_string($row->expiration_date))
-                                . "</span><br>"
-                            ;
-                        else
-                            echo "<span class='framed_content inlined state_highlight'>"
-                                . $current_module->language->record_nav->extras->expired . ": "
-                                . time_elapsed_string($row->expiration_date)
-                                . "</span><br>"
-                            ;
-                    }
-                    ?>
+                    
+                    <? render_expiration_date($row); ?>
+                    
                     <span class="framed_content inlined"><?= $current_module->language->status_labels->{$row->status} ?></span>
+                    
                     <?
-                    if( $row->pin_to_home )
-                        echo "
-                            <span class='framed_content inlined state_highlight'>
-                                <span class='fa fa-thumb-tack'></span>{$current_module->language->record_nav->pinned_to_home}
-                            </span>
-                        ";
+                    render_post_metas($row);
                     
-                    if( $row->pin_to_main_category_index )
-                        echo "
-                            <span class='framed_content inlined state_highlight'>
-                                <span class='fa fa-thumb-tack'></span><span class='category'><span 
-                                      class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span>
-                            </span>
-                        ";
-                    else
-                        echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span> ";
+                    render_post_tags($row);
                     
-                    foreach($repository->get_attached_categories($row->id_post) as $category)
-                        echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
-                    
-                    $remove_tag_link = "";
-                    if( $row->can_be_edited() ) $remove_tag_link = "
-                        <span class='pseudo_link fa fa-times' onclick='remove_tag_from_post(\$(this).closest(\".hashtag\"), \"{$row->id_post}\", \"%tag%\")'></span>
-                    ";
-                    
-                    if( $account->level < config::MODERATOR_USER_LEVEL )
-                    {
-                        foreach( $row->get_filtered_tags_list() as $tag)
-                        {
-                            $link = str_replace("%tag%", $tag, $remove_tag_link);
-                            echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}{$link}</span> ";
-                        }
-                    }
-                    else
-                    {
-                        if( is_array($row->tags_list) )
-                        {
-                            foreach( $row->tags_list as $tag)
-                            {
-                                $link = str_replace("%tag%", $tag, $remove_tag_link);
-                                echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}{$link}</span> ";
-                            }
-                        }
-                    }
+                    render_post_attached_media($row);
                     
                     if( ! empty($per_column_function_hooks["details"]) )
                         foreach($per_column_function_hooks["details"] as $function)
                             if( function_exists($function) ) $function($row);
                     ?>
+                    
                 </td>
                 <td>
                     <?= convert_emojis($row->author_display_name) ?>
@@ -319,3 +273,121 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
 <div class="pagination">
     <? $browser->render_pagination_controls("paginate", $pagination); ?>
 </div>
+
+<?php
+
+function render_expiration_date(post_record $row)
+{
+    global $current_module;
+    
+    if( $row->expiration_date != "0000-00-00 00:00:00")
+    {
+        if( date("Y-m-d H:i:s") <= $row->expiration_date )
+            echo "<span class='framed_content inlined state_active'>" 
+                . $current_module->language->record_nav->extras->expires . ": "
+                . preg_replace('/\d+s/', "", time_remaining_string($row->expiration_date))
+                . "</span><br>"
+            ;
+        else
+            echo "<span class='framed_content inlined state_highlight'>"
+                . $current_module->language->record_nav->extras->expired . ": "
+                . time_elapsed_string($row->expiration_date)
+                . "</span><br>"
+            ;
+    }
+}
+
+function render_post_metas(post_record $row)
+{
+    global $current_module, $repository;
+    
+    if( $row->pin_to_home )
+        echo "
+            <span class='framed_content inlined state_highlight'>
+                <span class='fa fa-thumb-tack'></span>{$current_module->language->record_nav->pinned_to_home}
+            </span>
+        ";
+    
+    if( $row->pin_to_main_category_index )
+        echo "
+            <span class='framed_content inlined state_highlight'>
+                <span class='fa fa-thumb-tack'></span><span class='category'><span 
+                      class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span>
+            </span>
+        ";
+    else
+        echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span> ";
+    
+    foreach($repository->get_attached_categories($row->id_post) as $category)
+        echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
+}
+
+function render_post_tags(post_record $row)
+{
+    global $account, $current_module;
+    
+    $remove_tag_link = "";
+    if( $row->can_be_edited() ) $remove_tag_link = "
+        <span class='pseudo_link fa fa-times fa-border' title='{$current_module->language->record_nav->extras->remove_tag}'
+              onclick='remove_tag_from_post(\$(this).closest(\".hashtag\"), \"{$row->id_post}\", \"\{\$tag}\")'></span>
+    ";
+    if( $account->level < config::MODERATOR_USER_LEVEL )
+    {
+        foreach( $row->get_filtered_tags_list() as $tag)
+        {
+            $link = str_replace('{$tag}', $tag, $remove_tag_link);
+            echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}{$link}</span> ";
+        }
+    }
+    else
+    {
+        if( is_array($row->tags_list) )
+        {
+            foreach( $row->tags_list as $tag)
+            {
+                $link = str_replace('{$tag}', $tag, $remove_tag_link);
+                echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}{$link}</span> ";
+            }
+        }
+    }
+}
+
+function render_post_attached_media(post_record $row)
+{
+    global $media_repository;
+    
+    if( empty($row->media_list) ) return;
+        
+    echo "\n<hr>\n";
+    
+    if( ! empty($row->id_featured_image) ):
+        $featured_image = $media_repository->get($row->id_featured_image); ?>
+        <div class="media_bullet">
+            <span class="bullet fa fa-picture-o fa-fw"></span>
+            <a href="<?= $config->full_root_path ?>/user/<?= $featured_image->author_user_name ?>"
+               class="user_display_name" data-user-level="<?= $featured_image->author_level ?>">
+                <span class="fa fa-user fa-fw"></span>
+                <?= $featured_image->get_processed_author_display_name() ?></a>
+            [<?= time_elapsed_string($featured_image->publishing_date) ?>]
+            <a class="prettyPhoto" href="<?= $featured_image->get_thumbnail_url() ?>"><?= $featured_image->title ?></a>
+            <a href="<?= $featured_image->get_page_url() ?>" target="_blank"><span class="fa fa-external-link fa-fw"></span></a>
+        </div>
+        <?
+    endif;
+    
+    $media_records = $media_repository->get_multiple($row->media_list);
+    foreach($media_records as $media_record):
+        $icon = $media_record->type == "image" ? "fa-picture-o" : "fa-film"; ?>
+        <div class="media_bullet">
+            <span class="bullet fa <?= $icon ?> fa-fw"></span>
+            <a href="<?= $config->full_root_path ?>/user/<?= $media_record->author_user_name ?>"
+               class="user_display_name" data-user-level="<?= $media_record->author_level ?>">
+                <span class="fa fa-user fa-fw"></span>
+                <?= $media_record->get_processed_author_display_name() ?></a>
+            [<?= time_elapsed_string($media_record->publishing_date) ?>]
+            <a class="prettyPhoto" href="<?= $media_record->get_thumbnail_url() ?>"><?= $media_record->title ?></a>
+            <a href="<?= $media_record->get_page_url() ?>" target="_blank"><span class="fa fa-external-link fa-fw"></span></a>
+        </div>
+        <?
+    endforeach;
+}

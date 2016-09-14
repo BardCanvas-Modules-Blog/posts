@@ -96,7 +96,7 @@
             <expires>Expira en</expires>
             <expired>Expirada</expired>
             <remove>Remover</remove>
-            <remove_tag>Remover etiqueta</remove_tag>
+            <remove_tag>Remover etiqueta #{$tag}</remove_tag>
         </extras>
         <pinned_to_home>Principal</pinned_to_home>
     </record_nav>
