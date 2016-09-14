@@ -379,4 +379,13 @@
         ]]></content>
     </reporting>
     
+    <accounts_nav_columns>
+        <posts>
+            <caption><![CDATA[ <span class="fa fa-newspaper-o fa-fw"></span> ]]></caption>
+            <layout xnowrap="true" xalign="right" />
+            <order_asc  id="posts_count_asc">Ordenar por cantidad de entradas publicadas ascendente</order_asc>
+            <order_desc id="posts_count_desc">Ordenar por cantidad de entradas publicadas descendente</order_desc>
+        </posts>
+    </accounts_nav_columns>
+    
 </language>
