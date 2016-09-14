@@ -89,7 +89,7 @@
         </columns>
         <actions>
             <edit>Editar</edit>
-            <trash>Borrar</trash>
+            <trash>Papelera</trash>
             <copy>Duplicar</copy>
         </actions>
         <extras>
@@ -106,7 +106,7 @@
         <published>Publicada</published>
         <reviewing>En revisión</reviewing>
         <hidden>Oculta</hidden>
-        <trashed>Eliminada</trashed>
+        <trashed>En papelera</trashed>
     </status_labels>
     
     <form>
