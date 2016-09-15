@@ -189,24 +189,22 @@ if( function_exists("extract_media_items") )
     $media_items = array_merge($images, $videos);
 }
 
+$repository->save($post);
+if( $set_expiration_date ) $repository->set_expiration_date($post->id_post, $set_expiration_date);
+$current_module->load_extensions("save_post", "after_saving");
+
 $media_deletions = array();
 if( $post->status == "published" )
 {
     $repository->set_tags($tags, $post->id_post);
     $media_deletions = $repository->set_media_items($media_items, $post->id_post);
 }
-$repository->save($post);
-if( $set_expiration_date ) $repository->set_expiration_date($post->id_post, $set_expiration_date);
-$current_module->load_extensions("save_post", "after_saving");
 
 if( $_POST["is_quick_post"] && $post->status == "draft" )
     send_notification($account->id_account, "success", $current_module->language->messages->draft_saved);
 
 if( is_array($media_deletions) && ! empty($media_deletions) )
-{
-    
     $media_repository->delete_multiple_if_unused($media_deletions);
-}
 
 if( $_POST["ok_with_url"] == "true" )
     echo "OK:{$post->get_permalink()}";

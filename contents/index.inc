@@ -33,16 +33,6 @@
     }
 </script>
 
-<style type="text/css">
-    .media_bullet         { padding: 0 0 4px 22px; margin-bottom: 2px; position: relative; color: rebeccapurple;
-                            border-bottom: 1px solid silver; }
-    .media_bullet .bullet { position: absolute; margin-left: -22px; margin-top: 2px; }
-    
-    .media_bullet:last-child { border-bottom: none; margin-bottom: 0; }
-    
-    .media_bullet a, .media_bullet .pseudo_link { color: rebeccapurple; }
-</style>
-
 <div id="main_workarea">
     
     <?

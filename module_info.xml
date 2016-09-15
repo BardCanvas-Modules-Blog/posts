@@ -17,6 +17,7 @@
         <rss_feed_generator handle_pattern="^_none_|author/.*|user/.*|category/.*$">extenders/rss_feed_generator.inc</rss_feed_generator>
         <media_record_filtering_tags_list>extenders/media_record_filtering_tags_list.inc</media_record_filtering_tags_list>
         <webhelper_autolink_hash_tags_filter>extenders/webhelper_autolink_hash_tags.inc</webhelper_autolink_hash_tags_filter>
+        <media_repository_delete_multiple_if_unused>extenders/media_repository_delete_multiple_if_unused.inc</media_repository_delete_multiple_if_unused>
     </php_includes>
     
     <template_includes>

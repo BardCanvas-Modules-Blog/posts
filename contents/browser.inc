@@ -359,7 +359,7 @@ function render_post_tags(post_record $row)
 
 function render_post_attached_media(post_record $row)
 {
-    global $media_repository;
+    global $media_repository, $config;
     
     if( empty($row->media_list) ) return;
         
