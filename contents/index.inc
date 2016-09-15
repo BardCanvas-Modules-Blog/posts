@@ -12,7 +12,9 @@
 <script type="text/javascript">$(document).ready(function() { $('.expandible_textarea').expandingTextArea() });</script>
 
 <link rel="stylesheet" type="text/css" href="<?= $config->full_root_path ?>/posts/media/styles~v<?=$config->scripts_version?>.css">
-<script type="text/javascript"          src="<?= $config->full_root_path ?>/posts/media/functions~v<?=$config->scripts_version?>.js"></script>
+
+<script type="text/javascript"> var post_autosaver_heartbit = 30 * 1000; </script>
+<script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/functions~v<?=$config->scripts_version?>.js"></script>
 
 <script type="text/javascript">
     function reset_filter()

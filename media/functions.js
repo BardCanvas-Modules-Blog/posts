@@ -9,7 +9,6 @@ if( typeof reset_post_form_extensions == 'undefined' )
     reset_post_form_extensions = {};
 
 var post_autosaver_enabled  = false;
-var post_autosaver_heartbit = 10 * 1000;
 var post_autosaver_interval = null;
 var post_autosaver_working  = false;
 
