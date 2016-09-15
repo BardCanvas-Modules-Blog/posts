@@ -24,11 +24,17 @@ $repository = new posts_repository();
 $post = $repository->get_by_id_or_slug($handle);
 
 if( is_null($post) ) return;
-if( $post->status != "published" && empty($_GET["preview"]) ) return;
-if( $_GET["preview"] == "true" && ($account->level < config::MODERATOR_USER_LEVEL || $post->id_author != $account->id_account) ) return;
-if( $post->expiration_date != "0000-00-00 00:00:00" && date("Y-m-d H:i:s") > $post->expiration_date ) return;
+if( $account->level < config::MODERATOR_USER_LEVEL )
+{
+    if( $post->status == "trashed" ) return;
+    if( $post->status == "draft" && $post->id_author != $account->id_account ) return;
+    if( $post->status == "reviewing" && $post->id_author != $account->id_account ) return;
+    if( $post->expiration_date != "0000-00-00 00:00:00" && date("Y-m-d H:i:s") > $post->expiration_date ) return;
+}
 
-$repository->increment_views($post->id_post);
+if( $post->status == "reviewing" ) $post->allow_comments = 0;
+if( $post->status == "published" ) $repository->increment_views($post->id_post);
+
 $template->set_page_title($post->title);
 $template->set("is_single_post", true);
 $template->set("is_post", true);

@@ -205,6 +205,10 @@
             Tag #{$tag} successfully removed from post "{$post_title}".
         ]]></tag_removed>
         <draft_saved>The draft has been saved. To edit it later, go into the posts browser and search it among your draft posts.</draft_saved>
+        <post_being_reviewed><![CDATA[
+            This post is being reviewed. Only you and mods/admins will be able to view it.<br>
+            You may receive a notification when the review process ends.
+        ]]></post_being_reviewed>
     </messages>
     
     <settings_data>

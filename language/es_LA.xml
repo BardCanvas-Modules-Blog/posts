@@ -208,6 +208,10 @@
             Etiqueta #{$tag} removida de entrada "{$post_title}" con éxito.
         ]]></tag_removed>
         <draft_saved>El borrador ha sido guardado. Para editarlo, entra al navegador de entradas y búscalo entre tus borradores.</draft_saved>
+        <post_being_reviewed><![CDATA[
+            Esta entrada está en revisión. Sólo tú y moderadores/administradores podrán verlo.<br>
+            Recibirás una notificación cuando el proceso de revisión termine.
+        ]]></post_being_reviewed>
     </messages>
     
     <settings_data>
