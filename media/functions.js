@@ -380,8 +380,7 @@ function start_post_autosaver()
 {
     if( post_autosaver_interval ) return;
     
-    var $form   = $('#post_form');
-    
+    var $form = $('#post_form');
     $form.find('.post_autosave_status .saving').hide();
     $form.find('.post_autosave_status .error').hide();
     $form.find('.post_autosave_status .saved').hide();
@@ -399,6 +398,7 @@ function stop_post_autosaver()
     post_autosaver_enabled = false;
     clearInterval(post_autosaver_interval);
     
+    var $form = $('#post_form');
     $form.find('.post_autosave_status .saving').hide();
     $form.find('.post_autosave_status .error').hide();
     $form.find('.post_autosave_status .saved').hide();
