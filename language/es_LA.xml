@@ -401,6 +401,9 @@
             <order_asc  id="posts_count_asc">Ordenar por cantidad de entradas publicadas ascendente</order_asc>
             <order_desc id="posts_count_desc">Ordenar por cantidad de entradas publicadas descendente</order_desc>
         </posts>
+        <principal_data><![CDATA[
+            Última entrada: [{$time}] <a href="{$url}" target="_blank">{$title}</a>
+        ]]></principal_data>
     </accounts_nav_columns>
     
 </language>

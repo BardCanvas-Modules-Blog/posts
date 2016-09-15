@@ -68,6 +68,7 @@
                 <additional_headers priority="100">extenders/accounts/browser_headers.inc</additional_headers>
                 <additional_columns priority="100">extenders/accounts/browser_columns.inc</additional_columns>
                 <presettings_data   priority="100">extenders/accounts/browser_presets.inc</presettings_data>
+                <principal_data_addons>extenders/accounts/principal_data_addons.inc</principal_data_addons>
             </records_browser>
         </accounts>
     </extends_to>

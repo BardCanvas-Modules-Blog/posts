@@ -25,7 +25,10 @@ switch( $order )
 }
 
 $additional_select_columns .= "
-    , (select count(id_post) from posts where posts.id_author = account.id_account ) as _posts_count
+    , ( select count(id_post) from posts where posts.id_author = account.id_account ) as _posts_count
+    , ( select concat(posts.id_post, '\t', posts.title, '\t', posts.publishing_date) from posts
+        where posts.id_author = account.id_account and posts.status = 'published'
+        order by posts.publishing_date desc limit 1 ) as _last_post_data
 ";
 
 $config->globals["accounts:nav/presettings_data"] = array( $sqlorder, $additional_select_columns);
