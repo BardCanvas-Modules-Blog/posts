@@ -139,7 +139,22 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
         </div>
     </div>
     
-    <div class="post_buttons alignright">
+    <div class="post_buttons alignright clearfix">
+        <span class="post_autosave_status pull-left">
+            <span class="saving" style="display: none">
+                <span class="fa fa-spinner fa-pulse"></span>
+                <?= $current_module->language->saving ?>
+            </span>
+            <span class="saved" style="display: none">
+                <span class="fa fa-check"></span>
+                <?= $current_module->language->saved ?>
+            </span>
+            <span class="error" style="display: none;">
+                <span class="fa fa-warning"></span>
+                <span class="message"></span>
+            </span>
+        </span>
+        
         <button onclick="$('#post_form').find('.field[data-field=controls]').toggle(); return false;"
                 title="<?= $current_module->language->form->fields->controls_toggle->title ?>">
             <span class="fa fa-check-square-o"></span>

@@ -15,6 +15,9 @@
         </buttons>
     </index>
     
+    <saving>Guardando borrador...</saving>
+    <saved>Borrador guardado.</saved>
+    
     <pages>
         <by_category>
             <title>Entradas en {$category}</title>
@@ -59,15 +62,21 @@
                 <caption>Autor</caption>
                 <layout xnowrap="true" />
             </author>
+            <creation_date>
+                <caption>Creada</caption>
+                <layout xnowrap="true" xalign="center" />
+                <order_asc  id="9">Ordenar por fecha de creación ascendente</order_asc>
+                <order_desc id="10">Ordenar por fecha de creación descendente</order_desc>
+            </creation_date>
             <publishing_date>
                 <caption>Publicada</caption>
-                <layout xnowrap="true" />
+                <layout xnowrap="true" xalign="center" />
                 <order_asc  id="1">Ordenar por fecha de publicación ascendente</order_asc>
                 <order_desc id="2">Ordenar por fecha de publicación descendente</order_desc>
             </publishing_date>
             <last_update>
                 <caption>Actividad</caption>
-                <layout xnowrap="true" />
+                <layout xnowrap="true" xalign="center" />
                 <order_asc  id="3">Ordenar por última actualización de actividad ascendente</order_asc>
                 <order_desc id="4">Ordenar por última actualización de actividad descendente</order_desc>
             </last_update>

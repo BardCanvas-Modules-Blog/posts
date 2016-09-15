@@ -15,6 +15,9 @@
         </buttons>
     </index>
     
+    <saving>Saving draft...</saving>
+    <saved>Draft saved.</saved>
+    
     <pages>
         <by_category>
             <title>Posts in {$category}</title>
@@ -58,15 +61,21 @@
                 <caption>Author</caption>
                 <layout xnowrap="true" />
             </author>
+            <creation_date>
+                <caption>Created</caption>
+                <layout xnowrap="true" xalign="center" />
+                <order_asc  id="9">Order by creation date ascending</order_asc>
+                <order_desc id="10">Order by creation date descending</order_desc>
+            </creation_date>
             <publishing_date>
                 <caption>Published</caption>
-                <layout xnowrap="true" />
+                <layout xnowrap="true" xalign="center" />
                 <order_asc  id="1">Order by publishing date ascending</order_asc>
                 <order_desc id="2">Order by publishing date descending</order_desc>
             </publishing_date>
             <last_update>
                 <caption>Last activity</caption>
-                <layout xnowrap="true" />
+                <layout xnowrap="true" xalign="center" />
                 <order_asc  id="3">Order by last activity update ascending</order_asc>
                 <order_desc id="4">Order by last activity update descending</order_desc>
             </last_update>

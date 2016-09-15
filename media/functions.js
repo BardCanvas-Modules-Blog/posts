@@ -8,6 +8,11 @@ if( typeof fill_post_form_extensions == 'undefined' )
 if( typeof reset_post_form_extensions == 'undefined' )
     reset_post_form_extensions = {};
 
+var post_autosaver_enabled  = false;
+var post_autosaver_heartbit = 10 * 1000;
+var post_autosaver_interval = null;
+var post_autosaver_working  = false;
+
 function prepare_post_addition()
 {
     var $workarea = $('#form_workarea');
@@ -277,6 +282,7 @@ function show_post_form()
 {
     $('#main_workarea').hide('fast');
     $('#form_workarea').show('fast');
+    start_post_autosaver();
 }
 
 function hide_post_form()
@@ -315,20 +321,46 @@ function prepare_post_form_serialization()
 
 function prepare_post_form_submission()
 {
-    $.blockUI(blockUI_default_params);
+    if( ! post_autosaver_working ) $.blockUI(blockUI_default_params);
 }
 
 function process_post_form_response(response, status, xhr, $form)
 {
-    $.unblockUI();
+    if( ! post_autosaver_working ) $.unblockUI();
+    
     if( response.indexOf('OK') < 0 )
     {
+        if( post_autosaver_working )
+        {
+            $form.find('.post_autosave_status .saving').hide();
+            $form.find('.post_autosave_status .saved').hide();
+            $form.find('.post_autosave_status .error').show();
+            $form.find('.post_autosave_status .error .message').text( response );
+            $form.find('.post_buttons button:visible').prop('disabled', false);
+            console.log('Draft autosave finished.');
+    
+            post_autosaver_working = false;
+            return;
+        }
+        
         alert( response );
         return;
     }
     
     id_post = response.replace('OK:', '');
     if( id_post != '' ) $form.find('input[name="id_post"]').val( id_post );
+    
+    if( post_autosaver_working )
+    {
+        $form.find('.post_autosave_status .saving').hide();
+        $form.find('.post_autosave_status .error').hide();
+        $form.find('.post_autosave_status .saved').show();
+        $form.find('.post_buttons button:visible').prop('disabled', false);
+        console.log('Draft autosave finished.');
+        
+        post_autosaver_working = false;
+        return;
+    }
     
     if( $form.attr('data-prevew-mode') == 'true' )
     {
@@ -339,8 +371,65 @@ function process_post_form_response(response, status, xhr, $form)
         return;
     }
     
+    stop_post_autosaver();
     hide_post_form();
     $('#refresh_posts_browser').click();
+}
+
+function start_post_autosaver()
+{
+    if( post_autosaver_interval ) return;
+    
+    var $form   = $('#post_form');
+    
+    $form.find('.post_autosave_status .saving').hide();
+    $form.find('.post_autosave_status .error').hide();
+    $form.find('.post_autosave_status .saved').hide();
+    $form.find('.post_buttons button:visible').prop('disabled', false);
+    
+    if( $form.find('input[name="status"]').val() != 'draft' ) return;
+    
+    post_autosaver_enabled = true;
+    post_autosaver_interval = setInterval('autosave_post()', post_autosaver_heartbit);
+    console.log('Draft autosaver started');
+}
+
+function stop_post_autosaver()
+{
+    post_autosaver_enabled = false;
+    clearInterval(post_autosaver_interval);
+    
+    $form.find('.post_autosave_status .saving').hide();
+    $form.find('.post_autosave_status .error').hide();
+    $form.find('.post_autosave_status .saved').hide();
+    $form.find('.post_buttons button:visible').prop('disabled', false);
+    
+    console.log('Draft autosaver stopped');
+}
+
+function autosave_post()
+{
+    if( ! post_autosaver_enabled ) return;
+    if( post_autosaver_working ) return;
+    
+    post_autosaver_working = true;
+    
+    var $form   = $('#post_form');
+    var title   = $.trim($form.find('textarea[name="title"]').val());
+    var content = $.trim(tinymce.get('post_content_editor').getContent());
+    
+    if( title == '' || content == '' )
+    {
+        post_autosaver_working = false;
+        return;
+    }
+    
+    console.log('Starting draft autosave...');
+    $form.find('.post_buttons button:visible').prop('disabled', true);
+    $form.find('.post_autosave_status .saving').show();
+    $form.find('.post_autosave_status .saved').hide();
+    $form.find('.post_autosave_status .error').hide();
+    $form.submit();
 }
 
 $(document).ready(function()

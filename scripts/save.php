@@ -189,8 +189,12 @@ if( function_exists("extract_media_items") )
     $media_items = array_merge($images, $videos);
 }
 
-$repository->set_tags($tags, $post->id_post);
-$media_deletions = $repository->set_media_items($media_items, $post->id_post);
+$media_deletions = array();
+if( $post->status == "published" )
+{
+    $repository->set_tags($tags, $post->id_post);
+    $media_deletions = $repository->set_media_items($media_items, $post->id_post);
+}
 $repository->save($post);
 if( $set_expiration_date ) $repository->set_expiration_date($post->id_post, $set_expiration_date);
 $current_module->load_extensions("save_post", "after_saving");

@@ -85,6 +85,8 @@ switch( $order )
     case  6: $sqlorder = "views desc";           break;
     case  7: $sqlorder = "comments_count asc";   break;
     case  8: $sqlorder = "comments_count desc";  break;
+    case  9: $sqlorder = "creation_date asc";    break;
+    case 10: $sqlorder = "creation_date desc";   break;
 }
 
 $records = $repository->find($where, $limit, $offset, $sqlorder);
@@ -244,10 +246,13 @@ $media_repository = new media_repository();
                 <td>
                     <?= convert_emojis($row->author_display_name) ?>
                 </td>
-                <td>
+                <td align="center">
+                    <?= get_minimized_date($row->creation_date) ?>
+                </td>
+                <td align="center">
                     <?= time_elapsed_string($row->publishing_date) ?>
                 </td>
-                <td>
+                <td align="center">
                     <?= time_elapsed_string($row->last_update) ?>
                 </td>
                 <td align="right">
