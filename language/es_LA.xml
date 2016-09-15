@@ -23,6 +23,7 @@
         <by_date>
             <title>Entradas publicadas en {$date}</title>
             <no_records>No se han encontrado entradas para este periodo.</no_records>
+            <see_media>ir a archivo de medios</see_media>
         </by_date>
         <by_author>
             <title>Entradas publicadas por {$author}</title>

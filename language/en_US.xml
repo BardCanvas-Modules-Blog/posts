@@ -23,6 +23,7 @@
         <by_date>
             <title>Posts published on {$date}</title>
             <no_records>No posts have been found for this date range.</no_records>
+            <see_media>go to media archive</see_media>
         </by_date>
         <by_author>
             <title>Posts published by {$author}</title>

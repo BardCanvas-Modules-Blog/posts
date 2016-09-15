@@ -29,6 +29,7 @@ $template->set("pagination_url_prefix", $pagination_url_prefix);
 
 <h1 class="clearfix">
     <?= replace_escaped_vars($current_module->language->pages->by_date->title, '{$date}', $showing_date) ?>
+    <a class="small" href="<?= $config->full_root_url ?>/date/<?= $_GET["date"] ?>/media/"><?= $current_module->language->pages->by_date->see_media ?></a>
     <span class="pull-right"><?= $posts_data->pagination["this_page_number"]; ?>/<?= $posts_data->pagination["total_pages"]; ?></span>
 </h1>
 
