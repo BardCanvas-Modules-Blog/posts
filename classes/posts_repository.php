@@ -177,7 +177,7 @@ class posts_repository extends abstract_repository
         
         if( $record->status == "published"
             && (empty($record->publishing_date) || $record->publishing_date == "0000-00-00 00:00:00") )
-            $record->publishing_date = date("Y-m-d H:i:s");
+            $record->publishing_date = $record->creation_date;
         
         $obj = $record->get_for_database_insertion();
         
@@ -258,7 +258,7 @@ class posts_repository extends abstract_repository
                 pin_to_home                = '{$obj->pin_to_home               }', 
                 pin_to_main_category_index = '{$obj->pin_to_main_category_index}',
                 
-            #   expiration_date   = '{$obj->expiration_date  }',
+                publishing_date   = '{$obj->publishing_date  }',
                 last_update       = '{$obj->last_update      }',
                 id_featured_image = '{$obj->id_featured_image}'
         ");

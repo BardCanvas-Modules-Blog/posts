@@ -190,7 +190,13 @@ if( function_exists("extract_media_items") )
     $images = extract_media_items("image", $post->content);
     $videos = extract_media_items("video", $post->content);
     $media_items = array_merge($images, $videos);
+    if( ! empty($post->featured_image_thumbnail) ) $media_items[] = $post->featured_image_thumbnail;
+    $media_items = array_unique($media_items);
 }
+
+if( $post->status == "published"
+    && (empty($post->publishing_date) || $post->publishing_date == "0000-00-00 00:00:00") )
+    $post->publishing_date = date("Y-m-d H:i:s");
 
 $repository->save($post);
 if( $set_expiration_date ) $repository->set_expiration_date($post->id_post, $set_expiration_date);
@@ -208,6 +214,8 @@ if( $_POST["is_quick_post"] && $post->status == "draft" )
 
 if( is_array($media_deletions) && ! empty($media_deletions) )
     $media_repository->delete_multiple_if_unused($media_deletions);
+
+
 
 if( $_POST["ok_with_url"] == "true" )
     echo "OK:{$post->get_permalink()}";

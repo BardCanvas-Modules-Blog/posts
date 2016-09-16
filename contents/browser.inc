@@ -467,8 +467,10 @@ function render_post_attached_media(post_record $row)
         
     echo "\n<hr>\n";
     
+    /*
     if( ! empty($row->id_featured_image) ):
         $featured_image = $media_repository->get($row->id_featured_image); ?>
+        <!--
         <div class="media_bullet">
             <span class="bullet fa fa-picture-o fa-fw"></span>
             <a href="<?= $config->full_root_path ?>/user/<?= $featured_image->author_user_name ?>"
@@ -479,8 +481,10 @@ function render_post_attached_media(post_record $row)
             <a class="prettyPhoto" href="<?= $featured_image->get_thumbnail_url() ?>"><?= $featured_image->title ?></a>
             <a href="<?= $featured_image->get_page_url() ?>" target="_blank"><span class="fa fa-external-link fa-fw"></span></a>
         </div>
+        -->
         <?
     endif;
+    */
     
     $media_records = $media_repository->get_multiple($row->media_list);
     foreach($media_records as $media_record):
