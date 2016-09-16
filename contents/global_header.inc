@@ -28,6 +28,22 @@ use hng2_base\template;
 </style>
 
 <script type="text/javascript">
+    
+    var abandon_post_question = '<?= $this_module->language->messages->abandon_post_question ?>';
+    
+    function hook_abandon_post()
+    {
+        $(window).bind('beforeunload.posts', function()
+        {
+            return abandon_post_question;
+        });
+    }
+    
+    function unhook_abandon_post()
+    {
+        $(window).unbind('beforeunload.posts');
+    }
+    
     $(document).ready(function()
     {
         $('#left_sidebar').find('.group.archive_tree .item.year').click(function()

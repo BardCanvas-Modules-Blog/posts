@@ -279,6 +279,7 @@ function trash_post(id_post)
 
 function show_post_form()
 {
+    hook_abandon_post();
     $('#main_workarea').hide('fast');
     $('#form_workarea').show('fast');
     start_post_autosaver();
@@ -286,6 +287,7 @@ function show_post_form()
 
 function hide_post_form()
 {
+    unhook_abandon_post();
     $('#form_workarea').hide('fast');
     $('#main_workarea').show('fast');
 }
@@ -434,7 +436,7 @@ function autosave_post()
 $(document).ready(function()
 {
     $('#post_form').ajaxForm({
-        target:       '#post_form_target',
+        target:          '#post_form_target',
         beforeSerialize: prepare_post_form_serialization,
         beforeSubmit:    prepare_post_form_submission,
         success:         process_post_form_response

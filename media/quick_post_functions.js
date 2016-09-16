@@ -31,6 +31,7 @@ function process_post_form_response(response)
     var url    = response.replace('OK:', '');
     var status = $form.find('input[name="status"]').val();
     
+    unhook_abandon_post();
     if( status == 'draft' ) location.href = $_REQUEST_URI;
     else                    location.href = url;
 }
@@ -55,7 +56,7 @@ $(document).ready(function()
 {
     var $form = $('#post_form');
     $form.ajaxForm({
-        target:       '#post_form_target',
+        target:          '#post_form_target',
         beforeSerialize: prepare_post_form_serialization,
         beforeSubmit:    prepare_post_form_submission,
         success:         process_post_form_response

@@ -182,6 +182,7 @@
     </form>
     
     <messages>
+        <abandon_post_question>Are you sure that you want to discard your post changes?</abandon_post_question>
         <missing>
             <id>Please provide a post id</id>
             <title>Please specify a title for the post</title>

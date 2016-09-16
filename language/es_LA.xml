@@ -183,6 +183,7 @@
     </form>
     
     <messages>
+        <abandon_post_question>¿Deseas descartar los cambios en tu entrada?</abandon_post_question>
         <missing>
             <id>No has proporcionado un identificador de entrada</id>
             <title>Favor de especificar un título para la entrada</title>
