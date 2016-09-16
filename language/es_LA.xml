@@ -118,6 +118,7 @@
         <hidden>Oculta</hidden>
         <trashed>En papelera</trashed>
     </status_labels>
+    <pinned>Anclada</pinned>
     
     <form>
         <add_title>Nueva entrada</add_title>

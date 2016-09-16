@@ -117,6 +117,7 @@
         <hidden>Hidden</hidden>
         <trashed>Trashed</trashed>
     </status_labels>
+    <pinned>Pinned</pinned>
     
     <form>
         <add_title>New post</add_title>

@@ -24,6 +24,9 @@
         $form.find('select[name="limit"] option[value="20"]').prop('selected', true);
         $form.find('input[name="offset"]').val('0');
         $form.find('input[name="order"]').val('');
+        $form.find('input[name="search_author"]').val('');
+        $form.find('input[name="search_status"]').val('');
+        $form.find('input[name="search_pinned"]').val('');
     }
     
     //noinspection JSUnusedGlobalSymbols
