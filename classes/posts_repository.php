@@ -174,6 +174,11 @@ class posts_repository extends abstract_repository
         global $database;
         
         $this->validate_record($record);
+        
+        if( $record->status == "published"
+            && (empty($record->publishing_date) || $record->publishing_date == "0000-00-00 00:00:00") )
+            $record->publishing_date = date("Y-m-d H:i:s");
+        
         $obj = $record->get_for_database_insertion();
         
         $obj->last_update = date("Y-m-d H:i:s");
