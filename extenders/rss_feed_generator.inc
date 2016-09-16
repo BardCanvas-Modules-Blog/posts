@@ -30,7 +30,7 @@ use hng2_rss\channel;
 use hng2_rss\enclosure;
 use hng2_rss\item;
 
-if( preg_match('#^author/#i', $handle) )
+if( preg_match('#^(author|user)/#i', $handle) )
     $content_key = "posts_by_author";
 elseif( preg_match('#^category/#i', $handle) )
     $content_key = "posts_by_category";
