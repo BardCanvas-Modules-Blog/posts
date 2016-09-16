@@ -391,7 +391,7 @@
             <order_desc id="posts_count_desc">Order by published posts count descending</order_desc>
         </posts>
         <principal_data><![CDATA[
-            Last post: [{$time}] <a href="{$url}" target="_blank">{$title}</a>
+            Last post: [{$time}, {$status}] <a href="{$url}" target="_blank">{$title}</a>
         ]]></principal_data>
     </accounts_nav_columns>
     
