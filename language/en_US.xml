@@ -190,6 +190,7 @@
             <main_category>Please specify a main category for the post</main_category>
             <tag>Please provide a tag label (without the #)</tag>
         </missing>
+        <no_urls_in_title>URLs aren't admitted in the title</no_urls_in_title>
         <post_not_found>The post wasn't found in the database</post_not_found>
         <post_not_yours>You can't get this post this way. It must be yours.</post_not_yours>
         <gallery_embeds>

@@ -191,6 +191,7 @@
             <main_category>Favor de especificar una categoría principal para la entrada</main_category>
             <tag>Favor de proveer una etiqueta (sin el símbolo #)</tag>
         </missing>
+        <no_urls_in_title>No se admiten URLs en el título</no_urls_in_title>
         <post_not_found>No se ha encontrado la entrada en la base de datos</post_not_found>
         <post_not_yours>No puedes obtener la entrada de esta forma.</post_not_yours>
         <gallery_embeds>

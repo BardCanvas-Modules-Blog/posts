@@ -35,6 +35,9 @@ if( ! $account->_exists ) die($language->errors->page_requires_login);
 if( empty($_POST["title"]) )
     die($current_module->language->messages->missing->title);
 
+if( preg_match('/http|https|www\./i', stripslashes($_POST["title"])) )
+    die($current_module->language->messages->no_urls_in_title);
+
 if( empty($_POST["main_category"]) )
     die($current_module->language->messages->missing->main_category);
 
