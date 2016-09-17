@@ -17,5 +17,10 @@ use hng2_base\module;
 global $row;
 ?>
 <td nowrap align="right">
-    <?= empty($row->_posts_count) ? "&mdash;" : number_format($row->_posts_count) ?>
+    <?
+    if( empty($row->_posts_count) )
+        echo "&mdash;";
+    else
+        echo "<a href='/posts/?author={$row->id_account}'>" . number_format($row->_posts_count) . "</a>";
+    ?>
 </td>

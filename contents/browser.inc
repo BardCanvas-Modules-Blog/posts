@@ -9,6 +9,7 @@
  * @var \SimpleXMLElement $language
  */
 
+use hng2_base\account;
 use hng2_base\config;
 use hng2_media\media_repository;
 use hng2_modules\posts\post_record;
@@ -23,7 +24,6 @@ $repository = new posts_repository();
  * @var int    $limit
  * @var int    $order
  * @var string $search_for
- * @var string $search_author
  * @var string $search_status
  * @var string $search_pinned
  */
@@ -44,8 +44,8 @@ if( ! empty($search_status) ) $where["status"] = $search_status;
 
 if( $account->level < config::MODERATOR_USER_LEVEL )
     $where["id_author"] = $account->id_account;
-elseif( $account->level >= config::MODERATOR_USER_LEVEL && ! empty($search_author) )
-    $where["id_author"] = $search_author;
+elseif( $account->level >= config::MODERATOR_USER_LEVEL && ! empty($_GET["author"]) )
+    $where["id_author"] = $_GET["author"];
 
 if( $account->level < config::MODERATOR_USER_LEVEL )
     $where[] = "status <> 'hidden'";
@@ -67,21 +67,21 @@ if( ! empty($search_for) )
                 $where_line .= "slug        like '%{$this_term}%' or ";
                 $where_line .= "title       like '%{$this_term}%' or ";
                 $where_line .= "excerpt     like '%{$this_term}%' or ";
-                $where_line .= "content     like '%{$this_term}%'    ";
+                $where_line .= "content     like '%{$this_term}%' or ";
             }
         }
-        $where[] = $where_line;
+        $where[] = "(" . preg_replace('/ or $/', "", $where_line) . ")";
     }
     else
     {
         $search_for = trim($search_for);
-        $where[] 
-            = "id_post     =     '{$search_for}'  or "
+        $where[] = "("
+            . "id_post     =     '{$search_for}'  or "
             . "parent_post =     '{$search_for}'  or "
             . "slug        like '%{$search_for}%' or "
             . "title       like '%{$search_for}%' or "
             . "excerpt     like '%{$search_for}%' or "
-            . "content     like '%{$search_for}%'"
+            . "content     like '%{$search_for}%'    )"
         ;
     }
 }
@@ -137,6 +137,15 @@ $media_repository = new media_repository();
     
     <?= $current_module->language->index->title; ?>
     
+    <?
+    if( ! empty($_GET["author"]) )
+    {
+        $author = new account($_GET["author"]);
+        if( ! $author->_exists ) echo " ~ #{$_GET["author"]}";
+        else                     echo " ~ " . convert_emojis($author->display_name);
+    }
+    ?>
+    
     <button onclick="prepare_post_addition()">
         <span class="fa fa-plus-circle"></span>
         <?= $current_module->language->index->buttons->add ?>
@@ -150,7 +159,7 @@ $media_repository = new media_repository();
         <input type="hidden" name="mode"          value="set_filter">
         <input type="hidden" name="order"         value="<?= $order ?>">
         <input type="hidden" name="offset"        value="0">
-        <input type="hidden" name="search_author" value="<?= $search_author ?>">
+        <input type="hidden" name="author"        value="<?= $_GET["author"] ?>">
         <input type="hidden" name="search_status" value="<?= $search_status ?>">
         <input type="hidden" name="search_pinned" value="<?= $search_pinned ?>">
         
@@ -192,8 +201,8 @@ $media_repository = new media_repository();
     
     <div class="records_browser filter_links" style="margin-top: 10px;">
         <? if($account->level >= config::MODERATOR_USER_LEVEL): ?>
-            <span class="framed_content <? if($search_author == $account->id_account) echo "state_active" ?> pseudo_link"
-                  onclick="set_filter_var('search_status', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_author', '<?= $account->id_account ?>')">
+            <span class="framed_content <? if($_GET["author"] == $account->id_account) echo "state_active" ?> pseudo_link"
+                  onclick="set_filter_var('search_status', '', false); set_filter_var('search_pinned', '', false); set_filter_var('author', '<?= $account->id_account ?>')">
                 <?= $language->mine_sf ?>
                 (<?= number_format($repository->get_record_count(array("id_author" => $account->id_account))) ?>)
             </span>
@@ -203,7 +212,7 @@ $media_repository = new media_repository();
         <? $where_copy = $where; $where_copy["status"] = "published";
            if($search_pinned == "true") unset($where_copy[0]); ?>
         <span class="framed_content <? if($search_status == "published") echo "state_active" ?> pseudo_link"
-              onclick="set_filter_var('search_author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', 'published')">
+              onclick="set_filter_var('author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', 'published')">
             <?= $current_module->language->status_labels->published ?>
             (<?= number_format($repository->get_record_count($where_copy)) ?>)
         </span>
@@ -212,7 +221,7 @@ $media_repository = new media_repository();
             $where_copy = $where; $where_copy[] = "( pin_to_home > 0 or pin_to_main_category_index > 0 )";
             unset( $where_copy["status"] ); ?>
             <span class="framed_content <? if($search_pinned == "true") echo "state_active" ?> pseudo_link"
-                  onclick="set_filter_var('search_author', '', false); set_filter_var('search_status', '', false); set_filter_var('search_pinned', 'true')">
+                  onclick="set_filter_var('author', '', false); set_filter_var('search_status', '', false); set_filter_var('search_pinned', 'true')">
                 <?= $current_module->language->pinned ?>
                 (<?= number_format($repository->get_record_count($where_copy)) ?>)
             </span>
@@ -221,7 +230,7 @@ $media_repository = new media_repository();
         <? $where_copy = $where; $where_copy["status"] = "draft";
            if($search_pinned == "true") unset($where_copy[0]); ?>
         <span class="framed_content <? if($search_status == "draft") echo "state_active" ?> pseudo_link"
-              onclick="set_filter_var('search_author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', 'draft')">
+              onclick="set_filter_var('author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', 'draft')">
             <?= $current_module->language->status_labels->draft ?>
             (<?= number_format($repository->get_record_count($where_copy)) ?>)
         </span>
@@ -230,7 +239,7 @@ $media_repository = new media_repository();
            if($search_pinned == "true") unset($where_copy[0]);
            $reviewing = $repository->get_record_count($where_copy); ?>
         <span class="framed_content <? if($search_status == "reviewing") echo "state_active" ?> <? if($reviewing) echo "state_ko"; ?> pseudo_link"
-              onclick="set_filter_var('search_author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', 'reviewing')">
+              onclick="set_filter_var('author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', 'reviewing')">
             <?= $current_module->language->status_labels->reviewing ?>
             (<?= number_format($reviewing) ?>)
         </span>
@@ -238,7 +247,7 @@ $media_repository = new media_repository();
         <? $where_copy = $where; $where_copy["status"] = "trashed";
            if($search_pinned == "true") unset($where_copy[0]); ?>
         <span class="framed_content <? if($search_status == "trashed") echo "state_active" ?> pseudo_link"
-              onclick="set_filter_var('search_author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', 'trashed')">
+              onclick="set_filter_var('author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', 'trashed')">
             <?= $current_module->language->status_labels->trashed ?>
             (<?= number_format($repository->get_record_count($where_copy)) ?>)
         </span>
@@ -247,13 +256,13 @@ $media_repository = new media_repository();
             $where_copy = $where; $where_copy["status"] = "hidden";
             if($search_pinned == "true") unset($where_copy[0]); ?>
             <span class="framed_content <? if($search_status == "hidden") echo "state_active" ?> pseudo_link"
-                  onclick="set_filter_var('search_author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', 'hidden')">
+                  onclick="set_filter_var('author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', 'hidden')">
                 <?= $current_module->language->status_labels->hidden ?>
                 (<?= number_format($repository->get_record_count($where_copy)) ?>)
             </span>
         <? endif; ?>
         
-        <span class="framed_content pseudo_link" onclick="set_filter_var('search_author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', '')">
+        <span class="framed_content pseudo_link" onclick="set_filter_var('author', '', false); set_filter_var('search_pinned', '', false); set_filter_var('search_status', '')">
             <?= $language->all_f ?>
         </span>
         
