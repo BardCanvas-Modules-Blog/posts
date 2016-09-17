@@ -109,6 +109,14 @@
             <remove_tag>Remover etiqueta #{$tag}</remove_tag>
         </extras>
         <pinned_to_home>Principal</pinned_to_home>
+        <filters>
+            <from_everyone>Por cualquiera</from_everyone>
+            <mine>Mías</mine>
+            <from_user>Por {$user}</from_user>
+            <pinned_or_not>Anclados o no</pinned_or_not>
+            <pinned>Anclados</pinned>
+            <any_status>Todo</any_status>
+        </filters>
     </record_nav>
     
     <status_labels>

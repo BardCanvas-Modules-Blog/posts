@@ -24,9 +24,14 @@
         $form.find('select[name="limit"] option[value="20"]').prop('selected', true);
         $form.find('input[name="offset"]').val('0');
         $form.find('input[name="order"]').val('');
-        $form.find('input[name="author"]').val('');
-        $form.find('input[name="search_status"]').val('');
-        $form.find('input[name="search_pinned"]').val('');
+        
+        $select = $form.find('select[name="search_author"]');
+        if( $select.length > 0 ) $select.find('option:first').prop('selected', true);
+        
+        $select = $form.find('select[name="search_pinned"]');
+        if( $select.length > 0 ) $select.find('option:first').prop('selected', true);
+    
+        $form.find('select[name="search_status"] option:first').prop('selected', true);
     }
     
     //noinspection JSUnusedGlobalSymbols
@@ -45,7 +50,7 @@
     if( ! empty($_GET["edit_post"]) )  $url .= "&edit_post={$_GET["edit_post"]}";
     if( ! empty($_GET["create"]) )     $url .= "&create={$_GET["create"]}";
     if( ! empty($_GET["trash_post"]) ) $url .= "&trash_post={$_GET["trash_post"]}";
-    if( ! empty($_GET["author"]) )     $url .= "&author={$_GET["author"]}";
+    if( ! empty($_GET["author"]) )     $url .= "&search_author={$_GET["author"]}";
     ?>
     <div id="posts_browser" class="ajax_record_browser" data-src="<?= $url ?>">
         <div class="framed_content state_highlight" style="padding: 100px 0; text-align: center;">

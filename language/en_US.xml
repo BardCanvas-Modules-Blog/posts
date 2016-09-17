@@ -108,6 +108,14 @@
             <remove_tag>Remove tag #{$tag}</remove_tag>
         </extras>
         <pinned_to_home>Home</pinned_to_home>
+        <filters>
+            <from_everyone>By everyone</from_everyone>
+            <mine>Mine</mine>
+            <from_user>By {$user}</from_user>
+            <pinned_or_not>Pined or not</pinned_or_not>
+            <pinned>Pinned</pinned>
+            <any_status>All</any_status>
+        </filters>
     </record_nav>
     
     <status_labels>
