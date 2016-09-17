@@ -216,6 +216,23 @@ $media_repository = new media_repository();
     <? return; ?>
 <? endif;  ?>
 
+<?
+if( $account->level >= config::MODERATOR_USER_LEVEL && $search_status != "reviewing" ):
+    $pending = $repository->get_record_count(array("status" => "reviewing"));
+    if( $pending > 0 ):
+        $message = replace_escaped_vars($current_module->language->messages->pending, '{$amount}', $pending);
+        ?>
+        <div class="framed_content state_ko">
+            <span class="pseudo_link" onclick="var $form = $('#filter_form'); reset_filter(); $form.find('select[name=search_status] option[value=reviewing]').prop('selected', true); $form.submit();">
+                <span class="fa fa-warning"></span>
+                <?= $message ?>
+            </span>
+        </div>
+        <?
+    endif;
+endif;
+?>
+
 <div class="table_wrapper">
     <table id="posts_browser_table" class="nav_table evened">
         
@@ -264,14 +281,15 @@ $media_repository = new media_repository();
                             <?= $current_module->language->record_nav->actions->copy ?>
                         </span>
                         
-                        <? if($row->status != "trashed"): ?>
-                            <? if($row->comments_count == 0 || $account->level >= config::MODERATOR_USER_LEVEL): ?>
+                        <? if($row->status != "trashed"):
+                            if($row->comments_count == 0 || $account->level >= config::MODERATOR_USER_LEVEL): ?>
                                 <span class="action pseudo_link" onclick="trash_post('<?= $row->id_post ?>')">
                                     <span class="fa fa-trash"></span>
                                     <?= $current_module->language->record_nav->actions->trash ?>
                                 </span>
-                            <? endif; ?>
-                        <? endif; ?>
+                                <?
+                            endif;
+                        endif; ?>
                     </div>
                 </td>
                 <td data-column="details">

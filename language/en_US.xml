@@ -191,6 +191,7 @@
     </form>
     
     <messages>
+        <pending>There are {$amount} posts flagged for review. Click here to see them.</pending>
         <abandon_post_question>Are you sure that you want to discard your post changes?</abandon_post_question>
         <missing>
             <id>Please provide a post id</id>

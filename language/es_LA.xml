@@ -192,6 +192,7 @@
     </form>
     
     <messages>
+        <pending>Hay {$amount} entradas marcadas para revisión. Da click aquí para revisarlas.</pending>
         <abandon_post_question>¿Deseas descartar los cambios en tu entrada?</abandon_post_question>
         <missing>
             <id>No has proporcionado un identificador de entrada</id>
