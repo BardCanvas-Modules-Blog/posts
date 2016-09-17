@@ -225,6 +225,8 @@
             Esta entrada está en revisión. Sólo tú y moderadores/administradores podrán verlo.<br>
             Recibirás una notificación cuando el proceso de revisión termine.
         ]]></post_being_reviewed>
+        <posts_hidden>{$count} entradas de {$author} han sido ocultadas.</posts_hidden>
+        <posts_unhidden>{$count} entradas de {$author} han sido restauradas.</posts_unhidden>
     </messages>
     
     <settings_data>

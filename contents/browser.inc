@@ -37,15 +37,18 @@ $where = array();
 if( empty($search_pinned) ) $where[] = "true";
 else                        $where[] = "( pin_to_home > 0 or pin_to_main_category_index > 0 )";
 
-if( ! empty($search_status) ) $where["status"] = $search_status;
-
 if( $account->level < config::MODERATOR_USER_LEVEL && $search_status == "hidden" )
     $search_status = "";
+
+if( ! empty($search_status) ) $where["status"] = $search_status;
 
 if( $account->level < config::MODERATOR_USER_LEVEL )
     $where["id_author"] = $account->id_account;
 elseif( $account->level >= config::MODERATOR_USER_LEVEL && ! empty($search_author) )
     $where["id_author"] = $search_author;
+
+if( $account->level < config::MODERATOR_USER_LEVEL )
+    $where[] = "status <> 'hidden'";
 
 $search_for = empty($search_for) ? "" : trim($search_for);
 if( ! empty($search_for) )

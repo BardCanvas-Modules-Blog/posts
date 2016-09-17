@@ -222,6 +222,8 @@
             This post is being reviewed. Only you and mods/admins will be able to view it.<br>
             You may receive a notification when the review process ends.
         ]]></post_being_reviewed>
+        <posts_hidden>{$count} posts from {$author} have been hidden.</posts_hidden>
+        <posts_unhidden>{$count} posts from {$author} have been restored.</posts_unhidden>
     </messages>
     
     <settings_data>
