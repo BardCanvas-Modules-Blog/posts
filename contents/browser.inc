@@ -500,7 +500,7 @@ function render_post_attached_media(post_record $row)
     
     $media_records = $media_repository->get_multiple($row->media_list);
     foreach($media_records as $media_record):
-        $icon = $media_record->type == "image" ? "fa-picture-o" : "fa-film"; ?>
+        $icon = $media_record->type == "image" ? "fa-picture-o" : "fa-video-camera"; ?>
         <div class="media_bullet">
             <span class="bullet fa <?= $icon ?> fa-fw"></span>
             <a href="<?= $config->full_root_path ?>/user/<?= $media_record->author_user_name ?>"
