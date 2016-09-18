@@ -37,7 +37,7 @@ function edit_post(id_post)
     var url    = $_FULL_ROOT_PATH + '/posts/scripts/get_as_json.php';
     var params = {
         'id_post': id_post,
-        'wasuuup': parseInt(Math.random() * 1000000000000000)
+        'wasuuup': wasuuup()
     };
     
     $.blockUI(blockUI_default_params);
@@ -79,7 +79,7 @@ function copy_post(id_post)
     var url    = $_FULL_ROOT_PATH + '/posts/scripts/get_as_json.php';
     var params = {
         'id_post': id_post,
-        'wasuuup': parseInt(Math.random() * 1000000000000000)
+        'wasuuup': wasuuup()
     };
     
     $.blockUI(blockUI_default_params);
@@ -183,7 +183,7 @@ function update_category_selector(preselected_id)
     
     var url = $_FULL_ROOT_PATH + '/categories/scripts/tree_as_json.php'
             + '?with_description=true'
-            + '&wasuuup=' + parseInt(Math.random() * 1000000000000000);
+            + '&wasuuup=' + wasuuup();
     $.getJSON(url, function(data)
     {
         if( data.message != 'OK' )
@@ -256,7 +256,7 @@ function trash_post(id_post)
     var url = $_FULL_ROOT_PATH + '/posts/scripts/trash.php';
     var params = {
         'id_post': id_post,
-        'wasuuup': parseInt(Math.random() * 1000000000000000)
+        'wasuuup': wasuuup()
     };
     
     var $row = $('#posts_browser_table').find('tr[data-record-id="' + id_post + '"]');
@@ -367,7 +367,7 @@ function process_post_form_response(response, status, xhr, $form)
     {
         $form.attr('data-prevew-mode', '');
         
-        var url = $_FULL_ROOT_PATH + '/' + id_post + '?preview=true&wasuuup=' + parseInt(Math.random() * 1000000000000000);
+        var url = $_FULL_ROOT_PATH + '/' + id_post + '?preview=true&wasuuup=' + wasuuup();
         window.open(url, 'post_preview_' + id_post).focus();
         return;
     }

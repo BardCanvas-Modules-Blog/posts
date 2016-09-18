@@ -63,7 +63,7 @@ use hng2_base\template;
                 + '/posts/scripts/remove_tag.php'
                 + '?id_post=' + id_post
                 + '&tag=' + tag
-                + '&wasuuup=' + parseInt(Math.random() * 1000000000000000)
+                + '&wasuuup=' + wasuuup()
                 ;
         $trigger.block(blockUI_smallest_params);
         $.get(url, function(response)
