@@ -138,7 +138,7 @@ class post_record extends abstract_record
     
     public function set_new_id()
     {
-        $this->id_post = make_unique_id("40");
+        $this->id_post = make_unique_id("P");
     }
     
     /**
