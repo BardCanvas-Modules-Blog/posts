@@ -127,8 +127,7 @@ class post_record extends abstract_record
     
     public function set_new_id()
     {
-        list($sec, $usec) = explode(".", microtime(true));
-        $this->id_post = "1030" . $sec . sprintf("%05.0f", $usec) . mt_rand(1000, 9999);;
+        $this->id_post = make_unique_id("40");
     }
     
     /**
