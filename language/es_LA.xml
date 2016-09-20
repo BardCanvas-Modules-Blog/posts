@@ -150,6 +150,10 @@
                 <caption>Resumen:</caption>
                 <placeholder>Introduce un extracto de los contenidos. Déjalo vacío para generarlo automáticamente.</placeholder>
             </excerpt>
+            <slug>
+                <caption>Slug (dirección "amigable" para la entrada):</caption>
+                <placeholder>Sólo minúsculas, números, guiones, guiones bajos. No acentos o eñes.</placeholder>
+            </slug>
             <visibility>
                 <caption>Visibilidad:</caption>
                 <options>

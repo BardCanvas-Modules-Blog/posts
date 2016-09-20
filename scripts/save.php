@@ -83,9 +83,14 @@ if( empty($post->excerpt) ) $post->excerpt = make_excerpt_of(
     empty($excerpt_length) ? 250 : $excerpt_length
 );
 
-if( empty($post->slug) ) $post->slug = wp_sanitize_filename($post->title);
-$existing_slugs = $repository->get_record_count(array("slug like '{$post->slug}%'"));
-if( $existing_slugs > 0 ) $post->slug .= "_" . $existing_slugs;
+if( empty($post->slug) )
+{
+    $post->slug = wp_sanitize_filename($post->title);
+    $existing_slugs = $repository->get_record_count(array(
+        "id_post <>  '{$post->id_post}' and slug like '{$post->slug}%'"
+    ));
+    if( $existing_slugs > 0 ) $post->slug .= "-" . ($existing_slugs + 1);
+}
 
 $current_module->load_extensions("save_post", "after_record_forging");
 

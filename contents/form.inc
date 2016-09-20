@@ -78,6 +78,16 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
                     <input type="password" name="password" placeholder="<?= $current_module->language->form->fields->password->placeholder ?>">
                 </div>
                 
+                <div class="field" data-field="slug">
+                    <div class="caption">
+                        <?= $current_module->language->form->fields->slug->caption ?>
+                    </div>
+                    <div class="input">
+                        <input type="text" name="slug" value="" maxlength="128"
+                               placeholder="<?= $current_module->language->form->fields->slug->placeholder ?>">
+                    </div>
+                </div>
+                
                 <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
                     <div class="caption"><?= $current_module->language->form->fields->allow_comments->caption ?></div>
                     <div class="input">

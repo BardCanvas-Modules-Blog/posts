@@ -114,8 +114,6 @@ function reset_post_form()
     $form[0].reset();
     
     $form.find('input[name="id_post"]').val('');
-    $form.find('input[name="slug"]').data('modified', false);
-    
     $form.find('.subfield select[name="visibility"] option:first').prop('selected', true);
     
     toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="allow_comments"]'), true);
@@ -143,6 +141,7 @@ function fill_post_form($form, record)
     $form.find('input[name="id_post"]').val( record.id_post );
     $form.find('input[name="status"]').val( record.status );
     $form.find('textarea[name="title"]').val( record.title );
+    $form.find('input[name="slug"]').val( record.slug );
     $form.find('textarea[name="excerpt"]').val( record.excerpt );
     
     $form.find('input[name="password"]').val( record.password );
@@ -290,22 +289,6 @@ function hide_post_form()
     unhook_abandon_post();
     $('#form_workarea').hide('fast');
     $('#main_workarea').show('fast');
-}
-
-function update_slug()
-{
-    var $form = $('#post_form');
-    if( $form.find('input[name="id_post"]').val() != '' ) return;
-    if( $form.find('input[name="slug"]').data('modified') ) return;
-    
-    var title = $form.find('input[name="title"]');
-    var slug  = title.toLowerCase();
-    
-    slug = slug.replace(/[^a-z0-9\-_]/g, "-");
-    slug = slug.replace(/\-+/g, "-");
-    slug = slug.replace(/_+/g, "_");
-    
-    $form.find('input[name="slug"]').val(slug);
 }
 
 function prepare_post_form_serialization()

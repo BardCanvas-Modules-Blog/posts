@@ -149,6 +149,10 @@
                 <caption>Excerpt:</caption>
                 <placeholder>Type an excerpt of the contents. Leave it blank for automatic generation.</placeholder>
             </excerpt>
+            <slug>
+                <caption>Slug ("friendly" name for the post):</caption>
+                <placeholder>Lowercased letters, numbers, hyphens and underscores only.</placeholder>
+            </slug>
             <visibility>
                 <caption>Visibility:</caption>
                 <options>
