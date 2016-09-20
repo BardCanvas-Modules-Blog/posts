@@ -45,11 +45,9 @@ $tables = array(
             
             publishing_date   datetime default null,
             expiration_date   datetime default null,
-            views             int unsigned not null default 0,
             comments_count    int unsigned not null default 0,
             
             last_update       datetime default null,
-            last_viewed       datetime default null,
             last_commented    datetime default null,
             
             id_featured_image varchar(32) not null default '',
@@ -60,6 +58,15 @@ $tables = array(
             index   by_author  ( id_author ),
             index   by_ip      ( creation_ip(7) )
             
+        ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
+    ",
+    "post_views" => "
+        create table if not exists post_views (
+            id_post           varchar(32) not null default '',
+            views             int unsigned not null default 0,
+            last_viewed       datetime default null,
+            
+            primary key        ( id_post )
         ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
     ",
     "post_media" => "

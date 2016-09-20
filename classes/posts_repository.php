@@ -32,6 +32,12 @@ class posts_repository extends abstract_repository
         #region Additional fields
         #------------------------
         
+        # Views
+        $this->additional_select_fields[] = "
+        ( select concat(views, '\\t', last_viewed)
+           from post_views where post_views.id_post = posts.id_post
+           ) as _views_data";
+        
         # Author slug/alias/email/level
         $this->additional_select_fields[] = "
         ( select concat(user_name, '\\t', display_name, '\\t', email, '\\t', level)
@@ -1061,11 +1067,17 @@ class posts_repository extends abstract_repository
         
         $now = date("Y-m-d H:i:s");
         return $database->exec("
-            update {$this->table_name} set
+            insert into post_views (
+                id_post,
+                views,
+                last_viewed
+            ) values (
+                '$id_post',
+                1,
+                '$now'
+            ) on duplicate key update
                 views       = views + 1,
                 last_viewed = '$now'
-            where
-                id_post = '$id_post'
         ");
     }
     
