@@ -66,7 +66,7 @@ use hng2_modules\posts\posts_data;
                 else
                 {
                     $tree_filter = array("id_category <> '0000000000000'");
-                    $categories = $categories_repository->get_as_tree_for_select($tree_filter, "", true);
+                    $categories = $categories_repository->get_as_tree_for_select($tree_filter, "title asc", true);
                     if( empty($categories) ) $mem_cache->set($mem_key, "none", 0, 60*60);
                     else                     $mem_cache->set($mem_key, $categories, 0, 60*60);
                 }
