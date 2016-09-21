@@ -183,8 +183,7 @@ if( ! empty($_FILES["attachments"]) )
                     data-media-type='image' data-id-media='{$item->id_media}'></p>\n";
             else
                 $post->content .= "\n<p><img src='{$item->get_thumbnail_url()}' 
-                    data-media-type='video' data-id-media='{$item->id_media}' 
-                    data-href='{$item->get_item_embeddable_url(true)}'></p>\n";
+                    data-media-type='video' data-id-media='{$item->id_media}'></p>\n";
         }
     }
 }
