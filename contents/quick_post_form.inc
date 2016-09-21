@@ -20,12 +20,17 @@ use hng2_base\module;
 use hng2_base\template;
 use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\posts_data;
+
+$class = "";
+if( isset($posts_data->slider_posts) )
+    if( count($posts_data->slider_posts) == 1 )
+        $class = "spaced"
 ?>
 
 <script type="text/javascript" src="<?= $config->full_root_path ?>/lib/jquery.exptextarea.js"></script>
 <script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/quick_post_functions~v<?=$config->scripts_version?>.js"></script>
 
-<div id="quick_post_form_container">
+<div id="quick_post_form_container" class="<?= $class ?>">
     
     <div id="post_form_target" style="display: none;"></div>
     
