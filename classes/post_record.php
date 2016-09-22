@@ -12,7 +12,7 @@ class post_record extends abstract_record
 {
     public $id_post           ; # bigint unsigned not null default 0,
     public $parent_post       ; # bigint unsigned not null default 0,
-    public $id_author         ; # varchar(32) not null default '',
+    public $id_author         ; # bigint unsigned not null default 0,
     
     public $slug              ; # varchar(128) not null default '',
     public $title             ; # varchar(255) not null default '',
@@ -40,7 +40,7 @@ class post_record extends abstract_record
     public $last_update       ; # datetime,
     public $last_commented    ; # datetime,
     
-    public $id_featured_image ; # varchar(32) not null default '',
+    public $id_featured_image ; # bigint unsigned not null default 0,
     
     # TODO:                                                                                                        :
     # TODO:  IMPORTANT! All dinamically generated members below should be undefined in get_for_database_insertion! :
@@ -138,7 +138,7 @@ class post_record extends abstract_record
     
     public function set_new_id()
     {
-        $this->id_post = make_unique_id("P");
+        $this->id_post = make_unique_id("50");
     }
     
     /**
