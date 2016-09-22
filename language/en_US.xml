@@ -328,6 +328,14 @@
             ]]></description>
             <type>code</type>
         </specs>
+        <specs key="home_excluded_categories">
+            <title>Categories to exclude from the main index</title>
+            <description><![CDATA[
+                Specify a list of category slugs which posts should be excluded from the main (home)
+                index, one per line.
+            ]]></description>
+            <type>code</type>
+        </specs>
         <specs key="time_allowed_for_editing_after_publishing">
             <title>Time allowed for editing after publishing</title>
             <description><![CDATA[

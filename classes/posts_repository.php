@@ -617,6 +617,18 @@ class posts_repository extends abstract_repository
                        and   post_tags.tag     = '{$settings->get("modules:posts.featured_posts_tag")}'
                    )";
         
+        $category_exclussions = trim($settings->get("modules:posts.home_excluded_categories"));
+        if( ! empty($category_exclussions) )
+        {
+            $list = explode("\n", $category_exclussions);
+            foreach($list as &$slug) $slug = "'" . trim($slug) . "'";
+            $list = implode(", ", $list);
+            $return->where[]
+                = "main_category not in (select id_category from categories where slug in (
+                       $list
+                   ))";
+        }
+        
         return $return;
     }
     

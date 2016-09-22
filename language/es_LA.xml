@@ -322,6 +322,14 @@
                 <max>255</max>
             </options>
         </specs>
+        <specs key="home_excluded_categories">
+            <title>Categorías a excluír de índice principal</title>
+            <description><![CDATA[
+                Especifica una lista de slugs de categorías cuyos posts se excluirán del índice principal (inicio),
+                uno por línea.
+            ]]></description>
+            <type>code</type>
+        </specs>
         <specs key="enforced_expiration_by_category">
             <title>Tiempo de vida forzado por categoría</title>
             <description><![CDATA[
