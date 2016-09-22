@@ -46,7 +46,7 @@ if( isset($posts_data->slider_posts) )
             <textarea name="title" class="expandible_textarea no_fw_font"
                       placeholder="<?= $this_module->language->form->fields->title->quick_form_placeholder ?>"
                       data-expanded-placeholder="<?= $this_module->language->form->fields->title->quick_form_expanded_placeholder ?>"
-                      onfocus="$(this).closest('form').find('.rest').show(); $(this).attr('placeholder', $(this).attr('data-expanded-placeholder')); hook_abandon_post();"></textarea>
+                      onfocus="$(this).closest('form').find('.rest').show(); $(this).toggleClass('ready', true); $(this).attr('placeholder', $(this).attr('data-expanded-placeholder')); hook_abandon_post();"></textarea>
         </div>
         
         <div class="rest" style="display: none;">
