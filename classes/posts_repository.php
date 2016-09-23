@@ -431,17 +431,22 @@ class posts_repository extends abstract_repository
         if( ! empty($inserts) )
         {
             $database->exec(
-                "insert into post_media (id_post, id_media, date_attached, order_attached) values "
+                "insert ignore into post_media (id_post, id_media, date_attached, order_attached) values "
                 . implode(", ", $inserts)
             );
             $this->last_query = $database->get_last_query();
             $update_caches = true;
         }
         
+        $return  = array();
         $deletes = array();
         if( ! empty($actual_items) )
         {
-            foreach($actual_items as $id => $object) $deletes[] = "'$id'";
+            foreach($actual_items as $id => $object)
+            {
+                $deletes[] = "'$id'";
+                $return[] = $id;
+            }
             $database->exec(
                 "delete from post_media where id_post = '$id_post' and id_media in (" . implode(", ", $deletes) . ")"
             );
@@ -450,7 +455,7 @@ class posts_repository extends abstract_repository
         }
         
         if( $update_caches ) $this->update_cache_versions();
-        return $deletes;
+        return $return;
     }
     
     public function unset_all_media_items($id_post)
