@@ -34,9 +34,13 @@ class posts_repository extends abstract_repository
         
         # Views
         $this->additional_select_fields[] = "
-        ( select concat(views, '\\t', last_viewed)
+        ( select views
            from post_views where post_views.id_post = posts.id_post
-           ) as _views_data";
+           ) as views";
+        $this->additional_select_fields[] = "
+        ( select last_viewed
+           from post_views where post_views.id_post = posts.id_post
+           ) as last_viewed";
         
         # Author slug/alias/email/level
         $this->additional_select_fields[] = "
