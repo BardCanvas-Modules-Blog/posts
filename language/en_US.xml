@@ -304,7 +304,10 @@
             </options>
         </specs>
         <specs key="featured_posts_ttl">
-            <title>Featured posts Time To Live (expiration time)</title>
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Featured posts Time To Live (expiration time)
+            ]]></title>
             <description><![CDATA[
                 Set an expiration in hours for featured posts. They will remain there until the time goes out,
                 then they'll just appear in normal indexes.<br>
@@ -345,7 +348,10 @@
             <type>number</type>
         </specs>
         <specs key="archives_tree_widget_cache_ttl">
-            <title>Archives tree widget cache TTL</title>
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Archives tree widget cache TTL
+            ]]></title>
             <description><![CDATA[
                 Amount of hours the archives tree widget should be cached.<br>
                 Defaults to <code>3</code> hours. Set to <code>0</code> to disable caching.<br>
@@ -365,6 +371,32 @@
                 them out of the site AND the slider when the time runs out.
             ]]></description>
             <type>code</type>
+        </specs>
+        <specs key="main_index_cache_for_guests">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Main index cache TTL for guests
+            ]]></title>
+            <description><![CDATA[
+                Amount of minutes to hold main index page caches for guests.<br>
+                Set to <code>0</code> to disable caching (not recommended).<br>
+                Recommended value: depends on the amount of posts being published, their timing and anonymous vs registered traffic.<br>
+                <code>5</code> minutes should be enough for constantly updated sites.<br>
+                Set to <code>60</code> or more for less updated sites.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        <specs key="main_index_cache_for_guests_version">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Version number for the guests main index cache
+            ]]></title>
+            <description><![CDATA[
+                It is automatically incremented. If you want to bump it, just add <code>1</code> to it.<br>
+                <span class="fa fa-info-circle"></span>
+                Only used if the Main index cache for guests is set above 0.
+            ]]></description>
+            <type>number</type>
         </specs>
     </settings_data>
     

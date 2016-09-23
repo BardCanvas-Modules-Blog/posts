@@ -310,7 +310,10 @@
             </options>
         </specs>
         <specs key="featured_posts_ttl">
-            <title>Tiempo de vida para entradas destacadas (expiración)</title>
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Tiempo de vida para entradas destacadas (expiración)
+            ]]></title>
             <description><![CDATA[
                 Especifica la cantidad de horas para las entradas destacadas en la página principal.
                 Una vez transcurrido el periodo, se removerán de el área y aparecerán en los índices normales.<br>
@@ -352,7 +355,10 @@
             <type>number</type>
         </specs>
         <specs key="archives_tree_widget_cache_ttl">
-            <title>Tiempo de vida del cache para el widget histórico (expiración)</title>
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Tiempo de vida del cache para el widget histórico (expiración)
+            ]]></title>
             <description><![CDATA[
                 Cantidad de horas que se conservará el árbol de histórico en este widget.<br>
                 Valor por defecto: <code>3</code> horas. Especificar <code>0</code> para deshabilitar este caché.<br>
@@ -376,6 +382,33 @@
                 carrusel como del sitio.
             ]]></description>
             <type>code</type>
+        </specs>
+        <specs key="main_index_cache_for_guests">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Tiempo de vida del caché para invitados en la página principal
+            ]]></title>
+            <description><![CDATA[
+                Cantidad de minutos para mantener las páginas del índice principal para invitados.<br>
+                Establecer a <code>0</code> para deshabilitar el cacheo principal (no recomendado).<br>
+                Valor recomendado: depende de la cantidad de posts que se publican, su frecuencia y el tráfico de
+                visitantes anónimos vs registrados.<br>
+                <code>5</code> minutos deberían bastar para sitios con mucho tráfico.<br>
+                Establecer a <code>60</code> o más para sitios menos actualizados.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        <specs key="main_index_cache_for_guests_version">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Número de versión para el caché de invitados de la página principal
+            ]]></title>
+            <description><![CDATA[
+                Es automáticamente incrementado. Si quieres regenerarlo, súmale un <code>1</code>.<br>
+                <span class="fa fa-info-circle"></span>
+                Sólo es usado si el tiempo de vida del caché para invitados en la página principal es mayor a cero.
+            ]]></description>
+            <type>number</type>
         </specs>
     </settings_data>
     
