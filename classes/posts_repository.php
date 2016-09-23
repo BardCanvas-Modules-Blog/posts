@@ -784,7 +784,7 @@ class posts_repository extends abstract_repository
      */
     public function get_for_home($pinned_first = false)
     {
-        global $settings, $account;
+        global $config, $modules, $settings, $account;
         
         //$offset        = empty($_GET["offset"]) ? 0 : $_GET["offset"];
         //$cache_area    = "home_{$offset}";
@@ -796,6 +796,12 @@ class posts_repository extends abstract_repository
         
         $find_params = $this->build_find_params_for_home();
         if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
+        
+        $config->globals["posts_repository/home_index_find_params"] =& $find_params;
+        $modules["posts"]->load_extensions("posts_repository", "home_prebuilding");
+        $find_params = $config->globals["posts_repository/home_index_find_params"];
+        unset( $config->globals["posts_repository/home_index_find_params"] );
+        
         $posts_data = $this->get_posts_data($find_params, "index_builders", "home");
         
         $find_params = $this->build_find_params_for_featured_posts();
