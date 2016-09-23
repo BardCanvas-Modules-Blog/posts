@@ -116,6 +116,7 @@
             <pinned_or_not>Anclados o no</pinned_or_not>
             <pinned>Anclados</pinned>
             <any_status>Todo</any_status>
+            <any_category>Cualquier categoría</any_category>
         </filters>
     </record_nav>
     

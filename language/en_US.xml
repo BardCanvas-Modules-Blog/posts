@@ -115,6 +115,7 @@
             <pinned_or_not>Pined or not</pinned_or_not>
             <pinned>Pinned</pinned>
             <any_status>All</any_status>
+            <any_category>Any category</any_category>
         </filters>
     </record_nav>
     

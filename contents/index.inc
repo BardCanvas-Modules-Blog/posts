@@ -25,12 +25,15 @@
         $form.find('input[name="offset"]').val('0');
         $form.find('input[name="order"]').val('');
         
+        $select = $form.find('select[name="search_category"]');
+        if( $select.length > 0 ) $select.find('option:first').prop('selected', true);
+        
         $select = $form.find('select[name="search_author"]');
         if( $select.length > 0 ) $select.find('option:first').prop('selected', true);
         
         $select = $form.find('select[name="search_pinned"]');
         if( $select.length > 0 ) $select.find('option:first').prop('selected', true);
-    
+        
         $form.find('select[name="search_status"] option:first').prop('selected', true);
     }
     

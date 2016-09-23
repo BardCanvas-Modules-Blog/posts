@@ -12,6 +12,7 @@
 use hng2_base\account;
 use hng2_base\config;
 use hng2_media\media_repository;
+use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\post_record;
 use hng2_modules\posts\posts_repository;
 use hng2_tools\record_browser;
@@ -27,6 +28,7 @@ $repository = new posts_repository();
  * @var string $search_author
  * @var string $search_pinned
  * @var string $search_status
+ * @var string $search_category
  */
 #region Nav filters
 $built_vars = $browser->build_vars(20, 4);
@@ -84,6 +86,9 @@ else
     if( ! empty($search_pinned) ) $where[]            = "pin_to_home > 0 or pin_to_main_category_index > 0";
     if( ! empty($search_status) ) $where["status"]    = $search_status;
 }
+
+if( ! empty($search_category) ) $where[] = "main_category = '$search_category'";
+
 #endregion
 
 #region Nav pointers
@@ -113,6 +118,9 @@ $per_column_function_hooks = array();
 $current_module->load_extensions("browser", "per_record_function_hooks");
 
 $media_repository = new media_repository();
+
+$categories_repository = new categories_repository();
+$categories            = $categories_repository->get_as_tree_for_select(array(), "title asc");
 #endregion
 ?>
 
@@ -163,6 +171,15 @@ $media_repository = new media_repository();
                value="<?= htmlspecialchars($search_for) ?>" size="46"
                placeholder="<?= $current_module->language->record_nav->search_placeholder ?>">
         
+        <select name="search_category" onchange="$('#filter_form').submit();">
+            <option <? if(empty($search_category)) echo "selected"; ?> selected value="">
+                &lt;<?= $current_module->language->record_nav->filters->any_category ?>&gt;
+            </option>
+            <? foreach($categories as $id_category => $description): ?>
+                <option <? if($search_category == $id_category) echo "selected"; ?> value="<?= $id_category ?>"><?= $description ?></option>
+            <? endforeach; ?>
+        </select>
+        
         <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
             <select name="search_author" onchange="$('#filter_form').submit();">
                 <option <? if( empty($search_author) ) echo "selected"; ?> value="">&lt;<?= $current_module->language->record_nav->filters->from_everyone ?>&gt;</option>
@@ -194,6 +211,8 @@ $media_repository = new media_repository();
             <? endif; ?>
             <option <? if($search_status == "trashed")   echo "selected"; ?> value="trashed"  ><?= $current_module->language->status_labels->trashed ?></option>
         </select>
+        
+        <br>
         
         <?= $language->record_nav->show ?>
         <select name="limit" onchange="$('#filter_form').submit();">
