@@ -99,25 +99,26 @@ $current_module->load_extensions("save_post", "after_record_forging");
 # $repository->set_category($_POST["main_category"], $post->id_post);
 
 # Enforced expiration date by category
-$set_expiration_date = "";
 if( $post->status == "published" && (empty($post->publishing_date) || $post->publishing_date == "0000-00-00 00:00:00") )
-{
     $post->publishing_date = date("Y-m-d H:i:s");
-    
-    $res = $settings->get("modules:posts.enforced_expiration_by_category");
-    if( ! empty($res) )
+
+$enforced_expiration = $settings->get("modules:posts.enforced_expiration_by_category");
+$set_expiration_date = "";
+if(
+    ! empty($enforced_expiration) 
+    && $post->status == "published" && $post->publishing_date > "0000-00-00 00:00:00"
+    && (empty($post->expiration_date) || $post->expiration_date == "0000-00-00 00:00:00")
+) {
+    $categories_repository = new categories_repository();
+    $entries = explode("\n", $enforced_expiration);
+    foreach($entries as $entry)
     {
-        $categories_repository = new categories_repository();
-        $entries = explode("\n", $res);
-        foreach($entries as $entry)
-        {
-            list($slug, $hours) = preg_split('/\s*-\s*/', $entry);
-            $id = $categories_repository->get_id_by_slug($slug);
-            if( $post->main_category != $id ) continue;
-            
-            $set_expiration_date = date("Y-m-d H:i:s", strtotime($post->publishing_date) + ($hours * 3600));
-            break;
-        }
+        list($slug, $hours) = preg_split('/\s*-\s*/', $entry);
+        $id = $categories_repository->get_id_by_slug($slug);
+        if( $post->main_category != $id ) continue;
+        
+        $set_expiration_date = date("Y-m-d H:i:s", strtotime($post->publishing_date) + ($hours * 3600));
+        break;
     }
 }
 
@@ -218,8 +219,6 @@ if( $_POST["is_quick_post"] && $post->status == "draft" )
 
 if( is_array($media_deletions) && ! empty($media_deletions) )
     $media_repository->delete_multiple_if_unused($media_deletions);
-
-
 
 if( $_POST["ok_with_url"] == "true" )
     echo "OK:{$post->get_permalink()}";
