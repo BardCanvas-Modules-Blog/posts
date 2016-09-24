@@ -85,7 +85,7 @@ if( empty($post->excerpt) ) $post->excerpt = make_excerpt_of(
 
 if( empty($post->slug) )
 {
-    $post->slug = wp_sanitize_filename($post->title);
+    $post->slug = str_replace("_", "-", wp_sanitize_filename($post->title));
     $existing_slugs = $repository->get_record_count(array(
         "id_post <>  '{$post->id_post}' and slug like '{$post->slug}%'"
     ));
