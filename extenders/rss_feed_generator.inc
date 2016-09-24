@@ -102,12 +102,17 @@ foreach($records as $row)
         
         if( ! is_null($media_item) )
         {
-            $item->enclosure = new enclosure();
+            $item->enclosure         = new enclosure();
             $item->enclosure->length = $media_item->size;
             $item->enclosure->type   = $media_item->mime_type;
             $item->enclosure->url    = $media_item->get_item_url(true);
         }
     }
+    
+    $item->author   = $row->author_user_name;
+    $item->category = $row->main_category_slug;
+    $item->comments = $item->link;
+    $item->pubDate  = gmdate('D, d M Y H:i:s T', strtotime($row->publishing_date) );
     
     $channel->items[] = $item;
 }
