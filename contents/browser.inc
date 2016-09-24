@@ -48,12 +48,18 @@ if( ! empty($search_for) )
             $this_term = trim($this_term);
             if( ! empty($this_term) )
             {
-                $where_line .= "id_post     =     '{$this_term}'  or ";
-                $where_line .= "parent_post =     '{$this_term}'  or ";
-                $where_line .= "slug        like '%{$this_term}%' or ";
-                $where_line .= "title       like '%{$this_term}%' or ";
-                $where_line .= "excerpt     like '%{$this_term}%' or ";
-                $where_line .= "content     like '%{$this_term}%' or ";
+                if( is_numeric($this_term) )
+                {
+                    $where_line .= "id_post     =     '{$this_term}'  or ";
+                    $where_line .= "parent_post =     '{$this_term}'  or ";
+                }
+                else
+                {
+                    $where_line .= "slug        like '%{$this_term}%' or ";
+                    $where_line .= "title       like '%{$this_term}%' or ";
+                    $where_line .= "excerpt     like '%{$this_term}%' or ";
+                    $where_line .= "content     like '%{$this_term}%' or ";
+                }
             }
         }
         $where[] = "(" . preg_replace('/ or $/', "", $where_line) . ")";
@@ -61,14 +67,18 @@ if( ! empty($search_for) )
     else
     {
         $search_for = trim($search_for);
-        $where[] = "("
-            . "id_post     =     '{$search_for}'  or "
-            . "parent_post =     '{$search_for}'  or "
-            . "slug        like '%{$search_for}%' or "
-            . "title       like '%{$search_for}%' or "
-            . "excerpt     like '%{$search_for}%' or "
-            . "content     like '%{$search_for}%'    )"
-        ;
+        if( is_numeric($search_for) )
+            $where[] = "("
+                . "id_post     =     '{$search_for}'  or "
+                . "parent_post =     '{$search_for}'     )"
+            ;
+        else
+            $where[] = "("
+                . "slug        like '%{$search_for}%' or "
+                . "title       like '%{$search_for}%' or "
+                . "excerpt     like '%{$search_for}%' or "
+                . "content     like '%{$search_for}%'    )"
+            ;
     }
 }
 
@@ -112,6 +122,7 @@ switch( $order )
 }
 
 $records = $repository->find($where, $limit, $offset, $sqlorder);
+# echo "<pre>" . print_r($repository->get_last_query(), true) . "</pre>";
 
 $current_module->load_extensions("browser", "after_collection_built");
 $per_column_function_hooks = array();
@@ -156,7 +167,7 @@ $categories            = $categories_repository->get_as_tree_for_select(array(),
         
         <input type="hidden" name="mode"          value="set_filter">
         <input type="hidden" name="order"         value="<?= $order ?>">
-        <input type="hidden" name="offset"        value="0">
+        <input type="hidden" name="offset"        value="<?= $offset ?>">
         
         <span style="float: right;">
             <?= $browser->get_pagination_button("previous", "paginate", $pagination) ?>
