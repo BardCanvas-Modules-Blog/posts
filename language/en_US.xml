@@ -393,7 +393,7 @@
                 Version number for the guests main index cache
             ]]></title>
             <description><![CDATA[
-                It is automatically incremented. If you want to bump it, just add <code>1</code> to it.<br>
+                If you want to bump it, just add <code>1</code> to it.<br>
                 <span class="fa fa-info-circle"></span>
                 Only used if the Main index cache for guests is set above 0.
             ]]></description>

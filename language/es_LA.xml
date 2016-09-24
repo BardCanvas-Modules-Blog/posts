@@ -405,7 +405,7 @@
                 Número de versión para el caché de invitados de la página principal
             ]]></title>
             <description><![CDATA[
-                Es automáticamente incrementado. Si quieres regenerarlo, súmale un <code>1</code>.<br>
+                Si quieres regenerarlo, súmale un <code>1</code>.<br>
                 <span class="fa fa-info-circle"></span>
                 Sólo es usado si el tiempo de vida del caché para invitados en la página principal es mayor a cero.
             ]]></description>
