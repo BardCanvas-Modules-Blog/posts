@@ -411,6 +411,22 @@
             ]]></description>
             <type>number</type>
         </specs>
+        <specs key="per_category_messages">
+            <title>Mensajes por categoría durante la edición</title>
+            <description><![CDATA[
+                Si deseas mostrar un mensaje debajo del selector de categorías por cada categoría
+                (p.e. lineamientos de contenido, etc.), especifica uno por línea usando la siguiente sintaxis:<br>
+                <code>slug_de_categoria | Texto plano con mensaje a mostrar</code><br>
+                <span class="fa fa-info-circle"></span>
+                Puedes deshabilitar mensajes temporalmente añadiendo un <code>#</code> al inicio de la línea.<br>
+                Si necesitas poner más de una línea de texto por cada mensaje, simplemente repite el slug al inicio, p.e.:<br>
+                <code>categoria_1 | Línea 1</code><br>
+                <code>categoria_1 | Línea 2</code><br>
+                <code>categoria_2 | Línea 1</code><br>
+                <code>categoria_2 | Línea 2</code><br>
+            ]]></description>
+            <type>code</type>
+        </specs>
     </settings_data>
     
     <user_profile_tabs>

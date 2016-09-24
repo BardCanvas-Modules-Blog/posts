@@ -25,6 +25,13 @@ use hng2_base\template;
     #left_sidebar .group.archive_tree .item.year.collapsed .toggle.down  {
         display: none;
     }
+    
+    .category_messages .message {
+        font-family: arial, helvetica, sans-serif;
+        font-size: 10pt;
+        line-height: 12pt;
+        margin: 5px 0 0 0;
+    }
 </style>
 
 <script type="text/javascript">
@@ -77,6 +84,21 @@ use hng2_base\template;
             }
             
             $trigger.remove();
+        });
+    }
+    
+    function toggle_post_category_message(source_select)
+    {
+        var $select  = $(source_select);
+        var id       = $select.find('option:selected').val();
+        var $targets = $select.closest('.field').find('.category_messages .message');
+        
+        if( $targets.length == 0 ) return;
+        $targets.each(function()
+        {
+            var message_for = $(this).attr('data-category-id');
+            if( message_for == id ) $(this).show();
+            else                    $(this).hide();
         });
     }
 </script>

@@ -399,6 +399,22 @@
             ]]></description>
             <type>number</type>
         </specs>
+        <specs key="per_category_messages">
+            <title>In-form Per-category messages</title>
+            <description><![CDATA[
+                If you want to show a message below the categories selector for each category
+                (like content rules, etc.), specify one per line using the next syntax:<br>
+                <code>category_slug | Message to show in plain text</code><br>
+                <span class="fa fa-info-circle"></span>
+                You can temporarily disable messages by adding a <code>#</code> at the begining of the line.<br>
+                If you need to add more than one text line per message, simply repeat the slug, E.G.:<br>
+                <code>category_1 | Text line 1</code><br>
+                <code>category_1 | Text line 2</code><br>
+                <code>category_2 | Text line 1</code><br>
+                <code>category_2 | Text line 2</code><br>
+            ]]></description>
+            <type>code</type>
+        </specs>
     </settings_data>
     
     <user_profile_tabs>

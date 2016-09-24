@@ -20,6 +20,9 @@ use hng2_base\module;
 use hng2_base\template;
 use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\posts_data;
+use hng2_modules\posts\toolbox;
+
+$posts_toolbox = new toolbox();
 
 $class = "";
 if( isset($posts_data->slider_posts) )
@@ -79,7 +82,7 @@ if( isset($posts_data->slider_posts) )
                 $style = $categories_count == 0 ? "display: none" : "";
                 ?>
                 <div class="field" id="main_category_selector_container" data-field="category" style="<?= $style ?>">
-                    <select name="main_category" class="big_monospace_select">
+                    <select name="main_category" class="big_monospace_select" onchange="toggle_post_category_message(this)">
                         <option selected value="<?= $default_category->id_category ?>">
                             <?= $default_category->title ?>: <?= $default_category->description ?>
                         </option>
@@ -87,6 +90,16 @@ if( isset($posts_data->slider_posts) )
                             <option value="<?= $id_category ?>"><?= $description ?></option>
                         <? endforeach; ?>
                     </select>
+                    
+                    <div class="category_messages">
+                        <? foreach( $posts_toolbox->get_per_category_messages() as $category_id => $text ): ?>
+                            <div class="message framed_content state_highlight" style="display: none;"
+                                 data-category-id="<?= $category_id ?>">
+                                <span class="fa fa-info-circle"></span>
+                                <?= $text ?>
+                            </div>
+                        <? endforeach; ?>
+                    </div>
                 </div>
             <? endif; ?>
             
