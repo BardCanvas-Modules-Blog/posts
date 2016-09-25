@@ -124,6 +124,9 @@ class post_record extends abstract_record
     {
         parent::set_from_post();
         
+        $this->content = str_replace("<p> </p>",      "<p></p>", $this->content);
+        $this->content = str_replace("<p>&nbsp;</p>", "<p></p>", $this->content);
+        
         if( empty($this->visibility) ) $this->visibility = "public";
     }
     
