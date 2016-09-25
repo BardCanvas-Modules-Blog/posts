@@ -363,7 +363,7 @@ class posts_repository extends abstract_repository
         if( ! empty($inserts) )
         {
             $database->exec(
-                "insert into post_tags (id_post, tag, date_attached, order_attached) values "
+                "insert ignore into post_tags (id_post, tag, date_attached, order_attached) values "
                 . implode(", ", $inserts)
             );
             $this->last_query = $database->get_last_query();
