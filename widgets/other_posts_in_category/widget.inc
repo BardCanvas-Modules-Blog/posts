@@ -29,12 +29,12 @@ global $config, $language, $mem_cache;
 $post = $template->get("current_post");
 if( ! is_object($post) ) return "";
 
-$data_key .= "/" . $post->main_category_slug;
+$data_key .= "/{$post->main_category_slug}/v5";
 
 # TODO: Add data extractors!!!
 $category_id = $post->main_category;
 $limit       = 10;
-$order       = "publishing_date asc";
+$order       = "publishing_date desc";
 
 $posts = $mem_cache->get($data_key);
 if( is_array($posts) && empty($posts) ) return "";
@@ -55,6 +55,8 @@ if( empty($posts ) )
 }
 
 $mem_cache->set($data_key, $posts, 0, 60*5);
+
+$posts = array_reverse($posts);
 ob_start(); ?>
 
 <!-- posts/other_posts_in_category  -->
@@ -63,7 +65,11 @@ ob_start(); ?>
     <ul class="simple_entries_listing">
         <? foreach( $posts as $post ): ?>
             <li>
-                <a class="author" href="<?= $config->full_root_path ?>/author/<?= $post->author_user_name ?>"><?= $post->get_processed_author_display_name() ?></a>
+                <a class="author user_display_name" data-user-level="<?= $post->author_level ?>"
+                   href="<?= $config->full_root_path ?>/author/<?= $post->author_user_name ?>">
+                    <span class="fa fa-user"></span>
+                    <?= $post->get_processed_author_display_name() ?>
+                </a>
                 <span class="date"><?= time_elapsed_string($post->publishing_date) ?></span>
                 <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title(false) ?></a>
             </li>
