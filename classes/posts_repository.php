@@ -1093,7 +1093,7 @@ class posts_repository extends abstract_repository
         
         $cookie_key = "{$config->website_key}_lvp_{$id_post}";
         if( ! empty($_COOKIE[$cookie_key]) ) return 0;
-        setcookie($cookie_key, $id_post, time() + 300, "/", $config->cookies_domain);
+        setcookie($cookie_key, $id_post, time() + 60, "/", $config->cookies_domain);
         
         $now = date("Y-m-d H:i:s");
         return $database->exec("
