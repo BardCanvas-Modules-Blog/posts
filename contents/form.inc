@@ -68,8 +68,8 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
             <div class="col subfield">
                 <div class="caption"><?= $current_module->language->form->fields->excerpt->caption ?></div>
                 <div class="input">
-                <textarea name="excerpt" class="expandible_textarea no_fw_font" style="min-height: 150px;"
-                          placeholder="<?= $current_module->language->form->fields->excerpt->placeholder ?>"></textarea>
+                    <textarea name="excerpt" class="expandible_textarea no_fw_font" style="min-height: 150px;"
+                              placeholder="<?= $current_module->language->form->fields->excerpt->placeholder ?>"></textarea>
                 </div>
             </div>
             
@@ -84,10 +84,20 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
                         <? endforeach; ?>
                     </select>
                 </div>
-                
-                <div class="caption"><?= $current_module->language->form->fields->password->caption ?></div>
+    
+                <? $info_handler = "post_composer_password_info"; ?>
+                <div class="caption">
+                    <?= $current_module->language->form->fields->password->caption ?>
+                    <i class="pseudo_link" onclick="toggle_info_section('<?= $info_handler ?>')"><i
+                       class="fa fa-info-circle" title="<?= $language->toggle_info ?>"></i></i>
+                </div>
+                <div class="input info_handler" id="<?= $info_handler ?>"
+                     style="<? if($account->engine_prefs[$info_handler] == "hidden") echo "display: none;"; ?>">
+                    <i class="fa fa-info-circle"></i>
+                    <?= $current_module->language->form->fields->password->info ?>
+                </div>
                 <div class="input">
-                    <input type="password" name="password" placeholder="<?= $current_module->language->form->fields->password->placeholder ?>">
+                    <input type="text" name="password" placeholder="<?= $current_module->language->form->fields->password->placeholder ?>">
                 </div>
                 
                 <div class="field" data-field="slug">

@@ -167,6 +167,10 @@
             <password>
                 <caption>Password:</caption>
                 <placeholder>Type a password to protect this post</placeholder>
+                <info><![CDATA[
+                    Leave this field empty if you don't want to protect the post.
+                    Otherwise, only those who know the password will be able to see it.
+                ]]></info>
             </password>
             <allow_comments>
                 <caption>Allow people to leave comments?</caption>

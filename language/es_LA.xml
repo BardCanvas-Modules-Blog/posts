@@ -168,6 +168,10 @@
             <password>
                 <caption>Contraseña:</caption>
                 <placeholder>Introduce una contraseña para proteger esta entrada</placeholder>
+                <info><![CDATA[
+                    Deja este campo vacío si no quieres proteger la entrada. De lo contrario,
+                    sólo a quienes les pases la contraseña podrán ver a la entrada.
+                ]]></info>
             </password>
             <allow_comments>
                 <caption>Permitir recepción de comentarios?</caption>
