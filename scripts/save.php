@@ -85,7 +85,7 @@ if( empty($post->excerpt) ) $post->excerpt = make_excerpt_of(
 
 if( empty($post->slug) )
 {
-    $post->slug = str_replace("_", "-", wp_sanitize_filename($post->title));
+    $post->slug = str_replace(array("_", "."), array("-", ""), wp_sanitize_filename($post->title));
     $existing_slugs = $repository->get_record_count(array(
         "id_post <>  '{$post->id_post}' and slug like '{$post->slug}%'"
     ));
@@ -205,7 +205,11 @@ if( $post->status == "published"
 
 $repository->save($post);
 if( $set_expiration_date ) $repository->set_expiration_date($post->id_post, $set_expiration_date);
+
+$config->globals["posts:saving_post_tags_list"] = $tags;
 $current_module->load_extensions("save_post", "after_saving");
+$tags = $config->globals["posts:saving_post_tags_list"];
+unset( $config->globals["posts:saving_post_tags_list"] );
 
 # Final override - pinned posts wont expire
 if( $account->level >= config::MODERATOR_USER_LEVEL && ($post->pin_to_home || $post->pin_to_main_category_index) )
