@@ -207,6 +207,10 @@ $repository->save($post);
 if( $set_expiration_date ) $repository->set_expiration_date($post->id_post, $set_expiration_date);
 $current_module->load_extensions("save_post", "after_saving");
 
+# Final override - pinned posts wont expire
+if( $account->level >= config::MODERATOR_USER_LEVEL && ($post->pin_to_home || $post->pin_to_main_category_index) )
+    $repository->set_expiration_date($post->id_post, "0000-00-00 00:00:00");
+
 $media_deletions = array();
 if( $post->status == "published" )
 {
