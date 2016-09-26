@@ -43,7 +43,7 @@ foreach($records as $record)
             convert_emojis($record->author_display_name),
             $record->get_permalink(),
             convert_emojis($record->title),
-            $record->publishing_date == "0000-00-00 00:00:00" ? "&mdash;" : get_minimized_date($record->publishing_date),
+            $record->publishing_date == "0000-00-00 00:00:00" ? "&mdash;" : time_mini_string($record->publishing_date),
             $this_module->language->status_labels->{$record->status},
         )
     );

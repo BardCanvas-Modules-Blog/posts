@@ -347,7 +347,7 @@ endif;
                     <?= convert_emojis($row->author_display_name) ?>
                 </td>
                 <td align="center">
-                    <?= get_minimized_date($row->creation_date) ?>
+                    <?= time_mini_string($row->creation_date) ?>
                 </td>
                 <td align="center">
                     <?= time_elapsed_string($row->publishing_date) ?>
