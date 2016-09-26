@@ -311,15 +311,12 @@ endif;
                             <?= $current_module->language->record_nav->actions->copy ?>
                         </span>
                         
-                        <? if($row->status != "trashed"):
-                            if($row->comments_count == 0 || $account->level >= config::MODERATOR_USER_LEVEL): ?>
-                                <span class="action pseudo_link" onclick="trash_post('<?= $row->id_post ?>')">
-                                    <span class="fa fa-trash"></span>
-                                    <?= $current_module->language->record_nav->actions->trash ?>
-                                </span>
-                                <?
-                            endif;
-                        endif; ?>
+                        <? if( $row->can_be_deleted() ): ?>
+                            <span class="action pseudo_link" onclick="if( confirm('<?= $language->confirm_action ?>') ) trash_post('<?= $row->id_post ?>')">
+                                <span class="fa fa-trash"></span>
+                                <?= $current_module->language->record_nav->actions->trash ?>
+                            </span>
+                        <? endif; ?>
                     </div>
                 </td>
                 <td data-column="details">
