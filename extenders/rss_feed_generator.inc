@@ -91,9 +91,9 @@ $media_repository = new media_repository();
 foreach($records as $row)
 {
     $item              = new item();
-    $item->title       = html_entity_decode($row->title, null, "UTF-8");
+    $item->title       = strip_tags(html_entity_decode($row->title, null, "UTF-8"));
     $item->link        = "{$config->full_root_url}/{$row->id_post}";
-    $item->description = html_entity_decode($row->excerpt, null, "UTF-8");
+    $item->description = strip_tags(html_entity_decode($row->excerpt, null, "UTF-8"));
     $item->guid        = "{$config->full_root_url}/{$row->id_post}";
     
     if( ! empty($row->id_featured_image) )
