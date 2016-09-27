@@ -84,7 +84,7 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
                         <? endforeach; ?>
                     </select>
                 </div>
-    
+                
                 <? $info_handler = "post_composer_password_info"; ?>
                 <div class="caption">
                     <?= $current_module->language->form->fields->password->caption ?>

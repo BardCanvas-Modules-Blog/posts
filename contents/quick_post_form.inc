@@ -27,7 +27,9 @@ $posts_toolbox = new toolbox();
 $class = "";
 if( isset($posts_data->slider_posts) )
     if( count($posts_data->slider_posts) == 1 )
-        $class = "spaced"
+        $class = "spaced";
+
+if( $current_module->name == "posts" ) $this_module = $current_module;
 ?>
 
 <script type="text/javascript" src="<?= $config->full_root_path ?>/lib/jquery.exptextarea.js"></script>
@@ -49,7 +51,7 @@ if( isset($posts_data->slider_posts) )
             <textarea name="title" class="expandible_textarea no_fw_font"
                       placeholder="<?= $this_module->language->form->fields->title->quick_form_placeholder ?>"
                       data-expanded-placeholder="<?= $this_module->language->form->fields->title->quick_form_expanded_placeholder ?>"
-                      onfocus="$(this).closest('form').find('.rest').show(); $(this).toggleClass('ready', true); $(this).attr('placeholder', $(this).attr('data-expanded-placeholder')); hook_abandon_post();"></textarea>
+                      onfocus="expand_quick_post_area()"></textarea>
         </div>
         
         <div class="rest" style="display: none;">
@@ -142,3 +144,10 @@ if( isset($posts_data->slider_posts) )
     </form>
     
 </div>
+
+<? if( $_GET["trigger_quick_post_form"] == "true" ): ?>
+    <script type="text/javascript">
+        expand_quick_post_area();
+        $.scrollTo('#quick_post_form_container', 1000);
+    </script>
+<? endif; ?>

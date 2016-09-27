@@ -1,5 +1,5 @@
 /**
- * Post styles
+ * Post styles - within the module
  *
  * @package    HNG2
  * @subpackage posts
@@ -42,3 +42,14 @@
     -ms-transform:     translate(-50%,-50%);
     transform:         translate(-50%,-50%);
 }
+
+/* Simplifiers for TinyMCE */
+
+/*
+@media all and (max-width: 480px)
+{
+    #post_form .field[data-field="content"] #mceu_36 { display: none; }
+    #post_form .field[data-field="content"] #mceu_37 { display: none; }
+    
+}
+*/

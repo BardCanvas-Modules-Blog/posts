@@ -36,22 +36,6 @@ function process_post_form_response(response)
     else                    location.href = url;
 }
 
-function add_attachment_to_quick_post(type, icon)
-{
-    var html  = '<div class="attachment framed_content state_highlight clearfix">'
-              +     '<span class="fa pseudo_link fa-trash fa-fw pull-right" onclick="remove_attachment_from_quick_post(this)"></span>'
-              +     sprintf('<span class="fa %s fa-fw"></span> ', icon)
-              +     sprintf('<input type="file" name="attachments[%1$s][]" accept="%1$s/*"> ', type)
-              + '</div>';
-    
-    $('#post_form').find('.field.attachments').append(html);
-}
-
-function remove_attachment_from_quick_post(trigger)
-{
-    $(trigger).closest('.attachment').fadeOut('fast', function() { $(this).remove(); });
-}
-
 $(document).ready(function()
 {
     var $form = $('#post_form');

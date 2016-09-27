@@ -190,6 +190,10 @@
             <buttons>
                 <image>Añadir foto</image>
                 <video>Añadir video</video>
+                <info><![CDATA[
+                    Da click en cualquiera de estos botones para anexar medios al final del contenido.
+                    Si quieres más control, usa los botones respectivos en la barra de herramientas del editor.
+                ]]></info>
             </buttons>
         </fields>
         

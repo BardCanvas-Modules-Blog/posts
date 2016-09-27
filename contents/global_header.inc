@@ -35,70 +35,7 @@ use hng2_base\template;
 </style>
 
 <script type="text/javascript">
-    
     var abandon_post_question = '<?= $this_module->language->messages->abandon_post_question ?>';
-    
-    function hook_abandon_post()
-    {
-        $(window).bind('beforeunload.posts', function()
-        {
-            return abandon_post_question;
-        });
-    }
-    
-    function unhook_abandon_post()
-    {
-        $(window).unbind('beforeunload.posts');
-    }
-    
-    $(document).ready(function()
-    {
-        $('#left_sidebar').find('.group.archive_tree .item.year').click(function()
-        {
-            var $parent = $(this).closest('.group');
-            var year    = $(this).attr('data-year');
-            
-            $parent.find('.item[data-year="' + year + '"]').toggleClass('collapsed expanded');
-        });
-    });
-    
-    function remove_tag_from_post(trigger, id_post, tag)
-    {
-        var $trigger = $(trigger);
-        
-        var url = $_FULL_ROOT_PATH
-                + '/posts/scripts/remove_tag.php'
-                + '?id_post=' + id_post
-                + '&tag=' + tag
-                + '&wasuuup=' + wasuuup()
-                ;
-        $trigger.block(blockUI_smallest_params);
-        $.get(url, function(response)
-        {
-            $trigger.unblock();
-            if( response != 'OK' )
-            {
-                alert(response);
-                
-                return;
-            }
-            
-            $trigger.remove();
-        });
-    }
-    
-    function toggle_post_category_message(source_select)
-    {
-        var $select  = $(source_select);
-        var id       = $select.find('option:selected').val();
-        var $targets = $select.closest('.field').find('.category_messages .message');
-        
-        if( $targets.length == 0 ) return;
-        $targets.each(function()
-        {
-            var message_for = $(this).attr('data-category-id');
-            if( message_for == id ) $(this).show();
-            else                    $(this).hide();
-        });
-    }
 </script>
+<script type="text/javascript" 
+        src="<?= $config->full_root_path ?>/posts/media/global_functions~v<?= $config->scripts_version ?>.js"></script>
