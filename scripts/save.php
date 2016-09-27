@@ -150,13 +150,13 @@ if( ! empty($_FILES["attachments"]) )
     foreach($uploads as $type => $files)
     {
         /** @var  array $file [name, type, tmp_name, error, size] */
-        foreach($files as $index => $file)
-        {
-            $file_title = "{$account->display_name} - {$file["name"]}";
-            
-            if( $media_repository->get_record_count(array("title" => $file_title)) )
-                die( $file["name"] . "\n" . $modules["gallery"]->language->messages->item_exists );
-        }
+        //foreach($files as $index => $file)
+        //{
+        //    $file_title = "{$account->display_name} - {$file["name"]}";
+        //    
+        //    if( $media_repository->get_record_count(array("title" => $file_title)) )
+        //        die( $file["name"] . "\n" . $modules["gallery"]->language->messages->item_exists );
+        //}
         
         /** @var  array $file [name, type, tmp_name, error, size] */
         foreach($files as $index => $file)
