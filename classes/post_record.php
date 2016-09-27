@@ -118,6 +118,10 @@ class post_record extends abstract_record
         $config->globals["current_post_record"] =& $this;
         $modules["posts"]->load_extensions("post_record_class", "set_from_object");
         unset( $config->globals["current_post_record"] );
+        
+        # Media tuning
+        if( ! preg_match('/.png|.gif|.jpg|.jpeg/i', $this->featured_image_thumbnail) ) $this->featured_image_thumbnail = "";
+        if( ! preg_match('/.png|.gif|.jpg|.jpeg/i', $this->featured_image_path) )      $this->featured_image_path = "";
     }
     
     public function set_from_post()
