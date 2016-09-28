@@ -86,7 +86,7 @@ if( $account->level < config::MODERATOR_USER_LEVEL )
 {
     if( $search_status == "hidden" ) $search_status = "";
     
-    if( empty($search_status) ) $where[] = "status <> 'hidden'";
+    if( empty($search_status) ) $where[] = "status not in ('trashed', 'hidden')";
     else                        $where[] = "status = '$search_status'";
     $where["id_author"] = $account->id_account;
 }
@@ -94,7 +94,8 @@ else
 {
     if( ! empty($search_author) ) $where["id_author"] = $_REQUEST["search_author"];
     if( ! empty($search_pinned) ) $where[]            = "pin_to_home > 0 or pin_to_main_category_index > 0";
-    if( ! empty($search_status) ) $where["status"]    = $search_status;
+    if( empty($search_status) )   $where[] = "status not in ('trashed', 'hidden')";
+    else                          $where[] = "status = '$search_status'";
 }
 
 if( ! empty($search_category) ) $where[] = "main_category = '$search_category'";
@@ -294,27 +295,54 @@ endif;
                     <div class="principal_data"><?= convert_emojis($row->title) ?></div>
                     
                     <div class="actions">
-                        <a class="action" href="<?= "{$config->full_root_url}/{$row->id_post}" ?>" target="_blank">
-                            <span class="fa fa-external-link"></span>
-                            <?= $language->view ?>
-                        </a>
+                        <? if( $account->level >= config::MODERATOR_USER_LEVEL || in_array($row->status, array("draft", "published", "reviewing")) ): ?>
+                            <a class="action" href="<?= "{$config->full_root_url}/{$row->id_post}" ?>" target="_blank">
+                                <span class="fa fa-external-link"></span>
+                                <?= $language->view ?>
+                            </a>
+                        <? endif ?>
                         
-                        <? if($row->can_be_edited()): ?>
+                        <? if( $row->can_be_edited() && $row->status != "trashed" ): ?>
                             <span class="action pseudo_link" onclick="edit_post('<?= $row->id_post ?>')">
                                 <span class="fa fa-pencil"></span>
                                 <?= $current_module->language->record_nav->actions->edit ?>
                             </span>
                         <? endif ?>
                         
-                        <span class="action pseudo_link" onclick="copy_post('<?= $row->id_post ?>')">
-                            <span class="fa fa-copy"></span>
-                            <?= $current_module->language->record_nav->actions->copy ?>
-                        </span>
+                        <? if( in_array($row->status, array("draft", "published", "reviewing")) ): ?>
+                            <span class="action pseudo_link" onclick="copy_post('<?= $row->id_post ?>')">
+                                <span class="fa fa-copy"></span>
+                                <?= $current_module->language->record_nav->actions->copy ?>
+                            </span>
+                        <? endif; ?>
                         
-                        <? if( $row->can_be_deleted() ): ?>
-                            <span class="action pseudo_link" onclick="if( confirm('<?= $language->confirm_action ?>') ) trash_post('<?= $row->id_post ?>')">
+                        <? if( $row->can_be_deleted() && $row->status != "trashed" ): ?>
+                            <span class="action pseudo_link" onclick="change_post_status( '<?= $row->id_post ?>', 'trashed', this, function() { $('tr[data-record-id=<?= $row->id_post ?>]').fadeOut('fast'); } )">
                                 <span class="fa fa-trash"></span>
                                 <?= $current_module->language->record_nav->actions->trash ?>
+                            </span>
+                        <? endif; ?>
+                        
+                        <? if( $account->level >= config::MODERATOR_USER_LEVEL && $row->status == "published" ): ?>
+                            <span class="action important pseudo_link"
+                                  onclick="change_post_status( '<?= $row->id_post ?>', 'reviewing', this, function() { $('tr[data-record-id=<?= $row->id_post ?>]').fadeOut('fast'); } )">
+                                <span class="fa fa-flag"></span>
+                                <?= $current_module->language->record_nav->actions->flag_for_review ?>
+                            </span>
+                        <? endif; ?>
+                        
+                        <? if( $account->level >= config::MODERATOR_USER_LEVEL && $row->status == "reviewing" ): ?>
+                            <span class="action greengo pseudo_link"
+                                  onclick="change_post_status( '<?= $row->id_post ?>', 'published', this, function() { $('tr[data-record-id=<?= $row->id_post ?>]').fadeOut('fast'); } )">
+                                <span class="fa fa-check"></span>
+                                <?= $current_module->language->record_nav->actions->publish ?>
+                            </span>
+                        <? endif; ?>
+                        
+                        <? if( $account->level >= config::MODERATOR_USER_LEVEL && $row->status == "trashed" ): ?>
+                            <span class="action pseudo_link" onclick="untrash_for_review('<?= $row->id_post ?>')">
+                                <span class="fa fa-refresh"></span>
+                                <?= $current_module->language->record_nav->actions->untrash_for_review ?>
                             </span>
                         <? endif; ?>
                     </div>
@@ -341,7 +369,41 @@ endif;
                     
                 </td>
                 <td>
-                    <?= convert_emojis($row->author_display_name) ?>
+                    <span class="user_display_name" data-user-level="<?= $row->author_level ?>">
+                        <span class="fa fa-user fa-fw"></span>
+                        <?= $row->get_processed_author_display_name() ?>
+                    </span><br>
+                    
+                    <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
+                        <span>
+                            <span class="fa fa-cloud fa-fw"></span>
+                            <?= $row->creation_ip ?>
+                        </span><br>
+                        
+                        <?
+                        $parts   = explode("; ", $row->creation_location);
+                        $isp      = array_pop($parts);
+                        $country  = array_pop($parts);
+                        $city     = implode("; ", $parts);
+                        if( $city != "N/A; N/A") : ?>
+                            <span>
+                                <span class="fa fa-map-marker fa-fw"></span>
+                                <?= $city ?>
+                            </span><br>
+                        <? endif; ?>
+                        <? if($country != "N/A"): ?>
+                            <span>
+                                <span class="fa fa-globe fa-fw"></span>
+                                <?= $country ?>
+                            </span><br>
+                        <? endif; ?>
+                        <? if($isp != "N/A"): ?>
+                            <span>
+                                <span class="fa fa-building fa-fw"></span>
+                                <?= $isp ?>
+                            </span><br>
+                        <? endif; ?>
+                    <? endif; ?>
                 </td>
                 <td align="center">
                     <?= time_mini_string($row->creation_date) ?>
@@ -430,15 +492,16 @@ function render_post_tags(post_record $row)
     global $account, $current_module;
     
     $remove_tag_link = "";
+    $caption         = str_replace('{$tag}', "%tag%", $current_module->language->record_nav->extras->remove_tag);
     if( $row->can_be_edited() ) $remove_tag_link = "
-        <span class='pseudo_link fa fa-times fa-border' title='{$current_module->language->record_nav->extras->remove_tag}'
-              onclick='remove_tag_from_post(\$(this).closest(\".hashtag\"), \"{$row->id_post}\", \"\{\$tag}\")'></span>
+        <span class='pseudo_link fa fa-times fa-border' title='{$caption}'
+              onclick='remove_tag_from_post($(this).closest(\".hashtag\"), \"{$row->id_post}\", \"%tag%\")'></span>
     ";
     if( $account->level < config::MODERATOR_USER_LEVEL )
     {
         foreach( $row->get_filtered_tags_list() as $tag)
         {
-            $link = str_replace('{$tag}', $tag, $remove_tag_link);
+            $link = str_replace('%tag%', $tag, $remove_tag_link);
             echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}{$link}</span> ";
         }
     }
@@ -448,7 +511,7 @@ function render_post_tags(post_record $row)
         {
             foreach( $row->tags_list as $tag)
             {
-                $link = str_replace('{$tag}', $tag, $remove_tag_link);
+                $link = str_replace('%tag%', $tag, $remove_tag_link);
                 echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}{$link}</span> ";
             }
         }

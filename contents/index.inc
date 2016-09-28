@@ -44,6 +44,33 @@
         $form.find('input[name="offset"]').val(value);
         $form.submit();
     }
+
+    function untrash_for_review(id_post)
+    {
+        var message = $('#untrash_for_review_confirmation').text();
+        if( ! confirm(message) ) return;
+    
+        var url = $_FULL_ROOT_PATH + '/posts/scripts/toolbox.php';
+        var params = {
+            action:  'untrash_for_review',
+            id_post: id_post,
+            wasuuup: wasuuup()
+        };
+        
+        $.blockUI(blockUI_default_params);
+        $.get(url, params, function(response)
+        {
+            if( response != 'OK' )
+            {
+                alert(response);
+                $.unblockUI();
+                
+                return;
+            }
+            
+            location.href = $_FULL_ROOT_PATH + '/posts/?search_for=' + id_post + '&edit_post=' + id_post;
+        });
+    }
 </script>
 
 <div id="main_workarea">
@@ -54,6 +81,7 @@
     if( ! empty($_GET["create"]) )     $url .= "&create={$_GET["create"]}";
     if( ! empty($_GET["trash_post"]) ) $url .= "&trash_post={$_GET["trash_post"]}";
     if( ! empty($_GET["author"]) )     $url .= "&search_author={$_GET["author"]}";
+    if( ! empty($_GET["search_for"]) ) $url .= "&search_for={$_GET["search_for"]}";
     ?>
     <div id="posts_browser" class="ajax_record_browser" data-src="<?= $url ?>">
         <div class="framed_content state_highlight" style="padding: 100px 0; text-align: center;">
@@ -86,3 +114,5 @@
     
     <? include __DIR__ . "/form.inc"; ?>
 </div>
+
+<div id="untrash_for_review_confirmation" style="display: none;"><?= unindent($current_module->language->messages->untrash_for_review_confirmation) ?></div>

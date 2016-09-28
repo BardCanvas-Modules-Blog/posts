@@ -101,6 +101,9 @@
             <edit>Editar</edit>
             <trash>Papelera</trash>
             <copy>Duplicar</copy>
+            <flag_for_review>Marcar para revisión</flag_for_review>
+            <publish>Publicar</publish>
+            <untrash_for_review>Recuperar para revisión</untrash_for_review>
         </actions>
         <extras>
             <expires>Expira en</expires>
@@ -249,6 +252,19 @@
         ]]></post_being_reviewed>
         <posts_hidden>{$count} entradas de {$author} han sido ocultadas.</posts_hidden>
         <posts_unhidden>{$count} entradas de {$author} han sido restauradas.</posts_unhidden>
+        <toolbox>
+            <invalid_action>La acción especificada es inválida</invalid_action>
+            <invalid_status>La bandera de estado especificada es inválida</invalid_status>
+            <action_not_allowed>Disculpa, pero no tienes privilegios para ejecutar esta acción</action_not_allowed>
+            
+        </toolbox>
+        <untrash_for_review_confirmation><![CDATA[
+            La entrada será sacada de la papelera y será marcada para revisión
+            sin enviar ninguna notificación, entonces se abrirá en modo de edición,
+            pero si cancelas la edición, la entrada no será regresada a la papelera.
+             
+            ¿Deseas continuar?
+        ]]></untrash_for_review_confirmation>
     </messages>
     
     <settings_data>

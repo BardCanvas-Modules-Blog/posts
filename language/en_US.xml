@@ -100,6 +100,9 @@
             <edit>Edit</edit>
             <trash>Trash</trash>
             <copy>Copy</copy>
+            <flag_for_review>Flag for review</flag_for_review>
+            <publish>Publish</publish>
+            <untrash_for_review>Untrash for review</untrash_for_review>
         </actions>
         <extras>
             <expires>Expires in</expires>
@@ -246,6 +249,19 @@
         ]]></post_being_reviewed>
         <posts_hidden>{$count} posts from {$author} have been hidden.</posts_hidden>
         <posts_unhidden>{$count} posts from {$author} have been restored.</posts_unhidden>
+        <toolbox>
+            <invalid_action>The provided action is invalid</invalid_action>
+            <invalid_status>The status flag you provided is invalid</invalid_status>
+            <action_not_allowed>Sorry, but your privileges aren't enough to carry on this action</action_not_allowed>
+            
+        </toolbox>
+        <untrash_for_review_confirmation><![CDATA[
+            The post will be taken out and will be flagged for reviewing
+            without sending any notification, then the editing mode will be launched,
+            but if you cancel the edition, the post wont be taken back to the trash can.
+             
+            Do you want to continue?
+        ]]></untrash_for_review_confirmation>
     </messages>
     
     <settings_data>

@@ -89,3 +89,31 @@ function expand_quick_post_area()
     $trigger.attr('placeholder', $trigger.attr('data-expanded-placeholder'));
     hook_abandon_post();
 }
+
+function change_post_status(id_post, new_status, trigger, callback)
+{
+    if( ! confirm($_GENERIC_CONFIRMATION) ) return;
+    
+    var url = $_FULL_ROOT_PATH + '/posts/scripts/toolbox.php';
+    var params = {
+        action:     'change_status',
+        new_status: new_status,
+        id_post:    id_post,
+        wasuuup:    wasuuup()
+    };
+    
+    $(trigger).block(blockUI_smallest_params);
+    $.get(url, params, function(response)
+    {
+        if( response != 'OK' )
+        {
+            alert(response);
+            $(trigger).unblock();
+            
+            return;
+        }
+        
+        $(trigger).unblock();
+        if( callback ) callback();
+    });
+}

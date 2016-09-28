@@ -93,9 +93,10 @@ function copy_post(id_post)
             return;
         }
         
-        var record         = data.data;
-        record.id_post     = '';
-        record.slug        = '';
+        var record     = data.data;
+        record.id_post = '';
+        record.slug    = '';
+        record.status  = 'draft';
         
         var $form  = $('#post_form');
         
