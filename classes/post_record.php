@@ -63,6 +63,7 @@ class post_record extends abstract_record
     
     public $featured_image_thumbnail;
     public $featured_image_path;
+    public $featured_media_type;
     
     # Taken with a group_concat from other tables:
     public $tags_list       = array(); # from post_tags
@@ -162,6 +163,7 @@ class post_record extends abstract_record
             
             $return["featured_image_thumbnail"],
             $return["featured_image_path"],
+            $return["featured_media_type"],
             
             $return["tags_list"],
             $return["categories_list"],

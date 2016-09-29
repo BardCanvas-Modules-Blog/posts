@@ -58,9 +58,19 @@ class posts_repository extends abstract_repository
         if( $settings->get("modules:posts.automatic_featured_images") != "true" )
         {
             $this->additional_select_fields[] = "
+            ( select path
+               from media where media.id_media = posts.id_featured_image
+               ) as featured_image_path";
+            
+            $this->additional_select_fields[] = "
             ( select thumbnail
                from media where media.id_media = posts.id_featured_image
                ) as featured_image_thumbnail";
+            
+            $this->additional_select_fields[] = "
+            ( select type
+               from media where media.id_media = posts.id_featured_image
+               ) as featured_media_type";
         }
         else
         {
@@ -85,6 +95,17 @@ class posts_repository extends abstract_repository
                 where post_media.id_post = posts.id_post
                 order by date_attached asc, order_attached asc limit 1 )
             ) as featured_image_thumbnail";
+    
+            # Featured image type
+            $this->additional_select_fields[] = "
+            if(
+              posts.id_featured_image <> '', 
+              ( select type from media where media.id_media = posts.id_featured_image ),
+              ( select type from media
+                join post_media on post_media.id_media = media.id_media
+                where post_media.id_post = posts.id_post
+                order by date_attached asc, order_attached asc limit 1 )
+            ) as featured_media_type";
         }
         
         # Tags
