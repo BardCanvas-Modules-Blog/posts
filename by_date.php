@@ -36,7 +36,7 @@ if( strlen($evaling_date) == 10 ) # Day
     if( ! checkdate($parts[1], $parts[2], $parts[0]) )
         throw_fake_404();
     
-    $showing_date = strftime("%B %e, %Y", strtotime($evaling_date));
+    $showing_date = utf8_encode(strftime("%B %e, %Y", strtotime($evaling_date)));
     $template->set("showing_date", $showing_date);
     $start_date = $evaling_date . " 00:00:00";
     $end_date   = $evaling_date . " 23:59:59";
@@ -54,7 +54,7 @@ elseif( strlen($evaling_date) == 7 ) # Month
     if( ! checkdate($parts[1], $parts[2], $parts[0]) )
         throw_fake_404();
     
-    $showing_date  = strftime("%B %Y", strtotime("{$evaling_date}-01"));
+    $showing_date  = utf8_encode(strftime("%B %Y", strtotime("{$evaling_date}-01")));
     $start_date    = date("Y-m-d 00:00:00", strtotime("{$evaling_date}-01"));
     $end_timestamp = strtotime("{$start_date} + 1 month");
     $end_date      = date("Y-m-d 23:59:59", $end_timestamp - 86400);

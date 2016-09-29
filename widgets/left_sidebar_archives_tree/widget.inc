@@ -60,7 +60,7 @@ foreach($res as $year => $months)
     foreach($months as $month => $count)
     {
         $month         = sprintf("%02.0f", $month);
-        $display_month = strftime("%B", strtotime("$year/$month/01"));
+        $display_month = utf8_encode(strftime("%B", strtotime("$year/$month/01")));
         $count         = empty($count) ? "" : "($count)";
     
         $selected = $template->get("page_tag") == "post_archive" 
