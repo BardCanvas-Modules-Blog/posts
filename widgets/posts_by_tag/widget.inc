@@ -25,29 +25,26 @@ use hng2_modules\posts\posts_repository;
 global $config, $language, $mem_cache;
 
 # TODO: Add data extractors!!!
-$tag   = "polemicas";
-$limit = 10;
-$order = "";
+$tag     = "polemicas";
+$limit   = 10;
+$order   = "publishing_date asc";
+$version = 4;
 
-$posts = $mem_cache->get($data_key);
-if( is_array($posts) && empty($posts) ) return "";
-if( $posts == "none" ) return "";
+$contents = $mem_cache->get("{$data_key}_v{$version}");
+if( ! empty($contents) && $contents != "none" ) return $contents;
+if( $contents == "none" ) return "";
 
-if( empty($posts) )
-{
-    $repository = new posts_repository();
-    $where      = array("id_post in (select id_post from post_tags where tag = '$tag')");
-    $posts      = $repository->lookup($where, $limit, 0, $order);
-}
+$repository = new posts_repository();
+$where      = array("id_post in (select id_post from post_tags where tag = '$tag')");
+$posts      = $repository->lookup($where, $limit, 0, $order);
 
 if( empty($posts ) )
 {
-    $mem_cache->set($data_key, "none", 0, 60*5);
+    $mem_cache->set("{$data_key}_v{$version}", "none", 0, 60*5);
     
     return "";
 }
 
-$mem_cache->set($data_key, $posts, 0, 60*5);
 ob_start(); ?>
 
 <!-- posts/posts_by_tag  -->
@@ -56,12 +53,18 @@ ob_start(); ?>
     <ul class="simple_entries_listing">
         <? foreach($posts as $post): ?>
             <li>
-                <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title(false) ?></a>
+                <a class="author user_display_name" data-user-level="<?= $post->author_level ?>" href="<?= $config->full_root_path ?>/author/<?= $post->author_user_name ?>">
+                    <span class="fa fa-user"></span>
+                    <?= $post->get_processed_author_display_name() ?></a>
                 <span class="date"><?= time_elapsed_string($post->publishing_date) ?></span>
-                <a class="author" href="<?= $config->full_root_path ?>/author/<?= $post->author_user_name ?>"><?= $post->get_processed_author_display_name() ?></a>
+                <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title(false) ?></a>
             </li>
         <? endforeach; ?>
     </ul>
 </div>
 
-<? return ob_get_clean();
+<?
+$return = ob_get_clean();
+$mem_cache->set("{$data_key}_v{$version}", $return, 0, 60*5);
+
+return $return;
