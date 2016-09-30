@@ -32,9 +32,10 @@ foreach($posts_data->posts as $post)
         "type"      => "",
         "url"       => "{$config->full_root_url}/{$post->id_post}",
         "title"     => $post->get_processed_title(false),
-        "excerpt"   => $post->get_processed_excerpt(),
+        "excerpt"   => "[".time_today_string($post->publishing_date)."] " . $post->get_processed_excerpt(),
         "thumbnail" => $post->featured_image_thumbnail
     ));
 
 $key = trim($this_module->language->extenders->search_by_tag_builder->collection_heading);
 $config->globals["search_by_tag_collections"][$key] = $collection;
+$config->globals["search_by_tag_counts"][$key]      = $posts_data->count;
