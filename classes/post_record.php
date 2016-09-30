@@ -104,11 +104,19 @@ class post_record extends abstract_record
             unset($this->_main_category_data);
         }
         
-        if( ! empty($this->featured_image_thumbnail) )
-            $this->featured_image_thumbnail = "{$config->full_root_path}/mediaserver/{$this->featured_image_thumbnail}";
-        
-        if( ! empty($this->featured_image_path) )
-            $this->featured_image_path = "{$config->full_root_path}/mediaserver/{$this->featured_image_path}";
+        if( $this->featured_media_type != "image" )
+        {
+            $this->featured_image_thumbnail = "";
+            $this->featured_image_path      = "";
+        }
+        else
+        {
+            if( ! empty($this->featured_image_thumbnail) )
+                $this->featured_image_thumbnail = "{$config->full_root_path}/mediaserver/{$this->featured_image_thumbnail}";
+    
+            if( ! empty($this->featured_image_path) )
+                $this->featured_image_path = "{$config->full_root_path}/mediaserver/{$this->featured_image_path}";
+        }
         
         if( is_string($this->tags_list) )       $this->tags_list       = explode(",", $this->tags_list);
         if( is_string($this->categories_list) ) $this->categories_list = explode(",", $this->categories_list);
