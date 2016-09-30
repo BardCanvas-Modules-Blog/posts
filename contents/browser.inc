@@ -406,13 +406,20 @@ endif;
                     <? endif; ?>
                 </td>
                 <td align="center">
-                    <?= time_mini_string($row->creation_date) ?>
+                    <?= time_mini_string($row->creation_date) ?><br>
+                    (<?= time_elapsed_string($row->creation_date) ?>)
                 </td>
                 <td align="center">
-                    <?= time_elapsed_string($row->publishing_date) ?>
+                    <? if( $row->publishing_date == "0000-00-00 00:00:00" ): ?>
+                        &mdash;
+                    <? else: ?>
+                        <?= time_mini_string($row->publishing_date) ?><br>
+                        (<?= time_elapsed_string($row->publishing_date) ?>)
+                    <? endif; ?>
                 </td>
                 <td align="center">
-                    <?= time_elapsed_string($row->last_update) ?>
+                    <?= time_mini_string($row->last_update) ?><br>
+                    (<?= time_elapsed_string($row->last_update) ?>)
                 </td>
                 <td align="right">
                     <?= $row->views ?>
