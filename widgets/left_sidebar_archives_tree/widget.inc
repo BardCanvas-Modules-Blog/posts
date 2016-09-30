@@ -33,7 +33,7 @@ $ttl = $settings->get("modules:posts.archives_tree_widget_cache_ttl"); if( $ttl 
 $ttl = $ttl * 60 * 60;
 $res = null;
 
-$cache_key = "posts.archives_tree_widget";
+$cache_key = "posts.archives_tree_widget_v2";
 if($ttl > 0) $res = $mem_cache->get($cache_key);
 
 if( is_null($res) )

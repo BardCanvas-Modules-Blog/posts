@@ -1023,7 +1023,8 @@ class posts_repository extends abstract_repository
         global $database;
         
         $find_params = $this->build_find_params();
-    
+        $find_params->where[] = "publishing_date <> '0000-00-00 00:00:00'";
+        
         $counts_addition = $with_counts
             ? ", count(id_post) as `count`"
             : "";
