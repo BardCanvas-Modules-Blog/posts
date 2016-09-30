@@ -65,8 +65,12 @@ use hng2_base\template;
         if( $_CURRENT_USER_ID_ACCOUNT == '' ) return;
         if( $_PHP_SELF == '/posts/quick_single.php' ) return;
         
-        var $trigger = $('<a id="quick_post_floating_trigger" class="fa fa-bolt fa-fw" style="display: none;"></a>');
+        var $trigger = $(sprintf(
+            '<a id="quick_post_floating_trigger" class="fa fa-bolt fa-fw"  href="%s" style="display: none; text-decoration: none;"></a>',
+            $_FULL_ROOT_PATH + '/posts/quick_single.php'
+        ));
         
+        /*
         $trigger.click(function()
         {
             $form = $('#quick_post_form_container');
@@ -81,6 +85,7 @@ use hng2_base\template;
                 location.href = $_FULL_ROOT_PATH + '/posts/quick_single.php';
             }
         });
+        */
         
         $('body').append( $trigger );
         $trigger.fadeIn('fast');
