@@ -369,16 +369,16 @@ endif;
                     
                 </td>
                 <td>
-                    <span class="user_display_name" data-user-level="<?= $row->author_level ?>">
-                        <span class="fa fa-user fa-fw"></span>
-                        <?= $row->get_processed_author_display_name() ?>
-                    </span><br>
+                    <a class="user_display_name nowrap" data-user-level="<?= $row->author_level ?>"
+                        href="<?= "{$config->full_root_path}/user/{$row->author_user_name}" ?>">
+                        <span class="fa fa-user fa-fw"></span><?= $row->get_processed_author_display_name() ?>
+                    </a><br>
                     
                     <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
-                        <span>
+                        <a class="nowrap" href="<?= $config->full_root_path ?>/?s=ip:<?= $row->creation_ip ?>">
                             <span class="fa fa-cloud fa-fw"></span>
                             <?= $row->creation_ip ?>
-                        </span><br>
+                        </a><br>
                         
                         <?
                         $parts   = explode("; ", $row->creation_location);
@@ -386,22 +386,19 @@ endif;
                         $country  = array_pop($parts);
                         $city     = implode("; ", $parts);
                         if( $city != "N/A; N/A") : ?>
-                            <span>
-                                <span class="fa fa-map-marker fa-fw"></span>
-                                <?= $city ?>
-                            </span><br>
+                            <a href="<?= $config->full_root_path ?>/?s=city:<?= urlencode($city) ?>">
+                                <span class="fa fa-map-marker fa-fw"></span><?= $city ?>
+                            </a><br>
                         <? endif; ?>
                         <? if($country != "N/A"): ?>
-                            <span>
-                                <span class="fa fa-globe fa-fw"></span>
-                                <?= $country ?>
-                            </span><br>
+                            <a href="<?= $config->full_root_path ?>/?s=country:<?= urlencode($country) ?>">
+                                <span class="fa fa-globe fa-fw"></span><?= $country ?>
+                            </a><br>
                         <? endif; ?>
                         <? if($isp != "N/A"): ?>
-                            <span>
-                                <span class="fa fa-building fa-fw"></span>
-                                <?= $isp ?>
-                            </span><br>
+                            <a href="<?= $config->full_root_path ?>/?s=isp:<?= urlencode($isp) ?>">
+                                <span class="fa fa-building fa-fw"></span><?= $isp ?>
+                            </a><br>
                         <? endif; ?>
                     <? endif; ?>
                 </td>
