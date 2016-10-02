@@ -12,7 +12,7 @@
  * 
  * $_GET params:
  * @param string "action"     change_status|untrash_for_review
- * @param string "new_status" trashed|published|reviewing
+ * @param string "new_status" trashed|published|reviewing|hidden|draft
  * @param string "id_post"
  */
 
@@ -40,7 +40,7 @@ $old_post = clone $post;
 
 if($_GET["action"] == "change_status")
 {
-    if( ! in_array($_GET["new_status"], array("trashed", "published", "reviewing")) )
+    if( ! in_array($_GET["new_status"], array("trashed", "published", "reviewing", "hidden", "draft")) )
         die($current_module->language->messages->toolbox->invalid_status);
     
     switch( $_GET["new_status"] )
@@ -88,6 +88,43 @@ if($_GET["action"] == "change_status")
             }
             
             $repository->trash($_GET["id_post"]);
+            
+            die("OK");
+            break;
+        }
+        case "hidden":
+        {
+            if($account->level < config::MODERATOR_USER_LEVEL)
+                die($current_module->language->messages->toolbox->action_not_allowed);
+            
+            if( $post->status == "hidden" ) die("OK");
+            
+            if( ! $post->can_be_deleted() )
+                die($current_module->language->messages->toolbox->action_not_allowed);
+            
+            $attached_media = $repository->get_media_items($_GET["id_post"]);
+            if( ! empty($attached_media) )
+            {
+                $item_ids  = array_keys($attached_media);
+                
+                $repository->unset_all_media_items($_GET["id_post"]);
+                $media_repository->delete_multiple_if_unused($item_ids);
+            }
+            
+            $repository->hide($_GET["id_post"]);
+            
+            die("OK");
+            break;
+        }
+        case "draft":
+        {
+            if($account->level < config::MODERATOR_USER_LEVEL)
+                die($current_module->language->messages->toolbox->action_not_allowed);
+            
+            if( $post->status == "draft" ) die("OK");
+            
+            $post->status = "draft";
+            include __DIR__ . "/save.inc";
             
             die("OK");
             break;

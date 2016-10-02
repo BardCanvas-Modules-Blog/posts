@@ -543,13 +543,30 @@ class posts_repository extends abstract_repository
     {
         global $database;
         
-        # TODO: Hide all attached media?
-        
         $date = date("Y-m-d H:i:s");
         
         $res = $database->exec("
             update posts set
                 status      = 'trashed',
+                last_update = '$date'
+            where
+                id_post = '$id_post'
+        ");
+        $this->last_query = $database->get_last_query();
+        
+        $this->update_cache_versions();
+        return $res;
+    }
+    
+    public function hide($id_post)
+    {
+        global $database;
+        
+        $date = date("Y-m-d H:i:s");
+        
+        $res = $database->exec("
+            update posts set
+                status      = 'hidden',
                 last_update = '$date'
             where
                 id_post = '$id_post'

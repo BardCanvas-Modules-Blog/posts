@@ -86,16 +86,31 @@ if( $account->level < config::MODERATOR_USER_LEVEL )
 {
     if( $search_status == "hidden" ) $search_status = "";
     
-    if( empty($search_status) ) $where[] = "status not in ('trashed', 'hidden')";
-    else                        $where[] = "status = '$search_status'";
+    if( empty($search_for) )
+    {
+        if( empty($search_status) ) $where[] = "status not in ('trashed', 'hidden')";
+        else                        $where[] = "status = '$search_status'";
+    }
+    else
+    {
+        if( empty($search_status) ) $where[] = "status not in ('hidden')";
+        else                        $where[] = "status = '$search_status'";
+    }
     $where["id_author"] = $account->id_account;
 }
 else
 {
     if( ! empty($search_author) ) $where["id_author"] = $_REQUEST["search_author"];
     if( ! empty($search_pinned) ) $where[]            = "pin_to_home > 0 or pin_to_main_category_index > 0";
-    if( empty($search_status) )   $where[] = "status not in ('trashed', 'hidden')";
-    else                          $where[] = "status = '$search_status'";
+    if( empty($search_for) )
+    {
+        if( empty($search_status) )   $where[] = "status not in ('trashed', 'hidden')";
+        else                          $where[] = "status = '$search_status'";
+    }
+    else
+    {
+        if( ! empty($search_status) ) $where[] = "status = '$search_status'";
+    }
 }
 
 if( ! empty($search_category) ) $where[] = "main_category = '$search_category'";
@@ -149,7 +164,8 @@ $categories            = $categories_repository->get_as_tree_for_select(array(),
 <? endif; ?>
 
 <h1 class="clearfix">
-    <button id="refresh_posts_browser" class="pull-right" onclick="$('#filter_form').submit()">
+    <button id="refresh_posts_browser" class="pull-right multirecord_actions_table_refresher"
+            onclick="$('#filter_form').submit()">
         <span class="fa fa-refresh"></span>
         <?= $language->refresh ?>
     </button>
@@ -265,10 +281,35 @@ endif;
 ?>
 
 <div class="table_wrapper">
+    
+    <div class="multi_record_actions" style="font-family: arial, helvetica, sans-serif; margin-bottom: 5px;">
+        <span class="fixed_font">&nbsp;┌──</span>
+        <button onclick="launch_multirecord_actions(this, 'trashed')">
+            <?= $current_module->language->multi_actions->trash ?>
+        </button>
+        <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
+            <button onclick="launch_multirecord_actions(this, 'draft')">
+                <?= $current_module->language->multi_actions->draft ?>
+            </button>
+            <button onclick="launch_multirecord_actions(this, 'hidden')">
+                <?= $current_module->language->multi_actions->hide ?>
+            </button>
+            <button onclick="launch_multirecord_actions(this, 'reviewing')">
+                <?= $current_module->language->multi_actions->review ?>
+            </button>
+            <button onclick="launch_multirecord_actions(this, 'published')">
+                <?= $current_module->language->multi_actions->publish ?>
+            </button>
+        <? endif; ?>
+    </div>
+    
     <table id="posts_browser_table" class="nav_table evened">
         
         <thead>
         <tr>
+            <th nowrap>
+                <input type="checkbox" name="record_selections_trigger" onchange="toggle_record_selections(this)">
+            </th>
             <? foreach( $browser->build_table_header($current_module->language->record_nav->columns) as $this_cell ): ?>
                 <th align="<?= $this_cell->xalign ?>" <? if( $this_cell->xnowrap == true ) echo "nowrap "; ?>
                     <? if( ! empty($this_cell->xwidth) ) echo "width='$this_cell->xwidth' "; ?> class="<?= $this_cell->xclass ?>"><?
@@ -291,7 +332,14 @@ endif;
         <tbody>
         <? foreach( $records as $row ): ?>
             <tr data-record-id="<?= $row->id_post ?>" class="<? if($row->status == "trashed") echo "deleted" ?>">
+                <td nowrap>
+                    <input type="checkbox" class="record_selector" name="record_selections[]" value="<?= $row->id_post ?>">
+                </td>
                 <td width="25%">
+                    <div class="pseudo_link clipboard-copy" data-clipboard-text="<?= $row->id_post ?>">
+                        <code>#<?= $row->id_post ?><span class="fa fa-copy fa-fw"></span></code>
+                    </div>
+                    
                     <div class="principal_data"><?= convert_emojis($row->title) ?></div>
                     
                     <div class="actions">
@@ -340,11 +388,20 @@ endif;
                         <? endif; ?>
                         
                         <? if( $account->level >= config::MODERATOR_USER_LEVEL && $row->status == "trashed" ): ?>
-                            <span class="action pseudo_link" onclick="untrash_for_review('<?= $row->id_post ?>')">
-                                <span class="fa fa-refresh"></span>
+                            <span class="action critical pseudo_link" onclick="untrash_for_review('<?= $row->id_post ?>')">
+                                <span class="fa fa-reply"></span>
                                 <?= $current_module->language->record_nav->actions->untrash_for_review ?>
                             </span>
                         <? endif; ?>
+                        
+                        <? if( $account->level >= config::MODERATOR_USER_LEVEL && in_array($row->status, array("trashed", "published", "reviewing")) ): ?>
+                            <span class="action critical pseudo_link"
+                                  onclick="change_post_status( '<?= $row->id_post ?>', 'draft', this, function() { $('tr[data-record-id=<?= $row->id_post ?>]').fadeOut('fast'); } )">
+                                <span class="fa fa-reply"></span>
+                                <?= $current_module->language->record_nav->actions->back_to_draft ?>
+                            </span>
+                        <? endif; ?>
+                        
                     </div>
                 </td>
                 <td data-column="details">
@@ -360,7 +417,7 @@ endif;
                     
                     render_post_tags($row);
                     
-                    render_post_attached_media($row);
+                    if($account->level >= config::MODERATOR_USER_LEVEL) render_post_attached_media($row);
                     
                     if( ! empty($per_column_function_hooks["details"]) )
                         foreach($per_column_function_hooks["details"] as $function)
@@ -505,8 +562,7 @@ function render_post_tags(post_record $row)
     {
         foreach( $row->get_filtered_tags_list() as $tag)
         {
-            $link = str_replace('%tag%', $tag, $remove_tag_link);
-            echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}{$link}</span> ";
+            echo "<span class='hashtag'><span class='fa fa-hashtag fa-fw'></span>{$tag}</span> ";
         }
     }
     else
