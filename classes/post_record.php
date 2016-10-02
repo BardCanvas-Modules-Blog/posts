@@ -269,8 +269,14 @@ class post_record extends abstract_record
         global $config, $modules;
         
         $contents = $this->content;
-        $contents = convert_emojis($contents);
         
+        $contents = preg_replace(
+            '@<p>(https?://([-\w\.]+[-\w])+(:\d+)?(/([\%\w/_\.#-]*(\?\S+)?[^\.\s])?)?)</p>@',
+            '<p><a href="$1" target="_blank">$1</a></p>',
+            $contents
+        );
+        
+        $contents = convert_emojis($contents);
         $contents = convert_media_tags($contents);
         $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
         
