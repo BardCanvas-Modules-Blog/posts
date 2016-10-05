@@ -34,7 +34,7 @@
         $select = $form.find('select[name="search_pinned"]');
         if( $select.length > 0 ) $select.find('option:first').prop('selected', true);
         
-        $form.find('select[name="search_status"] option:first').prop('selected', true);
+        $form.find('input[name="search_status"][value=""]').prop('checked', true);
     }
     
     //noinspection JSUnusedGlobalSymbols
