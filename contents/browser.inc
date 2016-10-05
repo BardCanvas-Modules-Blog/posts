@@ -205,7 +205,7 @@ $categories            = $categories_repository->get_as_tree_for_select(array(),
         
         <?= $language->record_nav->search ?>
         <input type="text" name="search_for"
-               value="<?= htmlspecialchars($search_for) ?>" size="46"
+               value="<?= htmlspecialchars($search_for) ?>" size="37"
                placeholder="<?= $current_module->language->record_nav->search_placeholder ?>">
         
         <select name="search_category" onchange="$('#filter_form').submit();">
