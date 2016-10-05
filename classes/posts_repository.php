@@ -931,18 +931,23 @@ class posts_repository extends abstract_repository
      *
      * @return post_record[]
      */
-    public function lookup($where, $limit = 0, $offset = 0, $order = "")
+    public function lookup($where, $limit = null, $offset = null, $order = "")
     {
+        global $database;
+        
         $params = $this->build_find_params();
         
-        if( empty($where)  ) $where  = array();
-        if( empty($limit)  ) $limit  = $params->limit;
-        if( empty($offset) ) $offset = $params->offset;
-        if( empty($order)  ) $order  = $params->order;
+        if( empty($where)    ) $where  = array();
+        if( is_null($limit)  ) $limit  = $params->limit;
+        if( is_null($offset) ) $offset = $params->offset;
+        if( empty($order)    ) $order  = $params->order;
         
         $where = array_merge($where, $params->where);
         
-        return parent::find($where, $limit, $offset, $order);
+        $return = parent::find($where, $limit, $offset, $order);
+        $this->last_query = $database->get_last_query();
+        
+        return $return;
     }
     
     /**
