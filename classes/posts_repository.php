@@ -954,7 +954,7 @@ class posts_repository extends abstract_repository
      */
     protected function get_posts_data($find_params, $extensions_hook, $extensions_marker)
     {
-        global $modules, $config;
+        global $modules, $config, $database;
         
         $posts_data = new posts_data();
         
@@ -962,6 +962,8 @@ class posts_repository extends abstract_repository
         $posts_data->count       = $this->get_record_count($find_params->where);
         $posts_data->pagination  = $posts_data->browser->build_pagination($posts_data->count, $find_params->limit, $find_params->offset);
         $posts_data->posts       = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+        
+        $this->last_query = $database->get_last_query();
         
         $this->preload_authors($posts_data);
         
