@@ -29,11 +29,11 @@ global $config, $language, $mem_cache;
 $post = $template->get("current_post");
 if( ! is_object($post) ) return "";
 
-$data_key .= "/{$post->main_category_slug}/v5";
+$data_key .= "/{$post->main_category_slug}/v6";
 
 # TODO: Add data extractors!!!
 $category_id = $post->main_category;
-$limit       = 10;
+$limit       = 5;
 $order       = "publishing_date desc";
 
 $posts = $mem_cache->get($data_key);

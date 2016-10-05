@@ -28,7 +28,7 @@ global $config, $language, $mem_cache;
 $tag     = "polemicas";
 $limit   = 10;
 $order   = "publishing_date asc";
-$version = 4;
+$version = 8;
 
 $contents = $mem_cache->get("{$data_key}_v{$version}");
 if( ! empty($contents) && $contents != "none" ) return $contents;
@@ -38,7 +38,7 @@ $repository = new posts_repository();
 $where      = array("id_post in (select id_post from post_tags where tag = '$tag')");
 $posts      = $repository->lookup($where, $limit, 0, $order);
 
-if( empty($posts ) )
+if( empty($posts) )
 {
     $mem_cache->set("{$data_key}_v{$version}", "none", 0, 60*5);
     
