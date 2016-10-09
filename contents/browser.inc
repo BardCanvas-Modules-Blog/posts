@@ -102,10 +102,7 @@ else
 {
     if( ! empty($search_author) ) $where["id_author"] = $_REQUEST["search_author"];
     if( ! empty($search_pinned) ) $where[]            = "pin_to_home > 0 or pin_to_main_category_index > 0";
-    
-    if( empty($search_for) )
-        if( ! empty($search_status) )
-            $where[] = "status = '$search_status'";
+    if( ! empty($search_status) ) $where[] = "status = '$search_status'";
 }
 
 if( ! empty($search_category) ) $where[] = "main_category = '$search_category'";
@@ -270,7 +267,7 @@ $categories            = $categories_repository->get_as_tree_for_select(array(),
             
             <label class="framed_content inlined <? if($search_status == "reviewing") echo "state_active"; ?>">
                 <input type="radio" name="search_status" <? if($search_status == "reviewing") echo "checked"; ?> value="reviewing"
-                       onchange="$('#filter_form').submit()">
+                       onchange="$('#filter_form').submit()" id="reviewing_trigger">
                 <?= $current_module->language->status_labels->reviewing ?>
             </label>
             
@@ -307,7 +304,7 @@ if( $account->level >= config::MODERATOR_USER_LEVEL && $search_status != "review
         $message = replace_escaped_vars($current_module->language->messages->pending, '{$amount}', $pending);
         ?>
         <div class="framed_content state_ko">
-            <span class="pseudo_link" onclick="var $form = $('#filter_form'); reset_filter(); $form.find('select[name=search_status] option[value=reviewing]').prop('selected', true); $form.submit();">
+            <span class="pseudo_link" onclick="var $form = $('#filter_form'); reset_filter(); $form.find('input[name=search_status][value=reviewing]').prop('checked', true); $form.submit();">
                 <span class="fa fa-warning"></span>
                 <?= $message ?>
             </span>
@@ -405,6 +402,14 @@ endif;
                             <span class="action pseudo_link" onclick="change_post_status( '<?= $row->id_post ?>', 'trashed', this, function() { $('tr[data-record-id=<?= $row->id_post ?>]').fadeOut('fast'); } )">
                                 <span class="fa fa-trash"></span>
                                 <?= $current_module->language->record_nav->actions->trash ?>
+                            </span>
+                        <? endif; ?>
+                        
+                        <? if( $account->id_account != $row->id_author ): ?>
+                            <span class="action pseudo_link" onclick="send_pm(this, '<?= $row->author_user_name ?>', '<?= htmlspecialchars($row->author_display_name) ?>')"
+                                  title="<?= replace_escaped_vars( $language->contact->pm->title, '{$website_name}', $settings->get("engine.website_name") ) ?>">
+                                <span class="fa fa-inbox"></span>
+                                <?= $language->pm_author ?>
                             </span>
                         <? endif; ?>
                         
