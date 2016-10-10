@@ -528,4 +528,66 @@
         <done>Todas las solicitudes han sido procesadas. El navegador de registos se actualizará ahora.</done>
     </multi_actions>
     
+    <email_templates>
+        <post_submitted>
+            <subject>[{$website_name}/Moderators] New post from {$post_author}: "{$post_title}"</subject>
+            <body><![CDATA[
+                <p>{$post_author} has posted a new entry on {$main_category} titled
+                "<a href="{$post_link}">{$post_title}</a>".</p>
+                
+                <p>Excerpt:</p>
+                <blockquote style="background-color: whitesmoke; color: black; border-left: 5px solid silver; padding: 10px;">
+                    {$excerpt}
+                </blockquote>
+                
+                <p>Featured image:</p>
+                <blockquote>
+                    {$featured_image}
+                </blockquote>
+                
+                <p>Submission info:</p>
+                <ul>
+                    <li>User IP: {$ip}</li>
+                    <li>Location data: {$location}</li>
+                    <li>Browser: {$user_agent}</li>
+                </ul>
+                
+                <p>Last 12 posts from the same network segment during the last 7 days:</p>
+                <ul>
+                    {$other_posts_from_segment}
+                </ul>
+                
+                <p>Available actions:</p>
+                <ul>
+                    <li><a href="{$post_url}">See to the post</a>.</li>
+                    <li><a href="{$edit_url}"><b>Review</b></a> the post in the editor.</li>
+                    <li><a href="{$preferences}"><b>Edit your preferences</b></a> to disable these notifications.</li>
+                </ul>
+                
+                <p>Regards,<br>
+                {$website_name}</p>
+            ]]></body>
+            <none_found>None found</none_found>
+            <none_defined>None defined</none_defined>
+        </post_submitted>
+    </email_templates>
+    
+    <engine_prefs>
+        <title>Post notifications</title>
+        
+        <!-- The next ones are for mods and up -->
+        <specs key="moderator_emails_for_posts" selector_default="true" min_account_level="200">
+            <title>Email me when new posts are published</title>
+            <description><![CDATA[
+                <span class="framed_content inlined state_highlight">
+                    <span class="fa fa-info-circle"></span>
+                    Mods/admins only
+                </span>
+                Receive an email with the excerpt and some statistics.
+                Applies to posts from everyone except your own.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+    </engine_prefs>
+    
 </language>

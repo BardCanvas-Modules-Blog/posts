@@ -12,6 +12,7 @@
 use hng2_base\config;
 use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\post_record;
+use hng2_modules\posts\toolbox;
 
 $current_module->load_extensions("save_post", "initial_validations");
 
@@ -181,3 +182,5 @@ if( $post->status == "published" )
     $media_deletions = $repository->set_media_items($media_items, $post->id_post);
 }
 
+$toolbox = new toolbox();
+$toolbox->notify_mods_on_post_submission($post);
