@@ -405,7 +405,7 @@ endif;
                             </span>
                         <? endif; ?>
                         
-                        <? if( $account->id_account != $row->id_author ): ?>
+                        <? if( $modules["messaging"]->enabled && $account->id_account != $row->id_author ): ?>
                             <span class="action pseudo_link" onclick="send_pm(this, '<?= $row->author_user_name ?>', '<?= htmlspecialchars($row->author_display_name) ?>')"
                                   title="<?= replace_escaped_vars( $language->contact->pm->title, '{$website_name}', $settings->get("engine.website_name") ) ?>">
                                 <span class="fa fa-inbox"></span>
