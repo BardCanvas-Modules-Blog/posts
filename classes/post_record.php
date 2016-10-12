@@ -200,7 +200,7 @@ class post_record extends abstract_record
         // TODO: Implement accounts repository for caching
         
         if( is_object($this->_author_account) ) return $this->_author_account;
-    
+        
         $repository = new accounts_repository();
         return $repository->get($this->id_author);
     }
@@ -253,13 +253,16 @@ class post_record extends abstract_record
      */
     public function get_processed_author_display_name()
     {
-        global $config;
+        global $config, $modules;
         
         $contents = $this->author_display_name;
         $contents = convert_emojis($contents);
-        $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
         
-        # TODO: Add get_processed_author_display_name() extension point
+        $config->globals["processing_id_account"]  = $this->id_author;
+        $config->globals["processing_contents"] = $contents;
+        $modules["posts"]->load_extensions("post_record_class", "get_processed_author_display_name");
+        $contents = $config->globals["processing_contents"];
+        unset( $config->globals["processing_contents"] );
         
         return $contents;
     }

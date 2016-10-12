@@ -981,6 +981,8 @@ class posts_repository extends abstract_repository
     
     private function preload_authors(posts_data &$posts_data)
     {
+        global $modules, $config;
+        
         $author_ids = array();
         foreach($posts_data->posts          as $post) $author_ids[] = $post->id_author;
         foreach($posts_data->featured_posts as $post) $author_ids[] = $post->id_author;
@@ -989,13 +991,16 @@ class posts_repository extends abstract_repository
             $author_ids = array_unique($author_ids);
             $authors_repository = new accounts_repository();
             $authors = $authors_repository->get_multiple($author_ids);
-        
+            
             foreach($posts_data->posts as $index => &$post)
                 $post->set_author($authors[$post->id_author]);
-        
+            
             foreach($posts_data->featured_posts as $index => &$post)
                 $post->set_author($authors[$post->id_author]);
         }
+        
+        $config->globals["author_ids"] = $author_ids;
+        $modules["posts"]->load_extensions("posts_repository_class", "preload_authors");
     }
     
     public function get_grouped_tag_counts($since = "", $min_hits = 10)
