@@ -1015,7 +1015,7 @@ class posts_repository extends abstract_repository
                 select tag, count(tag) as `count` from post_tags
                 group by tag
                 $having
-                order by `count` desc
+                order by tag asc
             ";
         else
             $query = "
@@ -1023,7 +1023,7 @@ class posts_repository extends abstract_repository
                 where date_attached >= '{$since}'
                 group by tag
                 $having
-                order by `count` desc
+                order by tag asc
             ";
         
         $res = $database->query($query);
