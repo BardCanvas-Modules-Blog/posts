@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     
-    <version>1.11.2</version>
+    <version>1.12</version>
     <group>BardCanvas</group>
     
     <working_flags>
@@ -18,6 +18,7 @@
         <media_record_filtering_tags_list>extenders/media_record_filtering_tags_list.inc</media_record_filtering_tags_list>
         <webhelper_autolink_hash_tags_filter>extenders/webhelper_autolink_hash_tags.inc</webhelper_autolink_hash_tags_filter>
         <media_repository_delete_multiple_if_unused>extenders/media_repository_delete_multiple_if_unused.inc</media_repository_delete_multiple_if_unused>
+        <media_repository_empty_trash>extenders/media_repository_empty_trash.inc</media_repository_empty_trash>
     </php_includes>
     
     <template_includes>

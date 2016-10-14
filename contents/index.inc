@@ -44,7 +44,7 @@
         $form.find('input[name="offset"]').val(value);
         $form.submit();
     }
-
+    
     function untrash_for_review(id_post)
     {
         var message = $('#untrash_for_review_confirmation').text();
@@ -72,6 +72,26 @@
         });
     }
     
+    function empty_trash()
+    {
+        var message = $('#empty_trash_confirmation').text();
+        if( ! confirm(message) ) return;
+        
+        var url = $_FULL_ROOT_PATH + '/posts/scripts/toolbox.php?action=empty_trash&wasuuup=' + wasuuup();
+        $.blockUI(blockUI_default_params);
+        $.get(url, function(response)
+        {
+            if( response != 'OK' )
+            {
+                alert(response);
+                $.unblockUI();
+                return;
+            }
+            
+            $.unblockUI();
+            $('#refresh_posts_browser').click();
+        });
+    }
 </script>
 
 <div id="main_workarea">
@@ -219,3 +239,4 @@
 <div id="multirecord_actions_confirmation"  style="display: none;"><?= unindent($current_module->language->multi_actions->confirmation) ?></div>
 <div id="multirecord_actions_none_selected" style="display: none;"><?= unindent($current_module->language->multi_actions->none_selected) ?></div>
 <div id="multirecord_actions_all_done"      style="display: none;"><?= unindent($current_module->language->multi_actions->done) ?></div>
+<div id="empty_trash_confirmation"          style="display: none;"><?= unindent($current_module->language->empty_trash->confirmation) ?></div>

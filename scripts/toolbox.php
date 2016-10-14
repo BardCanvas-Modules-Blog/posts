@@ -11,7 +11,7 @@
  * @var \SimpleXMLElement $language
  * 
  * $_GET params:
- * @param string "action"     change_status|untrash_for_review
+ * @param string "action"     change_status|untrash_for_review|empty_trash
  * @param string "new_status" trashed|published|reviewing|hidden|draft
  * @param string "id_post"
  */
@@ -26,13 +26,21 @@ header("Content-Type: text/plain; charset=utf-8");
 include "../../config.php";
 include "../../includes/bootstrap.inc";
 
-if( ! in_array($_GET["action"], array("change_status", "untrash_for_review")) )
+if( ! in_array($_GET["action"], array("change_status", "untrash_for_review", "empty_trash")) )
     die($current_module->language->messages->toolbox->invalid_action);
 
-if( empty($_GET["id_post"]) ) die($current_module->language->messages->missing->id);
+if( $_GET["action"] != "empty_trash" && empty($_GET["id_post"]) )
+    die($current_module->language->messages->missing->id);
 
 $repository       = new posts_repository();
 $media_repository = new media_repository();
+
+if($_GET["action"] == "empty_trash")
+{
+    if( ! $account->_is_admin ) die($current_module->language->messages->toolbox->action_not_allowed);
+    $repository->empty_trash();
+    die("OK");
+}
 
 $post = $repository->get($_GET["id_post"]);
 if( is_null($post) ) die($current_module->language->messages->post_not_found);

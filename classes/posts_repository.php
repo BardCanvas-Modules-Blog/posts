@@ -1222,4 +1222,46 @@ class posts_repository extends abstract_repository
         $this->last_query = $database->get_last_query();
         return $database->exec($query);
     }
+    
+    public function empty_trash()
+    {
+        global $database, $modules;
+        
+        $boundary = date("Y-m-d 00:00:00", strtotime("today - 7 days"));
+        
+        $database->exec("
+          delete from post_categories where id_post in (
+            select id_post from posts where status = 'trashed'
+            and creation_date < '$boundary'
+          )
+        ");
+        
+        $database->exec("
+          delete from post_media where id_post in (
+            select id_post from posts where status = 'trashed'
+            and creation_date < '$boundary'
+          )
+        ");
+        
+        $database->exec("
+          delete from post_mentions where id_post in (
+            select id_post from posts where status = 'trashed'
+            and creation_date < '$boundary'
+          )
+        ");
+        
+        $database->exec("
+          delete from post_views where id_post in (
+            select id_post from posts where status = 'trashed'
+            and creation_date < '$boundary'
+          )
+        ");
+        
+        $modules["posts"]->load_extensions("posts_repository_class", "empty_trash");
+        
+        $database->exec("
+          delete from posts where status = 'trashed'
+          and creation_date < '$boundary'
+        ");
+    }
 }
