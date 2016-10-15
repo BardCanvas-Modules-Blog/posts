@@ -361,7 +361,12 @@
             <title>Categories to exclude from the main index</title>
             <description><![CDATA[
                 Specify a list of category slugs which posts should be excluded from the main (home)
-                index, one per line.
+                index, one per line.<br><br>
+                <i class="fa fa-info-circle"></i>
+                You can set time based exclussions by using the next syntax:<br>
+                <code>slug - hours</code><br>
+                With this form, only posts <u>published within the last <code>hours</code></u> will be shown
+                on the index, <b>leaving the rest out</b>.
             ]]></description>
             <type>code</type>
         </specs>

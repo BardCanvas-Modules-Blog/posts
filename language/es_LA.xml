@@ -355,7 +355,12 @@
             <title>Categorías a excluír de índice principal</title>
             <description><![CDATA[
                 Especifica una lista de slugs de categorías cuyos posts se excluirán del índice principal (inicio),
-                uno por línea.
+                uno por línea.<br><br>
+                <i class="fa fa-info-circle"></i>
+                Puedes establecer exlcusiones basadas en tiempo al usar la siguiente sintaxis:<br>
+                <code>slug - horas</code><br>
+                De esta forma, sólo aquellas entradas <u>que hayan sido publicadas durante las últimas
+                <code>horas</code></u> serán incluídas en el índice, <b>dejando fuera las más viejas</b>.
             ]]></description>
             <type>code</type>
         </specs>

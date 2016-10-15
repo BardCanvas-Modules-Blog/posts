@@ -671,12 +671,26 @@ class posts_repository extends abstract_repository
         if( ! empty($category_exclussions) )
         {
             $list = explode("\n", $category_exclussions);
-            foreach($list as &$slug) $slug = "'" . trim($slug) . "'";
-            $list = implode(", ", $list);
-            $return->where[]
-                = "main_category not in (select id_category from categories where slug in (
-                       $list
-                   ))";
+            foreach($list as $slug)
+            {
+                if( stristr($slug, " - ") === false )
+                {
+                    $return->where[] = "main_category not in (select id_category from categories where slug = '$slug')";
+                }
+                else
+                {
+                    list($slug, $hours) = explode(" - ", $slug);
+                    $date = date("Y-m-d H:i:s", strtotime("now - $hours hours"));
+                    $return->where[] = "(
+                        (
+                            main_category not in (select id_category from categories where slug = '$slug')
+                        ) or (
+                            main_category in (select id_category from categories where slug = '$slug')
+                            and publishing_date >= '$date'
+                        )
+                    )";
+                }
+            }
         }
         
         return $return;
