@@ -883,6 +883,17 @@ class posts_repository extends abstract_repository
     }
     
     /**
+     * @return post_record[]
+     */
+    public function get_for_feed()
+    {
+        $find_params = $this->build_find_params_for_home();
+        $posts_data  = $this->get_posts_data($find_params, "index_builders", "home");
+        
+        return $posts_data->posts;
+    }
+    
+    /**
      * @param $id_account
      *
      * @return posts_data

@@ -81,7 +81,7 @@ elseif( $content_key == "posts_by_category" )
 }
 else
 {
-    $records = $posts_repository->lookup(array(), 0, 0, "");
+    $records = $posts_repository->get_for_feed();
 }
 
 if( empty($records) ) return;
