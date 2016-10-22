@@ -137,14 +137,14 @@ if( ! empty($_FILES["attachments"]) )
             
             if( is_string($res) ) die($res);
             
-            $item = $res;
-            
             if( $type == "image" )
-                $post->content .= "\n<p><img src='{$item->get_item_url()}'
-                    data-media-type='image' data-id-media='{$item->id_media}'></p>\n";
+                $post->content .= "\n<p><img src='{$res->get_item_url()}'
+                    data-media-type='image' data-id-media='{$res->id_media}'></p>\n";
             else
-                $post->content .= "\n<p><img src='{$item->get_thumbnail_url()}' 
-                    data-media-type='video' data-id-media='{$item->id_media}'></p>\n";
+                $post->content .= "\n<p><img src='{$res->get_thumbnail_url()}' 
+                    data-media-type='video' data-id-media='{$res->id_media}'></p>\n";
+            
+            sleep(1);
         }
     }
 }
