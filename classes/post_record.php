@@ -312,6 +312,7 @@ class post_record extends abstract_record
         
         if( ! $account->_exists ) return false;
         if( $account->level >= config::MODERATOR_USER_LEVEL ) return true;
+        if( $this->id_author != $account->id_account ) return false;
         if( $this->publishing_date == "0000-00-00 00:00:00" ) return true;
         if( $this->comments_count > 0 ) return false;
         
@@ -348,7 +349,7 @@ class post_record extends abstract_record
         global $account;
         
         if( $account->level >= config::MODERATOR_USER_LEVEL ) return true;
-        if( $account->level <= config::NEWCOMER_USER_LEVEL && $this->comments_count > 0 ) return false;
+        if( $this->comments_count > 0 ) return false;
         if( $account->id_account != $this->id_author ) return false;
         if( $this->status == "trashed" ) return false;
         
