@@ -107,7 +107,7 @@ if( $current_module->name == "posts" ) $this_module = $current_module;
             
             <? $modules["posts"]->load_extensions("quick_post_form", "below_main_category_selector"); ?>
             
-            <div class="field tinymce_container" data-field="content">
+            <div class="field tinymce_container" data-field="content" data-tinymce-hidden-buttons="gallery-module">
                 <textarea name="content" id="post_content_editor" class="tinymce"
                           placeholder="<?= $this_module->language->form->fields->content->quick_form_placeholder ?>"></textarea>
             </div>
