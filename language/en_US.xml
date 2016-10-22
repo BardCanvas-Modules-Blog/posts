@@ -104,6 +104,7 @@
             <back_to_draft>Back to draft</back_to_draft>
             <publish>Publish</publish>
             <untrash_for_review>Untrash for review</untrash_for_review>
+            <author_posts>Author posts</author_posts>
         </actions>
         <extras>
             <expires>Expires in</expires>

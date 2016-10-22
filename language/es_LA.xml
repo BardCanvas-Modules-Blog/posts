@@ -105,6 +105,7 @@
             <back_to_draft>Regresar a borrador</back_to_draft>
             <publish>Publicar</publish>
             <untrash_for_review>Recuperar para revisión</untrash_for_review>
+            <author_posts>Entradas del autor</author_posts>
         </actions>
         <extras>
             <expires>Expira en</expires>

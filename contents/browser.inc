@@ -216,7 +216,7 @@ $categories            = $categories_repository->get_as_tree_for_select(array(),
         
         <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
             <select name="search_author" onchange="$('#filter_form').submit();">
-                <option <? if( empty($search_author) ) echo "selected"; ?> value="">&lt;<?= $current_module->language->record_nav->filters->from_everyone ?>&gt;</option>
+                <option class="search_author_target" <? if( empty($search_author) ) echo "selected"; ?> value="">&lt;<?= $current_module->language->record_nav->filters->from_everyone ?>&gt;</option>
                 <option <? if( $search_author == $account->id_account ) echo "selected"; ?> value="<?= $account->id_account ?>"><?= $current_module->language->record_nav->filters->mine ?></option>
                 <? if( ! empty($search_author) && $search_author != $account->id_account ): $author = new account($search_author); ?>
                     <option selected value="<?= $search_author ?>"><?= replace_escaped_vars(
@@ -448,6 +448,15 @@ endif;
                                   onclick="change_post_status( '<?= $row->id_post ?>', 'draft', this, function() { $('tr[data-record-id=<?= $row->id_post ?>]').fadeOut('fast'); } )">
                                 <span class="fa fa-reply"></span>
                                 <?= $current_module->language->record_nav->actions->back_to_draft ?>
+                            </span>
+                        <? endif; ?>
+                        
+                        <? if( $account->level >= config::MODERATOR_USER_LEVEL
+                               && (empty($search_author) || $search_author != $account->id_account) ): ?>
+                            <span class="action pseudo_link"
+                                  onclick="$('.search_author_target').val('<?= $row->id_author ?>').prop('selected', true); $('#filter_form').submit();">
+                                <span class="fa fa-newspaper-o"></span>
+                                <?= $current_module->language->record_nav->actions->author_posts ?>
                             </span>
                         <? endif; ?>
                         
