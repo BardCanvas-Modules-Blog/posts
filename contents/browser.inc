@@ -489,7 +489,7 @@ endif;
                         <span class="fa fa-user fa-fw"></span><?= $row->get_processed_author_display_name() ?>
                     </a><br>
                     
-                    <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
+                    <? if( ! empty($row->creation_ip) && $account->level >= config::MODERATOR_USER_LEVEL ): ?>
                         <a class="nowrap" href="<?= $config->full_root_path ?>/?s=ip:<?= $row->creation_ip ?>">
                             <span class="fa fa-cloud fa-fw"></span>
                             <?= $row->creation_ip ?>
@@ -673,7 +673,7 @@ function render_post_attached_media(post_record $row)
                 <span class="fa fa-user fa-fw"></span>
                 <?= $media_record->get_processed_author_display_name() ?></a>
             [<?= time_elapsed_string($media_record->publishing_date) ?>]
-            <a class="prettyPhoto" href="<?= $media_record->get_thumbnail_url() ?>"><?= $media_record->title ?></a>
+            <a class="prettyPhoto" href="<?= $media_record->get_thumbnail_url() ?>"><?= make_excerpt_of($media_record->title, 30) ?></a>
             <a href="<?= $media_record->get_page_url() ?>" target="_blank"><span class="fa fa-external-link fa-fw"></span></a>
         </div>
         <?

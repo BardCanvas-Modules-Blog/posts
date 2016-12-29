@@ -352,6 +352,13 @@
                 <max>255</max>
             </options>
         </specs>
+        <specs key="disable_quick_post_form">
+            <title>¿Desactivar forma de posteo rápido?</title>
+            <description><![CDATA[
+                Si se desactiva, los usuarios no podrán postear entradas rápidas usando la forma rápida en índices.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
         <specs key="home_excluded_categories">
             <title>Categorías a excluír de índice principal</title>
             <description><![CDATA[

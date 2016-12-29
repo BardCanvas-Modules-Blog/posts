@@ -23,5 +23,6 @@ $template->add_menu_item(
     <a class='main_menu_item {$added_class}' data-module='posts' href='{$config->full_root_path}/posts/'>
         $icon {$this_module->language->index->menu_caption}
     </a>
-    "
+    ",
+    110
 );

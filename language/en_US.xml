@@ -346,6 +346,13 @@
                 <max>255</max>
             </options>
         </specs>
+        <specs key="disable_quick_post_form">
+            <title>Disable quick posts form?</title>
+            <description><![CDATA[
+                If disabled, users wont be able to post quick entries using the reduced composer on indexes.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
         <specs key="enforced_expiration_by_category">
             <title>Enforced post expiration by category</title>
             <description><![CDATA[
