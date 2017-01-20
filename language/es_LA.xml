@@ -385,6 +385,13 @@
             ]]></description>
             <type>code</type>
         </specs>
+        <specs key="lock_posts_with_enforced_expiration">
+            <title>Bloquear posts con vida forzada</title>
+            <description><![CDATA[
+                Si se habilita, los posts de estas categorías no se podrán editar o eliminar hasta que expiren.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
         <specs key="time_allowed_for_editing_after_publishing">
             <title>Tiempo de gracia para edición tras publicar</title>
             <description><![CDATA[

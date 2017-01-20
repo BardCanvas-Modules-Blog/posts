@@ -365,6 +365,13 @@
             ]]></description>
             <type>code</type>
         </specs>
+        <specs key="lock_posts_with_enforced_expiration">
+            <title>Lock posts with enforced expiration</title>
+            <description><![CDATA[
+                If enabled, posts with these categories wont be editable or deletable until they expire.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
         <specs key="home_excluded_categories">
             <title>Categories to exclude from the main index</title>
             <description><![CDATA[

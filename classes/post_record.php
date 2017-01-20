@@ -321,7 +321,12 @@ class post_record extends abstract_record
         
         $boundary = strtotime("{$this->publishing_date} + $time minutes");
         if( time() < $boundary ) return true;
-        else                     return false;
+        
+        if( $settings->get("modules:posts.lock_posts_with_enforced_expiration") == "true"
+            && $this->expiration_date != "0000-00-00 00:00:00"
+            && $this->expiration_date >= date("Y-m-d H:i:s") ) return true;
+        
+        return false;
     }
     
     public function get_filtered_tags_list()
@@ -346,12 +351,16 @@ class post_record extends abstract_record
     
     public function can_be_deleted()
     {
-        global $account;
+        global $account, $settings;
         
         if( $account->level >= config::MODERATOR_USER_LEVEL ) return true;
         if( $this->comments_count > 0 ) return false;
         if( $account->id_account != $this->id_author ) return false;
         if( $this->status == "trashed" ) return false;
+        
+        if( $settings->get("modules:posts.lock_posts_with_enforced_expiration") == "true"
+            && $this->expiration_date != "0000-00-00 00:00:00"
+            && $this->expiration_date < date("Y-m-d H:i:s") ) return false;
         
         return true;
     }
