@@ -55,7 +55,7 @@ use hng2_base\template;
     var abandon_post_question = '<?= $this_module->language->messages->abandon_post_question ?>';
 </script>
 <script type="text/javascript" 
-        src="<?= $config->full_root_path ?>/posts/media/global_functions~v<?= $config->scripts_version ?>.js"></script>
+        src="<?= $config->full_root_path ?>/posts/media/global_functions~v20170125.1.js"></script>
 
 <script type="text/javascript">
     

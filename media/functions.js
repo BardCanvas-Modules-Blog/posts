@@ -219,7 +219,7 @@ function set_post_featured_image()
         $(window).width() - 20,
         $(window).height() - 60,
         'image',
-        'top.' + 'set_selected_gallery_image_as_featured_image'
+        'parent.' + 'set_selected_gallery_image_as_featured_image'
     );
 }
 
@@ -236,7 +236,7 @@ function set_selected_gallery_image_as_featured_image(
         return;
     }
     
-    top.tinymce.activeEditor.windowManager.close();
+    tinymce.activeEditor.windowManager.close();
     
     var $form = $('#post_form');
     $form.find('input[name="id_featured_image"]').val(id_media);
