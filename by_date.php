@@ -72,6 +72,7 @@ else # Year
     $end_date     = "{$evaling_date}-12-31 23:59:59";
 }
 
+$template->set("showing_date", $showing_date);
 $template->set("page_tag", "post_archive");
 $template->set("showing_archive", true);
 $template->set("raw_get_date", $_GET["date"]);
