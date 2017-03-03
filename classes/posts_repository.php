@@ -981,7 +981,7 @@ class posts_repository extends abstract_repository
      * @param string $extensions_marker optional
      *
      * @return posts_data
-     */
+     8*/
     protected function get_posts_data($find_params, $extensions_hook, $extensions_marker)
     {
         global $modules, $config, $database;
@@ -1065,6 +1065,59 @@ class posts_repository extends abstract_repository
         if( empty($excluded) ) return $return;
         
         unset($return[$excluded]);
+        return $return;
+    }
+    
+    /**
+     * @param int    $min_posts
+     * @param int    $limit
+     * @param string $order
+     *
+     * @return array [{id_category, slug, title, count}, ...]
+     */
+    public function get_category_counts($min_posts = 0, $limit = 0, $order = "`count` desc")
+    {
+        global $database, $account;
+        
+        $now = date("Y-m-d H:i:s");
+        
+        if( ! $account->_exists )
+            $where = "visibility = 'public'";
+        else
+            $where = "(
+                           visibility = 'public' or visibility = 'users' or 
+                          (visibility = 'level_based' and '{$account->level}' >= min_level) 
+                      )";
+        
+        if( ! $account->_exists )
+            $pwhere = "posts.visibility = 'public' and posts.status = 'published' and posts.expiration_date < '$now'";
+        else
+            $pwhere = "posts.status = 'published' and posts.expiration_date < '$now' and (
+                           posts.visibility = 'public' or posts.visibility = 'users' or 
+                           (
+                               posts.visibility = 'level_based'
+                               and '{$account->level}' >= (select level from account where id_account = posts.id_author)
+                           ) 
+                       )";
+        
+        $query = "
+            select
+                id_category, slug, title,
+                ( select count(posts.id_post) from posts
+                  where posts.main_category = categories.id_category
+                  and   $pwhere) as `count`
+            from categories
+            where
+                $where
+            having `count` >= $min_posts
+            order by $order
+            limit $limit
+        ";
+        
+        $res = $database->query($query);
+        $return = array();
+        while( $row = $database->fetch_object($res) ) $return[] = $row;
+        
         return $return;
     }
     
