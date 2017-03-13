@@ -268,6 +268,17 @@
     
     <settings_data>
         <title>Posts reading/writing options</title>
+        <specs key="disable_posts_index_on_home">
+            <title>Disable posts index on home page</title>
+            <description><![CDATA[
+                If enabled, no posts index will be shown in the home page.<br>
+                The index will be available through the archives (<code>/date/yyyy/mmm/dd</code>),
+                categories (<code>/category/slug</code>) and any of <code>/blog</code>,
+                <code>/posts</code>, <code>/articles</code> or any <code>.htaccess</code> rule you set.
+                </ul>
+            ]]></description>
+            <type>boolean</type>
+        </specs>
         <specs key="items_per_page">
             <title>Posts to show per index page</title>
             <description><![CDATA[

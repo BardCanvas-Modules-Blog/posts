@@ -14,6 +14,8 @@ use hng2_base\config;
 use hng2_base\template;
 use hng2_modules\posts\posts_repository;
 
+if( $settings->get("modules:posts.disable_posts_index_on_home") == "true" ) return;
+
 $main_index_cache_for_guests_ttl = $settings->get("modules:posts.main_index_cache_for_guests");
 
 # If caching is disabled...
