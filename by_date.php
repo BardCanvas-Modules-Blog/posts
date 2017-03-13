@@ -17,7 +17,6 @@ use hng2_base\template;
 include "../config.php";
 include "../includes/bootstrap.inc";
 
-if( empty($_GET["date"]) ) throw_fake_404();
 if( strlen($_GET["date"]) > 10 ) throw_fake_404();
 
 $evaling_date = str_replace("/", "-", $_GET["date"]);
@@ -61,7 +60,7 @@ elseif( strlen($evaling_date) == 7 ) # Month
 }
 else # Year
 {
-    if( ! is_numeric($evaling_date) ) throw_fake_404();
+    if( ! is_numeric($evaling_date) ) $evaling_date = date("Y");
     if( $evaling_date > date("Y") ) throw_fake_404();
     
     if( ! checkdate(1, 1, $evaling_date) )
