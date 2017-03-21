@@ -139,7 +139,7 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
 $media_repository = new media_repository();
 
 $categories_repository = new categories_repository();
-$categories            = $categories_repository->get_as_tree_for_select(array(), "title asc");
+$categories            = $categories_repository->get_as_tree_for_select();
 #endregion
 ?>
 

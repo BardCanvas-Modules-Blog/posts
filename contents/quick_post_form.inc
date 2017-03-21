@@ -76,7 +76,7 @@ if( $current_module->name == "posts" ) $this_module = $current_module;
                 else
                 {
                     $tree_filter = array("id_category <> '0000000000000'");
-                    $categories = $categories_repository->get_as_tree_for_select($tree_filter, "title asc", true);
+                    $categories = $categories_repository->get_as_tree_for_select($tree_filter, "", true);
                     if( empty($categories) ) $mem_cache->set($mem_key, "none", 0, 60*60);
                     else                     $mem_cache->set($mem_key, $categories, 0, 60*60);
                 }
