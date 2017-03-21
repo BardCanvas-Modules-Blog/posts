@@ -587,23 +587,23 @@ function render_post_metas(post_record $row)
     
     if( $row->pin_to_home )
         echo "
-            <span class='framed_content inlined state_highlight'>
+            <span class='framed_content inlined nowrap state_highlight'>
                 <span class='fa fa-thumb-tack'></span>{$current_module->language->record_nav->pinned_to_home}
             </span>
         ";
     
     if( $row->pin_to_main_category_index )
         echo "
-            <span class='framed_content inlined state_highlight'>
+            <span class='framed_content inlined nowrap state_highlight'>
                 <span class='fa fa-thumb-tack'></span><span class='category'><span 
                       class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span>
             </span>
         ";
     else
-        echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span> ";
+        echo "<span class='category nowrap'><span class='fa fa-folder fa-fw'></span>{$row->main_category_title}</span> ";
     
     foreach($repository->get_attached_categories($row->id_post) as $category)
-        echo "<span class='category'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
+        echo "<span class='category nowrap'><span class='fa fa-folder fa-fw'></span>{$category->title}</span> ";
 }
 
 function render_post_tags(post_record $row)
