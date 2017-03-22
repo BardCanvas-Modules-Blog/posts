@@ -279,6 +279,17 @@
                 <default>10</default>
             </options>
         </specs>
+        <specs key="permalink_style">
+            <title>Permalink style</title>
+            <description><![CDATA[
+                Select how post permalinks should be displayed everywhere.
+            ]]></description>
+            <type>list</type>
+            <options>
+                <option value=""    >Numeric id</option>
+                <option value="slug">Slug</option>
+            </options>
+        </specs>
         <specs key="disable_posts_index_on_home">
             <title>Disable posts index on home page</title>
             <description><![CDATA[

@@ -282,6 +282,17 @@
                 <default>10</default>
             </options>
         </specs>
+        <specs key="permalink_style">
+            <title>Estilo de permalinks</title>
+            <description><![CDATA[
+                Selecciona cómo deberían desplegarse los permalinks de las entradas.
+            ]]></description>
+            <type>list</type>
+            <options>
+                <option value=""    >Id numérico</option>
+                <option value="slug">Slug</option>
+            </options>
+        </specs>
         <specs key="disable_posts_index_on_home">
             <title>Deshabilitar el índice de entradas en la página principal</title>
             <description><![CDATA[

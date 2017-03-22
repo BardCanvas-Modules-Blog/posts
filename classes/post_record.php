@@ -299,11 +299,18 @@ class post_record extends abstract_record
      */
     public function get_permalink($fully_qualified = false)
     {
-        global $config;
+        global $config, $settings;
         
-        if( $fully_qualified ) return "{$config->full_root_url}/{$this->id_post}";
+        $style = $settings->get("modules:posts.permalink_style");
+        switch( $style )
+        {
+            case "slug": $handler = $this->slug;    break;
+            default:     $handler = $this->id_post; break;
+        }
         
-        return "{$config->full_root_path}/{$this->id_post}";
+        if( $fully_qualified ) return "{$config->full_root_url}/{$handler}";
+        
+        return "{$config->full_root_path}/{$handler}";
     }
     
     public function can_be_edited()
