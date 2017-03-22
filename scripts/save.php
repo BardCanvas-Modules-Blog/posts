@@ -30,6 +30,8 @@ include "../../includes/bootstrap.inc";
 
 header("Content-Type: text/plain; charset=utf-8");
 if( ! $account->_exists ) die($language->errors->page_requires_login);
+if( $account->level < (int) $settings->get("modules:posts.required_level_to_post") )
+    die($language->errors->access_denied);
 
 if( empty($_POST["title"]) )
     die($current_module->language->messages->missing->title);

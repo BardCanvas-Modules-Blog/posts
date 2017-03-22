@@ -268,6 +268,17 @@
     
     <settings_data>
         <title>Posts reading/writing options</title>
+        <specs key="required_level_to_post">
+            <title>Required user level to post</title>
+            <description><![CDATA[
+                Allow users from the selected level and up to post.<br>
+                Default level: <code>10</code>
+            ]]></description>
+            <type>user_level_selector</type>
+            <options>
+                <default>10</default>
+            </options>
+        </specs>
         <specs key="disable_posts_index_on_home">
             <title>Disable posts index on home page</title>
             <description><![CDATA[

@@ -15,6 +15,7 @@ use hng2_base\template;
 include "../config.php";
 include "../includes/bootstrap.inc";
 if( ! $account->_exists ) throw_fake_404();
+if( $account->level < (int) $settings->get("modules:posts.required_level_to_post") ) throw_fake_401();
 
 $_GET["trigger_quick_post_form"] = "true";
 

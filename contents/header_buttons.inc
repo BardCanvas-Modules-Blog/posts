@@ -8,6 +8,7 @@
  */
 
 if( ! $account->_exists ) return;
+if( $account->level < (int) $settings->get("modules:posts.required_level_to_post") ) return;
 
 $added_class = $current_module->name == $this_module->name && ! $template->get("is_single_post") ? "current" : "";
 if( $template->get("showing_archive") ) $added_class = "";

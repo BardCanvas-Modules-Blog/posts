@@ -26,6 +26,10 @@ header("Content-Type: text/plain; charset=utf-8");
 include "../../config.php";
 include "../../includes/bootstrap.inc";
 
+if( ! $account->_exists ) die($language->errors->page_requires_login);
+if( $account->level < (int) $settings->get("modules:posts.required_level_to_post") )
+    die($language->errors->access_denied);
+
 if( ! in_array($_GET["action"], array("change_status", "untrash_for_review", "empty_trash")) )
     die($current_module->language->messages->toolbox->invalid_action);
 

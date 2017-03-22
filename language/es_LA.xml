@@ -271,6 +271,17 @@
     
     <settings_data>
         <title>Entradas (lectura/escritura)</title>
+        <specs key="required_level_to_post">
+            <title>Nivel requerido para postear</title>
+            <description><![CDATA[
+                Permitir postear a los usuarios del nivel seleccionado en adelante.<br>
+                Nivel predeterminado: <code>10</code>
+            ]]></description>
+            <type>user_level_selector</type>
+            <options>
+                <default>10</default>
+            </options>
+        </specs>
         <specs key="disable_posts_index_on_home">
             <title>Deshabilitar el índice de entradas en la página principal</title>
             <description><![CDATA[
