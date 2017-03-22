@@ -22,15 +22,27 @@ $handle = trim(stripslashes($_GET["handle"]));
 
 $repository = new posts_repository();
 $post = $repository->get_by_id_or_slug($handle);
-
 if( is_null($post) ) return;
+
 if( $account->level < config::MODERATOR_USER_LEVEL )
 {
-    if( $post->status == "trashed" ) return;
-    if( $post->status == "draft" && $post->id_author != $account->id_account ) return;
-    if( $post->status == "reviewing" && $post->id_author != $account->id_account ) return;
-    if( $post->expiration_date != "0000-00-00 00:00:00" && date("Y-m-d H:i:s") > $post->expiration_date ) return;
+    if( $post->status == "hidden" ) throw_fake_404();
+    if( $post->status == "trashed" ) throw_fake_404();
+    if( $post->status == "draft" && $post->id_author != $account->id_account ) throw_fake_401();
+    if( $post->status == "reviewing" && $post->id_author != $account->id_account ) throw_fake_401();
+    if( $post->expiration_date != "0000-00-00 00:00:00"
+        && date("Y-m-d H:i:s") > $post->expiration_date ) throw_fake_401();
+    if( $post->visibility == "private" && $account->id_account != $post->id_author ) throw_fake_401();
 }
+
+if( ($post->visibility == "users" || $post->main_category_visibility == "users") && ! $account->_exists )
+    throw_fake_401();
+
+if( $post->visibility == "level_based" && $account->level < $post->author_level )
+    throw_fake_401();
+
+if( $post->main_category_visibility == "level_based" && $account->level < $post->main_category_min_level )
+    throw_fake_401();
 
 if( $post->status == "reviewing" ) $post->allow_comments = 0;
 if( $post->status == "published" ) $repository->increment_views($post->id_post);
