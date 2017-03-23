@@ -197,9 +197,15 @@ function update_category_selector(preselected_id)
         var $select = $container.find('select');
         $select.find('option').remove();
         
+        var $exceptions = $('#category_exceptions');
+        
         var selected;
         for( var key in data.data )
         {
+            if( $exceptions.length > 0 )
+                if( $exceptions.find('div[data-id-category="' + key + '"]').length > 0 )
+                    continue;
+            
             selected = key == preselected_id ? 'selected' : '';
             $select.append('<option ' + selected + ' value="' + key + '">' + data.data[key] + '</option>');
         }

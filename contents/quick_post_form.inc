@@ -76,6 +76,23 @@ if( $current_module->name == "posts" ) $this_module = $current_module;
                 else
                 {
                     $tree_filter = array("id_category <> '0000000000000'");
+                    
+                    $raw_list = $settings->get("modules:posts.main_category_selector_exceptions");
+                    if( ! empty($raw_list) )
+                    {
+                        $exception_slugs = array();
+                        foreach(explode("\n", trim($raw_list)) as $line)
+                        {
+                            $line = trim($line);
+                            if( empty($line) ) continue;
+                            
+                            list($slug, $level) = preg_split('/\s+-\s+/', $line);
+                            if( $account->level >= $level ) continue;
+    
+                            $tree_filter[] = "slug <> '$slug'";
+                        }
+                    }
+                    
                     $categories = $categories_repository->get_as_tree_for_select($tree_filter, "", true);
                     if( empty($categories) ) $mem_cache->set($mem_key, "none", 0, 60*60);
                     else                     $mem_cache->set($mem_key, $categories, 0, 60*60);

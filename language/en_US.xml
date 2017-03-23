@@ -279,6 +279,21 @@
                 <default>10</default>
             </options>
         </specs>
+        <specs key="main_category_selector_exceptions">
+            <title>Main category selector exceptions</title>
+            <description><![CDATA[
+                You can limit the categories displayed in the main category selector
+                by user level. This allow you to prevent low level users to access categories only
+                available to mods/admins.<br>
+                Use one line per every category with the next syntax:<br>
+                <blocquote><code>category_slug - min_user_level</code><br></blockquote>
+                <i class="fa fa-info-circle"></i>
+                Note: this function is merely cosmetic: it only limits the categories
+                displayed on the list selector. It doesn't restrict the posts to have "hidden" categories
+                applied or being excluded from indexes.
+            ]]></description>
+            <type>code</type>
+        </specs>
         <specs key="permalink_style">
             <title>Permalink style</title>
             <description><![CDATA[

@@ -282,6 +282,21 @@
                 <default>10</default>
             </options>
         </specs>
+        <specs key="main_category_selector_exceptions">
+            <title>Excepciones para el selector de categoría principal</title>
+            <description><![CDATA[
+                Puedes limitar las categorías que se despliegan en el selector de categoría principal
+                por nivel de usuario. Esto te permite prevenir que usuarios de nivel bajo accedan a categorías
+                solo disponibles para mods/admins.<br>
+                Usa una línea para cada categoría con la siguiente sintaxis:<br>
+                <blocquote><code>slug_de_categoria - nivel_minimo_de_usuario</code><br></blockquote>
+                <i class="fa fa-info-circle"></i>
+                Nota: esta función es meramente cosmética: sólo limita las categorías
+                desplegadas en la lista. No restringe que las entradas tengan categorías "ocultas"
+                aplicadas o sean excluídas de los índices.
+            ]]></description>
+            <type>code</type>
+        </specs>
         <specs key="permalink_style">
             <title>Estilo de permalinks</title>
             <description><![CDATA[

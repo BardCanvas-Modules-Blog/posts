@@ -26,6 +26,39 @@ $categories_count = $categories_repository->get_record_count($tree_filter);
 
 <div id="post_form_target" style="display: none;"></div>
 
+<?
+$raw_list = $settings->get("modules:posts.main_category_selector_exceptions");
+if( ! empty($raw_list) )
+{
+    $exception_slugs = array();
+    foreach(explode("\n", trim($raw_list)) as $line)
+    {
+        $line = trim($line);
+        if( empty($line) ) continue;
+        
+        list($slug, $level) = preg_split('/\s+-\s+/', $line);
+        if( $account->level >= $level ) continue;
+        
+        $exception_slugs[] = "'$slug'";
+    }
+    
+    if( ! empty($exception_slugs) )
+    {
+        $res = $categories_repository->find(
+            array("slug in (" . implode(", ", $exception_slugs) . ")"), 0, 0, ""
+        );
+        
+        if( ! empty($res) )
+        {
+            echo "\n<div id='category_exceptions' style='display: none;'>\n";
+            foreach($res as $category_record)
+                echo "    <div data-id-category='{$category_record->id_category}'>{$category_record->slug}</div>\n";
+            echo "</div>";
+        }
+    }
+}
+?>
+
 <form name="post_form" id="post_form" method="post" data-preview-mode=""
       action="<?= $config->full_root_path ?>/posts/scripts/save.php">
     
