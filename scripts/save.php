@@ -48,7 +48,7 @@ if( empty($_FILES["attachments"]) && empty($_POST["content"]) )
 $repository       = new posts_repository();
 $media_repository = new media_repository();
 
-$old_post = empty($_POST["id_post"]) ? null : $repository->get($_POST["id_post"]);
+$old_post = empty($_POST["id_post"]) ? null : clone $repository->get($_POST["id_post"]);
 $post     = empty($_POST["id_post"]) ? new post_record() : $repository->get($_POST["id_post"]);
 $post->set_from_post();
 
