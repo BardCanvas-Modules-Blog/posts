@@ -23,19 +23,20 @@ if( empty($_GET["id_post"]) ) die($current_module->language->messages->missing->
 
 $media_repository = new media_repository();
 $posts_repository = new posts_repository();
-$count      = $posts_repository->get_record_count(array("id_post" => $_GET["id_post"]));
+$post             = $posts_repository->get($_GET["id_post"]);
 
-if( $count == 0 ) die($current_module->language->messages->post_not_found);
+if( is_null($post) ) die($current_module->language->messages->post_not_found);
 
-$attached_media = $posts_repository->get_media_items($_GET["id_post"]);
+$attached_media = $posts_repository->get_media_items($post->id_post);
 if( ! empty($attached_media) )
 {
     $item_ids  = array_keys($attached_media);
     
-    $posts_repository->unset_all_media_items($_GET["id_post"]);
+    $posts_repository->unset_all_media_items($post->id_post);
     $media_repository->delete_multiple_if_unused($item_ids);
 }
 
-$posts_repository->trash($_GET["id_post"]);
+$current_module->load_extensions("post_actions", "before_trashing");
+$posts_repository->trash($post->id_post);
 
 echo "OK";
