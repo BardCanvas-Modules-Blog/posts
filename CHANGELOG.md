@@ -5,6 +5,7 @@
 
 - Added a workaround for a diff check before saving a post.
 - Added Changelog.
+- Added extension point for custom author info on the posts browser.
 
 ## [1.15.1] - 2017-03-23
 
