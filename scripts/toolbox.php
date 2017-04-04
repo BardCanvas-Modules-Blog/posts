@@ -67,6 +67,7 @@ if($_GET["action"] == "change_status")
             $post->status = "published";
             include __DIR__ . "/save.inc";
             
+            $current_module->load_extensions("post_actions", "after_publishing");
             die("OK");
             break;
         }
@@ -78,6 +79,7 @@ if($_GET["action"] == "change_status")
             if( $comment->status == "reviewing" ) die("OK");
             
             $res = $repository->change_status($post->id_post, "reviewing");
+            $current_module->load_extensions("post_actions", "after_flagged_for_reviewing");
             if( empty($res) ) die("OK");
             
             die("OK");
@@ -99,6 +101,7 @@ if($_GET["action"] == "change_status")
                 $media_repository->delete_multiple_if_unused($item_ids);
             }
             
+            $current_module->load_extensions("post_actions", "before_trashing");
             $repository->trash($_GET["id_post"]);
             
             die("OK");
@@ -124,6 +127,7 @@ if($_GET["action"] == "change_status")
             }
             
             $repository->hide($_GET["id_post"]);
+            $current_module->load_extensions("post_actions", "after_hiding");
             
             die("OK");
             break;
@@ -138,6 +142,7 @@ if($_GET["action"] == "change_status")
             $post->status = "draft";
             include __DIR__ . "/save.inc";
             
+            $current_module->load_extensions("post_actions", "after_setting_as_draft");
             die("OK");
             break;
         }
@@ -153,6 +158,7 @@ if($_GET["action"] == "untrash_for_review")
     if( $post->status == "reviewing" ) die("OK");
     
     $res = $repository->change_status($post->id_post, "reviewing");
+    $current_module->load_extensions("post_actions", "after_untrashing_for_review");
     
     die("OK");
 }
