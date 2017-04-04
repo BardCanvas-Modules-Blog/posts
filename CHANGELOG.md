@@ -1,7 +1,7 @@
 
 # Posts Module Change Log
 
-## [Unreleased]
+## [1.15.2] - 2017-04-03
 
 - Added a workaround for a diff check before saving a post.
 - Added Changelog.
