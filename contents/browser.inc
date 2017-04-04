@@ -483,6 +483,8 @@ endif;
                     ?>
                     
                 </td>
+                
+                <!-- Author -->
                 <td>
                     <a class="user_display_name nowrap" data-user-level="<?= $row->author_level ?>"
                         href="<?= "{$config->full_root_path}/user/{$row->author_user_name}" ?>">
@@ -515,6 +517,13 @@ endif;
                                 <span class="fa fa-building fa-fw"></span><?= $isp ?>
                             </a><br>
                         <? endif; ?>
+                        
+                        <?
+                        if( ! empty($per_column_function_hooks["author_info"]) )
+                            foreach($per_column_function_hooks["author_info"] as $function)
+                                if( function_exists($function) ) $function($row);
+                        ?>
+                        
                     <? endif; ?>
                 </td>
                 <td align="center">
