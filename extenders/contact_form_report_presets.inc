@@ -1,14 +1,14 @@
 <?php
 /**
  * Contact extender: sets subject and body when the contact form is invoked
- * via GET with the next arguments: action=report & type=comment & id=xxxxxxx
+ * via GET with the next arguments: action=report & type=post & id=xxxxxxx
  *
  * @package    BardCanvas
  * @subpackage posts
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  *
  * Trailing vars:
- * @var module     $this_module self (commments)
+ * @var module     $this_module self (posts)
  *
  * Imported config globals:
  * • string @contact:subject
