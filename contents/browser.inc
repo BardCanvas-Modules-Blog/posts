@@ -464,6 +464,12 @@ endif;
                             </span>
                         <? endif; ?>
                         
+                        <?
+                        if( ! empty($per_column_function_hooks["actions"]) )
+                            foreach($per_column_function_hooks["actions"] as $function)
+                                if( function_exists($function) ) $function($row);
+                        ?>
+                        
                     </div>
                 </td>
                 
