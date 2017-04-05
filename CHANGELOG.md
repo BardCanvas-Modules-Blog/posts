@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.15.3] - 2017-04-04
+
+- Added extension points for actions over posts (trashing, change status, etc.)
+- Added function hooks for records browser extenders.
+
 ## [1.15.2] - 2017-04-03
 
 - Added a workaround for a diff check before saving a post.
