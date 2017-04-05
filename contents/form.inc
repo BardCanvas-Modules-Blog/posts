@@ -64,6 +64,8 @@ if( ! empty($raw_list) )
     
     <input type="hidden" name="id_post" value="">
     <input type="hidden" name="status" value="draft">
+    <input type="hidden" name="is_autosave" value="false">
+    <input type="hidden" name="is_preview" value="false">
     
     <div class="field" data-field="title">
         <textarea name="title" class="expandible_textarea no_fw_font" 
@@ -231,8 +233,7 @@ if( ! empty($raw_list) )
             <?= $language->cancel ?>
         </button>
         
-        <button type="submit" data-save-type="save_draft"
-                onclick="var $form = $('#post_form'); $form.find('input[name=status]').val('draft'); $form.attr('data-prevew-mode', 'true');">
+        <button type="submit" data-save-type="save_draft" onclick="prepare_post_preview()">
             <span class="fa fa-search"></span>
             <?= $current_module->language->form->buttons->preview ?>
         </button>

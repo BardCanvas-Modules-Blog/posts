@@ -114,6 +114,7 @@ function reset_post_form()
     
     $form[0].reset();
     
+    $form.find('input[name="is_autosave"]').val('false');
     $form.find('input[name="id_post"]').val('');
     $form.find('.subfield select[name="visibility"] option:first').prop('selected', true);
     
@@ -298,6 +299,14 @@ function hide_post_form()
     $('#main_workarea').show('fast');
 }
 
+function prepare_post_preview()
+{
+    var $form = $('#post_form');
+    $form.find('input[name=status]').val('draft');
+    $form.attr('data-prevew-mode', 'true');
+    $form.find('input[name="is_preview"]').val('true');
+}
+
 function prepare_post_form_serialization()
 {
     var $form = $('#post_form');
@@ -328,8 +337,9 @@ function process_post_form_response(response, status, xhr, $form)
             $form.find('.post_autosave_status .error').show();
             $form.find('.post_autosave_status .error .message').text( response );
             $form.find('.post_buttons button:visible').prop('disabled', false);
+            $form.find('input[name="is_autosave"]').val('false');
             console.log('Draft autosave finished.');
-    
+            
             post_autosaver_working = false;
             return;
         }
@@ -347,6 +357,7 @@ function process_post_form_response(response, status, xhr, $form)
         $form.find('.post_autosave_status .error').hide();
         $form.find('.post_autosave_status .saved').show();
         $form.find('.post_buttons button:visible').prop('disabled', false);
+        $form.find('input[name="is_autosave"]').val('false');
         console.log('Draft autosave finished.');
         
         post_autosaver_working = false;
@@ -356,6 +367,7 @@ function process_post_form_response(response, status, xhr, $form)
     if( $form.attr('data-prevew-mode') == 'true' )
     {
         $form.attr('data-prevew-mode', '');
+        $form.find('input[name="is_preview"]').val('false');
         
         var url = $_FULL_ROOT_PATH + '/' + id_post + '?preview=true&wasuuup=' + wasuuup();
         window.open(url, 'post_preview_' + id_post).focus();
@@ -420,6 +432,7 @@ function autosave_post()
     $form.find('.post_autosave_status .saving').show();
     $form.find('.post_autosave_status .saved').hide();
     $form.find('.post_autosave_status .error').hide();
+    $form.find('input[name="is_autosave"]').val('true');
     $form.submit();
 }
 
