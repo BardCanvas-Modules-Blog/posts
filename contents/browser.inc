@@ -373,9 +373,13 @@ endif;
         <tbody>
         <? foreach( $records as $row ): ?>
             <tr data-record-id="<?= $row->id_post ?>" class="<? if($row->status == "trashed") echo "deleted" ?>">
+                
+                <!-- Selector -->
                 <td nowrap>
                     <input type="checkbox" class="record_selector" name="record_selections[]" value="<?= $row->id_post ?>">
                 </td>
+                
+                <!-- Title and actions -->
                 <td width="25%">
                     <div class="pseudo_link clipboard-copy" data-clipboard-text="<?= $row->id_post ?>">
                         <code>#<?= $row->id_post ?><span class="fa fa-copy fa-fw"></span></code>
@@ -462,6 +466,8 @@ endif;
                         
                     </div>
                 </td>
+                
+                <!-- Details -->
                 <td data-column="details">
                     
                     <?= empty($row->excerpt) ? "―" : convert_emojis(make_excerpt_of($row->excerpt, 100)) ?><br>
@@ -526,10 +532,14 @@ endif;
                         
                     <? endif; ?>
                 </td>
+                
+                <!-- Created -->
                 <td align="center">
                     <?= time_mini_string($row->creation_date) ?><br>
                     (<?= time_elapsed_string($row->creation_date) ?>)
                 </td>
+                
+                <!-- Published -->
                 <td align="center">
                     <? if( $row->publishing_date == "0000-00-00 00:00:00" ): ?>
                         &mdash;
@@ -538,16 +548,24 @@ endif;
                         (<?= time_elapsed_string($row->publishing_date) ?>)
                     <? endif; ?>
                 </td>
+                
+                <!-- Last update -->
                 <td align="center">
                     <?= time_mini_string($row->last_update) ?><br>
                     (<?= time_elapsed_string($row->last_update) ?>)
                 </td>
+                
+                <!-- Views -->
                 <td align="right">
                     <?= $row->views ?>
                 </td>
+                
+                <!-- Comments count -->
                 <td align="right">
                     <?= $row->comments_count ?>
                 </td>
+                
+                <!-- Thumbnail -->
                 <td width="200">
                     <div class="thumbnail">
                         <? $src = empty($row->featured_image_thumbnail)
