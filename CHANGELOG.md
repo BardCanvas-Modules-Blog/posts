@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.15.4] - 2017-04-05
+
+- Added flags on the posting form to internally identify autosaves and previews.
+
 ## [1.15.3] - 2017-04-04
 
 - Added extension points for actions over posts (trashing, change status, etc.)
