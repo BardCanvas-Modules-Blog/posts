@@ -182,5 +182,6 @@ if( $post->status == "published" )
     $media_deletions = $repository->set_media_items($media_items, $post->id_post);
 }
 
+$current_module->load_extensions("save_post", "before_eof");
 $toolbox = new toolbox();
 $toolbox->notify_mods_on_post_submission($post);
