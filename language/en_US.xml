@@ -20,7 +20,7 @@
     
     <pages>
         <by_category>
-            <title>Posts in {$category}</title>
+            <title>{$category}</title>
             <no_records>No posts have been found for this category.</no_records>
         </by_category>
         <by_date>

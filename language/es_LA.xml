@@ -20,7 +20,7 @@
     
     <pages>
         <by_category>
-            <title>Entradas en {$category}</title>
+            <title>{$category}</title>
             <no_records>No se han encontrado entradas para esta categoría.</no_records>
         </by_category>
         <by_date>
