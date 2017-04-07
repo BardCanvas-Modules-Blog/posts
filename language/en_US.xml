@@ -569,6 +569,15 @@
         ]]></principal_data>
     </accounts_nav_columns>
     
+    <categories_nav_columns>
+        <posts>
+            <caption><![CDATA[ <span class="fa fa-newspaper-o fa-fw"></span> ]]></caption>
+            <layout xnowrap="true" xalign="right" />
+            <order_asc  id="posts_count_asc">Order by published posts count ascending</order_asc>
+            <order_desc id="posts_count_desc">Order by published posts count descending</order_desc>
+        </posts>
+    </categories_nav_columns>
+    
     <gallery_addons>
         <principal_data><![CDATA[
             <div class="media_bullet">

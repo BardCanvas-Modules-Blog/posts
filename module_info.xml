@@ -87,6 +87,9 @@
         </gallery>
         <categories>
             <browser>
+                <presettings_data      priority="100">extenders/categories/browser_presets.inc</presettings_data>
+                <additional_headers    priority="100">extenders/categories/browser_headers.inc</additional_headers>
+                <additional_columns    priority="100">extenders/categories/browser_columns.inc</additional_columns>
                 <per_record_function_hooks>extenders/categories/browser_function_hooks.inc</per_record_function_hooks>
             </browser>
         </categories>
