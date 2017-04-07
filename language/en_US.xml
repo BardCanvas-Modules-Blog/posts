@@ -44,6 +44,9 @@
         <search_by_tag_builder>
             <collection_heading>Posts</collection_heading>
         </search_by_tag_builder>
+        <categories_browser>
+            <show_category_posts>Show posts index</show_category_posts>
+        </categories_browser>
     </extenders>
     
     <record_nav>

@@ -85,6 +85,11 @@
                 <principal_data_addons priority="100">extenders/gallery/principal_data_addons.inc</principal_data_addons>
             </records_browser>
         </gallery>
+        <categories>
+            <browser>
+                <per_record_function_hooks>extenders/categories/browser_function_hooks.inc</per_record_function_hooks>
+            </browser>
+        </categories>
     </extends_to>
     
     <widgets>
