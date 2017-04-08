@@ -279,6 +279,7 @@ class post_record extends abstract_record
             $contents
         );
         
+        $contents = convert_shortcodes($contents);
         $contents = convert_emojis($contents);
         $contents = convert_media_tags($contents);
         $contents = autolink_hash_tags($contents, "{$config->full_root_path}/tag/");
