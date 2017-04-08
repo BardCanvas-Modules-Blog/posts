@@ -1,6 +1,13 @@
 
 # Posts Module Change Log
 
+## [1.16.0] - 2017-04-08
+
+- Added extension point on post save.
+- Added extenders to improve the categories browser.
+- Removed title prefix for posts indexes by category.
+- Added HTML classes to category index title elements for easing CSS customizations.
+
 ## [1.15.4] - 2017-04-05
 
 - Added flags on the posting form to internally identify autosaves and previews.
