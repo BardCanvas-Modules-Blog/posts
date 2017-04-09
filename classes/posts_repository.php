@@ -867,7 +867,7 @@ class posts_repository extends abstract_repository
         
         $find_params = $this->build_find_params_for_featured_posts();
         if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
-        $posts_data->featured_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+        $posts_data->featured_posts = $this->find($find_params->where, 0, 0, $find_params->order);
         
         $posts_data->slider_posts = array();
         if( $settings->get("modules:posts.slider_categories") != "" )
@@ -875,7 +875,7 @@ class posts_repository extends abstract_repository
             $find_params = $this->build_find_params_for_posts_slider();
             if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date asc";
             else                $find_params->order = "publishing_date asc";
-            $posts_data->slider_posts = $this->find($find_params->where, $find_params->limit, $find_params->offset, $find_params->order);
+            $posts_data->slider_posts = $this->find($find_params->where, 0, 0, $find_params->order);
         }
         
         //$cache->set("posts_data", $posts_data);
