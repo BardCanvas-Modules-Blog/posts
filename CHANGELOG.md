@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.16.1] - 2017-04-10
+
+- Removed limits for featured posts and the home slider.
+
 ## [1.16.0] - 2017-04-08
 
 - Added extension point on post save.
