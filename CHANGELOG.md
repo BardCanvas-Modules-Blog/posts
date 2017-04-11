@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.16.2] - 2017-04-11
+
+- Added extenders for reporting posts to tickets instead of the contact form
+  if Triklet is installed and enabled.
+
 ## [1.16.1] - 2017-04-10
 
 - Removed limits for featured posts and the home slider.

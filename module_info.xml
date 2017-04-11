@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     
-    <version>1.16.1</version>
+    <version>1.16.2</version>
     <group>modules_blog</group>
     
     <working_flags>
@@ -61,6 +61,9 @@
             </search_by_tag>
         </search>
         <contact>
+            <index>
+                <pre_start>extenders/contact_index_pre_start.inc</pre_start>
+            </index>
             <form>
                 <presets>extenders/contact_form_report_presets.inc</presets>
             </form>
@@ -93,6 +96,11 @@
                 <per_record_function_hooks>extenders/categories/browser_function_hooks.inc</per_record_function_hooks>
             </browser>
         </categories>
+        <triklet>
+            <home_form>
+                <presets>extenders/triklet_form_report_presets.inc</presets>
+            </home_form>
+        </triklet>
     </extends_to>
     
     <widgets>
