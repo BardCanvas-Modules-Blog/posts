@@ -511,6 +511,15 @@
             ]]></description>
             <type>code</type>
         </specs>
+        <specs key="use_triklet_for_reporting">
+            <title>Use Triklet module for reporting posts?</title>
+            <description><![CDATA[
+                If the Triklet module is installed and enabled and this option is set to "Yes",
+                online users that hit the "report post" link will be redirected to Triklet's New Ticket composition form
+                instead of going to the Contact form.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
     </settings_data>
     
     <user_profile_tabs>
