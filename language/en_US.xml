@@ -271,6 +271,11 @@
     
     <settings_data>
         <title>Posts reading/writing options</title>
+        
+        <!-- ======================================= -->
+        <specs is_separator="true">Base settings</specs>
+        <!-- ======================================= -->
+        
         <specs key="required_level_to_post">
             <title>Required user level to post</title>
             <description><![CDATA[
@@ -282,6 +287,7 @@
                 <default>10</default>
             </options>
         </specs>
+        
         <specs key="main_category_selector_exceptions">
             <title>Main category selector exceptions</title>
             <description><![CDATA[
@@ -297,6 +303,7 @@
             ]]></description>
             <type>code</type>
         </specs>
+        
         <specs key="permalink_style">
             <title>Permalink style</title>
             <description><![CDATA[
@@ -308,6 +315,11 @@
                 <option value="slug">Slug</option>
             </options>
         </specs>
+        
+        <!-- ================================= -->
+        <specs is_separator="true">Indexes</specs>
+        <!-- ================================= -->
+        
         <specs key="disable_posts_index_on_home">
             <title>Disable posts index on home page</title>
             <description><![CDATA[
@@ -319,110 +331,20 @@
             ]]></description>
             <type>boolean</type>
         </specs>
-        <specs key="items_per_page">
-            <title>Posts to show per index page</title>
+        
+        <specs key="slider_categories">
+            <title>Post categories for the home slider</title>
             <description><![CDATA[
-                Amount of posts to show per index (home, archives, etc.).<br>
-                Defaults to <code>30</code>.
-            ]]></description>
-            <type>number</type>
-            <options>
-                <min>1</min>
-                <max>255</max>
-            </options>
-        </specs>
-        <specs key="excerpt_length">
-            <title>Excerpt length</title>
-            <description><![CDATA[
-                Amount of characters to trim the post excerpts to.<br>
-                Defaults to <code>30</code>.
-            ]]></description>
-            <type>number</type>
-            <options>
-                <min>30</min>
-                <max>255</max>
-            </options>
-        </specs>
-        <specs key="featured_posts_tag">
-            <title>Featured posts tag</title>
-            <description><![CDATA[
-                Set the tag (without the <code>#</code>) to use for the featured posts functionality in the home layout.
-            ]]></description>
-            <type>text</type>
-        </specs>
-        <specs key="show_featured_posts_tag_everywhere">
-            <title>Show featured posts tag everywhere?</title>
-            <description><![CDATA[
-                By default, the tag defined for featured posts will be hidden from public view.
-                <b>You should leave this as <code>No</code></b> to prevent everyone (but mods/admins) from using it.
-                When set to <code>Yes</code>, the tag will be available in all views, and users may end up cluttering
-                your featured posts area.
-            ]]></description>
-            <type>yes/no</type>
-        </specs>
-        <specs key="automatic_featured_images">
-            <title>Automatic featured images</title>
-            <description><![CDATA[
-                If a post has no featured image but at least one has been inserted from the media gallery,
-                the thumbnail of the first inserted image will be used as featured image for the post on all indexes.<br>
+                Specify the category slugs and the amount of hours that you want to show up on the home slider,
+                one per line, using the next syntax: <code>category_slug - time_to_live</code>.<br>
+                Set <code>time_to_live</code> to <code>0</code> to show them always (not recommended).<br>
                 <span class="fa fa-info-circle"></span>
-                Note: this setting may be affected by module extenders.
-            ]]></description>
-            <type>boolean</type>
-        </specs>
-        <specs key="default_featured_image">
-            <title>Default featured posts thumbnail</title>
-            <description><![CDATA[
-                Show this image on featured posts when they have no featured image selected.<br>
-                <span class="fa fa-warning"></span> Important: this setting may be overriden by other modules!
-            ]]></description>
-            <type>@gallery:specs_renderer/image_selector</type>
-            <options>
-                <image_size>thumbnail</image_size>
-            </options>
-        </specs>
-        <specs key="featured_posts_ttl">
-            <title><![CDATA[
-                <span class="framed_content inlined state_highlight">Cache</span>
-                Featured posts Time To Live (expiration time)
-            ]]></title>
-            <description><![CDATA[
-                Set an expiration in hours for featured posts. They will remain there until the time goes out,
-                then they'll just appear in normal indexes.<br>
-                Set to <code>0</code> to disable keep them until the tag is manually taken out of them.
-            ]]></description>
-            <type>number</type>
-            <options>
-                <min>0</min>
-                <max>255</max>
-            </options>
-        </specs>
-        <specs key="disable_quick_post_form">
-            <title>Disable quick posts form?</title>
-            <description><![CDATA[
-                If disabled, users wont be able to post quick entries using the reduced composer on indexes.
-            ]]></description>
-            <type>yes/no</type>
-        </specs>
-        <specs key="enforced_expiration_by_category">
-            <title>Enforced post expiration by category</title>
-            <description><![CDATA[
-                Specify a list of <code>category_slug - time_to_live</code>, one per line, to specify for how many
-                hours the posts that have one of the listed categories as main will be available.
-                Once the time expires, posts will no longer appear
-                on indexes and a "not found" error will be thrown when opened directly.<br>
-                <span class="fa fa-info-circle"></span>
-                Note: this setting will override any expiration manually set by the post author.
+                Hint: you may opt to enforce an expiration time for the posts here if you want to take
+                them out of the site AND the slider when the time runs out.
             ]]></description>
             <type>code</type>
         </specs>
-        <specs key="lock_posts_with_enforced_expiration">
-            <title>Lock posts with enforced expiration</title>
-            <description><![CDATA[
-                If enabled, posts with these categories wont be editable or deletable until they expire.
-            ]]></description>
-            <type>boolean</type>
-        </specs>
+        
         <specs key="home_excluded_categories">
             <title>Categories to exclude from the main index</title>
             <description><![CDATA[
@@ -436,6 +358,107 @@
             ]]></description>
             <type>code</type>
         </specs>
+        
+        <specs key="items_per_page">
+            <title>Posts to show per index page</title>
+            <description><![CDATA[
+                Amount of posts to show per index (home, archives, etc.).<br>
+                Defaults to <code>30</code>.
+            ]]></description>
+            <type>number</type>
+            <options>
+                <min>1</min>
+                <max>255</max>
+            </options>
+        </specs>
+        
+        <specs key="excerpt_length">
+            <title>Excerpt length</title>
+            <description><![CDATA[
+                Amount of characters to trim the post excerpts to.<br>
+                Defaults to <code>30</code>.
+            ]]></description>
+            <type>number</type>
+            <options>
+                <min>30</min>
+                <max>255</max>
+            </options>
+        </specs>
+        
+        <specs key="automatic_featured_images">
+            <title>Automatic featured images</title>
+            <description><![CDATA[
+                If a post has no featured image but at least one has been inserted from the media gallery,
+                the thumbnail of the first inserted image will be used as featured image for the post on all indexes.<br>
+                <span class="fa fa-info-circle"></span>
+                Note: this setting may be affected by module extenders.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        
+        <!-- ======================================== -->
+        <specs is_separator="true">Featured posts</specs>
+        <!-- ======================================== -->
+        
+        <specs key="featured_posts_tag">
+            <title>Featured posts tag</title>
+            <description><![CDATA[
+                Set the tag (without the <code>#</code>) to use for the featured posts functionality in the home layout.
+            ]]></description>
+            <type>text</type>
+        </specs>
+        
+        <specs key="show_featured_posts_tag_everywhere">
+            <title>Show featured posts tag everywhere?</title>
+            <description><![CDATA[
+                By default, the tag defined for featured posts will be hidden from public view.
+                <b>You should leave this as <code>No</code></b> to prevent everyone (but mods/admins) from using it.
+                When set to <code>Yes</code>, the tag will be available in all views, and users may end up cluttering
+                your featured posts area.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        
+        <specs key="default_featured_image">
+            <title>Default featured posts thumbnail</title>
+            <description><![CDATA[
+                Show this image on featured posts when they have no featured image selected.<br>
+                <span class="fa fa-warning"></span> Important: this setting may be overriden by other modules!
+            ]]></description>
+            <type>@gallery:specs_renderer/image_selector</type>
+            <options>
+                <image_size>thumbnail</image_size>
+            </options>
+        </specs>
+        
+        <specs key="featured_posts_ttl">
+            <title><![CDATA[
+                Featured posts Time To Live (expiration time)
+            ]]></title>
+            <description><![CDATA[
+                Set an expiration in hours for featured posts. They will remain there until the time goes out,
+                then they'll just appear in normal indexes.<br>
+                Set to <code>0</code> to disable keep them until the tag is manually taken out of them.
+            ]]></description>
+            <type>number</type>
+            <options>
+                <min>0</min>
+                <max>255</max>
+            </options>
+        </specs>
+        
+        <!-- =================================== -->
+        <specs is_separator="true">Interface</specs>
+        <!-- =================================== -->
+        
+        <specs key="disable_quick_post_form">
+            <title>Disable quick posts form?</title>
+            <description><![CDATA[
+                If disabled, users wont be able to post quick entries using the reduced composer on indexes.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        
         <specs key="time_allowed_for_editing_after_publishing">
             <title>Time allowed for editing after publishing</title>
             <description><![CDATA[
@@ -444,57 +467,7 @@
             ]]></description>
             <type>number</type>
         </specs>
-        <specs key="archives_tree_widget_cache_ttl">
-            <title><![CDATA[
-                <span class="framed_content inlined state_highlight">Cache</span>
-                Archives tree widget cache TTL
-            ]]></title>
-            <description><![CDATA[
-                Amount of hours the archives tree widget should be cached.<br>
-                Defaults to <code>3</code> hours. Set to <code>0</code> to disable caching.<br>
-                Recommended value: depends on the amount of posts being published and their timing.
-                For constantly updated sites, 3-6 hours should suffice. For less updated sites, 24 hours or more.
-            ]]></description>
-            <type>number</type>
-        </specs>
-        <specs key="slider_categories">
-            <title>Post categories for the home slider</title>
-            <description><![CDATA[
-                Specify the category slugs and the amount of hours that you want to show up on the home slider,
-                one per line, using the next syntax: <code>category_slug - time_to_live</code>.<br>
-                Set <code>time_to_live</code> to <code>0</code> to show them always (not recommended).<br>
-                <span class="fa fa-info-circle"></span>
-                Hint: you may opt to enforce an expiration time for the posts here if you want to take
-                them out of the site AND the slider when the time runs out.
-            ]]></description>
-            <type>code</type>
-        </specs>
-        <specs key="main_index_cache_for_guests">
-            <title><![CDATA[
-                <span class="framed_content inlined state_highlight">Cache</span>
-                Main index cache TTL for guests
-            ]]></title>
-            <description><![CDATA[
-                Amount of minutes to hold main index page caches for guests.<br>
-                Set to <code>0</code> to disable caching (not recommended).<br>
-                Recommended value: depends on the amount of posts being published, their timing and anonymous vs registered traffic.<br>
-                <code>5</code> minutes should be enough for constantly updated sites.<br>
-                Set to <code>60</code> or more for less updated sites.
-            ]]></description>
-            <type>number</type>
-        </specs>
-        <specs key="main_index_cache_for_guests_version">
-            <title><![CDATA[
-                <span class="framed_content inlined state_highlight">Cache</span>
-                Version number for the guests main index cache
-            ]]></title>
-            <description><![CDATA[
-                If you want to bump it, just add <code>1</code> to it.<br>
-                <span class="fa fa-info-circle"></span>
-                Only used if the Main index cache for guests is set above 0.
-            ]]></description>
-            <type>number</type>
-        </specs>
+        
         <specs key="per_category_messages">
             <title>In-form Per-category messages</title>
             <description><![CDATA[
@@ -511,6 +484,82 @@
             ]]></description>
             <type>code</type>
         </specs>
+        
+        <!-- ============================================= -->
+        <specs is_separator="true">Enforced expiration</specs>
+        <!-- ============================================= -->
+        
+        <specs key="enforced_expiration_by_category">
+            <title>Enforced post expiration by category</title>
+            <description><![CDATA[
+                Specify a list of <code>category_slug - time_to_live</code>, one per line, to specify for how many
+                hours the posts that have one of the listed categories as main will be available.
+                Once the time expires, posts will no longer appear
+                on indexes and a "not found" error will be thrown when opened directly.<br>
+                <span class="fa fa-info-circle"></span>
+                Note: this setting will override any expiration manually set by the post author.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
+        <specs key="lock_posts_with_enforced_expiration">
+            <title>Lock posts with enforced expiration</title>
+            <description><![CDATA[
+                If enabled, posts with these categories wont be editable or deletable until they expire.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        
+        <!-- ================================= -->
+        <specs is_separator="true">Caching</specs>
+        <!-- ================================= -->
+        
+        <specs key="archives_tree_widget_cache_ttl">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Archives tree widget cache TTL
+            ]]></title>
+            <description><![CDATA[
+                Amount of hours the archives tree widget should be cached.<br>
+                Defaults to <code>3</code> hours. Set to <code>0</code> to disable caching.<br>
+                Recommended value: depends on the amount of posts being published and their timing.
+                For constantly updated sites, 3-6 hours should suffice. For less updated sites, 24 hours or more.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
+        <specs key="main_index_cache_for_guests">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Main index cache TTL for guests
+            ]]></title>
+            <description><![CDATA[
+                Amount of minutes to hold main index page caches for guests.<br>
+                Set to <code>0</code> to disable caching (not recommended).<br>
+                Recommended value: depends on the amount of posts being published, their timing and anonymous vs registered traffic.<br>
+                <code>5</code> minutes should be enough for constantly updated sites.<br>
+                Set to <code>60</code> or more for less updated sites.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
+        <specs key="main_index_cache_for_guests_version">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Version number for the guests main index cache
+            ]]></title>
+            <description><![CDATA[
+                If you want to bump it, just add <code>1</code> to it.<br>
+                <span class="fa fa-info-circle"></span>
+                Only used if the Main index cache for guests is set above 0.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
+        <!-- =================================== -->
+        <specs is_separator="true">Extenders</specs>
+        <!-- =================================== -->
+        
         <specs key="use_triklet_for_reporting">
             <title>Use Triklet module for reporting posts?</title>
             <description><![CDATA[
@@ -520,6 +569,7 @@
             ]]></description>
             <type>yes/no</type>
         </specs>
+        
     </settings_data>
     
     <user_profile_tabs>

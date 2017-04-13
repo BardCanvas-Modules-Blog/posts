@@ -274,6 +274,11 @@
     
     <settings_data>
         <title>Entradas (lectura/escritura)</title>
+
+        <!-- ============================================ -->
+        <specs is_separator="true">Configuración base</specs>
+        <!-- ============================================ -->
+        
         <specs key="required_level_to_post">
             <title>Nivel requerido para postear</title>
             <description><![CDATA[
@@ -285,6 +290,7 @@
                 <default>10</default>
             </options>
         </specs>
+        
         <specs key="main_category_selector_exceptions">
             <title>Excepciones para el selector de categoría principal</title>
             <description><![CDATA[
@@ -300,6 +306,7 @@
             ]]></description>
             <type>code</type>
         </specs>
+        
         <specs key="permalink_style">
             <title>Estilo de permalinks</title>
             <description><![CDATA[
@@ -311,6 +318,11 @@
                 <option value="slug">Slug</option>
             </options>
         </specs>
+        
+        <!-- ================================= -->
+        <specs is_separator="true">Índices</specs>
+        <!-- ================================= -->
+        
         <specs key="disable_posts_index_on_home">
             <title>Deshabilitar el índice de entradas en la página principal</title>
             <description><![CDATA[
@@ -322,149 +334,7 @@
             ]]></description>
             <type>boolean</type>
         </specs>
-        <specs key="items_per_page">
-            <title>Entradas a mostrar por página de índice</title>
-            <description><![CDATA[
-                Cantidad de entradas a mostrar en cada página de índice principal, de histórico, de categorías, etc.<br>
-                Valor por defecto: <code>30</code>.
-            ]]></description>
-            <type>number</type>
-            <options>
-                <min>1</min>
-                <max>255</max>
-            </options>
-        </specs>
-        <specs key="excerpt_length">
-            <title>Tamaño del resumen</title>
-            <description><![CDATA[
-                Cantidad máxima de caracteres para resúmenes (manuales o automáticos).<br>
-                Valor por defecto: <code>30</code>.
-            ]]></description>
-            <type>number</type>
-            <options>
-                <min>30</min>
-                <max>250</max>
-            </options>
-        </specs>
-        <specs key="featured_posts_tag">
-            <title>Etiqueta para entradas destacadas</title>
-            <description><![CDATA[
-                Especifica la etiqueta (sin el <code>#</code>) que deseas usar para llenar el área
-                de entradas destacadas en la página principal.
-            ]]></description>
-            <type>text</type>
-        </specs>
-        <specs key="show_featured_posts_tag_everywhere">
-            <title>Mostrar etiqueta destacada en todos lados?</title>
-            <description><![CDATA[
-                Por defecto, la etiqueta elegida para entradas destacadas se ocultará de la vista pública.
-                <b>Deberías dejar esta opción en <code>No</code></b> para evitar que cualquiera (excepto mods/admins) la use.
-                Al activarla, la etiqueta estará disponible en todas las vistas y los usuarios podrían
-                terminar saturando el área de entradas destacadas.
-            ]]></description>
-            <type>yes/no</type>
-        </specs>
-        <specs key="automatic_featured_images">
-            <title>Imágenes destacadas automáticas</title>
-            <description><![CDATA[
-                Si una entrada no tiene una imagen destacada definida pero al menos una se ha insertado de la galería,
-                la miniatura de la primera imagen insertada se usará como imagen destacada de la entrada en los índices.<br>
-                <span class="fa fa-info-circle"></span>
-                Nota: esta opción puede ser reescrita por otros módulos.
-            ]]></description>
-            <type>boolean</type>
-        </specs>
-        <specs key="default_featured_image">
-            <title>Miniatura por defecto para entradas destacadas</title>
-            <description><![CDATA[
-                Si una entrada en el área de destacadas de la página principal no tiene una imagen
-                definida, usar la que se defina aquí.<br>
-                <span class="fa fa-info-circle"></span>
-                Nota: esta opción puede ser reescrita por otros módulos.
-            ]]></description>
-            <type>@gallery:specs_renderer/image_selector</type>
-            <options>
-                <image_size>thumbnail</image_size>
-            </options>
-        </specs>
-        <specs key="featured_posts_ttl">
-            <title><![CDATA[
-                <span class="framed_content inlined state_highlight">Caché</span>
-                Tiempo de vida para entradas destacadas (expiración)
-            ]]></title>
-            <description><![CDATA[
-                Especifica la cantidad de horas para las entradas destacadas en la página principal.
-                Una vez transcurrido el periodo, se removerán de el área y aparecerán en los índices normales.<br>
-                Especifica <code>0</code> para mantenerlas hasta que se editen y se les remueva la etiqueta.
-            ]]></description>
-            <type>number</type>
-            <options>
-                <min>0</min>
-                <max>255</max>
-            </options>
-        </specs>
-        <specs key="disable_quick_post_form">
-            <title>¿Desactivar forma de posteo rápido?</title>
-            <description><![CDATA[
-                Si se desactiva, los usuarios no podrán postear entradas rápidas usando la forma rápida en índices.
-            ]]></description>
-            <type>yes/no</type>
-        </specs>
-        <specs key="home_excluded_categories">
-            <title>Categorías a excluír de índice principal</title>
-            <description><![CDATA[
-                Especifica una lista de slugs de categorías cuyos posts se excluirán del índice principal (inicio),
-                uno por línea.<br><br>
-                <i class="fa fa-info-circle"></i>
-                Puedes establecer exlcusiones basadas en tiempo al usar la siguiente sintaxis:<br>
-                <code>slug - horas</code><br>
-                De esta forma, sólo aquellas entradas <u>que hayan sido publicadas durante las últimas
-                <code>horas</code></u> serán incluídas en el índice, <b>dejando fuera las más viejas</b>.
-            ]]></description>
-            <type>code</type>
-        </specs>
-        <specs key="enforced_expiration_by_category">
-            <title>Tiempo de vida forzado por categoría</title>
-            <description><![CDATA[
-                Especifica una lista de categorías y tiempos de vida para los posts que desees limitar en los índices
-                usando la siguiente sintaxis, una por línea:<br>
-                <code>slug_de_categoria - tiempo_de_vida</code><br>
-                Una vez cumplido el plazo, las entradas no serán eliminadas, pero no aparecerán en los
-                índices ni podrán verse de forma individual.<br>
-                <span class="fa fa-info-circle"></span>
-                Nota: esta opción reescribirá cualquier valor impuesto por el autor de la entrada.
-            ]]></description>
-            <type>code</type>
-        </specs>
-        <specs key="lock_posts_with_enforced_expiration">
-            <title>Bloquear posts con vida forzada</title>
-            <description><![CDATA[
-                Si se habilita, los posts de estas categorías no se podrán editar o eliminar hasta que expiren.
-            ]]></description>
-            <type>boolean</type>
-        </specs>
-        <specs key="time_allowed_for_editing_after_publishing">
-            <title>Tiempo de gracia para edición tras publicar</title>
-            <description><![CDATA[
-                Cantidad de minutos que un usuario tiene para poder editar entradas que han sido publicadas.<br>
-                Especificar <code>0</code> para impedir que los usuarios editen las entradas (excepto mods/admins).
-            ]]></description>
-            <type>number</type>
-        </specs>
-        <specs key="archives_tree_widget_cache_ttl">
-            <title><![CDATA[
-                <span class="framed_content inlined state_highlight">Caché</span>
-                Tiempo de vida del cache para el widget histórico (expiración)
-            ]]></title>
-            <description><![CDATA[
-                Cantidad de horas que se conservará el árbol de histórico en este widget.<br>
-                Valor por defecto: <code>3</code> horas. Especificar <code>0</code> para deshabilitar este caché.<br>
-                Valor recomendado: depende de la cantidad de entradas que se publican y sus tiempos.
-                Para sitios actualizados constantemente, 3-6 horas deberían ser suficientes.
-                Para sitios con menos frecuencia de actualización, 24 horas o más.
-            ]]></description>
-            <type>number</type>
-        </specs>
+        
         <specs key="slider_categories">
             <title>Categorías para el carrusel</title>
             <description><![CDATA[
@@ -480,33 +350,133 @@
             ]]></description>
             <type>code</type>
         </specs>
-        <specs key="main_index_cache_for_guests">
-            <title><![CDATA[
-                <span class="framed_content inlined state_highlight">Caché</span>
-                Tiempo de vida del caché para invitados en la página principal
-            ]]></title>
+        
+        <specs key="home_excluded_categories">
+            <title>Categorías a excluír de índice principal</title>
             <description><![CDATA[
-                Cantidad de minutos para mantener las páginas del índice principal para invitados.<br>
-                Establecer a <code>0</code> para deshabilitar el cacheo principal (no recomendado).<br>
-                Valor recomendado: depende de la cantidad de posts que se publican, su frecuencia y el tráfico de
-                visitantes anónimos vs registrados.<br>
-                <code>5</code> minutos deberían bastar para sitios con mucho tráfico.<br>
-                Establecer a <code>60</code> o más para sitios menos actualizados.
+                Especifica una lista de slugs de categorías cuyos posts se excluirán del índice principal (inicio),
+                uno por línea.<br><br>
+                <i class="fa fa-info-circle"></i>
+                Puedes establecer exlcusiones basadas en tiempo al usar la siguiente sintaxis:<br>
+                <code>slug - horas</code><br>
+                De esta forma, sólo aquellas entradas <u>que hayan sido publicadas durante las últimas
+                <code>horas</code></u> serán incluídas en el índice, <b>dejando fuera las más viejas</b>.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
+        <specs key="items_per_page">
+            <title>Entradas a mostrar por página de índice</title>
+            <description><![CDATA[
+                Cantidad de entradas a mostrar en cada página de índice principal, de histórico, de categorías, etc.<br>
+                Valor por defecto: <code>30</code>.
             ]]></description>
             <type>number</type>
+            <options>
+                <min>1</min>
+                <max>255</max>
+            </options>
         </specs>
-        <specs key="main_index_cache_for_guests_version">
-            <title><![CDATA[
-                <span class="framed_content inlined state_highlight">Caché</span>
-                Número de versión para el caché de invitados de la página principal
-            ]]></title>
+        
+        <specs key="excerpt_length">
+            <title>Tamaño del resumen</title>
             <description><![CDATA[
-                Si quieres regenerarlo, súmale un <code>1</code>.<br>
+                Cantidad máxima de caracteres para resúmenes (manuales o automáticos).<br>
+                Valor por defecto: <code>30</code>.
+            ]]></description>
+            <type>number</type>
+            <options>
+                <min>30</min>
+                <max>250</max>
+            </options>
+        </specs>
+        
+        <specs key="automatic_featured_images">
+            <title>Imágenes destacadas automáticas</title>
+            <description><![CDATA[
+                Si una entrada no tiene una imagen destacada definida pero al menos una se ha insertado de la galería,
+                la miniatura de la primera imagen insertada se usará como imagen destacada de la entrada en los índices.<br>
                 <span class="fa fa-info-circle"></span>
-                Sólo es usado si el tiempo de vida del caché para invitados en la página principal es mayor a cero.
+                Nota: esta opción puede ser reescrita por otros módulos.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        
+        <!-- ============================================= -->
+        <specs is_separator="true">Entradas destacadas</specs>
+        <!-- ============================================= -->
+        
+        <specs key="featured_posts_tag">
+            <title>Etiqueta para entradas destacadas</title>
+            <description><![CDATA[
+                Especifica la etiqueta (sin el <code>#</code>) que deseas usar para llenar el área
+                de entradas destacadas en la página principal.
+            ]]></description>
+            <type>text</type>
+        </specs>
+        
+        <specs key="show_featured_posts_tag_everywhere">
+            <title>Mostrar etiqueta destacada en todos lados?</title>
+            <description><![CDATA[
+                Por defecto, la etiqueta elegida para entradas destacadas se ocultará de la vista pública.
+                <b>Deberías dejar esta opción en <code>No</code></b> para evitar que cualquiera (excepto mods/admins) la use.
+                Al activarla, la etiqueta estará disponible en todas las vistas y los usuarios podrían
+                terminar saturando el área de entradas destacadas.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        
+        <specs key="default_featured_image">
+            <title>Miniatura por defecto para entradas destacadas</title>
+            <description><![CDATA[
+                Si una entrada en el área de destacadas de la página principal no tiene una imagen
+                definida, usar la que se defina aquí.<br>
+                <span class="fa fa-info-circle"></span>
+                Nota: esta opción puede ser reescrita por otros módulos.
+            ]]></description>
+            <type>@gallery:specs_renderer/image_selector</type>
+            <options>
+                <image_size>thumbnail</image_size>
+            </options>
+        </specs>
+        
+        <specs key="featured_posts_ttl">
+            <title><![CDATA[
+                Tiempo de vida para entradas destacadas (expiración)
+            ]]></title>
+            <description><![CDATA[
+                Especifica la cantidad de horas para las entradas destacadas en la página principal.
+                Una vez transcurrido el periodo, se removerán de el área y aparecerán en los índices normales.<br>
+                Especifica <code>0</code> para mantenerlas hasta que se editen y se les remueva la etiqueta.
+            ]]></description>
+            <type>number</type>
+            <options>
+                <min>0</min>
+                <max>255</max>
+            </options>
+        </specs>
+        
+        <!-- ================================== -->
+        <specs is_separator="true">Interfaz</specs>
+        <!-- ================================== -->
+        
+        <specs key="disable_quick_post_form">
+            <title>¿Desactivar forma de posteo rápido?</title>
+            <description><![CDATA[
+                Si se desactiva, los usuarios no podrán postear entradas rápidas usando la forma rápida en índices.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        
+        <specs key="time_allowed_for_editing_after_publishing">
+            <title>Tiempo de gracia para edición tras publicar</title>
+            <description><![CDATA[
+                Cantidad de minutos que un usuario tiene para poder editar entradas que han sido publicadas.<br>
+                Especificar <code>0</code> para impedir que los usuarios editen las entradas (excepto mods/admins).
             ]]></description>
             <type>number</type>
         </specs>
+        
         <specs key="per_category_messages">
             <title>Mensajes por categoría durante la edición</title>
             <description><![CDATA[
@@ -523,6 +493,85 @@
             ]]></description>
             <type>code</type>
         </specs>
+        
+        <!-- ============================================= -->
+        <specs is_separator="true">Enforced expiration</specs>
+        <!-- ============================================= -->
+        
+        <specs key="enforced_expiration_by_category">
+            <title>Tiempo de vida forzado por categoría</title>
+            <description><![CDATA[
+                Especifica una lista de categorías y tiempos de vida para los posts que desees limitar en los índices
+                usando la siguiente sintaxis, una por línea:<br>
+                <code>slug_de_categoria - tiempo_de_vida</code><br>
+                Una vez cumplido el plazo, las entradas no serán eliminadas, pero no aparecerán en los
+                índices ni podrán verse de forma individual.<br>
+                <span class="fa fa-info-circle"></span>
+                Nota: esta opción reescribirá cualquier valor impuesto por el autor de la entrada.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
+        <specs key="lock_posts_with_enforced_expiration">
+            <title>Bloquear posts con vida forzada</title>
+            <description><![CDATA[
+                Si se habilita, los posts de estas categorías no se podrán editar o eliminar hasta que expiren.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        
+        <!-- ================================ -->
+        <specs is_separator="true">Cacheo</specs>
+        <!-- ================================ -->
+        
+        <specs key="archives_tree_widget_cache_ttl">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Tiempo de vida del cache para el widget histórico (expiración)
+            ]]></title>
+            <description><![CDATA[
+                Cantidad de horas que se conservará el árbol de histórico en este widget.<br>
+                Valor por defecto: <code>3</code> horas. Especificar <code>0</code> para deshabilitar este caché.<br>
+                Valor recomendado: depende de la cantidad de entradas que se publican y sus tiempos.
+                Para sitios actualizados constantemente, 3-6 horas deberían ser suficientes.
+                Para sitios con menos frecuencia de actualización, 24 horas o más.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
+        <specs key="main_index_cache_for_guests">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Tiempo de vida del caché para invitados en la página principal
+            ]]></title>
+            <description><![CDATA[
+                Cantidad de minutos para mantener las páginas del índice principal para invitados.<br>
+                Establecer a <code>0</code> para deshabilitar el cacheo principal (no recomendado).<br>
+                Valor recomendado: depende de la cantidad de posts que se publican, su frecuencia y el tráfico de
+                visitantes anónimos vs registrados.<br>
+                <code>5</code> minutos deberían bastar para sitios con mucho tráfico.<br>
+                Establecer a <code>60</code> o más para sitios menos actualizados.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
+        <specs key="main_index_cache_for_guests_version">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Número de versión para el caché de invitados de la página principal
+            ]]></title>
+            <description><![CDATA[
+                Si quieres regenerarlo, súmale un <code>1</code>.<br>
+                <span class="fa fa-info-circle"></span>
+                Sólo es usado si el tiempo de vida del caché para invitados en la página principal es mayor a cero.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
+        <!-- ==================================== -->
+        <specs is_separator="true">Extensores</specs>
+        <!-- ==================================== -->
+        
         <specs key="use_triklet_for_reporting">
             <title>Usar el módulo de Triklet para reportar posts?</title>
             <description><![CDATA[
@@ -532,6 +581,7 @@
             ]]></description>
             <type>yes/no</type>
         </specs>
+        
     </settings_data>
     
     <user_profile_tabs>
