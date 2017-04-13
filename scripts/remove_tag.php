@@ -43,4 +43,7 @@ send_notification($account->id_account, "success", replace_escaped_vars(
     array($tag, $post->title)
 ));
 
+if( $tag == $settings->get("modules:posts.featured_posts_tag") )
+    $mem_cache->delete("modules:posts.featured_posts");
+
 echo "OK";

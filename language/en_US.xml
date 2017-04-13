@@ -556,6 +556,36 @@
             <type>number</type>
         </specs>
         
+        <specs key="slider_posts_cache_ttl">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Slider posts cache TTL
+            ]]></title>
+            <description><![CDATA[
+                Amount of minutes the posts for the home slider should be cached.<br>
+                By default, it is disabled. If any value is set, the cache will be refreshed when a post for the slider is published.<br>
+                Recommended value: 60 minutes or more.<br>
+                <i class="fa fa-warning"></i> Important: if you set enforced expiration time for the category
+                that holds the slider posts, then you should set this cache to around 5 minutes.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
+        <specs key="featured_posts_cache_ttl">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Featured posts cache TTL
+            ]]></title>
+            <description><![CDATA[
+                Amount of minutes the featured posts should be cached.<br>
+                By default, it is disabled. If any value is set, the cache will be refreshed when a post with the featured posts tag is published.<br>
+                Recommended value: 60 minutes or more.<br>
+                <i class="fa fa-warning"></i> Important: if you set a time to live for featured posts,
+                then you should set this cache to around 5 minutes.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
         <!-- =================================== -->
         <specs is_separator="true">Extenders</specs>
         <!-- =================================== -->

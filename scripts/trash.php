@@ -39,4 +39,13 @@ if( ! empty($attached_media) )
 $current_module->load_extensions("post_actions", "before_trashing");
 $posts_repository->trash($post->id_post);
 
+$featured_posts_tag = $settings->get("modules:posts.featured_posts_tag");
+if( is_array($post->tags_list) )
+    if( in_array($featured_posts_tag, $post->tags_list) )
+        $mem_cache->delete("modules:posts.featured_posts");
+
+if( ! empty($post->main_category_slug) )
+    if( stristr($settings->get("modules:posts.slider_categories"), $post->main_category_slug) !== false )
+        $mem_cache->delete("modules:posts.slider_posts");
+
 echo "OK";

@@ -568,6 +568,39 @@
             <type>number</type>
         </specs>
         
+        <specs key="slider_posts_cache_ttl">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Tiempo de vida del caché del carrusel
+            ]]></title>
+            <description><![CDATA[
+                Cantidad de minutos que las entradas del carrusel deberían cachearse.<br>
+                Por defecto, esta característica está desactivada.
+                De especificarse algún valor, el caché se refrescará en cuanto se publique una entrada para el carrusel.<br>
+                Valor recomendado: 60 minutos o más.<br>
+                <i class="fa fa-warning"></i> Importante: si has especificado una expiración forzada para la categoría
+                del carrusel, el tiempo de vida de este caché debería ser de alrededor de 5 minutos.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
+        <specs key="featured_posts_cache_ttl">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Tiempo de vida del caché de entradas resaltadas
+            ]]></title>
+            <description><![CDATA[
+                Cantidad de minutos que las entradas destacadas deberían cachearse.<br>
+                Por defecto, esta característica está desactivada.
+                De especificarse algún valor, el caché se refrescará en cuanto se publique una entrada que contenga la etiqueta
+                definida para destacados.<br>
+                Valor recomendado: 60 minutos o más.<br>
+                <i class="fa fa-warning"></i> Importante: si has definido un tiempo de vida para las entradas destacadas,
+                el tiempo de vida de este caché debería ser de alrededor de 5 minutos.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
         <!-- ==================================== -->
         <specs is_separator="true">Extensores</specs>
         <!-- ==================================== -->

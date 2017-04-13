@@ -185,3 +185,10 @@ if( $post->status == "published" )
 $current_module->load_extensions("save_post", "before_eof");
 $toolbox = new toolbox();
 $toolbox->notify_mods_on_post_submission($post);
+
+if( in_array($featured_posts_tag, $tags) )
+    $mem_cache->delete("modules:posts.featured_posts");
+
+if( ! empty($post->main_category_slug) )
+    if( stristr($settings->get("modules:posts.slider_categories"), $post->main_category_slug) !== false )
+        $mem_cache->delete("modules:posts.slider_posts");

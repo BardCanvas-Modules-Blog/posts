@@ -845,7 +845,9 @@ class posts_repository extends abstract_repository
      */
     public function get_for_home($pinned_first = false)
     {
-        global $config, $modules, $settings, $account;
+        global $config, $modules, $settings, $mem_cache, $account;
+        
+        $this_module = $modules["posts"];
         
         //$offset        = empty($_GET["offset"]) ? 0 : $_GET["offset"];
         //$cache_area    = "home_{$offset}";
@@ -859,23 +861,64 @@ class posts_repository extends abstract_repository
         if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
         
         $config->globals["posts_repository/home_index_find_params"] =& $find_params;
-        $modules["posts"]->load_extensions("posts_repository", "home_prebuilding");
+        $this_module->load_extensions("posts_repository", "home_prebuilding");
         $find_params = $config->globals["posts_repository/home_index_find_params"];
         unset( $config->globals["posts_repository/home_index_find_params"] );
         
         $posts_data = $this->get_posts_data($find_params, "index_builders", "home");
         
-        $find_params = $this->build_find_params_for_featured_posts();
-        if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
-        $posts_data->featured_posts = $this->find($find_params->where, 0, 0, $find_params->order);
+        $cache_ttl  = $settings->get("modules:posts.featured_posts_cache_ttl");
+        if( empty($cache_ttl) )
+        {
+            $load_posts = true;
+        }
+        else
+        {
+            $cache_ttl  = $cache_ttl * 60;
+            $load_posts = false;
+            $res = $mem_cache->get("modules:posts.featured_posts");
+            if( is_array($res) )      $posts_data->featured_posts = $res;
+            else if( $res == "none" ) $posts_data->featured_posts = array();
+        }
+        
+        if( $load_posts )
+        {
+            $find_params = $this->build_find_params_for_featured_posts();
+            if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
+            $posts_data->featured_posts = $this->find($find_params->where, 0, 0, $find_params->order);
+            
+            if( ! empty($cache_ttl) )
+                $mem_cache->set("modules:posts.featured_posts", $posts_data->featured_posts, 0, $cache_ttl);
+        }
         
         $posts_data->slider_posts = array();
         if( $settings->get("modules:posts.slider_categories") != "" )
         {
-            $find_params = $this->build_find_params_for_posts_slider();
-            if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date asc";
-            else                $find_params->order = "publishing_date asc";
-            $posts_data->slider_posts = $this->find($find_params->where, 0, 0, $find_params->order);
+            $cache_ttl  = $settings->get("modules:posts.slider_posts_cache_ttl");
+            if( empty($cache_ttl) )
+            {
+                $load_posts = true;
+            }
+            else
+            {
+                $cache_ttl  = $cache_ttl * 60;
+                $load_posts = false;
+                $res = $mem_cache->get("modules:posts.slider_posts");
+                if( is_array($res) )      $posts_data->slider_posts = $res;
+                else if( $res == "none" ) $posts_data->slider_posts = array();
+            }
+            
+            if( $load_posts )
+            {
+                $find_params = $this->build_find_params_for_posts_slider();
+                if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date asc";
+                else                $find_params->order = "publishing_date asc";
+                $posts_data->slider_posts = $this->find($find_params->where, 0, 0, $find_params->order);
+                
+                if( ! empty($cache_ttl) )
+                    $mem_cache->set("modules:posts.slider_posts", $posts_data->slider_posts, 0, $cache_ttl);
+            }
+            
         }
         
         //$cache->set("posts_data", $posts_data);
@@ -981,7 +1024,7 @@ class posts_repository extends abstract_repository
      * @param string $extensions_marker optional
      *
      * @return posts_data
-     8*/
+     */
     protected function get_posts_data($find_params, $extensions_hook, $extensions_marker)
     {
         global $modules, $config, $database;
