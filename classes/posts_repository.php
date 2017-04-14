@@ -867,58 +867,17 @@ class posts_repository extends abstract_repository
         
         $posts_data = $this->get_posts_data($find_params, "index_builders", "home");
         
-        $cache_ttl  = $settings->get("modules:posts.featured_posts_cache_ttl");
-        if( empty($cache_ttl) )
-        {
-            $load_posts = true;
-        }
-        else
-        {
-            $cache_ttl  = $cache_ttl * 60;
-            $load_posts = false;
-            $res = $mem_cache->get("modules:posts.featured_posts");
-            if( is_array($res) )      $posts_data->featured_posts = $res;
-            else if( $res == "none" ) $posts_data->featured_posts = array();
-        }
-        
-        if( $load_posts )
-        {
-            $find_params = $this->build_find_params_for_featured_posts();
-            if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
-            $posts_data->featured_posts = $this->find($find_params->where, 0, 0, $find_params->order);
-            
-            if( ! empty($cache_ttl) )
-                $mem_cache->set("modules:posts.featured_posts", $posts_data->featured_posts, 0, $cache_ttl);
-        }
+        $find_params = $this->build_find_params_for_featured_posts();
+        if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
+        $posts_data->featured_posts = $this->find($find_params->where, 0, 0, $find_params->order);
         
         $posts_data->slider_posts = array();
         if( $settings->get("modules:posts.slider_categories") != "" )
         {
-            $cache_ttl  = $settings->get("modules:posts.slider_posts_cache_ttl");
-            if( empty($cache_ttl) )
-            {
-                $load_posts = true;
-            }
-            else
-            {
-                $cache_ttl  = $cache_ttl * 60;
-                $load_posts = false;
-                $res = $mem_cache->get("modules:posts.slider_posts");
-                if( is_array($res) )      $posts_data->slider_posts = $res;
-                else if( $res == "none" ) $posts_data->slider_posts = array();
-            }
-            
-            if( $load_posts )
-            {
-                $find_params = $this->build_find_params_for_posts_slider();
-                if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date asc";
-                else                $find_params->order = "publishing_date asc";
-                $posts_data->slider_posts = $this->find($find_params->where, 0, 0, $find_params->order);
-                
-                if( ! empty($cache_ttl) )
-                    $mem_cache->set("modules:posts.slider_posts", $posts_data->slider_posts, 0, $cache_ttl);
-            }
-            
+            $find_params = $this->build_find_params_for_posts_slider();
+            if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date asc";
+            else                $find_params->order = "publishing_date asc";
+            $posts_data->slider_posts = $this->find($find_params->where, 0, 0, $find_params->order);
         }
         
         //$cache->set("posts_data", $posts_data);
