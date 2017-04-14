@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.17.1] - 2017-04-14
+
+- Rolled back caching for featured and slider posts.
+
 ## [1.17.0] - 2017-04-13
 
 - Improved settings layout.
