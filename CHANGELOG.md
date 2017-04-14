@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.17.0] - 2017-04-13
+
+- Improved settings layout.
+- Added caching for featured and slider posts.
+
 ## [1.16.2] - 2017-04-11
 
 - Added extenders for reporting posts to tickets instead of the contact form
