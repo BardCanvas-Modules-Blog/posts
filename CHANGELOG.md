@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.17.2] - 2017-04-15
+
+- Avoided showing featured posts on pages beyond the first at the home index.
+  This was an unwanted behavior that triggered when removed featured post limits.
+
 ## [1.17.1] - 2017-04-14
 
 - Rolled back caching for featured and slider posts.
