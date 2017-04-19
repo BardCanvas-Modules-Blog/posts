@@ -33,7 +33,7 @@ if( ! empty($attached_media) )
     $item_ids  = array_keys($attached_media);
     
     $posts_repository->unset_all_media_items($post->id_post);
-    $media_repository->delete_multiple_if_unused($item_ids);
+    //$media_repository->delete_multiple_if_unused($item_ids);
 }
 
 $current_module->load_extensions("post_actions", "before_trashing");
