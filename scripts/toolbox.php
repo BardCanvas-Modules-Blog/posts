@@ -108,7 +108,7 @@ if($_GET["action"] == "change_status")
                 $item_ids  = array_keys($attached_media);
                 
                 $repository->unset_all_media_items($_GET["id_post"]);
-                $media_repository->delete_multiple_if_unused($item_ids);
+                //$media_repository->delete_multiple_if_unused($item_ids);
             }
             
             $current_module->load_extensions("post_actions", "before_trashing");
@@ -142,7 +142,7 @@ if($_GET["action"] == "change_status")
                 $item_ids  = array_keys($attached_media);
                 
                 $repository->unset_all_media_items($_GET["id_post"]);
-                $media_repository->delete_multiple_if_unused($item_ids);
+                //$media_repository->delete_multiple_if_unused($item_ids);
             }
             
             $repository->hide($_GET["id_post"]);
