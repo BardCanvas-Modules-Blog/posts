@@ -60,8 +60,8 @@ include __DIR__ . "/save.inc";
 if( $_POST["is_quick_post"] && $post->status == "draft" )
     send_notification($account->id_account, "success", $current_module->language->messages->draft_saved);
 
-if( is_array($media_deletions) && ! empty($media_deletions) )
-    $media_repository->delete_multiple_if_unused($media_deletions);
+//if( is_array($media_deletions) && ! empty($media_deletions) )
+//    $media_repository->delete_multiple_if_unused($media_deletions);
 
 if( $_POST["ok_with_url"] == "true" )
     echo "OK:{$post->get_permalink()}";
