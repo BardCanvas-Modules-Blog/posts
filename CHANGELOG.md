@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.17.3] - 2017-04-19
+
+- Removed propagated media deletions on saving/trashing/hiding.
+
 ## [1.17.2] - 2017-04-15
 
 - Avoided showing featured posts on pages beyond the first at the home index.
