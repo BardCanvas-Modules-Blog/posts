@@ -110,9 +110,13 @@ foreach($records as $row)
     }
     
     $item->author   = $row->author_user_name;
-    $item->category = $row->main_category_slug;
+    $item->category = $row->main_category_title;
     $item->comments = $item->link;
     $item->pubDate  = gmdate('D, d M Y H:i:s T', strtotime($row->publishing_date) );
+    
+    $config->globals["rss_feed_loop/current_post"] =& $row;
+    $config->globals["rss_feed_loop/current_item"] =& $item;
+    $this_module->load_extensions("rss_feed_generator", "before_loop_iteration_ending");
     
     $channel->items[] = $item;
 }
