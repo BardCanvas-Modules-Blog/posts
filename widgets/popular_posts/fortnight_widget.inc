@@ -24,7 +24,7 @@ use hng2_modules\posts\posts_repository;
 
 global $config, $language, $mem_cache, $account;
 
-$version = 3;
+$version = 8;
 $ttl     = 60*60;
 
 if( date("d") <= 15 )
@@ -62,11 +62,12 @@ ob_start(); ?>
         <? foreach($posts as $post): ?>
             <li>
                 <span class="pull-right"><?= number_format($post->views) ?></span>
-                <a class="author user_display_name" data-user-level="<?= $post->author_level ?>" href="<?= $config->full_root_path ?>/author/<?= $post->author_user_name ?>">
-                    <span class="fa fa-user"></span>
-                    <?= $post->get_processed_author_display_name() ?></a>
+                <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title(false) ?></a><br>
                 <span class="date"><?= time_elapsed_string($post->publishing_date) ?></span>
-                <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title(false) ?></a>
+                <?= $post->main_category_title ?><br>
+                <span class="author user_display_name" data-user-level="<?= $post->author_level ?>">
+                    <span class="fa fa-user"></span>
+                    <?= $post->get_processed_author_display_name() ?></span>
             </li>
         <? endforeach; ?>
     </ol>

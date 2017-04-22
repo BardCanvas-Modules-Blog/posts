@@ -29,7 +29,7 @@ global $config, $language, $mem_cache;
 $post = $template->get("current_post");
 if( ! is_object($post) ) return "";
 
-$data_key .= "/{$post->main_category_slug}/v6";
+$data_key .= "/{$post->main_category_slug}/v7";
 
 # TODO: Add data extractors!!!
 $category_id = $post->main_category;
@@ -65,13 +65,12 @@ ob_start(); ?>
     <ul class="simple_entries_listing">
         <? foreach( $posts as $post ): ?>
             <li>
-                <a class="author user_display_name" data-user-level="<?= $post->author_level ?>"
-                   href="<?= $config->full_root_path ?>/author/<?= $post->author_user_name ?>">
+                <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title(false) ?></a><br>
+                <span class="date"><?= time_elapsed_string($post->publishing_date) ?></span>
+                <span class="author user_display_name" data-user-level="<?= $post->author_level ?>">
                     <span class="fa fa-user"></span>
                     <?= $post->get_processed_author_display_name() ?>
-                </a>
-                <span class="date"><?= time_elapsed_string($post->publishing_date) ?></span>
-                <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title(false) ?></a>
+                </span>
             </li>
         <? endforeach; ?>
     </ul>
