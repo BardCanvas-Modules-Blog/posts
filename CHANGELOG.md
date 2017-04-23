@@ -1,6 +1,14 @@
 
 # Posts Module Change Log
 
+## [1.18.0] - 2017-04-23
+
+- Polished widgets.
+- Fixes and improvements on the repository class.
+- Added user home section with post counts per category (with charts for moderators).
+- Added recent posts chart links on the accounts browser, posts browser and several other places for quick viewing.
+- Added meta tags on single posts.
+
 ## [1.17.3] - 2017-04-19
 
 - Removed propagated media deletions on saving/trashing/hiding.
