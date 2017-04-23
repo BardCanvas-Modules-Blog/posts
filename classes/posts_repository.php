@@ -1,6 +1,7 @@
 <?php
 namespace hng2_modules\posts;
 
+use hng2_base\module;
 use hng2_cache\disk_cache;
 use hng2_repository\abstract_repository;
 use hng2_base\accounts_repository;
@@ -1075,10 +1076,11 @@ class posts_repository extends abstract_repository
      * @param int    $min_posts
      * @param int    $limit
      * @param string $order
+     * @param string $id_author optional
      *
-     * @return array [{id_category, slug, title, count}, ...]
+     * @return array [{id_category, slug, title, count}, {...}]
      */
-    public function get_category_counts($min_posts = 0, $limit = 0, $order = "`count` desc")
+    public function get_category_counts($min_posts = 0, $limit = 0, $order = "`count` desc", $id_author = "")
     {
         global $database, $account;
         
@@ -1092,10 +1094,13 @@ class posts_repository extends abstract_repository
                           (visibility = 'level_based' and '{$account->level}' >= min_level) 
                       )";
         
+        $author_addition = empty($id_author) ? "" : "posts.id_author = '$id_author' and ";
+        
         if( ! $account->_exists )
-            $pwhere = "posts.visibility = 'public' and posts.status = 'published' and posts.expiration_date < '$now'";
+            $pwhere = "$author_addition posts.visibility = 'public' and posts.status = 'published' and posts.expiration_date < '$now'";
         else
-            $pwhere = "posts.status = 'published' and posts.expiration_date < '$now' and (
+            $pwhere = "$author_addition posts.status = 'published' and posts.expiration_date < '$now' and
+                       (
                            posts.visibility = 'public' or posts.visibility = 'users' or 
                            (
                                posts.visibility = 'level_based'
@@ -1103,19 +1108,22 @@ class posts_repository extends abstract_repository
                            ) 
                        )";
         
+        $limit = empty($limit) ? "" : "limit $limit";
         $query = "
             select
                 id_category, slug, title,
                 ( select count(posts.id_post) from posts
                   where posts.main_category = categories.id_category
-                  and   $pwhere) as `count`
+                  and   $pwhere
+                ) as `count`
             from categories
             where
                 $where
             having `count` >= $min_posts
             order by $order
-            limit $limit
+            $limit
         ";
+        $this->last_query = $query;
         
         $res = $database->query($query);
         $return = array();
@@ -1306,6 +1314,7 @@ class posts_repository extends abstract_repository
     
     public function empty_trash()
     {
+        /** @var module[] $modules */
         global $database, $modules;
         
         $boundary = date("Y-m-d 00:00:00", strtotime("today - 7 days"));
