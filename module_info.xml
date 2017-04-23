@@ -82,6 +82,9 @@
             <accounts_repository>
                 <delete>extenders/accounts/account_deletion.inc</delete>
             </accounts_repository>
+            <user_profile_home>
+                <additional_sections>extenders/accounts/profile_home_sections.inc</additional_sections>
+            </user_profile_home>
         </accounts>
         <gallery>
             <records_browser>

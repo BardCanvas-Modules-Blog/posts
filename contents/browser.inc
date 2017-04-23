@@ -503,6 +503,15 @@ endif;
                         <span class="fa fa-user fa-fw"></span><?= $row->get_processed_author_display_name() ?>
                     </a><br>
                     
+                    <?
+                    $chart_url = "{$current_module->get_url()}/posts_per_day_chart.php"
+                               . "?id_author={$row->id_author}&width=720&height=480&wasuuup=" . md5(mt_rand(1, 65535));
+                    ?>
+                    <a class="prettyPhoto" href="<?= $chart_url ?>">
+                        <span class="fa fa-bar-chart fa-fw"></span>
+                        <?= $current_module->language->record_nav->actions->timeline_chart ?>
+                    </a><br>
+                
                     <? if( ! empty($row->creation_ip) && $account->level >= config::MODERATOR_USER_LEVEL ): ?>
                         <a class="nowrap" href="<?= $config->full_root_path ?>/?s=ip:<?= $row->creation_ip ?>">
                             <span class="fa fa-cloud fa-fw"></span>

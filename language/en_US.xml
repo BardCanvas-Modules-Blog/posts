@@ -108,6 +108,7 @@
             <publish>Publish</publish>
             <untrash_for_review>Untrash for review</untrash_for_review>
             <author_posts>Author posts</author_posts>
+            <timeline_chart>Recent posts chart</timeline_chart>
         </actions>
         <extras>
             <expires>Expires in</expires>
@@ -653,7 +654,9 @@
         <principal_data><![CDATA[
             <div class="media_bullet">
                 <span class="bullet fa fa-newspaper-o fa-fw"></span>
-                Last post: [{$time}, {$status}] <a href="{$url}" target="_blank">{$title}</a>
+                Last post: [{$time}, {$status}] <a href="{$url}" target="_blank">{$title}</a><br>
+                <span class="bullet fa fa-bar-chart fa-fw"></span>
+                <a class="prettyPhoto" href="{$posts_timeline_chart_url}">Latest posts timeline chart</a>
             </div>
         ]]></principal_data>
     </accounts_nav_columns>
@@ -771,5 +774,13 @@
             Do you want to continue?
         ]]></confirmation>
     </empty_trash>
+    
+    <user_profile_sections>
+        <posts_per_category>Published posts by category</posts_per_category>
+        <charts>
+            <all>Posts published by {$user}</all>
+            <by_category>Posts by {$user} on {$category}</by_category>
+        </charts>
+    </user_profile_sections>
     
 </language>

@@ -109,6 +109,7 @@
             <publish>Publicar</publish>
             <untrash_for_review>Recuperar para revisión</untrash_for_review>
             <author_posts>Entradas del autor</author_posts>
+            <timeline_chart>Entradas recientes</timeline_chart>
         </actions>
         <extras>
             <expires>Expira en</expires>
@@ -668,7 +669,9 @@
         <principal_data><![CDATA[
             <div class="media_bullet">
                 <span class="bullet fa fa-newspaper-o fa-fw"></span>
-                Última entrada: [{$time}, {$status}] <a href="{$url}" target="_blank">{$title}</a>
+                Última entrada: [{$time}, {$status}] <a href="{$url}" target="_blank">{$title}</a><br>
+                <span class="bullet fa fa-bar-chart fa-fw"></span>
+                <a class="prettyPhoto" href="{$posts_timeline_chart_url}">Histórico reciente de entradas</a>
             </div>
         ]]></principal_data>
     </accounts_nav_columns>
@@ -786,5 +789,13 @@
             ¿Deseas continuar?
         ]]></confirmation>
     </empty_trash>
+    
+    <user_profile_sections>
+        <posts_per_category>Entradas publicadas por categoría</posts_per_category>
+        <charts>
+            <all>Entradas publicadas de {$user}</all>
+            <by_category>Entradas de {$user} en {$category}</by_category>
+        </charts>
+    </user_profile_sections>
     
 </language>
