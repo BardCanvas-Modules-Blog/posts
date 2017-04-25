@@ -7,9 +7,11 @@
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  * 
  * @var \SimpleXMLElement $language
+ * @var module[] $modules
  */
 
 use hng2_base\config;
+use hng2_base\module;
 use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\toolbox;
 
@@ -100,6 +102,7 @@ if( ! empty($raw_list) )
     
     <div class="field framed_content" data-field="controls" style="display: none;">
         <div class="multicol cols-3 biggest-col">
+            
             <div class="col subfield">
                 <div class="caption"><?= $current_module->language->form->fields->excerpt->caption ?></div>
                 <div class="input">
@@ -132,7 +135,12 @@ if( ! empty($raw_list) )
                     <?= $current_module->language->form->fields->password->info ?>
                 </div>
                 <div class="input">
-                    <input type="text" name="password" placeholder="<?= $current_module->language->form->fields->password->placeholder ?>">
+                    <input type="hidden" name="password" placeholder="<?= $current_module->language->form->fields->password->placeholder ?>">
+                    <div class="password_control">
+                        <span class="current_password framed_content inlined" data-none-caption="<?= $current_module->language->form->fields->password->none ?>"></span>
+                        &nbsp;<span class="set pseudo_link" onclick="edit_post_password()"><i class="fa fa-pencil fa-fw"></i></span>
+                        &nbsp;<span class="remove pseudo_link" onclick="set_post_password('')"><i class="fa fa-times fa-fw"></i></span>
+                    </div>
                 </div>
                 
                 <div class="field" data-field="slug">
@@ -203,6 +211,7 @@ if( ! empty($raw_list) )
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
     

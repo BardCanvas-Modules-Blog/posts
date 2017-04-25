@@ -180,6 +180,7 @@
                     Leave this field empty if you don't want to protect the post.
                     Otherwise, only those who know the password will be able to see it.
                 ]]></info>
+                <none>None set</none>
             </password>
             <allow_comments>
                 <caption>Allow people to leave comments?</caption>

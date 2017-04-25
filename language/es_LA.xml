@@ -181,6 +181,7 @@
                     Deja este campo vacío si no quieres proteger la entrada. De lo contrario,
                     sólo a quienes les pases la contraseña podrán ver a la entrada.
                 ]]></info>
+                <none>Ninguna</none>
             </password>
             <allow_comments>
                 <caption>Permitir recepción de comentarios?</caption>

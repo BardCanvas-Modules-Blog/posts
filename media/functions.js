@@ -130,6 +130,8 @@ function reset_post_form()
         if( typeof reset_post_form_extensions[fi] == 'function' )
             reset_post_form_extensions[fi]($form);
     
+    set_post_password('');
+    
     $form.find('.field[data-field="controls"]').hide();
 }
 
@@ -146,7 +148,7 @@ function fill_post_form($form, record)
     $form.find('input[name="slug"]').val( record.slug );
     $form.find('textarea[name="excerpt"]').val( record.excerpt );
     
-    $form.find('input[name="password"]').val( record.password );
+    set_post_password(record.password);
     
     $form.find('.subfield select[name="visibility"] option[value="' + record.visibility + '"]').prop('selected', true);
     
@@ -434,6 +436,42 @@ function autosave_post()
     $form.find('.post_autosave_status .error').hide();
     $form.find('input[name="is_autosave"]').val('true');
     $form.submit();
+}
+
+function edit_post_password()
+{
+    var $form   = $('#post_form');
+    var $field  = $form.find('input[name="password"]');
+    var value   = $field.val();
+    var message = $field.attr('placeholder');
+    
+    var res = prompt(message, value);
+    if( res == null ) return;
+    
+    set_post_password(res);
+}
+
+function set_post_password(value)
+{
+    var $form  = $('#post_form');
+    var $field = $form.find('input[name="password"]');
+    var $dummy = $form.find('.password_control .current_password');
+    
+    $field.val( value );
+    
+    if( value != '' )
+    {
+        $dummy.text(value);
+        $dummy.toggleClass('state_active', true);
+        $form.find('.password_control .remove').show();
+    }
+    else
+    {
+        var placeholder = $dummy.attr('data-none-caption');
+        $dummy.text(placeholder);
+        $dummy.toggleClass('state_active', false);
+        $form.find('.password_control .remove').hide();
+    }
 }
 
 $(document).ready(function()
