@@ -183,6 +183,7 @@
                 ]]></info>
                 <none>Ninguna</none>
             </password>
+            <editor_options>Opciones de editor/moderador:</editor_options>
             <allow_comments>
                 <caption>Permitir recepción de comentarios?</caption>
             </allow_comments>

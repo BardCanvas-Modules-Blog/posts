@@ -182,6 +182,7 @@
                 ]]></info>
                 <none>None set</none>
             </password>
+            <editor_options>Editor/Moderator options:</editor_options>
             <allow_comments>
                 <caption>Allow people to leave comments?</caption>
             </allow_comments>

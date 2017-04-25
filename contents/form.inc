@@ -154,37 +154,52 @@ if( ! empty($raw_list) )
                 </div>
                 
                 <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
-                    <div class="caption"><?= $current_module->language->form->fields->allow_comments->caption ?></div>
+                    <div class="caption important">
+                        <?= $current_module->language->form->fields->editor_options ?>
+                    </div>
                     <div class="input">
-                        <?= $language->no ?>
-                        <span class='fa-pseudo-switch' data-input-name='allow_comments' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
-                        <input type='hidden' name='allow_comments' value='1'>
-                        <span class='toggler toggle-on  fa fa-toggle-on'  style='display: none'></span>
-                        <span class='toggler toggle-off fa fa-toggle-off' style=''></span>
-                    </span>
-                        <?= $language->yes ?>
+                        <span class="pull-right nowrap">
+                            <?= $language->no ?>
+                            <span class='fa-pseudo-switch' data-input-name='allow_comments' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
+                                <input type='hidden' name='allow_comments' value='1'>
+                                <span class='toggler toggle-on  fa fa-toggle-on'  style='display: none'></span>
+                                <span class='toggler toggle-off fa fa-toggle-off' style=''></span>
+                            </span>
+                            <?= $language->yes ?>
+                        </span>
+                        <span class="greengo">
+                            <?= $current_module->language->form->fields->allow_comments->caption ?>
+                        </span>
                     </div>
                     
-                    <div class="caption"><?= $current_module->language->form->fields->pin_to_home->caption ?></div>
                     <div class="input">
-                        <?= $language->no ?>
-                        <span class='fa-pseudo-switch' data-input-name='pin_to_home' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
-                            <input type='hidden' name='pin_to_home' value='0'>
-                            <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
-                            <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
+                        <span class="pull-right nowrap">
+                            <?= $language->no ?>
+                            <span class='fa-pseudo-switch' data-input-name='pin_to_home' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
+                                <input type='hidden' name='pin_to_home' value='0'>
+                                <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
+                                <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
+                            </span>
+                            <?= $language->yes ?>
                         </span>
-                        <?= $language->yes ?>
+                        <span class="greengo">
+                            <?= $current_module->language->form->fields->pin_to_home->caption ?>
+                        </span>
                     </div>
                     
-                    <div class="caption"><?= $current_module->language->form->fields->pin_to_main_category_index->caption ?></div>
                     <div class="input">
-                        <?= $language->no ?>
-                        <span class='fa-pseudo-switch' data-input-name='pin_to_main_category_index' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
-                            <input type='hidden' name='pin_to_main_category_index' value='0'>
-                            <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
-                            <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
+                        <span class="pull-right nowrap">
+                            <?= $language->no ?>
+                            <span class='fa-pseudo-switch' data-input-name='pin_to_main_category_index' data-value-on='1' data-value-off='0' onclick='toggle_fa_pseudo_switch(this);'>
+                                <input type='hidden' name='pin_to_main_category_index' value='0'>
+                                <span class='toggler toggle-on  fa fa-toggle-on'  style=''></span>
+                                <span class='toggler toggle-off fa fa-toggle-off' style='display: none'></span>
+                            </span>
+                            <?= $language->yes ?>
                         </span>
-                        <?= $language->yes ?>
+                        <span class="greengo">
+                            <?= $current_module->language->form->fields->pin_to_main_category_index->caption ?>
+                        </span>
                     </div>
                 <? endif; ?>
             </div>
