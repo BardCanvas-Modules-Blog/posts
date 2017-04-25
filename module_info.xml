@@ -48,7 +48,7 @@
         Index Builders / Tag index.
         Post Record Class / Set from object, Get Processed Excerpt, Get Processed Content.
         Posts saving / After record forging.
-        Editor form / Below main category selector.
+        Editor form: Below main category selector, below editor, option columns (left, middle, right), outside (after closing the form).
         Quick post form / Below main category selector.
         JSON record exporter / before output.
         Post actions: before trashing, after publishing, after flagged for reviewing, after hiding, after setting as draft, after untrashing for review.

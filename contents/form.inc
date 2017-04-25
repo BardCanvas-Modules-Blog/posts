@@ -100,18 +100,25 @@ if( ! empty($raw_list) )
                   placeholder="<?= $current_module->language->form->fields->content->placeholder ?>"></textarea>
     </div>
     
+    <? $modules["posts"]->load_extensions("editor_form", "below_editor"); ?>
+    
     <div class="field framed_content" data-field="controls" style="display: none;">
         <div class="multicol cols-3 biggest-col">
             
             <div class="col subfield">
+                
                 <div class="caption"><?= $current_module->language->form->fields->excerpt->caption ?></div>
                 <div class="input">
                     <textarea name="excerpt" class="expandible_textarea no_fw_font" style="min-height: 150px;"
                               placeholder="<?= $current_module->language->form->fields->excerpt->placeholder ?>"></textarea>
                 </div>
+                
+                <? $modules["posts"]->load_extensions("editor_form", "options_left_column"); ?>
+                
             </div>
             
             <div class="col subfield">
+                
                 <div class="caption"><?= $current_module->language->form->fields->visibility->caption ?></div>
                 <div class="input">
                     <select name="visibility">
@@ -152,6 +159,8 @@ if( ! empty($raw_list) )
                                placeholder="<?= $current_module->language->form->fields->slug->placeholder ?>">
                     </div>
                 </div>
+                
+                <? $modules["posts"]->load_extensions("editor_form", "options_middle_column"); ?>
                 
                 <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
                     <div class="caption important">
@@ -202,9 +211,11 @@ if( ! empty($raw_list) )
                         </span>
                     </div>
                 <? endif; ?>
+                
             </div>
             
             <div class="col subfield featured_image">
+                
                 <input type="hidden" name="id_featured_image" value="">
                 <div class="caption">
                     <?= $current_module->language->form->fields->featured_image->caption ?>
@@ -225,6 +236,9 @@ if( ! empty($raw_list) )
                         </span>
                     </div>
                 </div>
+                
+                <? $modules["posts"]->load_extensions("editor_form", "options_right_column"); ?>
+                
             </div>
             
         </div>
@@ -277,3 +291,6 @@ if( ! empty($raw_list) )
         </button>
     </div>
 </form>
+
+<? $modules["posts"]->load_extensions("editor_form", "outside"); ?>
+                
