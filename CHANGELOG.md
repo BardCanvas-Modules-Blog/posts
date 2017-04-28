@@ -1,6 +1,12 @@
 
 # Posts Module Change Log
 
+## [1.19.0] - 2017-04-23
+
+- Changed the way post passwords are set to avoid unwanted autofills.
+- Improved editor/mod controls on composition form.
+- Added extension point ons the editor form.
+
 ## [1.18.0] - 2017-04-23
 
 - Polished widgets.
