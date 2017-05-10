@@ -109,17 +109,16 @@
     <widgets>
         
         <widget for="right_sidebar" id="other_posts_in_category" type="php" is_clonable="true"
-                file="other_posts_in_category/widget.inc" config="other_posts_in_category/config.inc" />
+                file="other_posts_in_category.inc" />
         
         <widget for="right_sidebar" id="posts_by_tag" type="php" is_clonable="true"
-                file="posts_by_tag/widget.inc" config="posts_by_tag/config.inc" />
+                file="posts_by_tag.inc" />
         
         <widget for="right_sidebar" id="popular_posts_fortnight" type="php" is_clonable="true"
-                file="popular_posts/fortnight_widget.inc" config="popular_posts/fortnight_config.inc" />
+                file="popular_posts_fortnight.inc" />
         
         <widget for="left_sidebar"  id="archives_tree"  type="php" is_clonable="false"
-                file="left_sidebar_archives_tree/widget.inc" config="left_sidebar_archives_tree/config.inc"
-                added_classes="archive_tree" />
+                file="left_sidebar_archives_tree.inc" added_classes="archive_tree" />
         
     </widgets>
     
