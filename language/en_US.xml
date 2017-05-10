@@ -613,6 +613,22 @@
         <left_sidebar_archives_tree>
             <title>Archives</title>
         </left_sidebar_archives_tree>
+        <archives_tree>
+            <title>Archives tree</title>
+            <info>Expandible archives tree by year/month</info>
+        </archives_tree>
+        <other_posts_in_category>
+            <title>Other in category</title>
+            <info>Shows a small list of other posts in the same category as the on-screen post</info>
+        </other_posts_in_category>
+        <posts_by_tag>
+            <title>Posts by tag</title>
+            <info>Shows a list of matching posts against a hashtag</info>
+        </posts_by_tag>
+        <popular_posts_fortnight>
+            <title>Popular posts</title>
+            <info>Lists the most viewed posts in the current semimonth</info>
+        </popular_posts_fortnight>
     </widgets>
     
     <rss_feed_generator>

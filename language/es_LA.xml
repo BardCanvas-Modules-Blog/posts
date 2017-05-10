@@ -628,6 +628,22 @@
         <left_sidebar_archives_tree>
             <title>Históricos</title>
         </left_sidebar_archives_tree>
+        <archives_tree>
+            <title>Árbol histórico</title>
+            <info>Árbol expandible de archivos por año/mes</info>
+        </archives_tree>
+        <other_posts_in_category>
+            <title>Otras en categoría</title>
+            <info>Muestra un listado de otras entradas en la misma categoría de la entrada en pantalla</info>
+        </other_posts_in_category>
+        <posts_by_tag>
+            <title>Entradas por etiqueta</title>
+            <info>Muestra un listado de entradas que tengan asignada cierta etiqueta</info>
+        </posts_by_tag>
+        <popular_posts_fortnight>
+            <title>Entradas populares</title>
+            <info>Lista las entradas más vistas en la quincena actual</info>
+        </popular_posts_fortnight>
     </widgets>
     
     <rss_feed_generator>
