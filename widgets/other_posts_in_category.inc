@@ -14,7 +14,9 @@
  * @var \SimpleXMLElement $widget
  * @var string            $seed
  * @var string            $data_key
- *
+ * 
+ * @var toolbox           $toolbox
+ * 
  * @return string
  */
 
@@ -22,41 +24,53 @@ use hng2_base\module;
 use hng2_base\template;
 use hng2_modules\posts\post_record;
 use hng2_modules\posts\posts_repository;
+use hng2_modules\widgets_manager\toolbox;
 
 global $config, $language, $mem_cache;
+
+if( empty($config->globals["widgets_manager:toolbox"]) )
+    $config->globals["widgets_manager:toolbox"] = new toolbox();
+$toolbox = $config->globals["widgets_manager:toolbox"];
+$placed_widget = $toolbox->get_widget_from_data_key($data_key);
+if( is_null($placed_widget) ) return "";
+$data = $toolbox->load_widget_data($placed_widget);
 
 /** @var post_record $post */
 $post = $template->get("current_post");
 if( ! is_object($post) ) return "";
 
-$data_key .= "/{$post->main_category_slug}/v7";
-
-# TODO: Add data extractors!!!
+$cache_key   = "modules:posts.other_in_category:{$post->main_category_slug}/v{$data["cache_version"]}";
 $category_id = $post->main_category;
-$limit       = 5;
-$order       = "publishing_date desc";
+$limit       = $data["limit"]; if( empty($limit) ) $limit = 5;
+$order       = $data["order"]; if( empty($order) ) $order = "desc";
+$cache_ttl   = $data["cache_ttl"]; if ( empty($cache_ttl) ) $cache_ttl = 0;
+$cache_ttl   = $cache_ttl * 60;
+$posts       = array();
 
-$posts = $mem_cache->get($data_key);
-if( is_array($posts) && empty($posts) ) return "";
-if( $posts == "none" ) return "";
+if( ! empty($cache_ttl) )
+{
+    $posts = $mem_cache->get($cache_key);
+    if( is_array($posts) && empty($posts) ) return "";
+    if( $posts == "none" ) return "";
+}
 
 if( empty($posts) )
 {
     $repository = new posts_repository();
     $where      = array("main_category = '$category_id'", "id_post <> '{$post->id_post}'");
-    $posts      = $repository->lookup($where, $limit, 0, $order);
+    $posts      = $repository->lookup($where, $limit, 0, "publishing_date desc");
 }
 
 if( empty($posts ) )
 {
-    $mem_cache->set($data_key, "none", 0, 60*5);
+    if( ! empty($cache_ttl) ) $mem_cache->set($cache_key, "none", 0, $cache_ttl);
     
     return "";
 }
 
-$mem_cache->set($data_key, $posts, 0, 60*5);
+if( ! empty($cache_ttl) ) $mem_cache->set($cache_key, $posts, 0, $cache_ttl);
 
-$posts = array_reverse($posts);
+if($order == "desc") $posts = array_reverse($posts);
 ob_start(); ?>
 
 <!-- posts/other_posts_in_category  -->

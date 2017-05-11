@@ -14,33 +14,38 @@
  * @var \SimpleXMLElement $widget
  * @var string            $seed
  * @var string            $data_key
- *
+ * 
+ * @var toolbox           $toolbox
+ * 
  * @return string
  */
 
 use hng2_base\module;
 use hng2_base\template;
 use hng2_modules\posts\posts_repository;
+use hng2_modules\widgets_manager\toolbox;
 
 global $config, $language, $account, $mem_cache, $settings;
 
+if( empty($config->globals["widgets_manager:toolbox"]) )
+    $config->globals["widgets_manager:toolbox"] = new toolbox();
+$toolbox = $config->globals["widgets_manager:toolbox"];
+$placed_widget = $toolbox->get_widget_from_data_key($data_key);
+if( is_null($placed_widget) ) return "";
+$data = $toolbox->load_widget_data($placed_widget);
+
 $items = array();
 
-/** @var \SimpleXMLElement $_lang */
-$_lang = $this_module->language->widgets->left_sidebar_archives_tree;
+$version   = $data["cache_version"]; if( empty($version) ) $version = 1;
+$cache_ttl = $data["cache_ttl"] * 3600;
+$cache_key = "modules:posts.archives_tree_widget-v{$version}";
 
-$ttl = $settings->get("modules:posts.archives_tree_widget_cache_ttl"); if( $ttl == "" ) $ttl = 3;
-$ttl = $ttl * 60 * 60;
-$res = null;
-
-$cache_key = "posts.archives_tree_widget_v2";
-if($ttl > 0) $res = $mem_cache->get($cache_key);
-
-if( is_null($res) )
+$res = $mem_cache->get($cache_key);
+if( empty($res) )
 {
     $repository = new posts_repository();
     $res = $repository->get_archive_dates();
-    if($ttl > 0) $mem_cache->set($cache_key, $res, 0, $ttl);
+    $mem_cache->set($cache_key, $res, 0, $cache_ttl);
 }
 
 if( empty($res) ) return "";

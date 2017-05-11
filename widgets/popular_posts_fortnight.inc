@@ -14,18 +14,37 @@
  * @var \SimpleXMLElement $widget
  * @var string            $seed
  * @var string            $data_key
- *
+ * 
+ * @var toolbox           $toolbox
+ * 
  * @return string
  */
 
 use hng2_base\module;
 use hng2_base\template;
 use hng2_modules\posts\posts_repository;
+use hng2_modules\widgets_manager\toolbox;
 
 global $config, $language, $mem_cache, $account;
 
-$version = 8;
-$ttl     = 60*60;
+if( empty($config->globals["widgets_manager:toolbox"]) )
+    $config->globals["widgets_manager:toolbox"] = new toolbox();
+$toolbox = $config->globals["widgets_manager:toolbox"];
+$placed_widget = $toolbox->get_widget_from_data_key($data_key);
+if( is_null($placed_widget) ) return "";
+$data = $toolbox->load_widget_data($placed_widget);
+
+$limit     = $data["limit"];         if( empty($limit)   ) $limit   = 10;
+$version   = $data["cache_version"]; if( empty($version) ) $version = 1;
+$cache_ttl = $data["cache_ttl"] * 3600;
+$cache_key = "modules:posts.popular_fortnight_widget-v{$version}";
+
+if( $cache_ttl > 0 )
+{
+    $contents = $mem_cache->get($cache_key);
+    if( ! empty($contents) && $contents != "none" ) return $contents;
+    if( $contents == "none" ) return "";
+}
 
 if( date("d") <= 15 )
 {
@@ -38,17 +57,13 @@ else
     $max_date = date("Y-m-d 23:59:59", strtotime("last day of this month"));
 }
 
-$contents = $mem_cache->get("{$data_key}_v{$version}");
-if( ! empty($contents) && $contents != "none" ) return $contents;
-if( $contents == "none" ) return "";
-
 $repository = new posts_repository();
 $where      = array("publishing_date >= '$min_date' and publishing_date <= '$max_date'");
 $posts      = $repository->lookup($where, 10, 0, "views desc");
 
 if( empty($posts) )
 {
-    $mem_cache->set("{$data_key}_v{$version}", "none", 0, $ttl);
+    if( $cache_ttl > 0 ) $mem_cache->set($cache_key, "none", 0, $cache_ttl);
     
     return "";
 }
@@ -75,6 +90,6 @@ ob_start(); ?>
 
 <?
 $return = ob_get_clean();
-$mem_cache->set("{$data_key}_v{$version}", $return, 0, $ttl);
+if( $cache_ttl > 0 ) $mem_cache->set($cache_key, $return, 0, $cache_ttl);
 
 return $return;

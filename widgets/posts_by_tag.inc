@@ -14,25 +14,40 @@
  * @var \SimpleXMLElement $widget
  * @var string            $seed
  * @var string            $data_key
- *
+ * 
+ * @var toolbox           $toolbox
+ * 
  * @return string
  */
 
 use hng2_base\module;
 use hng2_base\template;
 use hng2_modules\posts\posts_repository;
+use hng2_modules\widgets_manager\toolbox;
 
 global $config, $language, $mem_cache;
 
-# TODO: Add data extractors!!!
-$tag     = "polemicas";
-$limit   = 10;
-$order   = "publishing_date asc";
-$version = 9;
+if( empty($config->globals["widgets_manager:toolbox"]) )
+    $config->globals["widgets_manager:toolbox"] = new toolbox();
+$toolbox = $config->globals["widgets_manager:toolbox"];
+$placed_widget = $toolbox->get_widget_from_data_key($data_key);
+if( is_null($placed_widget) ) return "";
+$data = $toolbox->load_widget_data($placed_widget);
+if( empty($data["tag"]) ) return "";
 
-$contents = $mem_cache->get("{$data_key}_v{$version}");
-if( ! empty($contents) && $contents != "none" ) return $contents;
-if( $contents == "none" ) return "";
+$tag       = str_replace("#", "", $data["tag"]);
+$limit     = $data["limit"];         if( empty($limit)   ) $limit = 10;
+$order     = $data["order"];         if( empty($order)   ) $order = "publishing_date asc";
+$version   = $data["cache_version"]; if( empty($version) ) $version = 1;
+$cache_ttl = $data["cache_ttl"] * 60;
+$cache_key = "modules:posts.posts_by_tag_widget-v{$version}";
+
+if( $cache_ttl > 0 )
+{
+    $contents = $mem_cache->get($cache_key);
+    if( ! empty($contents) && $contents != "none" ) return $contents;
+    if( $contents == "none" ) return "";
+}
 
 $repository = new posts_repository();
 $where      = array("id_post in (select id_post from post_tags where tag = '$tag')");
@@ -40,7 +55,7 @@ $posts      = $repository->lookup($where, $limit, 0, $order);
 
 if( empty($posts) )
 {
-    $mem_cache->set("{$data_key}_v{$version}", "none", 0, 60*5);
+    if( $cache_ttl > 0 ) $mem_cache->set($cache_key, "none", 0, $cache_ttl);
     
     return "";
 }
@@ -66,6 +81,6 @@ ob_start(); ?>
 
 <?
 $return = ob_get_clean();
-$mem_cache->set("{$data_key}_v{$version}", $return, 0, 60*5);
+if( $cache_ttl > 0 ) $mem_cache->set($cache_key, $return, 0, $cache_ttl);
 
 return $return;

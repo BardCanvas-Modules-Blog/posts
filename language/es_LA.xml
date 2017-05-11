@@ -498,7 +498,7 @@
         </specs>
         
         <!-- ============================================= -->
-        <specs is_separator="true">Enforced expiration</specs>
+        <specs is_separator="true">Expiración forzada</specs>
         <!-- ============================================= -->
         
         <specs key="enforced_expiration_by_category">
@@ -526,21 +526,6 @@
         <!-- ================================ -->
         <specs is_separator="true">Cacheo</specs>
         <!-- ================================ -->
-        
-        <specs key="archives_tree_widget_cache_ttl">
-            <title><![CDATA[
-                <span class="framed_content inlined state_highlight">Caché</span>
-                Tiempo de vida del cache para el widget histórico (expiración)
-            ]]></title>
-            <description><![CDATA[
-                Cantidad de horas que se conservará el árbol de histórico en este widget.<br>
-                Valor por defecto: <code>3</code> horas. Especificar <code>0</code> para deshabilitar este caché.<br>
-                Valor recomendado: depende de la cantidad de entradas que se publican y sus tiempos.
-                Para sitios actualizados constantemente, 3-6 horas deberían ser suficientes.
-                Para sitios con menos frecuencia de actualización, 24 horas o más.
-            ]]></description>
-            <type>number</type>
-        </specs>
         
         <specs key="main_index_cache_for_guests">
             <title><![CDATA[
@@ -625,24 +610,141 @@
     </user_profile_tabs>
     
     <widgets>
-        <left_sidebar_archives_tree>
-            <title>Históricos</title>
-        </left_sidebar_archives_tree>
         <archives_tree>
             <title>Árbol histórico</title>
             <info>Árbol expandible de archivos por año/mes</info>
+            <editable_specs>
+                <specs key="cache_ttl">
+                    <title>Tiempo de vida del caché</title>
+                    <description><![CDATA[
+                        Especificado <b>en horas</b>.<br>
+                        Valor predeterminado: <code>1</code> horas.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="cache_version">
+                    <title>Versión del caché</title>
+                    <description><![CDATA[
+                        Número de versión del caché. Si deseas refrescarlo, increméntalo por 1.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+            </editable_specs>
         </archives_tree>
         <other_posts_in_category>
             <title>Otras en categoría</title>
             <info>Muestra un listado de otras entradas en la misma categoría de la entrada en pantalla</info>
+            <editable_specs>
+                <specs key="limit">
+                    <title>Cantidad de entradas</title>
+                    <description><![CDATA[
+                        Cantidad de entradas a listar. Predeterminado: <code>5</code>
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="order">
+                    <title>Órden de muestreo</title>
+                    <description><![CDATA[
+                        Las entradas son ordenadas por fecha de publicación.
+                        Especifica el órden deseado.
+                    ]]></description>
+                    <type>list</type>
+                    <options>
+                        <option value="desc">Viejos primero</option>
+                        <option value="asc">Nuevos primero</option>
+                    </options>
+                </specs>
+                <specs key="cache_ttl">
+                    <title>Tiempo de vida del caché</title>
+                    <description><![CDATA[
+                        Especificado <b>en minutos</b>.<br>
+                        Valor predeterminado: <code>0</code> (caché desactivado).
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="cache_version">
+                    <title>Versión del caché</title>
+                    <description><![CDATA[
+                        Número de versión del caché. Si deseas refrescarlo, increméntalo por 1.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+            </editable_specs>
         </other_posts_in_category>
         <posts_by_tag>
             <title>Entradas por etiqueta</title>
             <info>Muestra un listado de entradas que tengan asignada cierta etiqueta</info>
+            <editable_specs>
+                <specs key="tag">
+                    <title>Etiqueta</title>
+                    <description><![CDATA[
+                        Hashtag que los posts deben tener para ser listados aquí.
+                    ]]></description>
+                    <type>text</type>
+                </specs>
+                <specs key="limit">
+                    <title>Cantidad de entradas</title>
+                    <description><![CDATA[
+                        Cantidad de entradas a listar. Predeterminado: <code>5</code>
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="order">
+                    <title>Órden de muestreo</title>
+                    <description><![CDATA[
+                        Las entradas son ordenadas por fecha de publicación.
+                        Especifica el órden deseado.
+                    ]]></description>
+                    <type>list</type>
+                    <options>
+                        <option value="publishing_date desc">Viejos primero</option>
+                        <option value="publishing_date asc">Nuevos primero</option>
+                    </options>
+                </specs>
+                <specs key="cache_ttl">
+                    <title>Tiempo de vida del caché</title>
+                    <description><![CDATA[
+                        Especificado <b>en minutos</b>.<br>
+                        Valor predeterminado: <code>0</code> (caché desactivado).
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="cache_version">
+                    <title>Versión del caché</title>
+                    <description><![CDATA[
+                        Número de versión del caché. Si deseas refrescarlo, increméntalo por 1.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+            </editable_specs>
         </posts_by_tag>
         <popular_posts_fortnight>
             <title>Entradas populares</title>
             <info>Lista las entradas más vistas en la quincena actual</info>
+            <editable_specs>
+                <specs key="limit">
+                    <title>Cantidad de entradas</title>
+                    <description><![CDATA[
+                        Cantidad de entradas a listar. Predeterminado: <code>5</code>
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="cache_ttl">
+                    <title>Tiempo de vida del caché</title>
+                    <description><![CDATA[
+                        Especificado <b>en horas</b>.<br>
+                        Valor predeterminado: <code>0</code> (caché desactivado).
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="cache_version">
+                    <title>Versión del caché</title>
+                    <description><![CDATA[
+                        Número de versión del caché. Si deseas refrescarlo, increméntalo por 1.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+            </editable_specs>
         </popular_posts_fortnight>
     </widgets>
     
