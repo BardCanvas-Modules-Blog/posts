@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.20.0] - 2017-05-13
+
+- Updated widgets to support new widgets manager version.
+  **WARNING:** After updating to this version, all existing widgets must be reviewed.
+
 ## [1.19.0] - 2017-04-23
 
 - Changed the way post passwords are set to avoid unwanted autofills.
