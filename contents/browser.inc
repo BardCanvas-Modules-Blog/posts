@@ -168,6 +168,8 @@ $categories            = $categories_repository->get_as_tree_for_select();
         <span class="fa fa-plus-circle"></span>
         <?= $current_module->language->index->buttons->add ?>
     </button>
+    
+    <? $current_module->load_extensions("browser", "main_actions"); ?>
 </h1>
 
 <div class="filtering clearfix">
