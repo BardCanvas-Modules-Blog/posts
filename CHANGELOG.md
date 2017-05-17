@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.20.1] - 2017-05-16
+
+- Added extension point to the browser.
+
 ## [1.20.0] - 2017-05-13
 
 - Updated widgets to support new widgets manager version.

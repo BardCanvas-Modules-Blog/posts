@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     
-    <version>1.20.0</version>
+    <version>1.20.1</version>
     <group>modules_blog</group>
     
     <working_flags>
@@ -52,6 +52,7 @@
         Quick post form / Below main category selector.
         JSON record exporter / before output.
         Post actions: before trashing, after publishing, after flagged for reviewing, after hiding, after setting as draft, after untrashing for review.
+        Browser: after collection built, per record function hooks, main actions
     ]]></extension_areas_info>
     
     <extends_to>
