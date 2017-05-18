@@ -11,13 +11,15 @@ function prepare_post_form_serialization()
     });
 }
 
-function prepare_post_form_submission()
+function prepare_post_form_submission(formData, $form, options)
 {
-    $('#post_form').block(blockUI_medium_params);
+    $('#post_form').block(blockUI_big_progress_params);
 }
 
 function process_post_form_response(response)
 {
+    blockUI_progress_complete();
+    
     var $form = $('#post_form');
     
     if( response.indexOf('OK:') < 0 )
@@ -43,6 +45,8 @@ $(document).ready(function()
         target:          '#post_form_target',
         beforeSerialize: prepare_post_form_serialization,
         beforeSubmit:    prepare_post_form_submission,
+        beforeSend:      blockUI_progress_init,
+        uploadProgress:  blockUI_progress_update,
         success:         process_post_form_response
     });
     

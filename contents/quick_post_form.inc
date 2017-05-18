@@ -33,7 +33,7 @@ if( $current_module->name == "posts" ) $this_module = $current_module;
 ?>
 
 <script type="text/javascript" src="<?= $config->full_root_path ?>/lib/jquery.exptextarea.js"></script>
-<script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/quick_post_functions~v<?=$config->scripts_version?>.js"></script>
+<script type="text/javascript" src="<?= $this_module->get_url() ?>/media/quick_post_functions~v1.2.0-2.js"></script>
 
 <div id="quick_post_form_container" class="<?= $class ?>">
     
