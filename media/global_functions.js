@@ -117,3 +117,19 @@ function change_post_status(id_post, new_status, trigger, callback)
         if( callback ) callback();
     });
 }
+
+// Quick post trigger for mobiles
+$(document).ready(function()
+{
+    if( ! $_IS_MOBILE ) return;
+    if( $_CURRENT_USER_ID_ACCOUNT == '' ) return;
+    if( $_PHP_SELF == '/posts/quick_single.php' ) return;
+    
+    var $trigger = $(sprintf(
+        '<a id="quick_post_floating_trigger" class="fa fa-bolt fa-fw"  href="%s" style="display: none; text-decoration: none;"></a>',
+        $_FULL_ROOT_PATH + '/posts/quick_single.php'
+    ));
+    
+    $('body').append( $trigger );
+    $trigger.fadeIn('fast');
+});

@@ -1,0 +1,37 @@
+/**
+ * Post styles - Global
+ *
+ * @package    HNG2
+ * @subpackage posts
+ * @author     Alejandro Caballero - lava.caballero@gmail.com
+ */
+
+#left_sidebar .group.archive_tree .item.month.collapsed,
+#left_sidebar .group.archive_tree .item.year.expanded  .toggle.right ,
+#left_sidebar .group.archive_tree .item.year.collapsed .toggle.down  {
+    display: none;
+}
+
+.category_messages .message {
+    font-family: arial, helvetica, sans-serif;
+    font-size: 10pt;
+    line-height: 12pt;
+    margin: 5px 0 0 0;
+}
+
+#quick_post_floating_trigger {
+    color: darkgreen;
+    background-color: greenyellow;
+    -webkit-box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 1);
+    -moz-box-shadow:    2px 2px 10px 1px rgba(0, 0, 0, 1);
+    box-shadow:         2px 2px 10px 1px rgba(0, 0, 0, 1);
+    width: 42px; height: 42px; font-size: 32px; padding: 5px;
+    text-align: center;
+    border-radius: 100%;
+    display: inline-block;
+    cursor: pointer;
+    position: fixed; bottom: 10px; left: 10px;
+    z-index: 100;
+}
+
+#quick_post_floating_trigger:hover { color: black; }
