@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.21.0] - 2017-05-20
+
+- Added upload progress indicator to quick post form.
+- Added missing parameter for Triklet redirector.
+
 ## [1.20.1] - 2017-05-16
 
 - Added extension point to the browser.
