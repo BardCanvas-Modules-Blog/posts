@@ -362,7 +362,7 @@ class post_record extends abstract_record
         global $account, $settings;
         
         if( $account->level >= config::MODERATOR_USER_LEVEL ) return true;
-        if( $this->comments_count > 0 ) return false;
+        if( $account->level < config::AUTHOR_USER_LEVEL && $this->comments_count > 0 ) return false;
         if( $account->id_account != $this->id_author ) return false;
         if( $this->status == "trashed" ) return false;
         
