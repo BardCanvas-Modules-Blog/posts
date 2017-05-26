@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.21.1] - 2017-05-25
+
+- Allowed users with level 100 and up to delete their own posts with comments.
+
 ## [1.21.0] - 2017-05-20
 
 - Added upload progress indicator to quick post form.
