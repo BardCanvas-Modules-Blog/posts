@@ -30,6 +30,14 @@ if( isset($posts_data->slider_posts) )
         $class = "spaced";
 
 if( $current_module->name == "posts" ) $this_module = $current_module;
+
+$categories_repository = new categories_repository();
+if( $template->get("current_category_id") )
+{
+    $category = $categories_repository->get($template->get("current_category_id"));
+    if( $category->visibility == "level_based" && $account->level < $category->min_level )
+        return;
+}
 ?>
 
 <script type="text/javascript" src="<?= $config->full_root_path ?>/lib/jquery.exptextarea.js"></script>
@@ -60,8 +68,7 @@ if( $current_module->name == "posts" ) $this_module = $current_module;
                 <input type="hidden" name="main_category" value="<?= $template->get("current_category_id") ?>">
                 
             <? else:
-                $categories_repository = new categories_repository();
-                $default_category      = $categories_repository->get("0000000000000");
+                $default_category = $categories_repository->get("0000000000000");
                 
                 $mem_key     = "quick_post_categories/level:{$account->level}";
                 $res         = $mem_cache->get($mem_key);
