@@ -22,6 +22,7 @@ use hng2_base\config;
 use hng2_base\module;
 use hng2_media\media_repository;
 use hng2_base\settings;
+use hng2_modules\categories\categories_repository;
 use hng2_modules\posts\post_record;
 use hng2_modules\posts\posts_repository;
 
@@ -47,6 +48,11 @@ if( empty($_FILES["attachments"]) && empty($_POST["content"]) )
 
 $repository       = new posts_repository();
 $media_repository = new media_repository();
+
+$categories_repository = new categories_repository();
+$category = $categories_repository->get($_POST["main_category"]);
+if( $category->visibility == "level_based" && $account->level < $category->min_level )
+    die($current_module->language->messages->invalid_category_selected);
 
 $old_post = empty($_POST["id_post"]) ? null : clone $repository->get($_POST["id_post"]);
 $post     = empty($_POST["id_post"]) ? new post_record() : $repository->get($_POST["id_post"]);

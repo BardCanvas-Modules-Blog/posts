@@ -273,6 +273,7 @@
              
             ¿Deseas continuar?
         ]]></untrash_for_review_confirmation>
+        <invalid_category_selected>Lo sentimos, pero no puedes usar la categoría seleccionada.</invalid_category_selected>
     </messages>
     
     <settings_data>

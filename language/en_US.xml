@@ -270,6 +270,7 @@
              
             Do you want to continue?
         ]]></untrash_for_review_confirmation>
+        <invalid_category_selected>Sorry, but you can't use the selected category.</invalid_category_selected>
     </messages>
     
     <settings_data>
