@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.21.2] - 2017-05-29
+
+- Added missing restrictions to post on a category limited by user level.
+
 ## [1.21.1] - 2017-05-25
 
 - Allowed users with level 100 and up to delete their own posts with comments.
