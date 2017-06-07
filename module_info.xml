@@ -46,6 +46,7 @@
         Index Builders / Author index.
         Index Builders / Category index.
         Index Builders / Tag index.
+        Posts Repository Class / Home Prebuilding, Preload Authors, Empty Trash, Get Posts data (multiple).
         Post Record Class / Set from object, Get Processed Excerpt, Get Processed Content.
         Posts saving / After record forging.
         Editor form: Below main category selector, below editor, option columns (left, middle, right), outside (after closing the form).
