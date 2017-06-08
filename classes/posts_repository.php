@@ -917,9 +917,14 @@ class posts_repository extends abstract_repository
      */
     public function get_for_category($id_category, $pinned_first = false)
     {
+        global $config, $modules;
+        
         $find_params = $this->build_find_params_for_category($id_category);
-    
+        
         if( $pinned_first ) $find_params->order = "pin_to_main_category_index desc, publishing_date desc";
+        
+        $config->globals["posts_repository/find_params_for_category"] =& $find_params;
+        $modules["posts"]->load_extensions("posts_repository", "get_for_category");
         
         return $this->get_posts_data($find_params, "index_builders", "category_index");
     }
