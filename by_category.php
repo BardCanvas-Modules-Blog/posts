@@ -30,6 +30,7 @@ $template->set("showing_archive",        true);
 $template->set("current_category_slug",  $category->slug);
 $template->set("current_category_title", $category->title);
 $template->set("current_category_id",    $category->id_category);
+$template->append("additional_body_attributes", " data-category-slug='$category->slug' data-category-id='$category->id_category'");
 
 $template->page_contents_include = "by_category.inc";
 $template->set_page_title(replace_escaped_vars(
