@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.21.3] - 2017-06-08
+
+- Added extension point on posts_repository class.
+
 ## [1.21.2] - 2017-05-29
 
 - Added missing restrictions to post on a category limited by user level.
