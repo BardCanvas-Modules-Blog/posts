@@ -54,6 +54,10 @@
         JSON record exporter / before output.
         Post actions: before trashing, after publishing, after flagged for reviewing, after hiding, after setting as draft, after untrashing for review.
         Browser: after collection built, per record function hooks, main actions
+        Posts by category index: pre fetching, pre rendering, before heading, after heading
+        Posts by tag index: pre fetching, pre rendering, before heading, after heading
+        Posts by date index: pre fetching, pre rendering, before heading, after heading
+        Posts by author index: pre fetching, pre rendering, before heading, after heading
     ]]></extension_areas_info>
     
     <extends_to>

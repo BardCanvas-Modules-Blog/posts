@@ -16,16 +16,24 @@ use hng2_base\template;
 use hng2_modules\categories\category_record;
 use hng2_modules\posts\posts_repository;
 
+$current_module->load_extensions("posts_by_category_index", "pre_fetching");
+
 $posts_repository      = new posts_repository();
 $posts_data            = $posts_repository->get_for_category($category->id_category, true);
 $pagination_url_prefix = "$config->full_root_url/category/{$category->slug}/";
 $template->set("pagination_url_prefix", $pagination_url_prefix);
+
+$current_module->load_extensions("posts_by_category_index", "pre_rendering");
 ?>
+
+<? $current_module->load_extensions("posts_by_category_index", "before_heading"); ?>
 
 <h1 class="clearfix">
     <span class="title"><?= replace_escaped_vars($current_module->language->pages->by_category->title, '{$category}', $category->title) ?></span>
     <span class="title_pagination pull-right"><?= $posts_data->pagination["this_page_number"]; ?>/<?= $posts_data->pagination["total_pages"]; ?></span>
 </h1>
+
+<? $current_module->load_extensions("posts_by_category_index", "after_heading"); ?>
 
 <? if($posts_data->count == 0): ?>
     <div class='framed_content state_ko'>
