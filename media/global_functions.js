@@ -61,6 +61,11 @@ function toggle_post_category_message(source_select)
         if( message_for == id ) $(this).show();
         else                    $(this).hide();
     });
+    
+    if( typeof toggle_post_category_message_callbacks != 'undefined' )
+        for( var i in toggle_post_category_message_callbacks )
+            if( typeof toggle_post_category_message_callbacks[i] == 'function' )
+                toggle_post_category_message_callbacks[i](id);
 }
 
 function add_attachment_to_quick_post(type, icon)
