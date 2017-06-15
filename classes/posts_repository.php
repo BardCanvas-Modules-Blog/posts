@@ -981,6 +981,10 @@ class posts_repository extends abstract_repository
         $return = parent::find($where, $limit, $offset, $order);
         $this->last_query = $database->get_last_query();
         
+        $posts_data = new posts_data();
+        $posts_data->posts =& $return;
+        $this->preload_authors($posts_data);
+        
         return $return;
     }
     
