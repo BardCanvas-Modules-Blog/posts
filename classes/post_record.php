@@ -258,6 +258,7 @@ class post_record extends abstract_record
         $contents = $this->author_display_name;
         $contents = convert_emojis($contents);
         
+        if( isset($this->_author_account) ) $config->globals["processing_account"] = $this->_author_account;
         $config->globals["processing_id_account"]  = $this->id_author;
         $config->globals["processing_contents"] = $contents;
         $modules["posts"]->load_extensions("post_record_class", "get_processed_author_display_name");
