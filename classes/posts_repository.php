@@ -2,7 +2,6 @@
 namespace hng2_modules\posts;
 
 use hng2_base\module;
-use hng2_cache\disk_cache;
 use hng2_repository\abstract_repository;
 use hng2_base\accounts_repository;
 use hng2_modules\categories\category_record;
@@ -303,8 +302,6 @@ class posts_repository extends abstract_repository
         ");
         $this->last_query = $database->get_last_query();
         
-        $this->update_cache_versions();
-        
         return $res;
     }
     
@@ -338,8 +335,6 @@ class posts_repository extends abstract_repository
             order_attached = '$order'
         ");
         $this->last_query = $database->get_last_query();
-        
-        $this->update_cache_versions();
         
         return $res;
     }
@@ -385,7 +380,6 @@ class posts_repository extends abstract_repository
             $index++;
         }
         
-        $update_caches = false;
         if( ! empty($inserts) )
         {
             $database->exec(
@@ -393,7 +387,6 @@ class posts_repository extends abstract_repository
                 . implode(", ", $inserts)
             );
             $this->last_query = $database->get_last_query();
-            $update_caches = true;
         }
         
         if( ! empty($actual_tags) )
@@ -404,10 +397,7 @@ class posts_repository extends abstract_repository
                 "delete from post_tags where id_post = '$id_post' and tag in (" . implode(", ", $deletes) . ")"
             );
             $this->last_query = $database->get_last_query();
-            $update_caches = true;
         }
-        
-        if( $update_caches ) $this->update_cache_versions();
     }
     
     /**
@@ -457,7 +447,6 @@ class posts_repository extends abstract_repository
             $index++;
         }
         
-        $update_caches = false;
         if( ! empty($inserts) )
         {
             $database->exec(
@@ -465,7 +454,6 @@ class posts_repository extends abstract_repository
                 . implode(", ", $inserts)
             );
             $this->last_query = $database->get_last_query();
-            $update_caches = true;
         }
         
         $return  = array();
@@ -481,10 +469,8 @@ class posts_repository extends abstract_repository
                 "delete from post_media where id_post = '$id_post' and id_media in (" . implode(", ", $deletes) . ")"
             );
             $this->last_query = $database->get_last_query();
-            $update_caches = true;
         }
         
-        if( $update_caches ) $this->update_cache_versions();
         return $return;
     }
     
@@ -506,7 +492,6 @@ class posts_repository extends abstract_repository
         ");
         $this->last_query = $database->get_last_query();
     
-        $this->update_cache_versions();
         return $res;
     }
     
@@ -559,7 +544,6 @@ class posts_repository extends abstract_repository
         ");
         $this->last_query = $database->get_last_query();
         
-        $this->update_cache_versions();
         return $res;
     }
     
@@ -578,7 +562,6 @@ class posts_repository extends abstract_repository
         ");
         $this->last_query = $database->get_last_query();
         
-        $this->update_cache_versions();
         return $res;
     }
     
@@ -850,15 +833,7 @@ class posts_repository extends abstract_repository
      */
     public function get_for_home($pinned_first = false)
     {
-        global $config, $modules, $settings, $account;
-        
-        //$offset        = empty($_GET["offset"]) ? 0 : $_GET["offset"];
-        //$cache_area    = "home_{$offset}";
-        //$cache_version = $this->get_cache_version($cache_area);
-        //$cache_file    = "{$this->cache_base}/{$cache_area}_level{$account->level}_v{$cache_version}.dat";
-        //$cache         = new disk_cache($cache_file);
-        //
-        //if( $cache->loaded ) return $cache->get("posts_data");
+        global $config, $modules, $settings;
         
         $find_params = $this->build_find_params_for_home();
         if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
@@ -887,7 +862,6 @@ class posts_repository extends abstract_repository
         }
         
         $this->preload_authors($posts_data);
-        //$cache->set("posts_data", $posts_data);
         return $posts_data;
     }
     
@@ -1198,7 +1172,6 @@ class posts_repository extends abstract_repository
         $res = $database->exec("update {$this->table_name} set status = '$new_status' where  id_post = '$id_post'");
         $this->last_query = $database->get_last_query();
         
-        $this->update_cache_versions();
         return $res;
     }
     
@@ -1227,7 +1200,6 @@ class posts_repository extends abstract_repository
         ");
         $this->last_query = $database->get_last_query();
         
-        $this->update_cache_versions();
         return $res;
     }
     
@@ -1242,7 +1214,6 @@ class posts_repository extends abstract_repository
         ");
         $this->last_query = $database->get_last_query();
         
-        $this->update_cache_versions();
         return $res;
     }
     
@@ -1284,26 +1255,6 @@ class posts_repository extends abstract_repository
             where
                 id_post = '$id_post'
         ");
-    }
-    
-    private function update_cache_versions()
-    {
-        //global $account;
-        //
-        //$area    = "home";
-        //$version = $this->get_cache_version($area) + .1;
-        //$file    = "{$this->cache_base}/{$area}_level_{$account->level}.version";
-        //file_put_contents($file, "$version\n");
-    }
-    
-    private function get_cache_version($area_of_effect)
-    {
-        //global $account;
-        //
-        //$file = "{$this->cache_base}/{$area_of_effect}_level_{$account->level}.version";
-        //if( ! file_exists($file) ) return 1;
-        //
-        //return trim(file_get_contents($file));
     }
     
     public function hide_all_published_by_auhtor($id_author)
