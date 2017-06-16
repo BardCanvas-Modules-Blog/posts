@@ -1,6 +1,13 @@
 
 # Posts Module Change Log
 
+## [1.22.0] - 2017-06-16
+
+- Added extension points on post indexes by category, tag, date and author.
+- Added JS extension point for the category selector on the post composition forms.
+- Improved object caching.
+- Other minor improvements and cleanup.
+
 ## [1.21.3] - 2017-06-08
 
 - Added extension point on posts_repository class.
