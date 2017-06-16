@@ -166,6 +166,10 @@ class posts_repository extends abstract_repository
         $return = array();
         foreach($res as $post) $return[$post->id_post] = $post;
         
+        $posts_data = new posts_data();
+        $posts_data->posts =& $return;
+        $this->preload_authors($posts_data);
+        
         return $return;
     }
     
@@ -871,17 +875,18 @@ class posts_repository extends abstract_repository
             $find_params = $this->build_find_params_for_featured_posts();
             if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
             $posts_data->featured_posts = $this->find($find_params->where, 0, 0, $find_params->order);
+            
+            $posts_data->slider_posts = array();
+            if( $settings->get("modules:posts.slider_categories") != "" )
+            {
+                $find_params = $this->build_find_params_for_posts_slider();
+                if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date asc";
+                else                $find_params->order = "publishing_date asc";
+                $posts_data->slider_posts = $this->find($find_params->where, 0, 0, $find_params->order);
+            }
         }
         
-        $posts_data->slider_posts = array();
-        if( $settings->get("modules:posts.slider_categories") != "" )
-        {
-            $find_params = $this->build_find_params_for_posts_slider();
-            if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date asc";
-            else                $find_params->order = "publishing_date asc";
-            $posts_data->slider_posts = $this->find($find_params->where, 0, 0, $find_params->order);
-        }
-        
+        $this->preload_authors($posts_data);
         //$cache->set("posts_data", $posts_data);
         return $posts_data;
     }
@@ -1024,6 +1029,7 @@ class posts_repository extends abstract_repository
         $author_ids = array();
         foreach($posts_data->posts          as $post) $author_ids[] = $post->id_author;
         foreach($posts_data->featured_posts as $post) $author_ids[] = $post->id_author;
+        foreach($posts_data->slider_posts   as $post) $author_ids[] = $post->id_author;
         if( count($author_ids) > 0 )
         {
             $author_ids = array_unique($author_ids);
@@ -1034,6 +1040,9 @@ class posts_repository extends abstract_repository
                 $post->set_author($authors[$post->id_author]);
             
             foreach($posts_data->featured_posts as $index => &$post)
+                $post->set_author($authors[$post->id_author]);
+            
+            foreach($posts_data->slider_posts as $index => &$post)
                 $post->set_author($authors[$post->id_author]);
         }
         
