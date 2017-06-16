@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.22.1] - 2017-06-16
+
+- Added helper to remove posts by tag widget entries without needing to edit the posts.
+
 ## [1.22.0] - 2017-06-16
 
 - Added extension points on post indexes by category, tag, date and author.
