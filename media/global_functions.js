@@ -23,7 +23,7 @@ $(document).ready(function()
     });
 });
 
-function remove_tag_from_post(trigger, id_post, tag)
+function remove_tag_from_post(trigger, id_post, tag, callback)
 {
     var $trigger = $(trigger);
     
@@ -45,6 +45,7 @@ function remove_tag_from_post(trigger, id_post, tag)
         }
         
         $trigger.remove();
+        if( typeof callback == 'function' ) callback();
     });
 }
 

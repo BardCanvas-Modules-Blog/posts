@@ -905,4 +905,9 @@
         </charts>
     </user_profile_sections>
     
+    <posts_by_tag_helper>
+        <remove_link>Remove</remove_link>
+        <message>Hashtag removed. The element will disappear when the widget cache expires.</message>
+    </posts_by_tag_helper>
+    
 </language>

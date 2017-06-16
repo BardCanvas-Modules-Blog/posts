@@ -919,4 +919,9 @@
         </charts>
     </user_profile_sections>
     
+    <posts_by_tag_helper>
+        <remove_link>Remover</remove_link>
+        <message>Etiqueta removida. El elemento desaparecerá cuando el caché del widget expire.</message>
+    </posts_by_tag_helper>
+    
 </language>

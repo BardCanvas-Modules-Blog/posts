@@ -67,7 +67,7 @@ ob_start(); ?>
 <div class="posts_by_tag" data-tag="<?= $tag ?>">
     <ul class="simple_entries_listing">
         <? foreach($posts as $post): ?>
-            <li>
+            <li data-post-id="<?= $post->id_post ?>">
                 <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title(false) ?></a><br>
                 <span class="date"><?= time_elapsed_string($post->publishing_date) ?></span>
                 <?= $post->main_category_title ?><br>
