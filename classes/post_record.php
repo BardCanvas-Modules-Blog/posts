@@ -369,7 +369,7 @@ class post_record extends abstract_record
         
         if( $settings->get("modules:posts.lock_posts_with_enforced_expiration") == "true"
             && $this->expiration_date != "0000-00-00 00:00:00"
-            && $this->expiration_date < date("Y-m-d H:i:s") ) return false;
+            && $this->expiration_date > date("Y-m-d H:i:s") ) return false;
         
         return true;
     }
