@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.22.2] - 2017-06-22
+
+- Fixed wrong date comparison in posts check against deletion.
+
 ## [1.22.1] - 2017-06-16
 
 - Added helper to remove posts by tag widget entries without needing to edit the posts.
