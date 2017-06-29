@@ -21,7 +21,7 @@ include "../includes/bootstrap.inc";
 include "../lib/phplot-6.1.0/rgb.inc.php";
 include "../lib/phplot-6.1.0/phplot.php";
 
-if( ! $account->_exists ) throw_fake_401();
+if( $account->state != "enabled" ) throw_fake_401();
 if( empty($_GET["id_author"])   ) die("Missing author");
 
 $accounts_repository = new accounts_repository();

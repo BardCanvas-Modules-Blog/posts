@@ -19,7 +19,7 @@ global $config, $modules, $settings, $account, $language;
 if( empty($_GET["action"]) ) return;
 if( empty($_GET["type"]) ) return;
 if( $_GET["type"] != "post" ) return;
-if( ! $account->_exists ) return;
+if( $account->state != "enabled" ) return;
 if( ! isset($modules["triklet"]) ) return;
 if( $settings->get("modules:posts.use_triklet_for_reporting") != "true" ) return;
 

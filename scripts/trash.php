@@ -17,7 +17,7 @@ include "../../config.php";
 include "../../includes/bootstrap.inc";
 
 header("Content-Type: text/plain; charset=utf-8");
-if( ! $account->_exists ) die($language->errors->page_requires_login);
+if( $account->state != "enabled" ) die($language->errors->access_denied);
 
 if( empty($_GET["id_post"]) ) die($current_module->language->messages->missing->id);
 

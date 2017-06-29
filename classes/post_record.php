@@ -319,7 +319,7 @@ class post_record extends abstract_record
     {
         global $settings, $account;
         
-        if( ! $account->_exists ) return false;
+        if( $account->state != "enabled" ) return false;
         if( $account->level >= config::MODERATOR_USER_LEVEL ) return true;
         if( $this->id_author != $account->id_account ) return false;
         if( $this->publishing_date == "0000-00-00 00:00:00" ) return true;

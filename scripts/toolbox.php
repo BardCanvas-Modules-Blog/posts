@@ -26,7 +26,7 @@ header("Content-Type: text/plain; charset=utf-8");
 include "../../config.php";
 include "../../includes/bootstrap.inc";
 
-if( ! $account->_exists ) die($language->errors->page_requires_login);
+if( $account->state != "enabled" ) die($language->errors->access_denied);
 if( $account->level < (int) $settings->get("modules:posts.required_level_to_post") )
     die($language->errors->access_denied);
 
