@@ -110,6 +110,8 @@
             <untrash_for_review>Recuperar para revisión</untrash_for_review>
             <author_posts>Entradas del autor</author_posts>
             <timeline_chart>Entradas recientes</timeline_chart>
+            <add_child_post>Añadir entrada hija</add_child_post>
+            <make_orphan>Emancipar</make_orphan>
         </actions>
         <extras>
             <expires>Expira en</expires>
@@ -183,6 +185,9 @@
                 ]]></info>
                 <none>Ninguna</none>
             </password>
+            <parent_post>
+                <caption>Hijo de:</caption>
+            </parent_post>
             <editor_options>Opciones de editor/moderador:</editor_options>
             <allow_comments>
                 <caption>Permitir recepción de comentarios?</caption>
@@ -923,5 +928,7 @@
         <remove_link>Remover</remove_link>
         <message>Etiqueta removida. El elemento desaparecerá cuando el caché del widget expire.</message>
     </posts_by_tag_helper>
+    
+    <post_tree_index_caption>En esta trama:</post_tree_index_caption>
     
 </language>

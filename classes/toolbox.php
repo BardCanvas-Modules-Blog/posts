@@ -168,4 +168,26 @@ class toolbox
             $subject, $body, "@posts:moderator_emails_for_posts", array($post->id_author)
         );
     }
+    
+    /**
+     * @param post_record[] $tree
+     * @param string        $selected_post_id
+     *
+     * @return string
+     */
+    public function build_post_family_tree_links($tree, $selected_post_id = "")
+    {
+        $return = "<ul>\n";
+        foreach($tree as $id_post => $post)
+        {
+            $class   = $post->id_post == $selected_post_id ? "selected" : "";
+            $return .= "<li>\n";
+            $return .= "<a class='{$class}' href='{$post->get_permalink()}'>{$post->title}</a>\n";
+            if( ! empty($post->children) ) $return .= $this->build_post_family_tree_links($post->children, $selected_post_id);
+            $return .= "</li>\n";
+        }
+        $return .= "</ul>\n";
+        
+        return $return;
+    }
 }

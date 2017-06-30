@@ -50,6 +50,9 @@ class post_record extends abstract_record
     
     public $views;
     public $last_viewed;
+    public $parent_post_title;
+    public $parent_post_slug;
+    public $children_count;
     
     public $author_user_name;
     public $author_display_name;
@@ -157,7 +160,10 @@ class post_record extends abstract_record
         
         unset(
             $return["views"],
-            $return["last_view"],
+            $return["last_viewed"],
+            $return["parent_post_title"],
+            $return["parent_post_slug"],
+            $return["children_count"],
             
             $return["author_user_name"],
             $return["author_display_name"],
@@ -274,6 +280,10 @@ class post_record extends abstract_record
         
         $contents = $this->content;
         
+        if( stristr($contents, "[post_family_tree") === false )
+            if( $this->children_count || $this->parent_post )
+                $contents = "[post_family_tree]" . $contents;
+        
         $contents = preg_replace(
             '@<p>(https?://([-\w\.]+[-\w])+(:\d+)?(/([\%\w/_\.#-]*(\?\S+)?[^\.\s])?)?)</p>@',
             '<p><a href="$1" target="_blank">$1</a></p>',
@@ -308,6 +318,29 @@ class post_record extends abstract_record
         {
             case "slug": $handler = $this->slug;    break;
             default:     $handler = $this->id_post; break;
+        }
+        
+        if( $fully_qualified ) return "{$config->full_root_url}/{$handler}";
+        
+        return "{$config->full_root_path}/{$handler}";
+    }
+    
+    /**
+     * Returns the permalink to the post
+     *
+     * @param bool $fully_qualified
+     *
+     * @return string
+     */
+    public function get_parent_permalink($fully_qualified = false)
+    {
+        global $config, $settings;
+        
+        $style = $settings->get("modules:posts.permalink_style");
+        switch( $style )
+        {
+            case "slug": $handler = $this->parent_post_slug; break;
+            default:     $handler = $this->parent_post;      break;
         }
         
         if( $fully_qualified ) return "{$config->full_root_url}/{$handler}";

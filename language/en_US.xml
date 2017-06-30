@@ -109,6 +109,8 @@
             <untrash_for_review>Untrash for review</untrash_for_review>
             <author_posts>Author posts</author_posts>
             <timeline_chart>Recent posts chart</timeline_chart>
+            <add_child_post>Add child post</add_child_post>
+            <make_orphan>Emancipate</make_orphan>
         </actions>
         <extras>
             <expires>Expires in</expires>
@@ -182,6 +184,9 @@
                 ]]></info>
                 <none>None set</none>
             </password>
+            <parent_post>
+                <caption>Parent post:</caption>
+            </parent_post>
             <editor_options>Editor/Moderator options:</editor_options>
             <allow_comments>
                 <caption>Allow people to leave comments?</caption>
@@ -909,5 +914,7 @@
         <remove_link>Remove</remove_link>
         <message>Hashtag removed. The element will disappear when the widget cache expires.</message>
     </posts_by_tag_helper>
+    
+    <post_tree_index_caption>On this thread:</post_tree_index_caption>
     
 </language>

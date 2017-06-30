@@ -139,3 +139,19 @@ $(document).ready(function()
     $('body').append( $trigger );
     $trigger.fadeIn('fast');
 });
+
+// Post family tree adjustments
+function adjust_post_family_tree_layout()
+{
+    var $tree = $('.post_family_tree');
+    if( $tree.length == 0 ) return;
+    
+    var $parent = $('#content');
+    
+    var width = $parent.width();
+    if( width > 600 ) $tree.toggleClass("collapsible", false);
+    else              $tree.toggleClass("collapsible", true);
+}
+
+$(document).ready(function() { adjust_post_family_tree_layout(); });
+$(window).resize(function()  { adjust_post_family_tree_layout(); });

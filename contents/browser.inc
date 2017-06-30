@@ -391,7 +391,7 @@ endif;
                     
                     <div class="actions">
                         <? if( $account->level >= config::MODERATOR_USER_LEVEL || in_array($row->status, array("draft", "published", "reviewing")) ): ?>
-                            <a class="action" href="<?= "{$config->full_root_url}/{$row->id_post}" ?>" target="_blank">
+                            <a class="action" href="<?= $row->get_permalink() ?>" target="_blank">
                                 <span class="fa fa-external-link"></span>
                                 <?= $language->view ?>
                             </a>
@@ -410,6 +410,11 @@ endif;
                                 <?= $current_module->language->record_nav->actions->copy ?>
                             </span>
                         <? endif; ?>
+                        
+                        <span class="action pseudo_link" onclick="add_child_post_of('<?= $row->id_post ?>')">
+                            <span class="fa fa-code-fork"></span>
+                            <?= $current_module->language->record_nav->actions->add_child_post ?>
+                        </span>
                         
                         <? if( $row->can_be_deleted() && $row->status != "trashed" ): ?>
                             <span class="action pseudo_link" onclick="change_post_status( '<?= $row->id_post ?>', 'trashed', this, function() { $('tr[data-record-id=<?= $row->id_post ?>]').fadeOut('fast'); } )">
@@ -488,6 +493,16 @@ endif;
                     render_post_metas($row);
                     
                     render_post_tags($row);
+                    
+                    if( ! empty($row->parent_post) ) echo "
+                        <div class='parent_post_info' style='margin: 0 0 2px 0;'>
+                            <hr>
+                            {$current_module->language->form->fields->parent_post->caption}
+                            <a href='{$row->get_parent_permalink()}' target='_blank'>{$row->parent_post_title}</a>
+                            <span class='pseudo_link' onclick=\"emancipate_post('{$row->id_post}', $(this).closest('.parent_post_info'), function() { $(this).closest('.parent_post_info').remove(); })\"><i class='fa fa-times'></i>
+                            {$current_module->language->record_nav->actions->make_orphan}</span>
+                        </div>
+                    ";
                     
                     if($account->level >= config::MODERATOR_USER_LEVEL) render_post_attached_media($row);
                     

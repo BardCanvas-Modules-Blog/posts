@@ -60,6 +60,13 @@
         Posts by author index: pre fetching, pre rendering, before heading, after heading
     ]]></extension_areas_info>
     
+    <shortcode_handlers>
+        <handler name="post_family_tree">
+            <syntax>[post_family_tree reach="all|children" title="string" class="css classes" style="css styles"]</syntax>
+            <file>shortcode_handlers/post_family_tree.inc</file>
+        </handler>
+    </shortcode_handlers>
+    
     <extends_to>
         <search>
             <search_by_tag>

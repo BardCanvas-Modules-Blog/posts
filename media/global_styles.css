@@ -35,3 +35,34 @@
 }
 
 #quick_post_floating_trigger:hover { color: black; }
+
+/* Post family tree base styles */
+
+.post_family_tree { font-size: 10pt; line-height: 16pt;
+                    font-family: Arial, Helvetica, sans-serif;
+                    padding: 10px; border: 1px solid silver; border-radius: 5px;
+                    -webkit-box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.25);
+                    -moz-box-shadow:    1px 1px 5px 0 rgba(0, 0, 0, 0.25);
+                    box-shadow:         1px 1px 5px 0 rgba(0, 0, 0, 0.25);
+                    /* Full width by default */
+                    display: inline-block; width: 30%; float: right; margin: 0 0 10px 20px;
+                    }
+
+.post_family_tree .title          { font-size: 12pt; font-weight: bold; padding: 5px; }
+.post_family_tree .expand_trigger { display: none; cursor: pointer; }
+.post_family_tree > ul            { margin: 0; }
+.post_family_tree li              { margin-left: -22px; }
+.post_family_tree a               { padding: 2px 4px; border-radius: 2px; }
+.post_family_tree a.selected      { color: white; background-color: #23282D; text-decoration: none; }
+.post_family_tree a:hover         { color: white; background-color: #8ca0aa; text-decoration: none; }
+
+.post_family_tree.collapsible { display: block; width: 100%; float: none; margin: 20px 0; border-radius: 0;
+                                -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
+
+.post_family_tree.collapsible .title .expand_trigger           { display: inline-block; }
+.post_family_tree.collapsible .title .expand_trigger .collapse { display: none; }
+.post_family_tree.expanded    .title .expand_trigger .expand   { display: none; }
+.post_family_tree.expanded    .title .expand_trigger .collapse { display: inline-block; }
+
+.post_family_tree.collapsible          > ul          { display: none; }
+.post_family_tree.collapsible.expanded > ul          { display: block; }

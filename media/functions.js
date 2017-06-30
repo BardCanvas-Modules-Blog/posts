@@ -108,6 +108,46 @@ function copy_post(id_post)
     });
 }
 
+function add_child_post_of(id_parent_post)
+{
+    var $workarea = $('#form_workarea');
+    $workarea.find('.for_edition').hide();
+    $workarea.find('.for_addition').show();
+    
+    var url    = $_FULL_ROOT_PATH + '/posts/scripts/get_as_json.php';
+    var params = {
+        'id_post': id_parent_post,
+        'wasuuup': wasuuup()
+    };
+    
+    $.blockUI(blockUI_default_params);
+    $.getJSON(url, params, function(data)
+    {
+        if( data.message != 'OK' )
+        {
+            $.unblockUI();
+            alert(data.message);
+            
+            return;
+        }
+        
+        var record = data.data;
+        reset_post_form();
+        var post_permalink = post_permalink_style == 'slug' ? record.slug : id_parent_post;
+        var $form  = $('#post_form');
+        $form.find('.parent_post_title').html(sprintf(
+            '<a href="%s/%s" target="_blank">%s</a>',
+            $_FULL_ROOT_PATH, post_permalink, record.title
+        ));
+        $form.find('.parent_post_area').show();
+        $form.find('input[name="parent_post"]').val(id_parent_post);
+        
+        $.unblockUI();
+        show_post_form();
+        update_category_selector(record.main_category);
+    });
+}
+
 function reset_post_form()
 {
     var $form = $('#post_form');
@@ -133,6 +173,10 @@ function reset_post_form()
     set_post_password('');
     
     $form.find('.field[data-field="controls"]').hide();
+    
+    $form.find('input[name="parent_post"]').val('');
+    $form.find('.parent_post_title').html('&mdash;');
+    $form.find('.parent_post_area').hide();
 }
 
 /**
@@ -175,6 +219,23 @@ function fill_post_form($form, record)
             fill_post_form_extensions[fi]($form, record);
     
     $form.find('.field[data-field="controls"]').show();
+    
+    $form.find('input[name="parent_post"]').val(record.parent_post);
+    if( record.parent_post == '' )
+    {
+        $form.find('.parent_post_title').html('&mdash;');
+        $form.find('.parent_post_area').hide();
+    }
+    else
+    {
+        var parent_permalink = post_permalink_style == 'slug' ? record.parent_post_slug : record.parent_post;
+        $form.find('.parent_post_title').text(record.parent_post_title);
+        $form.find('.parent_post_title').html(sprintf(
+            '<a href="%s/%s" target="_blank">%s</a>',
+            $_FULL_ROOT_PATH, parent_permalink, record.parent_post_title
+        ));
+        $form.find('.parent_post_area').show();
+    }
 }
 
 function update_category_selector(preselected_id)
@@ -472,6 +533,38 @@ function set_post_password(value)
         $dummy.toggleClass('state_active', false);
         $form.find('.password_control .remove').hide();
     }
+}
+
+function emancipate_post(post_id, trigger, callback)
+{
+    if( ! confirm($_GENERIC_CONFIRMATION) ) return;
+    
+    var $trigger = $(trigger);
+    var url      = $_FULL_ROOT_PATH + '/posts/scripts/toolbox.php';
+    var params   = {
+        action:  'remove_parent',
+        id_post: post_id,
+        wasuuup: wasuuup()
+    };
+    
+    $trigger.block(blockUI_smallest_params);
+    $.get(url, params, function(response)
+    {
+        $trigger.unblock();
+        if( response != 'OK' )
+        {
+            alert(response);
+            
+            return;
+        }
+        
+        $trigger.fadeOut('fast', function()
+        {
+            $(this).remove();
+            
+            if( typeof callback == 'function' ) callback();
+        });
+    });
 }
 
 $(document).ready(function()

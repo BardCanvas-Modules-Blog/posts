@@ -113,6 +113,14 @@ if( ! empty($raw_list) )
                               placeholder="<?= $current_module->language->form->fields->excerpt->placeholder ?>"></textarea>
                 </div>
                 
+                <div class="parent_post_area" style="display: none">
+                    <input type="hidden" name="parent_post" value="">
+                    <div class="caption"><?= $current_module->language->form->fields->parent_post->caption ?></div>
+                    <div class="input">
+                        <div class="parent_post_title framed_content" style="margin: 0;"></div>
+                    </div>
+                </div>
+                
                 <? $modules["posts"]->load_extensions("editor_form", "options_left_column"); ?>
                 
             </div>

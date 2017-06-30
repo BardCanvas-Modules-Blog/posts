@@ -11,7 +11,7 @@
  * @var \SimpleXMLElement $language
  * 
  * $_GET params:
- * @param string "action"     change_status|untrash_for_review|empty_trash
+ * @param string "action"     change_status|untrash_for_review|empty_trash|remove_parent
  * @param string "new_status" trashed|published|reviewing|hidden|draft
  * @param string "id_post"
  */
@@ -30,7 +30,7 @@ if( $account->state != "enabled" ) die($language->errors->access_denied);
 if( $account->level < (int) $settings->get("modules:posts.required_level_to_post") )
     die($language->errors->access_denied);
 
-if( ! in_array($_GET["action"], array("change_status", "untrash_for_review", "empty_trash")) )
+if( ! in_array($_GET["action"], array("change_status", "untrash_for_review", "empty_trash", "remove_parent")) )
     die($current_module->language->messages->toolbox->invalid_action);
 
 if( $_GET["action"] != "empty_trash" && empty($_GET["id_post"]) )
@@ -49,6 +49,9 @@ if($_GET["action"] == "empty_trash")
 $post = $repository->get($_GET["id_post"]);
 if( is_null($post) ) die($current_module->language->messages->post_not_found);
 $old_post = clone $post;
+
+if( $account->level < $config::MODERATOR_USER_LEVEL && $account->id_account != $post->id_author )
+    die($language->errors->access_denied);
 
 if($_GET["action"] == "change_status")
 {
@@ -188,6 +191,14 @@ if($_GET["action"] == "untrash_for_review")
     
     $res = $repository->change_status($post->id_post, "reviewing");
     $current_module->load_extensions("post_actions", "after_untrashing_for_review");
+    
+    die("OK");
+}
+
+if($_GET["action"] == "remove_parent")
+{
+    $res = $repository->remove_parent($post->id_post);
+    $current_module->load_extensions("post_actions", "after_removing_parent");
     
     die("OK");
 }

@@ -132,6 +132,13 @@ class posts_repository extends abstract_repository
            from post_mentions where post_mentions.id_post = posts.id_post
            ) as mentions_list";
         
+        # Parent post
+        $this->additional_select_fields[] = "( select title from posts p2 where p2.id_post = posts.parent_post ) as parent_post_title";
+        $this->additional_select_fields[] = "( select slug  from posts p2 where p2.id_post = posts.parent_post ) as parent_post_slug";
+        
+        # Children
+        $this->additional_select_fields[] = "( select count(id_post) from posts p2 where p2.parent_post = posts.id_post ) as children_count";
+        
         #---------------------------
         #endregion Additional fields
     }
@@ -1322,5 +1329,68 @@ class posts_repository extends abstract_repository
           delete from posts where status = 'trashed'
           and creation_date < '$boundary'
         ");
+    }
+    
+    public function remove_parent($id_post)
+    {
+        global $database;
+        
+        $query = "update {$this->table_name} set parent_post = '0' where  id_post = '$id_post'";
+        $res   = $database->exec($query);
+        
+        $this->last_query = $query;
+        
+        return $res;
+    }
+    
+    /**
+     * @param int    $id_post
+     * @param string $order
+     *
+     * @return array of post_record in multiple levels
+     */
+    public function find_child_posts($id_post, $order = "parent_post, publishing_date")
+    {
+        global $object_cache;
+        
+        $where = $object_cache->get("posts_repository", "find_child_posts_where");
+        if( empty($where) )
+        {
+            $params  = $this->build_find_params();
+            $where   = $params->where;
+            $object_cache->set("posts_repository", "find_child_posts_where", $where);
+        }
+        
+        $where["parent_post"] = $id_post;
+        if( empty($order) ) $order = "parent_post, publishing_date";
+        
+        $records = $this->find($where, 0, 0, $order);
+        if( empty($records) ) return array();
+        
+        $return = array();
+        foreach($records as $record)
+        {
+            $record->children = $this->find_child_posts($record->id_post, $order);
+            $return[$record->id_post] = $record;
+        }
+        
+        return $return;
+    }
+    
+    /**
+     * @param $id_post
+     *
+     * @return post_record|null
+     */
+    public function get_topmost_parent($id_post)
+    {
+        while(true)
+        {
+            $post = $this->get($id_post);
+            if( empty($post->parent_post) ) return $post;
+            else $id_post = $post->parent_post;
+        }
+        
+        return null;
     }
 }
