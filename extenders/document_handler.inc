@@ -51,6 +51,7 @@ $template->set_page_title($post->title);
 $template->page_meta_description   = $post->excerpt;
 $template->page_meta_url           = $post->get_permalink(true);
 $template->page_meta_image         = $config->full_root_url . $post->featured_image_thumbnail;
+$template->page_extra_metas["og:type"] = "<meta property='og:type' content='article'>";
 
 $template->set("is_single_post", true);
 $template->set("is_post", true);
