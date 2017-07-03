@@ -1,6 +1,15 @@
 
 # Posts Module Change Log
 
+## [1.23.0] - 2017-07-03
+
+- Increased security against disabled accounts.
+- Added og:type meta tag.
+- Added support for child posts:
+  - Automatic trees are inserted at the top of single post contents.
+  - Trees are fully responsive.
+  - Shortcode added to allow relocation and customization.
+
 ## [1.22.2] - 2017-06-22
 
 - Fixed wrong date comparison in posts check against deletion.
