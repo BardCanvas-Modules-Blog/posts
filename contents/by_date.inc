@@ -6,14 +6,16 @@
  * @subpackage posts
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  *
- * @var config $config
+ * @var config   $config
  * @var template $template
- * @var string $showing_date
- * @var string $start_date
- * @var string $end_date
+ * @var module   $current_module
+ * @var string   $showing_date
+ * @var string   $start_date
+ * @var string   $end_date
  */
 
 use hng2_base\config;
+use hng2_base\module;
 use hng2_base\template;
 use hng2_modules\posts\posts_repository;
 use hng2_tools\record_browser;
@@ -36,7 +38,9 @@ $current_module->load_extensions("posts_by_date_index", "pre_rendering");
 <h1 class="clearfix">
     <?= replace_escaped_vars($current_module->language->pages->by_date->title, '{$date}', $showing_date) ?>
     <a class="small" href="<?= $config->full_root_url ?>/date/<?= $_GET["date"] ?>/media/"><?= $current_module->language->pages->by_date->see_media ?></a>
-    <span class="pull-right"><?= $posts_data->pagination["this_page_number"]; ?>/<?= $posts_data->pagination["total_pages"]; ?></span>
+    <? if($posts_data->pagination["total_pages"] > 1): ?>
+        <span class="title_pagination pull-right"><?= $posts_data->pagination["this_page_number"]; ?>/<?= $posts_data->pagination["total_pages"]; ?></span>
+    <? endif; ?>
 </h1>
 
 <? $current_module->load_extensions("posts_by_date_index", "after_heading"); ?>
