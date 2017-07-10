@@ -47,6 +47,7 @@
         </search_by_tag_builder>
         <categories_browser>
             <show_category_posts>Ver índice de entradas</show_category_posts>
+            <excluded_from_main_index>Excluída de índice principal</excluded_from_main_index>
         </categories_browser>
     </extenders>
     
