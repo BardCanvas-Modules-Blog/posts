@@ -223,7 +223,7 @@ function fill_post_form($form, record)
     $form.find('.field[data-field="controls"]').show();
     
     $form.find('input[name="parent_post"]').val(record.parent_post);
-    if( record.parent_post == '' )
+    if( record.parent_post == '' || record.parent_post == 0 )
     {
         $form.find('.parent_post_title').html('&mdash;');
         $form.find('.parent_post_area').hide();
