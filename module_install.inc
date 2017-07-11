@@ -17,6 +17,12 @@
 use hng2_base\module;
 
 $tables = array(
+    #
+    # Important: in the posts repository, the "find" method has been injected
+    # with hardcoded column names to allow overriding the last_commented
+    # column with a subquery. If the posts table structure changes,
+    # changes should be applied to the repository.
+    #
     "posts" => "
         create table if not exists posts (
             
