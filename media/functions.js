@@ -1,4 +1,6 @@
 
+var posts_category_selector_post_process_extensions;
+
 var fill_post_form_extensions;
 var reset_post_form_extensions;
 
@@ -273,6 +275,10 @@ function update_category_selector(preselected_id)
             selected = key == preselected_id ? 'selected' : '';
             $select.append('<option ' + selected + ' value="' + key + '">' + data.data[key] + '</option>');
         }
+        
+        if( typeof posts_category_selector_post_process_extensions == 'object' )
+            for( var i in posts_category_selector_post_process_extensions )
+                posts_category_selector_post_process_extensions[i]($select);
         
         $container.unblock();
     });
