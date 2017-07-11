@@ -18,7 +18,7 @@ class posts_repository extends abstract_repository
     
     public function __construct()
     {
-        global $settings, $config;
+        global $settings, $config, $modules;
         
         $this->cache_base = "{$config->datafiles_location}/cache/posts/indexes";
         if( ! is_dir($this->cache_base) )
@@ -139,6 +139,17 @@ class posts_repository extends abstract_repository
         # Children
         $this->additional_select_fields[] = "( select count(id_post) from posts p2 where p2.parent_post = posts.id_post ) as children_count";
         
+        # Last comment date
+        if( $modules["comments"]->enabled )
+            $this->additional_select_fields[] = "
+            ( select c.creation_date from comments c
+               where c.id_post = posts.id_post and c.status = 'published'
+               order by c.creation_date desc limit 1
+               ) as last_commented";
+        else
+            $this->additional_select_fields[] = "
+            null as last_commented";
+        
         #---------------------------
         #endregion Additional fields
     }
@@ -186,10 +197,90 @@ class posts_repository extends abstract_repository
      * @param string $order
      *
      * @return post_record[]
+     *
+     * @throws \Exception
      */
     public function find($where, $limit, $offset, $order)
     {
-        return parent::find($where, $limit, $offset, $order);
+        global $database;
+        
+        $query_where = "";
+        if( ! empty($where) ) $query_where = "where " . $this->convert_where($where);
+        
+        $order_by = "";
+        if( ! empty($order) ) $order_by = "order by {$order}";
+        
+        $limit_by = "";
+        if($limit > 0 || $offset > 0 ) $limit_by = "limit $limit offset $offset";
+        
+        $referenced_fields = "
+            posts.id_post                    ,
+            posts.parent_post                ,
+            posts.id_author                  ,
+            posts.slug                       ,
+            posts.title                      ,
+            posts.excerpt                    ,
+            posts.content                    ,
+            posts.main_category              ,
+            posts.visibility                 ,
+            posts.status                     ,
+            posts.password                   ,
+            posts.allow_comments             ,
+            posts.pin_to_home                ,
+            posts.pin_to_main_category_index ,
+            posts.creation_date              ,
+            posts.creation_ip                ,
+            posts.creation_host              ,
+            posts.creation_location          ,
+            posts.publishing_date            ,
+            posts.expiration_date            ,
+            posts.comments_count             ,
+            posts.last_update                ,
+            posts.id_featured_image          
+        ";
+        $straight_fields = str_replace("posts.", "", $referenced_fields);
+        
+        if( empty($this->additional_select_fields) )
+        {
+            $query = "
+                select $straight_fields from `{$this->table_name}`
+                $query_where
+                $order_by
+                $limit_by
+            ";
+        }
+        else
+        {
+            $all_fields = array_merge(
+                array($referenced_fields),
+                $this->additional_select_fields
+            );
+            
+            $all_fields_string = implode(",\n                  ", $all_fields);
+            $query = "
+                select
+                  $all_fields_string
+                from `{$this->table_name}`
+                $query_where
+                $order_by
+                $limit_by
+            ";
+        }
+        
+        # echo "<pre>$query</pre>";
+        $this->last_query = $query;
+        $res = $database->query($query);
+        
+        if( $database->num_rows($res) == 0 ) return array();
+        
+        $return = array();
+        while($row = $database->fetch_object($res))
+        {
+            $class = $this->row_class;
+            $return[] = new $class($row);
+        }
+        
+        return $return;
     }
     
     /**
