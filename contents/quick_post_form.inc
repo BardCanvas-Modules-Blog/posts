@@ -70,8 +70,8 @@ if( $template->get("current_category_id") )
             <? else:
                 $default_category = $categories_repository->get("0000000000000");
                 
-                $mem_key     = "quick_post_categories/level:{$account->level}";
-                $res         = $mem_cache->get($mem_key);
+                $mem_key = "categories:for_quick_posts_form/level:{$account->level}";
+                $res     = $mem_cache->get($mem_key);
                 if( is_array($res) )
                 {
                     $categories = $res;
@@ -95,26 +95,31 @@ if( $template->get("current_category_id") )
                             
                             list($slug, $level) = preg_split('/\s+-\s+/', $line);
                             if( $account->level >= $level ) continue;
-    
+                            
                             $tree_filter[] = "slug <> '$slug'";
                         }
                     }
                     
                     $categories = $categories_repository->get_as_tree_for_select($tree_filter, "", true);
-                    if( empty($categories) ) $mem_cache->set($mem_key, "none", 0, 60*60);
-                    else                     $mem_cache->set($mem_key, $categories, 0, 60*60);
+                    if( empty($categories) ) $mem_cache->set($mem_key, "none",      0, 60 * 60);
+                    else                     $mem_cache->set($mem_key, $categories, 0, 60 * 60);
                 }
                 $categories_count = count($categories);
                 $style = $categories_count == 0 ? "display: none" : "";
+                
+                $options = array();
+                foreach($categories as $id_category => $description)
+                    $options[$id_category] = "<option value='$id_category'>$description</option>";
+                
+                $config->globals["modules:posts.prebuilt_category_selector_options"] =& $options;
+                $this_module->load_extensions("quick_post_form", "process_prebuilt_category_selector_options");
                 ?>
                 <div class="field" id="main_category_selector_container" data-field="category" style="<?= $style ?>">
                     <select name="main_category" class="big_monospace_select" onchange="toggle_post_category_message(this)">
                         <option selected value="<?= $default_category->id_category ?>">
                             <?= $default_category->title ?>: <?= $default_category->description ?>
                         </option>
-                        <? foreach($categories as $id_category => $description): ?>
-                            <option value="<?= $id_category ?>"><?= $description ?></option>
-                        <? endforeach; ?>
+                        <?= implode("\n                        ", $options) ?>
                     </select>
                     
                     <div class="category_messages">
