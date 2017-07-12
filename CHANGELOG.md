@@ -1,6 +1,18 @@
 
 # Posts Module Change Log
 
+## [1.24.0] - 2017-07-11
+
+- Hidden pagination helpers for single-page post indexes.
+- Added checks on the category index to allow full content overrides by extenders.
+- Added info of categories excluded from the main index on the categories browser.
+- Added extension point on the quick posts form and renamed cache keys to allow purging.
+- Added extension point on the posts browser and JS function extender support for the post category selector.
+- Adjustments to the posts repository.
+- Fixed wrong display of parent info when editing orphan posts.
+- Added option to allow posts editing always.
+- Added option to specify user level allowed to edit posts with comments.
+
 ## [1.23.0] - 2017-07-03
 
 - Increased security against disabled accounts.
