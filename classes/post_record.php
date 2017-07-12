@@ -356,17 +356,23 @@ class post_record extends abstract_record
         if( $account->level >= config::MODERATOR_USER_LEVEL ) return true;
         if( $this->id_author != $account->id_account ) return false;
         if( $this->publishing_date == "0000-00-00 00:00:00" ) return true;
+        if( $this->publishing_date > date("Y-m-d H:i:s") ) return true;
         if( $this->comments_count > 0 ) return false;
         
         $time = (int) $settings->get("modules:posts.time_allowed_for_editing_after_publishing");
         if( empty($time) ) return false;
         
-        $boundary = strtotime("{$this->publishing_date} + $time minutes");
-        if( time() < $boundary ) return true;
+        if( $time > 0 )
+        {
+            $boundary = strtotime("{$this->publishing_date} + $time minutes");
+            if( time() < $boundary ) return true;
+        }
         
         if( $settings->get("modules:posts.lock_posts_with_enforced_expiration") == "true"
             && $this->expiration_date != "0000-00-00 00:00:00"
             && $this->expiration_date >= date("Y-m-d H:i:s") ) return true;
+        
+        if( $time < 0 ) return true;
         
         return false;
     }

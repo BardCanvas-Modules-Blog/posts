@@ -482,7 +482,8 @@
             <title>Tiempo de gracia para edición tras publicar</title>
             <description><![CDATA[
                 Cantidad de minutos que un usuario tiene para poder editar entradas que han sido publicadas.<br>
-                Especificar <code>0</code> para impedir que los usuarios editen las entradas (excepto mods/admins).
+                Especificar <code>0</code> para impedir que los usuarios editen las entradas (excepto mods/admins).<br>
+                Especificar <code>-1</code> para permitir la edición siempre.<br>
             ]]></description>
             <type>number</type>
         </specs>

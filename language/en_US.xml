@@ -473,7 +473,8 @@
             <title>Time allowed for editing after publishing</title>
             <description><![CDATA[
                 Amount of minutes a user has to edit a post once published.<br>
-                Set to <code>0</code> to disable post editing for everyone excep mods/admins.
+                Set to <code>0</code> to disable post editing for everyone excep mods/admins.<br>
+                Set to <code>-1</code> to allow editing always.<br>
             ]]></description>
             <type>number</type>
         </specs>
