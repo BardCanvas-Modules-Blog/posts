@@ -479,6 +479,15 @@
             <type>number</type>
         </specs>
         
+        <specs key="level_allowed_to_edit_with_comments">
+            <title>User level allowed to edit posts with comments</title>
+            <description><![CDATA[
+                By default, everyone can edit posts with comments. If you want to restrict this feature,
+                set the user level to a higher value.
+            ]]></description>
+            <type>user_level_selector</type>
+        </specs>
+        
         <specs key="per_category_messages">
             <title>In-form Per-category messages</title>
             <description><![CDATA[

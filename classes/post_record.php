@@ -357,7 +357,10 @@ class post_record extends abstract_record
         if( $this->id_author != $account->id_account ) return false;
         if( $this->publishing_date == "0000-00-00 00:00:00" ) return true;
         if( $this->publishing_date > date("Y-m-d H:i:s") ) return true;
-        if( $this->comments_count > 0 ) return false;
+        
+        $min_level = (int) $settings->get("modules:posts.level_allowed_to_edit_with_comments");
+        if( empty($min_level) ) $min_level = config::NEWCOMER_USER_LEVEL;
+        if( $this->comments_count > 0 && $account->level < $min_level ) return false;
         
         $time = (int) $settings->get("modules:posts.time_allowed_for_editing_after_publishing");
         if( empty($time) ) return false;

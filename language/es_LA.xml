@@ -488,6 +488,15 @@
             <type>number</type>
         </specs>
         
+        <specs key="level_allowed_to_edit_with_comments">
+            <title>Nivel de usuarios permitido para editar posts con comentarios</title>
+            <description><![CDATA[
+                De forma predeterminada, cualquiera puede editar entradas con comentarios.
+                Si deseas restringir esta característica, establece un nivel de usuario más alto.
+            ]]></description>
+            <type>user_level_selector</type>
+        </specs>
+        
         <specs key="per_category_messages">
             <title>Mensajes por categoría durante la edición</title>
             <description><![CDATA[
