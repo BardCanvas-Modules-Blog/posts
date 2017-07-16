@@ -152,6 +152,27 @@ class posts_repository extends abstract_repository
         
         #---------------------------
         #endregion Additional fields
+        
+        $this->check_meta_table();
+    }
+    
+    private function check_meta_table()
+    {
+        global $settings, $database;
+        
+        if( $settings->get("modules:posts.meta_table_created") == "true" ) return;
+        
+        $database->exec("
+            create table if not exists post_meta (
+              id_post bigint unsigned not null default 0,
+              name    varchar(128) not null default '',
+              value   longtext,
+              
+              primary key (id_post, name)
+              
+            ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
+        ");
+        $settings->set("modules:posts.meta_table_created", "true");
     }
     
     /**
@@ -281,6 +302,24 @@ class posts_repository extends abstract_repository
         }
         
         return $return;
+    }
+    
+    /**
+     * @param $name
+     *
+     * @return post_record[]
+     */
+    public function find_by_meta($name)
+    {
+        $name = addslashes($name);
+        $where = array("
+            id_post in (
+                select pm.id_post from post_meta pm
+                where pm.id_post = posts.id_post
+                and   pm.name    = '$name' limit 1
+            )
+        ");
+        return $this->find($where, 0, 0, "creation_date asc");
     }
     
     /**

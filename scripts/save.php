@@ -58,6 +58,30 @@ $old_post = empty($_POST["id_post"]) ? null : clone $repository->get($_POST["id_
 $post     = empty($_POST["id_post"]) ? new post_record() : $repository->get($_POST["id_post"]);
 $post->set_from_post();
 
+$custom_fields = array();
+$custom_fields_editing_level = $settings->get("modules:posts.level_allowed_to_edit_custom_fields");
+if( empty($custom_fields_editing_level) )
+{
+    $custom_fields_editing_level = config::MODERATOR_USER_LEVEL;
+    $settings->set("modules:posts.level_allowed_to_edit_custom_fields", $custom_fields_editing_level);
+}
+if( $account->level >= $custom_fields_editing_level )
+{
+    if( ! empty($_POST["custom_field_names"]) )
+    {
+        foreach($_POST["custom_field_names"] as $index => $name)
+        {
+            $name  = trim(stripslashes($name));
+            $value = trim(stripslashes($_POST["custom_field_values"][$index]));
+            if( empty($name) ) continue;
+            
+            $custom_fields[$name] = $value;
+            unset( $_POST["custom_field_names"][$index] );
+            unset( $_POST["custom_field_values"][$index] );
+        }
+    }
+}
+
 if( $_POST["is_quick_post"] == "true" ) $post->allow_comments = 1;
 if( $account->level < config::MODERATOR_USER_LEVEL ) $post->allow_comments = 1;
 
@@ -65,6 +89,13 @@ include __DIR__ . "/save.inc";
 
 if( $_POST["is_quick_post"] && $post->status == "draft" )
     send_notification($account->id_account, "success", $current_module->language->messages->draft_saved);
+
+if( $account->level >= $custom_fields_editing_level )
+{
+    $post->purge_metas();
+    foreach($custom_fields as $name => $value)
+        $post->set_meta($name, $value);
+}
 
 //if( is_array($media_deletions) && ! empty($media_deletions) )
 //    $media_repository->delete_multiple_if_unused($media_deletions);

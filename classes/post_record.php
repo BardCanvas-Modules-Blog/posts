@@ -75,6 +75,7 @@ class post_record extends abstract_record
     public $mentions_list   = array(); # from post_mentions
     
     private $_author_account;
+    private $_meta = array();
     
     protected function set_from_object($object_or_array)
     {
@@ -182,10 +183,13 @@ class post_record extends abstract_record
             $return["tags_list"],
             $return["categories_list"],
             $return["media_list"],
-            $return["mentions_list"]
+            $return["mentions_list"],
+            $return["_meta"]
         );
         
-        foreach( $return as $key => &$val ) $val = addslashes($val);
+        foreach( $return as $key => &$val )
+            if( is_string($val) )
+                $val = addslashes($val);
         
         return (object) $return;
     }
@@ -414,5 +418,77 @@ class post_record extends abstract_record
             && $this->expiration_date > date("Y-m-d H:i:s") ) return false;
         
         return true;
+    }
+    
+    private function preload_metas()
+    {
+        $this->_meta = $this->fetch_all_metas();
+    }
+    
+    /**
+     * @param bool $include_hidden
+     *
+     * @return array
+     */
+    public function fetch_all_metas($include_hidden = true)
+    {
+        global $database;
+        
+        if( empty($this->id_post) ) return array();
+        
+        $query = $include_hidden 
+            ? "select * from post_meta where id_post = '{$this->id_post}'" 
+            : "select * from post_meta where id_post = '{$this->id_post}' and name not like '.%'";
+        
+        $res = $database->query($query);
+        if( $database->num_rows($res) == 0 ) return array();
+        
+        $return = array();
+        while($row = $database->fetch_object($res))
+            $return[$row->name] = unserialize($row->value);
+        
+        return $return;
+    }
+    
+    public function get_meta($name)
+    {
+        if( empty($this->id_post) ) return null;
+        
+        $this->preload_metas();
+        
+        return $this->_meta[$name];
+    }
+    
+    public function set_meta($name, $value)
+    {
+        global $database;
+        
+        if( empty($this->id_post) ) return;
+        
+        $this->preload_metas();
+        $this->_meta[$name] = $value;
+        
+        $name  = addslashes($name);
+        $value = serialize($value);
+        $database->exec("
+            insert into post_meta (
+                id_post,
+                name,
+                value
+            ) values (
+                '{$this->id_post}',
+                '$name',
+                '$value'
+            ) on duplicate key update
+                value = '$value'
+        ");
+    }
+    
+    public function purge_metas()
+    {
+        global $database;
+        
+        $database->exec("delete from post_meta where id_post = '{$this->id_post}'");
+        $this->_meta = array();
     }
 }

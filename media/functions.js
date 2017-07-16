@@ -154,6 +154,7 @@ function reset_post_form()
 {
     var $form = $('#post_form');
     
+    $form.find('#custom_fields_target').html('');
     $form[0].reset();
     
     $form.find('input[name="is_autosave"]').val('false');
@@ -238,6 +239,8 @@ function fill_post_form($form, record)
         ));
         $form.find('.parent_post_area').show();
     }
+    
+    fill_custom_fields(record);
 }
 
 function update_category_selector(preselected_id)
@@ -571,6 +574,42 @@ function emancipate_post(post_id, trigger, callback)
             if( typeof callback == 'function' ) callback();
         });
     });
+}
+
+function fill_custom_fields(record)
+{
+    if( typeof record.custom_fields == 'undefined' ) return;
+    
+    var $template = $('#custom_field_template');
+    if( $template.length == 0 ) return;
+    
+    var html    = $template.html();
+    var $target = $('#custom_fields_target');
+    for( var i in record.custom_fields )
+    {
+        var fname = i;
+        var fval  = record.custom_fields[i];
+        
+        var $node = $(html);
+        $node.find('input[type="text"]').val( fname );
+        $node.find('textarea').val(fval);
+        $node.appendTo($target);
+        
+        $target.find('textarea.new').expandingTextArea();
+        $target.find('textarea.new').removeClass('new');
+    }
+}
+
+function add_custom_field()
+{
+    var $template = $('#custom_field_template');
+    if( $template.length == 0 ) return;
+    
+    var html    = $template.html();
+    var $target = $('#custom_fields_target');
+    $target.append(html);
+    $target.find('textarea.new').expandingTextArea();
+    $target.find('textarea.new').removeClass('new');
 }
 
 $(document).ready(function()

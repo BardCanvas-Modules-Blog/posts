@@ -218,6 +218,13 @@
             <preview>Preview</preview>
             <publish>Publish</publish>
         </buttons>
+        
+        <custom_fields>
+            <title>Custom post fields</title>
+            <add>Add</add>
+            <name_placeholder>Specify a name for the field</name_placeholder>
+            <value_placeholder>Specify a value</value_placeholder>
+        </custom_fields>
     </form>
     
     <messages>
@@ -488,6 +495,15 @@
             <type>user_level_selector</type>
         </specs>
         
+        <specs key="level_allowed_to_edit_custom_fields">
+            <title>User level allowed to edit custom fields</title>
+            <description><![CDATA[
+                By default, only mods/admins can set custom fields on posts.
+                If you want to allow others to do it, set the wanted level here.
+            ]]></description>
+            <type>user_level_selector</type>
+        </specs>
+        
         <specs key="per_category_messages">
             <title>In-form Per-category messages</title>
             <description><![CDATA[
@@ -606,6 +622,7 @@
             <type>yes/no</type>
         </specs>
         
+        <specs key="meta_table_created" disabled="true" />
     </settings_data>
     
     <user_profile_tabs>

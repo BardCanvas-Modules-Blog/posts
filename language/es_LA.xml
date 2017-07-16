@@ -219,6 +219,13 @@
             <preview>Vista previa</preview>
             <publish>Publicar</publish>
         </buttons>
+        
+        <custom_fields>
+            <title>Campos personalizados de la entrada</title>
+            <add>Añadir</add>
+            <name_placeholder>Especifica un nombre para el campo</name_placeholder>
+            <value_placeholder>Especifica un valor</value_placeholder>
+        </custom_fields>
     </form>
     
     <messages>
@@ -497,6 +504,15 @@
             <type>user_level_selector</type>
         </specs>
         
+        <specs key="level_allowed_to_edit_custom_fields">
+            <title>Nivel de usuarios permitido para editar campos personalizados en entradas</title>
+            <description><![CDATA[
+                De forma predeterminada, sólo mods/admins pueden editar campos personalizados
+                en las entradas. Si deseas permitir a otros hacerlo, selecciona el nivel deseado.
+            ]]></description>
+            <type>user_level_selector</type>
+        </specs>
+        
         <specs key="per_category_messages">
             <title>Mensajes por categoría durante la edición</title>
             <description><![CDATA[
@@ -620,6 +636,7 @@
             <type>yes/no</type>
         </specs>
         
+        <specs key="meta_table_created" disabled="true" />
     </settings_data>
     
     <user_profile_tabs>

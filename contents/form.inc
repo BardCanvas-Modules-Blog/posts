@@ -59,6 +59,13 @@ if( ! empty($raw_list) )
         }
     }
 }
+
+$custom_fields_editing_level = $settings->get("modules:posts.level_allowed_to_edit_custom_fields");
+if( empty($custom_fields_editing_level) )
+{
+    $custom_fields_editing_level = config::MODERATOR_USER_LEVEL;
+    $settings->set("modules:posts.level_allowed_to_edit_custom_fields", $custom_fields_editing_level);
+}
 ?>
 
 <form name="post_form" id="post_form" method="post" data-preview-mode=""
@@ -250,6 +257,17 @@ if( ! empty($raw_list) )
             </div>
             
         </div>
+        
+        <? if( $account->level >= $custom_fields_editing_level ): ?>
+            <fieldset>
+                <legend><?= $current_module->language->form->custom_fields->title ?></legend>
+                <div id="custom_fields_target" class="multicol cols-2"></div>
+                <button onclick="add_custom_field(); return false;">
+                    <i class="fa fa-plus"></i>
+                    <?= $current_module->language->form->custom_fields->add ?>
+                </button>
+            </fieldset>
+        <? endif; ?>
     </div>
     
     <div class="post_buttons alignright clearfix">
@@ -299,6 +317,23 @@ if( ! empty($raw_list) )
         </button>
     </div>
 </form>
+
+<? if( $account->level >= $custom_fields_editing_level ): ?>
+    <div id="custom_field_template" style="display: none;">
+        <div class="col custom_field">
+            <div class="caption nowrap">
+                <input type="text" name="custom_field_names[]" value=""
+                       placeholder="<?= $current_module->language->form->custom_fields->name_placeholder ?>"
+                       style="width: calc(100% - 16px)">
+                <i class="fa fa-trash pseudo_link" onclick="$(this).closest('.custom_field').remove()"></i>
+            </div>
+            <div class="input">
+                <textarea name="custom_field_values[]" rows="3" wrap="off"
+                          placeholder="<?= $current_module->language->form->custom_fields->value_placeholder ?>"></textarea>
+            </div>
+        </div>
+    </div>
+<? endif; ?>
 
 <? $modules["posts"]->load_extensions("editor_form", "outside"); ?>
                 
