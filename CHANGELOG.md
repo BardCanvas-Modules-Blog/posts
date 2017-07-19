@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.25.0]
+
+- Added support for post metas and custom fields editor.
+
 ## [1.24.0] - 2017-07-11
 
 - Hidden pagination helpers for single-page post indexes.
