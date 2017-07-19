@@ -637,6 +637,7 @@
         </specs>
         
         <specs key="meta_table_created" disabled="true" />
+        <specs key="meta_table_created_v2" disabled="true" />
     </settings_data>
     
     <user_profile_tabs>

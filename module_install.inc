@@ -129,7 +129,7 @@ $tables = array(
           name    varchar(128) not null default '',
           value   longtext,
           
-          primary key (id_post, meta_name)
+          primary key (id_post, name)
           
         ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
     ",
@@ -137,7 +137,7 @@ $tables = array(
 
 $init_settings = array(
     "modules:posts.excerpt_length"                      => 250,
-    "modules:posts.meta_table_created"                  => "true",
+    "modules:posts.meta_table_created_v2"               => "true",
     "modules:posts.level_allowed_to_edit_custom_fields" => 200,
 );
 

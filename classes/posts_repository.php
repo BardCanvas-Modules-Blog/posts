@@ -160,7 +160,7 @@ class posts_repository extends abstract_repository
     {
         global $settings, $database;
         
-        if( $settings->get("modules:posts.meta_table_created") == "true" ) return;
+        if( $settings->get("modules:posts.meta_table_created_v2") == "true" ) return;
         
         $database->exec("
             create table if not exists post_meta (
@@ -172,7 +172,7 @@ class posts_repository extends abstract_repository
               
             ) engine=InnoDB default charset=utf8mb4 collate='utf8mb4_unicode_ci'
         ");
-        $settings->set("modules:posts.meta_table_created", "true");
+        $settings->set("modules:posts.meta_table_created_v2", "true");
     }
     
     /**
