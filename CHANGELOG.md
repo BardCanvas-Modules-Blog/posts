@@ -1,7 +1,11 @@
 
 # Posts Module Change Log
 
-## [1.25.0]
+## [1.25.1] - 2017-07-19
+
+- Fixed issue in post_meta table creation.
+
+## [1.25.0] - 2017-07-18
 
 - Added support for post metas and custom fields editor.
 
