@@ -38,6 +38,10 @@ if( $template->get("current_category_id") )
     if( $category->visibility == "level_based" && $account->level < $category->min_level )
         return;
 }
+
+$config->globals["show_quick_post_form"] = true;
+$this_module->load_extensions("quick_post_form", "pre_rendering");
+if( ! $config->globals["show_quick_post_form"] ) return;
 ?>
 
 <script type="text/javascript" src="<?= $config->full_root_path ?>/lib/jquery.exptextarea.js"></script>

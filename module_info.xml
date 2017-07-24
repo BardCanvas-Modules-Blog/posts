@@ -50,7 +50,7 @@
         Post Record Class / Set from object, Get Processed Excerpt, Get Processed Content.
         Posts saving / After record forging.
         Editor form: Below main category selector, below editor, option columns (left, middle, right), outside (after closing the form).
-        Quick post form / Below main category selector.
+        Quick post form: Pre rendering / Process prebuilt category selector options / Below main category selector.
         JSON record exporter / before output.
         Post actions: before trashing, after publishing, after flagged for reviewing, after hiding, after setting as draft, after untrashing for review.
         Browser: after collection built, per record function hooks, main actions
