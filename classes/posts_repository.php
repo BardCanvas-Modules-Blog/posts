@@ -175,6 +175,11 @@ class posts_repository extends abstract_repository
         $settings->set("modules:posts.meta_table_created_v2", "true");
     }
     
+    public function add_to_select_fields($statement)
+    {
+        $this->additional_select_fields[] = $statement;
+    }
+    
     /**
      * @param $id
      *
