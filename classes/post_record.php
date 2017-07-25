@@ -469,7 +469,7 @@ class post_record extends abstract_record
         $this->_meta[$name] = $value;
         
         $name  = addslashes($name);
-        $value = serialize($value);
+        $value = addslashes(serialize($value));
         $database->exec("
             insert into post_meta (
                 id_post,
