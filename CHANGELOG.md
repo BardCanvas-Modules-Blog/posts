@@ -1,6 +1,14 @@
 
 # Posts Module Change Log
 
+## [1.25.2] - 2017-07-26
+
+- Added extension point on the Quick Posts form.
+- Added check on the Quick Posts form to allow hiding it based on the exceptions
+  specified in the main category selector.
+- Added helper method the posts repository.
+- Fixed a potential issue on the post_record method used to store custom fields.
+
 ## [1.25.1] - 2017-07-19
 
 - Fixed issue in post_meta table creation.
