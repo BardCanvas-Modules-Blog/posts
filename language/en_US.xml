@@ -309,13 +309,14 @@
             <title>Main category selector exceptions</title>
             <description><![CDATA[
                 You can limit the categories displayed in the main category selector
-                by user level. This allow you to prevent low level users to access categories only
-                available to mods/admins.<br>
+                by user level. This allow you to prevent low level users to publish on public categories
+                only where only higher level users can post.<br>
                 Use one line per every category with the next syntax:<br>
                 <blocquote><code>category_slug - min_user_level</code><br></blockquote>
                 <i class="fa fa-info-circle"></i>
                 Note: this function is merely cosmetic: it only limits the categories
-                displayed on the list selector. It doesn't restrict the posts to have "hidden" categories
+                displayed on the list selector and hides the quick post form accordingly (if enabled).
+                It doesn't restrict the posts to have "hidden" categories
                 applied or being excluded from indexes.
             ]]></description>
             <type>code</type>

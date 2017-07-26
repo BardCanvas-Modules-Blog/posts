@@ -42,6 +42,32 @@ if( $template->get("current_category_id") )
 $config->globals["show_quick_post_form"] = true;
 $this_module->load_extensions("quick_post_form", "pre_rendering");
 if( ! $config->globals["show_quick_post_form"] ) return;
+
+#region hiding the quick posts form based on main category selector exceptions
+$raw_list = $settings->get("modules:posts.main_category_selector_exceptions");
+if( ! empty($raw_list) )
+{
+    $page_cat = $template->get("current_category_slug");
+    $page_tag = $template->get("page_tag");
+    $lines    = explode("\n", $raw_list);
+    foreach($lines as $line)
+    {
+        $line = trim($line);
+        if( empty($line) ) continue;
+        
+        list($slug, $level) = preg_split('/\s+-\s+/', $line);
+        
+        if( $page_tag == "post_category_index" && $slug == $page_cat && $account->level < $level )
+        {
+            $config->globals["show_quick_post_form"] = false;
+            
+            break;
+        }
+    }
+}
+
+if( ! $config->globals["show_quick_post_form"] ) return;
+#endregion
 ?>
 
 <script type="text/javascript" src="<?= $config->full_root_path ?>/lib/jquery.exptextarea.js"></script>

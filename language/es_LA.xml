@@ -312,13 +312,14 @@
             <title>Excepciones para el selector de categoría principal</title>
             <description><![CDATA[
                 Puedes limitar las categorías que se despliegan en el selector de categoría principal
-                por nivel de usuario. Esto te permite prevenir que usuarios de nivel bajo accedan a categorías
-                solo disponibles para mods/admins.<br>
+                por nivel de usuario. Esto te permite prevenir que usuarios de nivel bajo publiquen en categorías
+                públicas en las que sólo niveles más altos debería poder publicar.<br>
                 Usa una línea para cada categoría con la siguiente sintaxis:<br>
                 <blocquote><code>slug_de_categoria - nivel_minimo_de_usuario</code><br></blockquote>
                 <i class="fa fa-info-circle"></i>
                 Nota: esta función es meramente cosmética: sólo limita las categorías
-                desplegadas en la lista. No restringe que las entradas tengan categorías "ocultas"
+                desplegadas en la lista y oculta la forma de posteo rápido (de estar activa) de acuerdo a las selecciones.
+                No restringe que las entradas tengan categorías "ocultas"
                 aplicadas o sean excluídas de los índices.
             ]]></description>
             <type>code</type>
