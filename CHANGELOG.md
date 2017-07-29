@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.25.3] - 2017-07-29
+
+- Added check on the posts repository to allow extenders avoiding unneeded data preloads.
+
 ## [1.25.2] - 2017-07-26
 
 - Added extension point on the Quick Posts form.
