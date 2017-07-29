@@ -984,8 +984,10 @@ class posts_repository extends abstract_repository
         $modules["posts"]->load_extensions("posts_repository", "home_prebuilding");
         $find_params = $config->globals["posts_repository/home_index_find_params"];
         unset( $config->globals["posts_repository/home_index_find_params"] );
-        
-        $posts_data = $this->get_posts_data($find_params, "index_builders", "home");
+    
+        $posts_data = new posts_data();
+        if( ! $config->globals["modules:posts.avoid_preloading_posts_for_home_index"] )
+            $posts_data = $this->get_posts_data($find_params, "index_builders", "home");
         
         if( empty($_GET["offset"]) )
         {
