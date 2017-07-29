@@ -1140,7 +1140,7 @@ class posts_repository extends abstract_repository
         return $posts_data;
     }
     
-    private function preload_authors(posts_data &$posts_data)
+    protected function preload_authors(posts_data &$posts_data)
     {
         global $modules, $config;
         
