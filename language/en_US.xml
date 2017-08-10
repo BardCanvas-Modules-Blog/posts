@@ -579,6 +579,34 @@
             <type>number</type>
         </specs>
         
+        <specs key="main_index_cache_for_users">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Main index cache TTL for users
+            ]]></title>
+            <description><![CDATA[
+                Amount of minutes to hold main index page caches for online users.<br>
+                Set to <code>0</code> to disable caching (not recommended).<br>
+                Recommended value: depends on the amount of posts being published, their timing and anonymous vs registered traffic.<br>
+                <code>5</code> minutes should be enough for constantly updated sites.<br>
+                Set to <code>60</code> or more for less updated sites.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
+        <specs key="main_index_cache_for_users_version">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Version number for the users main index cache
+            ]]></title>
+            <description><![CDATA[
+                If you want to bump it, just add <code>1</code> to it.<br>
+                <span class="fa fa-info-circle"></span>
+                Only used if the Main index cache for guests is set above 0.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
         <specs key="slider_posts_cache_ttl" disabled="true">
             <title><![CDATA[
                 <span class="framed_content inlined state_highlight">Cache</span>

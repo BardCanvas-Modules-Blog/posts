@@ -36,6 +36,7 @@ $post->excerpt = preg_replace("/#$tag\\b/i", "", $post->excerpt);
 
 $repository->save($post);
 $repository->delete_tag($post->id_post, $tag);
+$repository->bump_index_caches();
 
 send_notification($account->id_account, "success", replace_escaped_vars(
     $current_module->language->messages->tag_removed,

@@ -100,6 +100,8 @@ if( $account->level >= $custom_fields_editing_level )
 //if( is_array($media_deletions) && ! empty($media_deletions) )
 //    $media_repository->delete_multiple_if_unused($media_deletions);
 
+if( $post->status == "published" ) $repository->bump_index_caches();
+
 if( $_POST["ok_with_url"] == "true" )
     echo "OK:{$post->get_permalink()}";
 elseif( $post->status == 'draft' )

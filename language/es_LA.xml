@@ -590,6 +590,35 @@
             <type>number</type>
         </specs>
         
+        <specs key="main_index_cache_for_users">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Tiempo de vida del caché para usuarios en la página principal
+            ]]></title>
+            <description><![CDATA[
+                Cantidad de minutos para mantener las páginas del índice principal para usuarios en línea.<br>
+                Establecer a <code>0</code> para deshabilitar el cacheo principal (no recomendado).<br>
+                Valor recomendado: depende de la cantidad de posts que se publican, su frecuencia y el tráfico de
+                visitantes anónimos vs registrados.<br>
+                <code>5</code> minutos deberían bastar para sitios con mucho tráfico.<br>
+                Establecer a <code>60</code> o más para sitios menos actualizados.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
+        <specs key="main_index_cache_for_users_version">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Número de versión para el caché de usuarios de la página principal
+            ]]></title>
+            <description><![CDATA[
+                Si quieres regenerarlo, súmale un <code>1</code>.<br>
+                <span class="fa fa-info-circle"></span>
+                Sólo es usado si el tiempo de vida del caché para invitados en la página principal es mayor a cero.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
         <specs key="slider_posts_cache_ttl" disabled="true">
             <title><![CDATA[
                 <span class="framed_content inlined state_highlight">Cache</span>

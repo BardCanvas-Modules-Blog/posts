@@ -71,6 +71,7 @@ if($_GET["action"] == "change_status")
             include __DIR__ . "/save.inc";
             
             $current_module->load_extensions("post_actions", "after_publishing");
+            $repository->bump_index_caches();
             die("OK");
             break;
         }
@@ -93,6 +94,7 @@ if($_GET["action"] == "change_status")
                     $mem_cache->delete("modules:posts.slider_posts");
             
             $current_module->load_extensions("post_actions", "after_flagged_for_reviewing");
+            $repository->bump_index_caches();
             if( empty($res) ) die("OK");
             
             die("OK");
@@ -126,6 +128,7 @@ if($_GET["action"] == "change_status")
                 if( stristr($settings->get("modules:posts.slider_categories"), $post->main_category_slug) !== false )
                     $mem_cache->delete("modules:posts.slider_posts");
             
+            $repository->bump_index_caches();
             die("OK");
             break;
         }
@@ -161,6 +164,7 @@ if($_GET["action"] == "change_status")
             
             $current_module->load_extensions("post_actions", "after_hiding");
             
+            $repository->bump_index_caches();
             die("OK");
             break;
         }
@@ -175,6 +179,7 @@ if($_GET["action"] == "change_status")
             include __DIR__ . "/save.inc";
             
             $current_module->load_extensions("post_actions", "after_setting_as_draft");
+            $repository->bump_index_caches();
             die("OK");
             break;
         }

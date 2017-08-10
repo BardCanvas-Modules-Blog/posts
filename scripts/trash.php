@@ -38,6 +38,7 @@ if( ! empty($attached_media) )
 
 $current_module->load_extensions("post_actions", "before_trashing");
 $posts_repository->trash($post->id_post);
+$posts_repository->bump_index_caches();
 
 $featured_posts_tag = $settings->get("modules:posts.featured_posts_tag");
 if( is_array($post->tags_list) )
