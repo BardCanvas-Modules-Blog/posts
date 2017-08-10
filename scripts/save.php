@@ -54,7 +54,8 @@ $category = $categories_repository->get($_POST["main_category"]);
 if( $category->visibility == "level_based" && $account->level < $category->min_level )
     die($current_module->language->messages->invalid_category_selected);
 
-$old_post = empty($_POST["id_post"]) ? null : clone $repository->get($_POST["id_post"]);
+$old_post = empty($_POST["id_post"]) ? null : $repository->get($_POST["id_post"]);
+if( ! is_null($old_post) ) $old_post = clone $old_post;
 $post     = empty($_POST["id_post"]) ? new post_record() : $repository->get($_POST["id_post"]);
 $post->set_from_post();
 
