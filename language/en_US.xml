@@ -274,7 +274,6 @@
             <invalid_action>The provided action is invalid</invalid_action>
             <invalid_status>The status flag you provided is invalid</invalid_status>
             <action_not_allowed>Sorry, but your privileges aren't enough to carry on this action</action_not_allowed>
-            
         </toolbox>
         <untrash_for_review_confirmation><![CDATA[
             The post will be taken out and will be flagged for reviewing

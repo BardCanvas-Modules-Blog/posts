@@ -277,7 +277,6 @@
             <invalid_action>La acción especificada es inválida</invalid_action>
             <invalid_status>La bandera de estado especificada es inválida</invalid_status>
             <action_not_allowed>Disculpa, pero no tienes privilegios para ejecutar esta acción</action_not_allowed>
-            
         </toolbox>
         <untrash_for_review_confirmation><![CDATA[
             La entrada será sacada de la papelera y será marcada para revisión
