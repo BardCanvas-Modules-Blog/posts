@@ -16,7 +16,8 @@
 <script type="text/javascript"> var post_permalink_style = '<?= $settings->get("modules:posts.permalink_style") ?>'; </script>
 <script type="text/javascript"> var post_autosaver_heartbit = 30 * 1000; </script>
 <script type="text/javascript"> var posts_category_selector_post_process_extensions = {}; </script>
-<script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/functions~v1.19.2-5.js"></script>
+<script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/functions~v1.20.0-5.js"></script>
+<script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/moment.js"></script>
 
 <? $current_module->load_extensions("browser", "index_extra_inits"); ?>
 

@@ -56,8 +56,32 @@ if( $category->visibility == "level_based" && $account->level < $category->min_l
 
 $old_post = empty($_POST["id_post"]) ? null : $repository->get($_POST["id_post"]);
 if( ! is_null($old_post) ) $old_post = clone $old_post;
-$post     = empty($_POST["id_post"]) ? new post_record() : $repository->get($_POST["id_post"]);
+$post = empty($_POST["id_post"]) ? new post_record() : $repository->get($_POST["id_post"]);
+unset($_POST["schedule"]);
 $post->set_from_post();
+
+# Publishing date checks
+$date = date("Y-m-d H:i:s");
+if( ! empty($_POST["publishing_date"]) )
+{
+    $parts = explode(" ", $_POST["publishing_date"]);
+    if( count($parts) != 2 ) die($current_module->language->messages->invalid_publishing_date);
+    
+    $date_parts = explode("-", $parts[0]);
+    if( count($date_parts) != 3 ) die($current_module->language->messages->invalid_publishing_date);
+    
+    $time_parts = explode(":", $parts[1]);
+    if( count($time_parts) < 2 ) die($current_module->language->messages->invalid_publishing_date);
+    if( $time_parts[0] < 0 || $time_parts[0] > 23 ) die($current_module->language->messages->invalid_publishing_date);
+    if( $time_parts[1] < 0 || $time_parts[1] > 59 ) die($current_module->language->messages->invalid_publishing_date);
+    
+    if( ! checkdate($date_parts[1], $date_parts[2], $date_parts[0]) )
+        die($current_module->language->messages->invalid_publishing_date);
+    
+    if( $post->status == "published" && ($post->expiration_date == "" || $post->expiration_date == "0000-00-00 00:00:00")
+        && $_POST["publishing_date"] < $date && is_null($old_post) )
+        die( $current_module->language->messages->publishing_date_in_the_past );
+}
 
 $custom_fields = array();
 $custom_fields_editing_level = $settings->get("modules:posts.level_allowed_to_edit_custom_fields");

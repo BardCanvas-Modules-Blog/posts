@@ -576,8 +576,12 @@ endif;
                     <? if( $row->publishing_date == "0000-00-00 00:00:00" ): ?>
                         &mdash;
                     <? else: ?>
-                        <?= time_mini_string($row->publishing_date) ?><br>
-                        (<?= time_elapsed_string($row->publishing_date) ?>)
+                        <?
+                        if( $row->publishing_date <= date("Y-m-d H:i:s") )
+                            echo time_mini_string($row->publishing_date) . "<br>(" . time_elapsed_string($row->publishing_date) . ")";
+                        else
+                            echo "<span class='alternate'>" . time_mini_string($row->publishing_date) . "<br><i class='fa fa-clock-o'></i> " . time_remaining_string($row->publishing_date) . "</span>";
+                        ?>
                     <? endif; ?>
                 </td>
                 

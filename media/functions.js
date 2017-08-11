@@ -95,10 +95,12 @@ function copy_post(id_post)
             return;
         }
         
-        var record     = data.data;
-        record.id_post = '';
-        record.slug    = '';
-        record.status  = 'draft';
+        var record             = data.data;
+        record.id_post         = '';
+        record.slug            = '';
+        record.status          = 'draft';
+        record.publishing_date = '';
+        record.expiration_date = '';
         
         var $form  = $('#post_form');
         
@@ -159,6 +161,7 @@ function reset_post_form()
     
     $form.find('input[name="is_autosave"]').val('false');
     $form.find('input[name="id_post"]').val('');
+    $form.find('input[name="status"]').val('draft');
     $form.find('.subfield select[name="visibility"] option:first').prop('selected', true);
     
     toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="allow_comments"]'), true);
@@ -174,12 +177,15 @@ function reset_post_form()
             reset_post_form_extensions[fi]($form);
     
     set_post_password('');
+    prefill_scheduling_controls('');
     
     $form.find('.field[data-field="controls"]').hide();
     
     $form.find('input[name="parent_post"]').val('');
     $form.find('.parent_post_title').html('&mdash;');
     $form.find('.parent_post_area').hide();
+    
+    $form.find('.post_buttons').unblock();
 }
 
 /**
@@ -194,6 +200,10 @@ function fill_post_form($form, record)
     $form.find('textarea[name="title"]').val( record.title );
     $form.find('input[name="slug"]').val( record.slug );
     $form.find('textarea[name="excerpt"]').val( record.excerpt );
+    
+    if( record.publishing_date == '0000-00-00 00:00:00' ) record.publishing_date = '';
+    if( record.expiration_date == '0000-00-00 00:00:00' ) record.expiration_date = '';
+    prefill_scheduling_controls(record.publishing_date, record.expiration_date);
     
     set_post_password(record.password);
     
@@ -610,6 +620,147 @@ function add_custom_field()
     $target.append(html);
     $target.find('textarea.new').expandingTextArea();
     $target.find('textarea.new').removeClass('new');
+}
+
+function prefill_scheduling_controls(preset_date, expiration_date)
+{
+    if( typeof expiration_date == 'undefined' ) expiration_date = '';
+    
+    var $form      = $('#post_form');
+    var $container = $form.find('.field[data-field="publishing_date"]');
+    var $field     = $container.find('input[name="publishing_date"]');
+    var status     = $form.find('input[name="status"]').val();
+    
+    $field.val(preset_date);
+    if( preset_date == '' )
+    {
+        $container.find('.input .values .specific').html('&mdash;');
+        $container.find('.input .values .automatic').show();
+        $container.find('.input .values .specific').hide();
+    }
+    else
+    {
+        $container.find('.input .values .specific').text(preset_date);
+        $container.find('.input .values .automatic').hide();
+        $container.find('.input .values .specific').show();
+    }
+    
+    hide_scheduling_controls();
+    if( status == 'published' || expiration_date != '' )
+    {
+        $container.find('.input .controls .trigger').hide();
+        $container.find('.input .controls .fieldset').hide();
+    }
+    else
+    {
+        $container.find('.input .controls .trigger').show();
+        $container.find('.input .controls .fieldset').hide();
+    }
+}
+
+function show_scheduling_controls(preset_date)
+{
+    var $form      = $('#post_form');
+    var $container = $form.find('.field[data-field="publishing_date"]');
+    var $field     = $container.find('input[name="publishing_date"]');
+    
+    if( typeof preset_date == 'undefined' )
+    {
+        var field_value = $field.val();
+        if( field_value != '' )
+        {
+            preset_date = field_value;
+        }
+        else
+        {
+            var dateObject = new Date();
+            dateObject.setHours(dateObject.getHours() + 1);
+            preset_date = moment(dateObject).format("YYYY-MM-DD HH:mm:ss");
+        }
+    }
+    
+    $container.find('.input .values').hide();
+    $container.find('.input .controls .trigger').hide();
+    $container.find('.input .controls .fieldset').show();
+    
+    // console.log( preset_date );
+    var _parts  = preset_date.split(' ');
+    var _date   = _parts[0].split('-');
+    var _time   = _parts[1].split(':');
+    var params  = {
+        year:   _date[0],
+        month:  _date[1],
+        day:    _date[2],
+        hour:   _time[0],
+        minute: _time[1]
+    };
+    
+    $container.find('select').each(function()
+    {
+        var name  = $(this).attr('name').replace('schedule', '').replace('[', '').replace(']', '');
+        var value = params[name];
+        // console.log(name, ' := ', value);
+        
+        $(this).attr('data-original-value', value);
+        $(this).find('option[value="' + value + '"]').prop('selected', true);
+    });
+    
+    $form.find('.post_buttons').fadeOut('fast');
+}
+
+function cancel_schedule_edition()
+{
+    hide_scheduling_controls();
+    
+    $('#post_form').find('.field[data-field="publishing_date"] select').each(function()
+    {
+        var value = $(this).attr('data-original-value');
+        $(this).find('option[value="' + value + '"]').prop('selected', true);
+    });
+}
+
+function remove_automatic_schedule()
+{
+    var $container = $('#post_form').find('.field[data-field="publishing_date"]');
+    
+    $container.find('input[name="publishing_date"]').val('');
+    $container.find('.values .specific').html('&mdash;');
+    $container.find('.values .specific').hide();
+    $container.find('.values .automatic').show();
+    hide_scheduling_controls();
+}
+
+function hide_scheduling_controls()
+{
+    var $form      = $('#post_form');
+    var $container = $form.find('.field[data-field="publishing_date"]');
+    $container.find('.input .controls .fieldset').hide();
+    $container.find('.input .controls .trigger').show();
+    $container.find('.input .values').show();
+    
+    $form.find('.post_buttons').fadeIn('fast');
+}
+
+function set_schedule_date()
+{
+    var $container = $('#post_form').find('.field[data-field="publishing_date"]');
+    var value = $container.find('select[name="schedule[year]"] option:selected').val()
+              + '-'
+              + $container.find('select[name="schedule[month]"] option:selected').val()
+              + '-'
+              + $container.find('select[name="schedule[day]"] option:selected').val()
+              + ' '
+              + $container.find('select[name="schedule[hour]"] option:selected').val()
+              + ':'
+              + $container.find('select[name="schedule[minute]"] option:selected').val()
+              + ':00'
+    ;
+    
+    $container.find('input[name="publishing_date"]').val(value);
+    $container.find('.values .specific').text(value);
+    $container.find('.values .automatic').hide();
+    $container.find('.values .specific').show();
+    hide_scheduling_controls();
 }
 
 $(document).ready(function()

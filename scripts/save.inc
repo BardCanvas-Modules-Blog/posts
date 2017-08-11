@@ -7,6 +7,7 @@
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  * 
  * @var post_record $post
+ * @var string      $date
  */
 
 use hng2_base\config;
@@ -58,9 +59,14 @@ $current_module->load_extensions("save_post", "after_record_forging");
 #     $repository->unset_category($old_post->main_category, $post->id_post);
 # $repository->set_category($_POST["main_category"], $post->id_post);
 
-# Enforced expiration date by category
+# Publishing date
 if( $post->status == "published" && (empty($post->publishing_date) || $post->publishing_date == "0000-00-00 00:00:00") )
-    $post->publishing_date = date("Y-m-d H:i:s");
+{
+    if( empty($_POST["publishing_date"]) )
+        $post->publishing_date = $date;
+    else
+        $post->publishing_date = $_POST["publishing_date"];
+}
 
 $enforced_expiration = $settings->get("modules:posts.enforced_expiration_by_category");
 $set_expiration_date = "";

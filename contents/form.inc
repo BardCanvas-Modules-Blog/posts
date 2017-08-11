@@ -13,8 +13,10 @@
 use hng2_base\config;
 use hng2_base\module;
 use hng2_modules\categories\categories_repository;
+use hng2_modules\posts\posts_repository;
 use hng2_modules\posts\toolbox;
 
+$posts_repository      = new posts_repository();
 $posts_toolbox         = new toolbox();
 $categories_repository = new categories_repository();
 $default_category      = $categories_repository->get("0000000000000");
@@ -248,6 +250,93 @@ if( empty($custom_fields_editing_level) )
                         &nbsp;
                         <span class="pseudo_link" onclick="remove_post_featured_image()">
                             <?= $current_module->language->form->fields->featured_image->remove ?>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="field" data-field="publishing_date">
+                    <input type="hidden" name="publishing_date" value="">
+                    <div class="caption">
+                        <?= $current_module->language->form->fields->publishing_date->caption ?>
+                    </div>
+                    <div class="input">
+                        <span class="values">
+                            <span class="framed_content inlined automatic">
+                                <?= $current_module->language->form->fields->publishing_date->automatic ?>
+                            </span>
+                            <span class="framed_content inlined specific" style="display: none">&mdash;</span>
+                        </span>
+                        
+                        <span class="controls">
+                            <span class="trigger pseudo_link" onclick="show_scheduling_controls()"><i class="fa fa-pencil"></i>
+                                <?= $current_module->language->form->fields->publishing_date->schedule ?></span>
+                            
+                            <span class="fieldset" style="display: none">
+                                <span class="inline-block nowrap" style="margin: 0 5px 5px 0">
+                                    <i class="fa fa-calendar"></i>
+                                    <select name="schedule[year]" style="width: auto">
+                                        <?
+                                        $first_year = date("Y") - 1;
+                                        $last_year  = date("Y") + 1;
+                                        if( $account->level < config::MODERATOR_USER_LEVEL )
+                                        {
+                                            $first_year = substr($account->creation_date, 0, 4);
+                                        }
+                                        else
+                                        {
+                                            $rows = $posts_repository->find(array("status = 'published'", "publishing_date <> ''", "publishing_date <> '0000-00-00 00:00:00'"), 1, 0, "publishing_date asc");
+                                            if( count($rows) > 0 ) $first_year = substr($rows[0]->publishing_date, 0, 4) - 1;
+                                            else                   $first_year = date("Y") - 10;
+                                        }
+                                        
+                                        for($c = $first_year; $c <= $last_year; $c++):
+                                            $number   = $c;
+                                            $selected = date("Y") == $number ? "selected" : ""; ?>
+                                            <option value="<?= $number ?>"><?= $number ?></option>
+                                        <? endfor; ?>
+                                    </select>-<select name="schedule[month]" style="width: auto">
+                                        <? for($c = 1; $c <= 12; $c++):
+                                            $number   = sprintf("%02.0f", $c);
+                                            $stamp    = strtotime("2016-$c-01");
+                                            $string   = ucwords(strftime("%b", $stamp));
+                                            $selected = date("m") == $number ? "selected" : ""; ?>
+                                            <option <?= $selected ?> value="<?= $number ?>"><?= $string ?></option>
+                                        <? endfor; ?>
+                                    </select>-<select name="schedule[day]" style="width: auto">
+                                        <? for($c = 1; $c <= 31; $c++):
+                                            $number   = sprintf("%02.0f", $c);
+                                            $stamp    = strtotime("2016-01-$c");
+                                            $selected = date("d") == $number ? "selected" : ""; ?>
+                                            <option <?= $selected ?> value="<?= $number ?>"><?= $number ?></option>
+                                        <? endfor; ?>
+                                    </select>
+                                </span>
+                                
+                                <span class="inline-block nowrap" style="margin: 0 5px 5px 0">
+                                    <i class="fa fa-clock-o"></i>
+                                    <select name="schedule[hour]" style="width: auto">
+                                        <? for($c = 0; $c <= 23; $c++):
+                                            $number   = sprintf("%02.0f", $c);
+                                            $selected = date("H") == $number ? "selected" : ""; ?>
+                                            <option <?= $selected ?> value="<?= $number ?>"><?= $number ?></option>
+                                        <? endfor; ?>
+                                    </select>:<select name="schedule[minute]" style="width: auto">
+                                        <? for($c = 0; $c <= 60; $c++):
+                                            $number   = sprintf("%02.0f", $c);
+                                            $selected = date("i") == $number ? "selected" : ""; ?>
+                                            <option <?= $selected ?> value="<?= $number ?>"><?= $number ?></option>
+                                        <? endfor; ?>
+                                    </select>
+                                </span>
+                                
+                                <span class="inline-block nowrap">
+                                    <button onclick="set_schedule_date(); return false;"><i class="fa fa-check"></i></button>
+                                    <button onclick="cancel_schedule_edition(); return false;"><i class="fa fa-times"></i></button>
+                                    <button onclick="remove_automatic_schedule(); return false;">
+                                        <?= $current_module->language->form->fields->publishing_date->immediate ?>
+                                    </button>
+                                </span>
+                            </span>
                         </span>
                     </div>
                 </div>

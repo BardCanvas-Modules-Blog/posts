@@ -204,6 +204,12 @@
                 <set>Definir…</set>
                 <remove>Remover</remove>
             </featured_image>
+            <publishing_date>
+                <caption>Fecha de publicación:</caption>
+                <automatic>Automática</automatic>
+                <immediate>De inmediato</immediate>
+                <schedule>Programar...</schedule>
+            </publishing_date>
             <buttons>
                 <image>Añadir foto</image>
                 <video>Añadir video</video>
@@ -286,6 +292,8 @@
             ¿Deseas continuar?
         ]]></untrash_for_review_confirmation>
         <invalid_category_selected>Lo sentimos, pero no puedes usar la categoría seleccionada.</invalid_category_selected>
+        <invalid_publishing_date>Por favor especifica una fecha de programación válida</invalid_publishing_date>
+        <publishing_date_in_the_past>Por favor especifica una fecha de publicación en el futuro</publishing_date_in_the_past>
     </messages>
     
     <settings_data>

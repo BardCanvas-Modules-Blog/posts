@@ -203,6 +203,12 @@
                 <set>Set…</set>
                 <remove>Remove</remove>
             </featured_image>
+            <publishing_date>
+                <caption>Publishing Date:</caption>
+                <automatic>Automatic</automatic>
+                <immediate>Immediately</immediate>
+                <schedule>Schedule...</schedule>
+            </publishing_date>
             <buttons>
                 <image>Add picture</image>
                 <video>Add video</video>
@@ -283,6 +289,8 @@
             Do you want to continue?
         ]]></untrash_for_review_confirmation>
         <invalid_category_selected>Sorry, but you can't use the selected category.</invalid_category_selected>
+        <invalid_publishing_date>Please specify a valid scheduling date</invalid_publishing_date>
+        <publishing_date_in_the_past>Please specify a publishing date in the future</publishing_date_in_the_past>
     </messages>
     
     <settings_data>
