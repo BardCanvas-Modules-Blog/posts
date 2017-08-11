@@ -39,6 +39,8 @@ if( strlen($evaling_date) == 10 ) # Day
     $template->set("showing_date", $showing_date);
     $start_date = $evaling_date . " 00:00:00";
     $end_date   = $evaling_date . " 23:59:59";
+    
+    if( $evaling_date == date("Y-m-d") ) $end_date = date("Y-m-d H:i:s");
 }
 elseif( strlen($evaling_date) == 7 ) # Month
 {
@@ -57,6 +59,8 @@ elseif( strlen($evaling_date) == 7 ) # Month
     $start_date    = date("Y-m-d 00:00:00", strtotime("{$evaling_date}-01"));
     $end_timestamp = strtotime("{$start_date} + 1 month");
     $end_date      = date("Y-m-d 23:59:59", $end_timestamp - 86400);
+    
+    if( $evaling_date == date("Y-m") ) $end_date = date("Y-m-d H:i:s");
 }
 else # Year
 {
@@ -69,6 +73,8 @@ else # Year
     $showing_date = $evaling_date;
     $start_date   = "{$evaling_date}-01-01 00:00:00";
     $end_date     = "{$evaling_date}-12-31 23:59:59";
+    
+    if( $evaling_date == date("Y") ) $end_date = date("Y-m-d H:i:s");
 }
 
 $template->set("showing_date", $showing_date);
