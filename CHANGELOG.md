@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.26.1] - 2017-08-11
+
+- Added a fix that thrown an exception when autosaving drafts on a cluster with sync delays.
+
 ## [1.26.0] - 2017-08-11
 
 - Added main index caching for users (by level) with automatic bumping.
