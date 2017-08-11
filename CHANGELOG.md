@@ -1,6 +1,12 @@
 
 # Posts Module Change Log
 
+## [1.26.0] - 2017-08-11
+
+- Added main index caching for users (by level) with automatic bumping.
+- Fixed issue in posts archive by date that allowed showing future posts.
+- Allowed editing of publishing date on the composition form.
+
 ## [1.25.3] - 2017-07-29
 
 - Added check on the posts repository to allow extenders avoiding unneeded data preloads.
