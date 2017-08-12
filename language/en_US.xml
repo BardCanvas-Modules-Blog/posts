@@ -586,6 +586,20 @@
             <type>number</type>
         </specs>
         
+        <specs key="prevent_guests_cache_autobumping">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Prevent guests cache autobumping
+            ]]></title>
+            <description><![CDATA[
+                If guests cache is enabled, it will be automatically bumped when
+                posts are published or unpublished. Enable this option to prevent
+                this from happening and leave the cache alone until it expires
+                and regeneration triggers.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        
         <specs key="main_index_cache_for_users">
             <title><![CDATA[
                 <span class="framed_content inlined state_highlight">Cache</span>
@@ -612,6 +626,20 @@
                 Only used if the Main index cache for guests is set above 0.
             ]]></description>
             <type>number</type>
+        </specs>
+        
+        <specs key="prevent_users_cache_autobumping">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Cache</span>
+                Prevent users cache autobumping
+            ]]></title>
+            <description><![CDATA[
+                If users cache is enabled, it will be automatically bumped when
+                posts are published or unpublished. Enable this option to prevent
+                this from happening and leave the cache alone until it expires
+                and regeneration triggers.
+            ]]></description>
+            <type>boolean</type>
         </specs>
         
         <specs key="slider_posts_cache_ttl" disabled="true">

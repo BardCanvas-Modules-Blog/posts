@@ -597,6 +597,20 @@
             <type>number</type>
         </specs>
         
+        <specs key="prevent_guests_cache_autobumping">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Evitar actualización automática de caché de invitados
+            ]]></title>
+            <description><![CDATA[
+                Cuando el caché de invitados es habilitado, se incrementará la versión
+                de forma automática cuando se publiquen o despubliquen entradas.
+                Activa esta opción para prevenir que esto suceda y dejar que
+                el caché se regenere cuando expire.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        
         <specs key="main_index_cache_for_users">
             <title><![CDATA[
                 <span class="framed_content inlined state_highlight">Caché</span>
@@ -624,6 +638,20 @@
                 Sólo es usado si el tiempo de vida del caché para invitados en la página principal es mayor a cero.
             ]]></description>
             <type>number</type>
+        </specs>
+        
+        <specs key="prevent_users_cache_autobumping">
+            <title><![CDATA[
+                <span class="framed_content inlined state_highlight">Caché</span>
+                Evitar actualización automática de caché de usuarios
+            ]]></title>
+            <description><![CDATA[
+                Cuando el caché de usuarios es habilitado, se incrementará la versión
+                de forma automática cuando se publiquen o despubliquen entradas.
+                Activa esta opción para prevenir que esto suceda y dejar que
+                el caché se regenere cuando expire.
+            ]]></description>
+            <type>boolean</type>
         </specs>
         
         <specs key="slider_posts_cache_ttl" disabled="true">

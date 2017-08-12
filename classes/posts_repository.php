@@ -1537,15 +1537,19 @@ class posts_repository extends abstract_repository
         
         $settings->prepare_batch();
         
-        if( (int) $settings->get("modules:posts.main_index_cache_for_guests") > 0 )
-        {
+        if(
+            $settings->get("modules:posts.prevent_guests_cache_autobumping") != "true"
+            && (int) $settings->get("modules:posts.main_index_cache_for_guests") > 0
+        ) {
             $cache_version = (int) $settings->get("modules:posts.main_index_cache_for_guests_version");
             if( $cache_version > 65535 ) $cache_version = 0;
             $settings->set("modules:posts.main_index_cache_for_guests_version", $cache_version + 1);
         }
         
-        if( (int) $settings->get("modules:posts.main_index_cache_for_users") > 0 )
-        {
+        if(
+            $settings->get("modules:posts.prevent_users_cache_autobumping") != "true"
+            && (int) $settings->get("modules:posts.main_index_cache_for_users") > 0
+        ) {
             $cache_version = (int) $settings->get("modules:posts.main_index_cache_for_users_version");
             if( $cache_version > 65535 ) $cache_version = 0;
             $settings->set("modules:posts.main_index_cache_for_users_version", $cache_version + 1);
