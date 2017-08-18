@@ -3,7 +3,9 @@
 
 ## [1.26.1] - 2017-08-11
 
-- Added a fix that thrown an exception when autosaving drafts on a cluster with sync delays.
+- Added settings to control autobumping of index caches.
+- Added a fix that threw an exception when autosaving drafts on a cluster with sync delays.
+- Improved publishing date editor.
 
 ## [1.26.0] - 2017-08-11
 
