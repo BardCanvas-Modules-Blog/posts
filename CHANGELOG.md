@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.26.2] - 2017-08-11
+
+- Version bump.
+
 ## [1.26.1] - 2017-08-11
 
 - Added settings to control autobumping of index caches.
