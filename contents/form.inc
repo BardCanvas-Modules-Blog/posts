@@ -271,7 +271,7 @@ if( empty($custom_fields_editing_level) )
                             <span class="trigger pseudo_link" onclick="show_scheduling_controls()"><i class="fa fa-pencil"></i>
                                 <?= $current_module->language->form->fields->publishing_date->schedule ?></span>
                             
-                            <span class="fieldset" style="display: none">
+                            <span class="fieldset framed_content state_active nowrap" style="display: none">
                                 <span class="inline-block nowrap" style="margin: 0 5px 5px 0">
                                     <i class="fa fa-calendar"></i>
                                     <select name="schedule[year]" style="width: auto">
@@ -312,6 +312,8 @@ if( empty($custom_fields_editing_level) )
                                     </select>
                                 </span>
                                 
+                                <br>
+                                
                                 <span class="inline-block nowrap" style="margin: 0 5px 5px 0">
                                     <i class="fa fa-clock-o"></i>
                                     <select name="schedule[hour]" style="width: auto">
@@ -329,13 +331,15 @@ if( empty($custom_fields_editing_level) )
                                     </select>
                                 </span>
                                 
-                                <span class="inline-block nowrap">
+                                <br>
+                                
+                                <span class="inline-block nowrap pull-right">
                                     <button onclick="set_schedule_date(); return false;"><i class="fa fa-check"></i></button>
                                     <button onclick="cancel_schedule_edition(); return false;"><i class="fa fa-times"></i></button>
                                     <button onclick="remove_automatic_schedule(); return false;">
                                         <?= $current_module->language->form->fields->publishing_date->immediate ?>
                                     </button>
-                                </span>
+                                </span><br>
                             </span>
                         </span>
                     </div>

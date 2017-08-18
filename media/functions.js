@@ -185,7 +185,7 @@ function reset_post_form()
     $form.find('.parent_post_title').html('&mdash;');
     $form.find('.parent_post_area').hide();
     
-    $form.find('.post_buttons').unblock();
+    // $form.find('.post_buttons').unblock();
 }
 
 /**
@@ -392,6 +392,11 @@ function prepare_post_preview()
 function prepare_post_form_serialization()
 {
     var $form = $('#post_form');
+    
+    if( $form.find('input[name="is_autosave"]').val() != 'true' )
+        if( $form.find('.field[data-field="publishing_date"] .input .controls .fieldset').is(':visible') )
+            set_schedule_date();
+    
     $form.find('textarea[class*="tinymce"]').each(function()
     {
         var id      = $(this).attr('id');
@@ -705,7 +710,7 @@ function show_scheduling_controls(preset_date)
         $(this).find('option[value="' + value + '"]').prop('selected', true);
     });
     
-    $form.find('.post_buttons').fadeOut('fast');
+    // $form.find('.post_buttons').fadeOut('fast');
 }
 
 function cancel_schedule_edition()
@@ -738,7 +743,7 @@ function hide_scheduling_controls()
     $container.find('.input .controls .trigger').show();
     $container.find('.input .values').show();
     
-    $form.find('.post_buttons').fadeIn('fast');
+    // $form.find('.post_buttons').fadeIn('fast');
 }
 
 function set_schedule_date()
@@ -760,6 +765,7 @@ function set_schedule_date()
     $container.find('.values .specific').text(value);
     $container.find('.values .automatic').hide();
     $container.find('.values .specific').show();
+    console.log( 'huevos' );
     hide_scheduling_controls();
 }
 
