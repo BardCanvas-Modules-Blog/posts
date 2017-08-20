@@ -696,26 +696,17 @@ function show_scheduling_controls(preset_date)
     
     // console.log( preset_date );
     var _parts  = preset_date.split(' ');
-    var _date   = _parts[0].split('-');
-    var _time   = _parts[1].split(':');
-    var params  = {
-        year:   _date[0],
-        month:  _date[1],
-        day:    _date[2],
-        hour:   _time[0],
-        minute: _time[1]
-    };
+    var _date   = _parts[0];
+    var _time   = _parts[1].substring(5, 0);
+    var val;
     
-    $container.find('select').each(function()
-    {
-        var name  = $(this).attr('name').replace('schedule', '').replace('[', '').replace(']', '');
-        var value = params[name];
-        // console.log(name, ' := ', value);
-        
-        $(this).attr('data-original-value', value);
-        $(this).find('option[value="' + value + '"]').prop('selected', true);
-    });
+    val = $container.find('input[name="schedule[date]"]').val();
+    $container.find('input[name="schedule[date]"]').attr('data-original-value', val);
+    $container.find('input[name="schedule[date]"]').val(_date);
     
+    val = $container.find('input[name="schedule[time]"]').val();
+    $container.find('input[name="schedule[time]"]').attr('data-original-value', val);
+    $container.find('input[name="schedule[time]"]').val(_time);
     // $form.find('.post_buttons').fadeOut('fast');
 }
 
@@ -723,11 +714,14 @@ function cancel_schedule_edition()
 {
     hide_scheduling_controls();
     
-    $('#post_form').find('.field[data-field="publishing_date"] select').each(function()
-    {
-        var value = $(this).attr('data-original-value');
-        $(this).find('option[value="' + value + '"]').prop('selected', true);
-    });
+    var $container = $('#post_form').find('.field[data-field="publishing_date"]');
+    var val;
+    
+    val = $container.find('input[name="schedule[date]"]').attr('data-original-value');
+    $container.find('input[name="schedule[date]"]').val(val);
+    
+    val = $container.find('input[name="schedule[time]"]').attr('data-original-value');
+    $container.find('input[name="schedule[time]"]').val(val);
 }
 
 function remove_automatic_schedule()
@@ -755,15 +749,9 @@ function hide_scheduling_controls()
 function set_schedule_date()
 {
     var $container = $('#post_form').find('.field[data-field="publishing_date"]');
-    var value = $container.find('select[name="schedule[year]"] option:selected').val()
-              + '-'
-              + $container.find('select[name="schedule[month]"] option:selected').val()
-              + '-'
-              + $container.find('select[name="schedule[day]"] option:selected').val()
+    var value = $container.find('input[name="schedule[date]"]').val()
               + ' '
-              + $container.find('select[name="schedule[hour]"] option:selected').val()
-              + ':'
-              + $container.find('select[name="schedule[minute]"] option:selected').val()
+              + $container.find('input[name="schedule[time]"]').val()
               + ':00'
     ;
     
@@ -771,7 +759,6 @@ function set_schedule_date()
     $container.find('.values .specific').text(value);
     $container.find('.values .automatic').hide();
     $container.find('.values .specific').show();
-    console.log( 'huevos' );
     hide_scheduling_controls();
 }
 
@@ -782,5 +769,12 @@ $(document).ready(function()
         beforeSerialize: prepare_post_form_serialization,
         beforeSubmit:    prepare_post_form_submission,
         success:         process_post_form_response
+    });
+    
+    $('#schedule_date').datepicker({
+        showOn:          'button',
+        buttonImage:     $_FULL_ROOT_PATH + '/media/icons/calendar.png',
+        buttonImageOnly: true,
+        dateFormat:      'yy-mm-dd'
     });
 });
