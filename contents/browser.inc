@@ -374,7 +374,8 @@ endif;
         
         <tbody>
         <? foreach( $records as $row ): ?>
-            <tr data-record-id="<?= $row->id_post ?>" class="<? if($row->status == "trashed") echo "deleted" ?>">
+            <tr data-record-id="<?= $row->id_post ?>" class="<? if($row->status == "trashed") echo "deleted" ?>"
+                onclick="$(this).toggleClass('clicked')">
                 
                 <!-- Selector -->
                 <td nowrap>
