@@ -14,6 +14,8 @@ var post_autosaver_enabled  = false;
 var post_autosaver_interval = null;
 var post_autosaver_working  = false;
 
+var browser_position = 0;
+
 function prepare_post_addition()
 {
     var $workarea = $('#form_workarea');
@@ -368,17 +370,21 @@ function trash_post(id_post)
 
 function show_post_form()
 {
+    browser_position = $(window).scrollTop();
+    
     hook_abandon_post();
     $('#main_workarea').hide('fast');
     $('#form_workarea').show('fast');
     start_post_autosaver();
+    
+    $.scrollTo(0, 250);
 }
 
 function hide_post_form()
 {
     unhook_abandon_post();
     $('#form_workarea').hide('fast');
-    $('#main_workarea').show('fast');
+    $('#main_workarea').show('fast', function() { $.scrollTo(browser_position, 250); });
 }
 
 function prepare_post_preview()
