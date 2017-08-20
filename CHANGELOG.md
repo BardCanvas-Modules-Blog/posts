@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.26.3] - 2017-08-19
+
+- Improved records browser navigation.
+- Simplified publishing date editor.
+
 ## [1.26.2] - 2017-08-11
 
 - Version bump.
