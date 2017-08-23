@@ -82,6 +82,21 @@ if( ! empty($search_for) )
     }
 }
 
+$restore_status = "";
+if( $search_status == "scheduled" )
+{
+    $restore_status = $search_status;
+    $search_status  = "published";
+    $where[]        = "publishing_date > '" . date("Y-m-d H:i:s") . "'";
+}
+
+if( $search_status == "expired" )
+{
+    $restore_status = $search_status;
+    $search_status  = "published";
+    $where[]        = "(expiration_date <> '0000-00-00 00:00:00' and expiration_date < '" . date("Y-m-d H:i:s") . "')";
+}
+
 if( $account->level < config::MODERATOR_USER_LEVEL )
 {
     if( $search_status == "hidden" ) $search_status = "";
@@ -105,6 +120,7 @@ else
     if( ! empty($search_status) ) $where[] = "status = '$search_status'";
 }
 
+if( ! empty($restore_status) ) $search_status = $restore_status;
 if( ! empty($search_category) ) $where[] = "main_category = '$search_category'";
 
 #endregion
@@ -249,43 +265,20 @@ $categories            = $categories_repository->get_as_tree_for_select();
         </span>
         
         <div class="framed_radios" style="margin: 5px 0 0 0;">
+            
             <label class="framed_content inlined <? if($search_status == "") echo "state_active"; ?>">
                 <input type="radio" name="search_status" <? if($search_status == "") echo "checked"; ?> value=""
                        onchange="$('#filter_form').submit()">
-                <?= $current_module->language->record_nav->filters->any_status ?>
+                <?= $current_module->language->record_nav->special_filters->all ?>
             </label>
             
-            <label class="framed_content inlined <? if($search_status == "draft") echo "state_active"; ?>">
-                <input type="radio" name="search_status" <? if($search_status == "draft") echo "checked"; ?> value="draft"
-                       onchange="$('#filter_form').submit()">
-                <?= $current_module->language->status_labels->draft ?>
-            </label>
-            
-            <label class="framed_content inlined <? if($search_status == "published") echo "state_active"; ?>">
-                <input type="radio" name="search_status" <? if($search_status == "published") echo "checked"; ?> value="published"
-                       onchange="$('#filter_form').submit()">
-                <?= $current_module->language->status_labels->published ?>
-            </label>
-            
-            <label class="framed_content inlined <? if($search_status == "reviewing") echo "state_active"; ?>">
-                <input type="radio" name="search_status" <? if($search_status == "reviewing") echo "checked"; ?> value="reviewing"
-                       onchange="$('#filter_form').submit()" id="reviewing_trigger">
-                <?= $current_module->language->status_labels->reviewing ?>
-            </label>
-            
-            <? if( $account->level >= config::MODERATOR_USER_LEVEL ): ?>
-                <label class="framed_content inlined <? if($search_status == "hidden") echo "state_active"; ?>">
-                    <input type="radio" name="search_status" <? if($search_status == "hidden") echo "checked"; ?> value="hidden"
+            <? foreach($current_module->language->record_nav->special_filters->filter as $item): ?>
+                <label class="framed_content inlined <? if($search_status == trim($item["value"])) echo "state_active"; ?>">
+                    <input type="radio" name="search_status" <? if($search_status == trim($item["value"])) echo "checked"; ?> value="<?= trim($item["value"]) ?>"
                            onchange="$('#filter_form').submit()">
-                    <?= $current_module->language->status_labels->hidden ?>
+                    <?= trim($item) ?>
                 </label>
-            <? endif; ?>
-            
-            <label class="framed_content inlined <? if($search_status == "trashed") echo "state_active"; ?>">
-                <input type="radio" name="search_status" <? if($search_status == "trashed") echo "checked"; ?> value="trashed"
-                       onchange="$('#filter_form').submit()">
-                <?= $current_module->language->status_labels->trashed ?>
-            </label>
+            <? endforeach; ?>
             
             <? if($account->_is_admin && $search_status == "trashed"): ?>
                 <button onclick="empty_trash(); return false;" style="font-size: 12pt; padding: 5px;">

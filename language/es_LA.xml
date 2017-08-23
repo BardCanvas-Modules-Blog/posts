@@ -130,6 +130,16 @@
             <any_status>Todo</any_status>
             <any_category>Cualquier categoría</any_category>
         </filters>
+        <special_filters>
+            <all>Todas</all>
+            <filter value="draft"    >Borradores</filter>
+            <filter value="published">Publicadas</filter>
+            <filter value="scheduled">Programadas</filter>
+            <filter value="expired"  >Expiradas</filter>
+            <filter value="reviewing">En revisión</filter>
+            <filter value="hidden"   >Ocultas</filter>
+            <filter value="trashed"  >En papelera</filter>
+        </special_filters>
     </record_nav>
     
     <status_labels>

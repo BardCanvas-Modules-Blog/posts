@@ -129,6 +129,16 @@
             <any_status>All</any_status>
             <any_category>Any category</any_category>
         </filters>
+        <special_filters>
+            <all>All</all>
+            <filter value="draft"    >Drafts</filter>
+            <filter value="published">Published</filter>
+            <filter value="scheduled">Scheduled</filter>
+            <filter value="expired"  >Expired</filter>
+            <filter value="reviewing">Reviewing</filter>
+            <filter value="hidden"   >Hidden</filter>
+            <filter value="trashed"  >Trashed</filter>
+        </special_filters>
     </record_nav>
     
     <status_labels>
