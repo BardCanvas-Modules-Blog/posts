@@ -250,3 +250,101 @@
 <div id="multirecord_actions_none_selected" style="display: none;"><?= unindent($current_module->language->multi_actions->none_selected) ?></div>
 <div id="multirecord_actions_all_done"      style="display: none;"><?= unindent($current_module->language->multi_actions->done) ?></div>
 <div id="empty_trash_confirmation"          style="display: none;"><?= unindent($current_module->language->empty_trash->confirmation) ?></div>
+
+<div id="schedule_editor" style="display: none; padding: 10px;" class="aligncenter"
+    data-ok-caption="<?= $language->ok ?>" data-cancel-caption="<?= $language->cancel ?>"
+    title="<?= $current_module->language->form->fields->publishing_date->changer_dialog_caption ?>">
+    
+    <input type="hidden" id="schedule_id_post">
+    
+    <div id="schedule_date_control"></div>
+    
+    <br>
+    <i class="fa fa-clock-o"></i>
+    <input type="text" id="schedule_time_control" value="" maxlength="5"
+           style="width: 60px; text-align: center;">
+</div>
+<script type="text/javascript">
+    
+    function show_schedule_changer(trigger, pubdate, id_post)
+    {
+        var $trigger = $(trigger);
+        var parts    = pubdate.split(' ');
+        var _date    = parts[0];
+        var _time    = parts[1].substring(0, 5);
+        
+        var $dialog      = $('#schedule_editor');
+        var $datecontrol = $('#schedule_date_control');
+        var $timecontrol = $('#schedule_time_control');
+        var $idpostfield = $('#schedule_id_post');
+        
+        $dialog.data('current_date', pubdate.substring(0, 16));
+        $idpostfield.val(id_post);
+        $timecontrol.val(_time);
+        $datecontrol.datepicker('setDate', _date);
+        $dialog.dialog('open');
+    }
+    
+    function save_post_publishing_date()
+    {
+        var $dialog = $('#schedule_editor');
+        var _date   = moment($('#schedule_date_control').datepicker('getDate')).format('YYYY-MM-DD');
+        var _time   = $('#schedule_time_control').val();
+        
+        console.log( $dialog.data('current_date') );
+        if( $dialog.data('current_date') == (_date + ' ' + _time) )
+        {
+            $dialog.dialog('close');
+            
+            return;
+        }
+        
+        var id      = $('#schedule_id_post').val();
+        var url     = $_FULL_ROOT_PATH + '/posts/scripts/set_publishing_date.php';
+        var params  = {
+            id_post: id,
+            date:    _date + ' ' + _time + ':00',
+            wasuuup: wasuuup()
+        };
+        
+        $dialog.closest('.ui-dialog').block(blockUI_medium_params);
+        $.post(url, params, function(response)
+        {
+            if( response != 'OK' )
+            {
+                alert(response);
+    
+                $dialog.closest('.ui-dialog').unblock();
+                return;
+            }
+            
+            $dialog.closest('.ui-dialog').unblock();
+            $dialog.dialog('close');
+            $('#refresh_posts_browser').click();
+        });
+    }
+    
+    $(document).ready(function()
+    {
+        var $dialog = $('#schedule_editor');
+        
+        $('#schedule_date_control').datepicker({ dateFormat: 'yy-mm-dd' });
+        
+        $dialog.dialog({
+            autoOpen: false,
+            modal:    true,
+            width:    330,
+            buttons: [
+                {
+                    text:  $dialog.attr('data-ok-caption'),
+                    icons: { primary: "ui-icon-check" },
+                    click: function() { save_post_publishing_date(); }
+                }, {
+                    text:  $dialog.attr('data-cancel-caption'),
+                    icons: { primary: "ui-icon-cancel" },
+                    click: function() { $(this).dialog('close'); }
+                }
+            ]
+        })
+    });
+</script>

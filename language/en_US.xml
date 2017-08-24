@@ -218,6 +218,8 @@
                 <automatic>Automatic</automatic>
                 <immediate>Immediately</immediate>
                 <schedule>Schedule...</schedule>
+                <change>Change</change>
+                <changer_dialog_caption>Change scheduling</changer_dialog_caption>
             </publishing_date>
             <buttons>
                 <image>Add picture</image>
@@ -301,6 +303,8 @@
         <invalid_category_selected>Sorry, but you can't use the selected category.</invalid_category_selected>
         <invalid_publishing_date>Please specify a valid scheduling date</invalid_publishing_date>
         <publishing_date_in_the_past>Please specify a publishing date in the future</publishing_date_in_the_past>
+        <cannot_change_others_posts>You cannot change posts from other users.</cannot_change_others_posts>
+        <cannot_schedule_posts_with_expiration>Posts with expiration date cannot be scheduled.</cannot_schedule_posts_with_expiration>
     </messages>
     
     <settings_data>

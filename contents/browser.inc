@@ -275,7 +275,7 @@ $categories            = $categories_repository->get_as_tree_for_select();
             <? foreach($current_module->language->record_nav->special_filters->filter as $item): ?>
                 <label class="framed_content inlined <? if($search_status == trim($item["value"])) echo "state_active"; ?>">
                     <input type="radio" name="search_status" <? if($search_status == trim($item["value"])) echo "checked"; ?> value="<?= trim($item["value"]) ?>"
-                           onchange="$('#filter_form').submit()">
+                           onchange="var $form = $('#filter_form'); $form.find('input[name=offset]').val(0); $form.submit()">
                     <?= trim($item) ?>
                 </label>
             <? endforeach; ?>
@@ -571,10 +571,30 @@ endif;
                         &mdash;
                     <? else: ?>
                         <?
-                        if( $row->publishing_date <= date("Y-m-d H:i:s") )
-                            echo time_mini_string($row->publishing_date) . "<br>(" . time_elapsed_string($row->publishing_date) . ")";
-                        else
-                            echo "<span class='alternate'>" . time_mini_string($row->publishing_date) . "<br><i class='fa fa-clock-o'></i> " . time_remaining_string($row->publishing_date) . "</span>";
+                        if( $row->publishing_date <= date("Y-m-d H:i:s") ):
+                            echo time_mini_string($row->publishing_date) . "<br>(" . time_elapsed_string(
+                                    $row->publishing_date
+                                ) . ")";
+                        else:
+                            ?>
+                            <span class="alternate scheduled_date">
+                                <?= utf8_encode(strftime("%a", strtotime($row->publishing_date))) . " " . time_complete_string($row->publishing_date) ?>
+                                <br>
+                                <i class='fa fa-clock-o'></i>
+                                <?
+                                $parts = explode(" ", time_remaining_string($row->publishing_date));
+                                if( count($parts) == 4 ) array_pop($parts) && array_pop($parts);
+                                if( count($parts) == 3 ) array_pop($parts);
+                                echo implode(" ", $parts);
+                                ?>
+                                <br>
+                                <span class="pseudo_link"
+                                      onclick="show_schedule_changer(this, '<?= $row->publishing_date ?>', '<?= $row->id_post ?>')"
+                                      ><i class="fa fa-pencil"></i>
+                                    <?= $current_module->language->form->fields->publishing_date->change ?></span>
+                            </span>
+                            <?
+                        endif;
                         ?>
                     <? endif; ?>
                 </td>

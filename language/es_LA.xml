@@ -219,6 +219,8 @@
                 <automatic>Automática</automatic>
                 <immediate>De inmediato</immediate>
                 <schedule>Programar...</schedule>
+                <change>Cambiar</change>
+                <changer_dialog_caption>Cambiar programación</changer_dialog_caption>
             </publishing_date>
             <buttons>
                 <image>Añadir foto</image>
@@ -304,6 +306,8 @@
         <invalid_category_selected>Lo sentimos, pero no puedes usar la categoría seleccionada.</invalid_category_selected>
         <invalid_publishing_date>Por favor especifica una fecha de programación válida</invalid_publishing_date>
         <publishing_date_in_the_past>Por favor especifica una fecha de publicación en el futuro</publishing_date_in_the_past>
+        <cannot_change_others_posts>No puedes cambiar entradas de otros usuarios.</cannot_change_others_posts>
+        <cannot_schedule_posts_with_expiration>Entradas con fecha de expiración no pueden programarse.</cannot_schedule_posts_with_expiration>
     </messages>
     
     <settings_data>
