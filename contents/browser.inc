@@ -171,12 +171,32 @@ $categories            = $categories_repository->get_as_tree_for_select();
     <script type="text/javascript"> $(document).ready(function() { trash_post('<?= $_GET["trash_post"] ?>') }); </script>
 <? endif; ?>
 
+<script type="text/javascript">
+    function toggle_browser_view()
+    {
+        var $button = $('#toggle_browser_view');
+        var mode    = $button.attr('data-current-mode');
+        if( mode == '' ) mode = 'light'; else mode = '';
+        set_engine_pref('@posts:selected_browser_view', mode, function() { $('#refresh_posts_browser').click(); });
+    }
+</script>
+
 <h1 class="clearfix">
-    <button id="refresh_posts_browser" class="pull-right multirecord_actions_table_refresher"
-            onclick="$('#filter_form').submit()">
-        <span class="fa fa-refresh"></span>
-        <?= $language->refresh ?>
-    </button>
+    <span class="pull-right">
+        <button id="toggle_browser_view" onclick="toggle_browser_view()" data-current-mode="<?= $account->engine_prefs["@posts:selected_browser_view"] ?>">
+            <span class="show" style="<?= $account->engine_prefs["@posts:selected_browser_view"] == "light" ? "" : "display: none;" ?>">
+                <i class="fa fa-eye"></i> <?= $current_module->language->record_nav->toggle_view->full ?>
+            </span>
+            <span class="hide" style="<?= $account->engine_prefs["@posts:selected_browser_view"] != "light" ? "" : "display: none;" ?>">
+                <i class="fa fa-eye-slash"></i>  <?= $current_module->language->record_nav->toggle_view->light ?>
+            </span>
+        </button>
+        <button id="refresh_posts_browser" class="multirecord_actions_table_refresher"
+                onclick="$('#filter_form').submit()">
+            <span class="fa fa-refresh"></span>
+            <?= $language->refresh ?>
+        </button>
+    </span>
     
     <?= $current_module->language->index->title; ?>
     
@@ -383,7 +403,7 @@ endif;
                     
                     <div class="principal_data"><?= convert_emojis($row->title) ?></div>
                     
-                    <div class="actions">
+                    <div class="actions hideable_controls" style="<?= $account->engine_prefs["@posts:selected_browser_view"] != "light" ? "" : "display: none;" ?>">
                         <? if( $account->level >= config::MODERATOR_USER_LEVEL || in_array($row->status, array("draft", "published", "reviewing")) ): ?>
                             <a class="action" href="<?= $row->get_permalink() ?>" target="_blank">
                                 <span class="fa fa-external-link"></span>
@@ -497,14 +517,17 @@ endif;
                             {$current_module->language->record_nav->actions->make_orphan}</span>
                         </div>
                     ";
-                    
-                    if($account->level >= config::MODERATOR_USER_LEVEL) render_post_attached_media($row);
-                    
-                    if( ! empty($per_column_function_hooks["details"]) )
-                        foreach($per_column_function_hooks["details"] as $function)
-                            if( function_exists($function) ) $function($row);
                     ?>
                     
+                    <div class="hideable_controls" style="<?= $account->engine_prefs["@posts:selected_browser_view"] != "light" ? "" : "display: none;" ?>">
+                        <?
+                        if($account->level >= config::MODERATOR_USER_LEVEL) render_post_attached_media($row);
+                        
+                        if( ! empty($per_column_function_hooks["details"]) )
+                            foreach($per_column_function_hooks["details"] as $function)
+                                if( function_exists($function) ) $function($row);
+                        ?>
+                    </div>
                 </td>
                 
                 <!-- Author -->
@@ -518,10 +541,12 @@ endif;
                     $chart_url = "{$current_module->get_url()}/posts_per_day_chart.php"
                                . "?id_author={$row->id_author}&width=720&height=480&wasuuup=" . md5(mt_rand(1, 65535));
                     ?>
-                    <a class="prettyPhoto" href="<?= $chart_url ?>">
-                        <span class="fa fa-bar-chart fa-fw"></span>
-                        <?= $current_module->language->record_nav->actions->timeline_chart ?>
-                    </a><br>
+                    <div class="hideable_controls" style="<?= $account->engine_prefs["@posts:selected_browser_view"] != "light" ? "" : "display: none;" ?>">
+                        <a class="prettyPhoto" href="<?= $chart_url ?>">
+                            <span class="fa fa-bar-chart fa-fw"></span>
+                            <?= $current_module->language->record_nav->actions->timeline_chart ?>
+                        </a><br>
+                    </div>
                 
                     <? if( ! empty($row->creation_ip) && $account->level >= config::MODERATOR_USER_LEVEL ): ?>
                         <a class="nowrap" href="<?= $config->full_root_path ?>/?s=ip:<?= $row->creation_ip ?>">
@@ -550,12 +575,13 @@ endif;
                             </a><br>
                         <? endif; ?>
                         
-                        <?
-                        if( ! empty($per_column_function_hooks["author_info"]) )
-                            foreach($per_column_function_hooks["author_info"] as $function)
-                                if( function_exists($function) ) $function($row);
-                        ?>
-                        
+                        <div class="hideable_controls" style="<?= $account->engine_prefs["@posts:selected_browser_view"] != "light" ? "" : "display: none;" ?>">
+                            <?
+                            if( ! empty($per_column_function_hooks["author_info"]) )
+                                foreach($per_column_function_hooks["author_info"] as $function)
+                                    if( function_exists($function) ) $function($row);
+                            ?>
+                        </div>
                     <? endif; ?>
                 </td>
                 

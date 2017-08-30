@@ -52,6 +52,10 @@
     
     <record_nav>
         <search_placeholder>Search by id, parent, slug, title, excerpt or content</search_placeholder>
+        <toggle_view>
+            <full>Full view</full>
+            <light>Light view</light>
+        </toggle_view>
         <columns>
             <title>
                 <caption>Title</caption>

@@ -53,6 +53,10 @@
     
     <record_nav>
         <search_placeholder>Buscar por id, pariente, slug, título, resumen o contenido</search_placeholder>
+        <toggle_view>
+            <full>Vista completa</full>
+            <light>Vista reducida</light>
+        </toggle_view>
         <columns>
             <title>
                 <caption>Título</caption>
