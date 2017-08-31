@@ -975,7 +975,7 @@ class posts_repository extends abstract_repository
      */
     public function get_for_home($pinned_first = false)
     {
-        global $config, $modules, $settings;
+        global $config, $modules, $settings, $template;
         
         $find_params = $this->build_find_params_for_home();
         if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
@@ -996,7 +996,7 @@ class posts_repository extends abstract_repository
             $posts_data->featured_posts = $this->find($find_params->where, 0, 0, $find_params->order);
             
             $posts_data->slider_posts = array();
-            if( $settings->get("modules:posts.slider_categories") != "" )
+            if( $settings->get("modules:posts.slider_categories") != "" && $template->get("exclude_home_slider") != "true" )
             {
                 $find_params = $this->build_find_params_for_posts_slider();
                 if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date asc";
