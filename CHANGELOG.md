@@ -1,6 +1,13 @@
 
 # Posts Module Change Log
 
+## [1.27.0] - 2017-09-01
+
+- Added filtering by scheduled/expired posts on the posts browser.
+- Added publishing date changer for scheduled posts straight on the posts browser.
+- Added "light" view to the posts browser.
+- Added check to avoid loading the home slider posts through a template var injection.
+
 ## [1.26.3] - 2017-08-19
 
 - Improved records browser navigation.
