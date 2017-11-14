@@ -690,11 +690,11 @@
             <type>number</type>
         </specs>
         
-        <!-- =================================== -->
-        <specs is_separator="true">Extenders</specs>
-        <!-- =================================== -->
+        <!-- ============================================================== -->
+        <specs is_separator="true" required_modules="triklet">Extenders</specs>
+        <!-- ============================================================== -->
         
-        <specs key="use_triklet_for_reporting">
+        <specs key="use_triklet_for_reporting" required_modules="triklet">
             <title>Use Triklet module for reporting posts?</title>
             <description><![CDATA[
                 If the Triklet module is installed and enabled and this option is set to "Yes",

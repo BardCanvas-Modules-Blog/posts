@@ -705,11 +705,11 @@
             <type>number</type>
         </specs>
         
-        <!-- ==================================== -->
-        <specs is_separator="true">Extensores</specs>
-        <!-- ==================================== -->
+        <!-- =============================================================== -->
+        <specs is_separator="true" required_modules="triklet">Extensores</specs>
+        <!-- =============================================================== -->
         
-        <specs key="use_triklet_for_reporting">
+        <specs key="use_triklet_for_reporting" required_modules="triklet">
             <title>Usar el módulo de Triklet para reportar posts?</title>
             <description><![CDATA[
                 Si el módulo Triklet está instalado y activo y esta opción está puesta a "Sí",
