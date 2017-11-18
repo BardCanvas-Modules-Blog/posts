@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.27.1] - 2017-11-18
+
+- Added required module details for settings with external requirements.
+
 ## [1.27.0] - 2017-09-01
 
 - Added filtering by scheduled/expired posts on the posts browser.
