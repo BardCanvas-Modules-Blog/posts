@@ -130,6 +130,7 @@ $(document).ready(function()
     if( ! $_IS_MOBILE ) return;
     if( $_CURRENT_USER_ID_ACCOUNT == '' ) return;
     if( $_PHP_SELF == '/posts/quick_single.php' ) return;
+    if( template_layout == 'popup' ) return;
     
     var $trigger = $(sprintf(
         '<a id="quick_post_floating_trigger" class="fa fa-bolt fa-fw"  href="%s" style="display: none; text-decoration: none;"></a>',
