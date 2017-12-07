@@ -30,10 +30,19 @@ function process_post_form_response(response)
         return;
     }
     
+    unhook_abandon_post();
+    
+    if( $form.find('input[name="as_popup"]').val() === 'true' )
+    {
+        $('#quick_post_form_container').html(sprintf('<p>%s</p>', saved_as_popup_message));
+        if(parent) parent.postMessage('BARDCANVAS:CLOSE_CHILD_FRAME', '*');
+        
+        return;
+    }
+    
     var url    = response.replace('OK:', '');
     var status = $form.find('input[name="status"]').val();
     
-    unhook_abandon_post();
     if( status == 'draft' ) location.href = $_REQUEST_URI;
     else                    location.href = url;
 }

@@ -309,6 +309,7 @@
         <publishing_date_in_the_past>Please specify a publishing date in the future</publishing_date_in_the_past>
         <cannot_change_others_posts>You cannot change posts from other users.</cannot_change_others_posts>
         <cannot_schedule_posts_with_expiration>Posts with expiration date cannot be scheduled.</cannot_schedule_posts_with_expiration>
+        <saved_as_popup>Your post has been saved. Please close this window.</saved_as_popup>
     </messages>
     
     <settings_data>

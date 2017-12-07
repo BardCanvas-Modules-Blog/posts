@@ -70,8 +70,9 @@ if( ! $config->globals["show_quick_post_form"] ) return;
 #endregion
 ?>
 
+<script type="text/javascript"> var saved_as_popup_message = '<?= htmlspecialchars(trim($current_module->language->messages->saved_as_popup)) ?>'; </script>
 <script type="text/javascript" src="<?= $config->full_root_path ?>/lib/jquery.exptextarea.js"></script>
-<script type="text/javascript" src="<?= $this_module->get_url() ?>/media/quick_post_functions~v1.2.0-2.js"></script>
+<script type="text/javascript" src="<?= $this_module->get_url() ?>/media/quick_post_functions~v1.3.0-2.js"></script>
 
 <div id="quick_post_form_container" class="<?= $class ?>">
     
@@ -84,6 +85,7 @@ if( ! $config->globals["show_quick_post_form"] ) return;
         <input type="hidden" name="status"        value="published">
         <input type="hidden" name="ok_with_url"   value="true">
         <input type="hidden" name="is_quick_post" value="true">
+        <input type="hidden" name="as_popup"      value="<?= trim(stripslashes($_GET["as_popup"])) ?>">
         
         <div class="field" data-field="title">
             <textarea name="title" class="expandible_textarea no_fw_font"
@@ -174,16 +176,18 @@ if( ! $config->globals["show_quick_post_form"] ) return;
             <div class="field attachments"></div>
             
             <div class="field post_buttons clearfix">
-                <span>
-                    <button onclick="add_attachment_to_quick_post('image', 'fa-camera'); return false;">
-                        <span class="fa fa-camera"></span>
-                        <?= $this_module->language->form->fields->buttons->image ?>
-                    </button>
-                    <button onclick="add_attachment_to_quick_post('video', 'fa-video-camera'); return false;">
-                        <span class="fa fa-video-camera"></span>
-                        <?= $this_module->language->form->fields->buttons->video ?>
-                    </button>
-                </span>
+                <? if( $_GET["no_attachments"] != "true" ): ?>
+                    <span>
+                        <button onclick="add_attachment_to_quick_post('image', 'fa-camera'); return false;">
+                            <span class="fa fa-camera"></span>
+                            <?= $this_module->language->form->fields->buttons->image ?>
+                        </button>
+                        <button onclick="add_attachment_to_quick_post('video', 'fa-video-camera'); return false;">
+                            <span class="fa fa-video-camera"></span>
+                            <?= $this_module->language->form->fields->buttons->video ?>
+                        </button>
+                    </span>
+                <? endif; ?>
                 
                 <span style="float: right">
                     <button type="submit" data-save-type="save_draft"

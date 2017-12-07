@@ -312,6 +312,7 @@
         <publishing_date_in_the_past>Por favor especifica una fecha de publicación en el futuro</publishing_date_in_the_past>
         <cannot_change_others_posts>No puedes cambiar entradas de otros usuarios.</cannot_change_others_posts>
         <cannot_schedule_posts_with_expiration>Entradas con fecha de expiración no pueden programarse.</cannot_schedule_posts_with_expiration>
+        <saved_as_popup>Tu entrada ha sido guardada con éxito. Por favor cierra esta ventana.</saved_as_popup>
     </messages>
     
     <settings_data>
