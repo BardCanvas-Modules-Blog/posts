@@ -78,6 +78,12 @@ if( empty($custom_fields_editing_level) )
     <input type="hidden" name="is_autosave" value="false">
     <input type="hidden" name="is_preview" value="false">
     
+    <!-- BCM additions -->
+    <input type="hidden" name="bcm_platform"      value="<?= $_REQUEST["bcm_platform"] ?>">
+    <input type="hidden" name="bcm_access_token"  value="<?= $_REQUEST["bcm_access_token"] ?>">
+    <input type="hidden" name="bcm_force_session" value="<?= $_REQUEST["bcm_force_session"] ?>">
+    <input type="hidden" name="bcm_output_type"   value="<?= $_REQUEST["bcm_output_type"] ?>">
+    
     <div class="field" data-field="title">
         <textarea name="title" class="expandible_textarea no_fw_font" 
                   placeholder="<?= $current_module->language->form->fields->title->placeholder ?>"></textarea>
@@ -339,10 +345,12 @@ if( empty($custom_fields_editing_level) )
             <?= $language->cancel ?>
         </button>
         
-        <button type="submit" data-save-type="save_draft" onclick="prepare_post_preview()">
-            <span class="fa fa-search"></span>
-            <?= $current_module->language->form->buttons->preview ?>
-        </button>
+        <? if( $_GET["hide_post_preview"] != "true" ): ?>
+            <button type="submit" data-save-type="save_draft" onclick="prepare_post_preview()">
+                <span class="fa fa-search"></span>
+                <?= $current_module->language->form->buttons->preview ?>
+            </button>
+        <? endif; ?>
         <button type="submit" data-save-type="save_draft"
                 onclick="$('#post_form').find('input[name=status]').val('draft')">
             <span class="fa fa-save"></span>

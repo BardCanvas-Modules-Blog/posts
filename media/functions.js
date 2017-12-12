@@ -44,6 +44,10 @@ function edit_post(id_post)
         'wasuuup': wasuuup()
     };
     
+    if( typeof GLOBAL_AJAX_ADDED_PARAMS !== 'undefined' )
+        for(var i in GLOBAL_AJAX_ADDED_PARAMS)
+            params[i] = GLOBAL_AJAX_ADDED_PARAMS[i];
+    
     $.blockUI(blockUI_default_params);
     $.getJSON(url, params, function(data)
     {
@@ -86,6 +90,10 @@ function copy_post(id_post)
         'wasuuup': wasuuup()
     };
     
+    if( typeof GLOBAL_AJAX_ADDED_PARAMS !== 'undefined' )
+        for(var i in GLOBAL_AJAX_ADDED_PARAMS)
+            params[i] = GLOBAL_AJAX_ADDED_PARAMS[i];
+    
     $.blockUI(blockUI_default_params);
     $.getJSON(url, params, function(data)
     {
@@ -125,6 +133,10 @@ function add_child_post_of(id_parent_post)
         'id_post': id_parent_post,
         'wasuuup': wasuuup()
     };
+    
+    if( typeof GLOBAL_AJAX_ADDED_PARAMS !== 'undefined' )
+        for(var i in GLOBAL_AJAX_ADDED_PARAMS)
+            params[i] = GLOBAL_AJAX_ADDED_PARAMS[i];
     
     $.blockUI(blockUI_default_params);
     $.getJSON(url, params, function(data)
@@ -265,7 +277,7 @@ function update_category_selector(preselected_id)
     var url = $_FULL_ROOT_PATH + '/categories/scripts/tree_as_json.php'
             + '?with_description=true'
             + '&wasuuup=' + wasuuup();
-    $.getJSON(url, function(data)
+    $.getJSON(url, GLOBAL_AJAX_ADDED_PARAMS, function(data)
     {
         if( data.message != 'OK' )
         {
@@ -383,6 +395,15 @@ function show_post_form()
 function hide_post_form()
 {
     unhook_abandon_post();
+    
+    if( post_form_iframed_mode )
+    {
+        parent.postMessage('BCM:CLOSE_FRAME', '*');
+        location.href = '/BCM/CLOSE_FRAME';
+        
+        return;
+    }
+    
     $('#form_workarea').hide('fast');
     $('#main_workarea').show('fast', function() { $.scrollTo(browser_position, 250); });
 }

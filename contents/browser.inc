@@ -230,6 +230,12 @@ $categories            = $categories_repository->get_as_tree_for_select();
         <input type="hidden" name="order"         value="<?= $order ?>">
         <input type="hidden" name="offset"        value="<?= $offset ?>">
         
+        <!-- BCM additions -->
+        <input type="hidden" name="bcm_platform"      value="<?= $_REQUEST["bcm_platform"] ?>">
+        <input type="hidden" name="bcm_access_token"  value="<?= $_REQUEST["bcm_access_token"] ?>">
+        <input type="hidden" name="bcm_force_session" value="<?= $_REQUEST["bcm_force_session"] ?>">
+        <input type="hidden" name="bcm_output_type"   value="<?= $_REQUEST["bcm_output_type"] ?>">
+        
         <span style="float: right;">
             <?= $browser->get_pagination_button("previous", "paginate", $pagination) ?>
             <?= $language->record_nav->page ?>

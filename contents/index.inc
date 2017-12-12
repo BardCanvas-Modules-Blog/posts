@@ -21,7 +21,8 @@
 <script type="text/javascript"> var post_permalink_style = '<?= $settings->get("modules:posts.permalink_style") ?>'; </script>
 <script type="text/javascript"> var post_autosaver_heartbit = 30 * 1000; </script>
 <script type="text/javascript"> var posts_category_selector_post_process_extensions = {}; </script>
-<script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/functions~v1.20.3-8.js"></script>
+<script type="text/javascript"> var post_form_iframed_mode = '<?= $_GET["post_form_iframed_mode"] ?>' == 'true'; </script>
+<script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/functions~v1.21.0-10.js"></script>
 <script type="text/javascript" src="<?= $config->full_root_path ?>/posts/media/moment.js"></script>
 
 <? $current_module->load_extensions("browser", "index_extra_inits"); ?>
@@ -104,8 +105,7 @@
     }
 </script>
 
-<div id="main_workarea">
-    
+<div id="main_workarea" style="<? if($_GET["hide_browser"] == "true") echo "display: none;" ?>">
     <?
     $url = "browser.php?wasuuup=" . md5(mt_rand(1, 65535));
     if( ! empty($_GET["edit_post"]) )  $url .= "&edit_post={$_GET["edit_post"]}";
@@ -113,6 +113,13 @@
     if( ! empty($_GET["trash_post"]) ) $url .= "&trash_post={$_GET["trash_post"]}";
     if( ! empty($_GET["author"]) )     $url .= "&search_author={$_GET["author"]}";
     if( ! empty($_GET["search_for"]) ) $url .= "&search_for={$_GET["search_for"]}";
+    
+    # BCM additions
+    if( ! empty($_GET["bcm_platform"]) )      $url .= "&bcm_platform={$_GET["bcm_platform"]}";
+    if( ! empty($_GET["bcm_access_token"]) )  $url .= "&bcm_access_token={$_GET["bcm_access_token"]}";
+    if( ! empty($_GET["bcm_force_session"]) ) $url .= "&bcm_force_session={$_GET["bcm_force_session"]}";
+    if( ! empty($_GET["bcm_output_type"]) )   $url .= "&bcm_output_type={$_GET["bcm_output_type"]}";
+    if( ! empty($_GET["hide_browser"]) )      $url .= "&hide_browser={$_GET["hide_browser"]}";
     ?>
     <div id="posts_browser" class="ajax_record_browser" data-src="<?= $url ?>">
         <div class="framed_content state_highlight" style="padding: 100px 0; text-align: center;">
@@ -120,7 +127,6 @@
             <?= $language->wait ?>
         </div>
     </div>
-    
 </div>
 
 <div id="form_workarea" style="display: none;">
@@ -135,15 +141,21 @@
     </h1>
     
     <h1 class="clearfix for_edition" style="display: none">
-        <button class="pull-right" onclick="hide_post_form()">
-            <span class="fa fa-reply"></span>
-            <?= $language->return ?>
-        </button>
+        <? if( $_GET["hide_browser"] != "true" ): ?>
+            <button class="pull-right" onclick="hide_post_form()">
+                <span class="fa fa-reply"></span>
+                <?= $language->return ?>
+            </button>
+        <? endif; ?>
         
         <?= $current_module->language->form->edit_title; ?>
     </h1>
     
     <? include __DIR__ . "/form.inc"; ?>
+</div>
+
+<div id="iframed_close_message" style="display: none;">
+    
 </div>
 
 <div id="untrash_for_review_confirmation"   style="display: none;"><?= unindent($current_module->language->messages->untrash_for_review_confirmation) ?></div>
@@ -180,8 +192,8 @@
         var action_caption = $trigger.text().trim();
         
         var confirmation = $('#multirecord_actions_confirmation').text();
-        confirmation = confirmation.replace(/\{\$amount\}/g,   targets_count);
-        confirmation = confirmation.replace(/\{\$new_flag\}/g, action_caption);
+        confirmation = confirmation.replace(/{\$amount}/g,   targets_count);
+        confirmation = confirmation.replace(/{\$new_flag}/g, action_caption);
         
         if( ! confirm(confirmation) ) return;
         
