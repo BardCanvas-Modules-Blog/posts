@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     
-    <version>1.28.0</version>
+    <version>1.28.1</version>
     <group>modules_blog</group>
     
     <working_flags>
@@ -48,7 +48,7 @@
         Index Builders / Tag index.
         Posts Repository Class / Home Prebuilding, Preload Authors, Empty Trash, Get Posts data (multiple), Get for Category.
         Post Record Class / Set from object, Get Processed Excerpt, Get Processed Content.
-        Posts saving / After record forging.
+        Posts saving: Before extracting media items / After record forging.
         Editor form: Below main category selector, below editor, option columns (left, middle, right), outside (after closing the form).
         Quick post form: Pre rendering / Process prebuilt category selector options / Below main category selector.
         JSON record exporter / before output.

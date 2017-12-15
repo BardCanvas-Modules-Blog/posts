@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.28.1] - 2017-12-14
+
+- Added check to avoid a warning when fetching the category selector data on the composition forms.
+- Added extension point.
+
 ## [1.28.0] - 2017-12-14
 
 - Prevented showing the quick post composition link on "popup" layouts.
