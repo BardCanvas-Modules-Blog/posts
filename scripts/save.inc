@@ -155,6 +155,8 @@ if( ! empty($_FILES["attachments"]) )
     }
 }
 
+$current_module->load_extensions("save_post", "before_extracting_media_items");
+
 $media_items = array();
 if( function_exists("extract_media_items") )
 {
