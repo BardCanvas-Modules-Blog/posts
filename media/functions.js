@@ -274,6 +274,9 @@ function update_category_selector(preselected_id)
     var $container = $('#main_category_selector_container');
     $container.block(blockUI_smallest_params);
     
+    if( typeof GLOBAL_AJAX_ADDED_PARAMS === 'undefined' )
+        GLOBAL_AJAX_ADDED_PARAMS = {};
+    
     var url = $_FULL_ROOT_PATH + '/categories/scripts/tree_as_json.php'
             + '?with_description=true'
             + '&wasuuup=' + wasuuup();
