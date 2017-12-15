@@ -43,7 +43,7 @@ if( preg_match('/http|https|www\./i', stripslashes($_POST["title"])) )
 if( empty($_POST["main_category"]) )
     die($current_module->language->messages->missing->main_category);
 
-if( empty($_FILES["attachments"]) && empty($_POST["content"]) )
+if( empty($_FILES["attachments"]) && empty($_POST["embedded_attachments"]) && empty($_POST["content"]) )
     die($current_module->language->messages->missing->content);
 
 $repository       = new posts_repository();
