@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.28.2] - 2017-12-18
+
+- Added extra check for empty contents on saving.
+
 ## [1.28.1] - 2017-12-14
 
 - Added check to avoid a warning when fetching the category selector data on the composition forms.
