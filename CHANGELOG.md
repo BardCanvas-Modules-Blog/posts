@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.28.3] - 2018-03-19
+
+- Passed BCM version on web requests.
+
 ## [1.28.2] - 2017-12-18
 
 - Added extra check for empty contents on saving.
