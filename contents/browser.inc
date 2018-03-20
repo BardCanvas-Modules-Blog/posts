@@ -232,6 +232,7 @@ $categories            = $categories_repository->get_as_tree_for_select();
         
         <!-- BCM additions -->
         <input type="hidden" name="bcm_platform"      value="<?= $_REQUEST["bcm_platform"] ?>">
+        <input type="hidden" name="bcm_version"       value="<?= $_REQUEST["bcm_version"] ?>">
         <input type="hidden" name="bcm_access_token"  value="<?= $_REQUEST["bcm_access_token"] ?>">
         <input type="hidden" name="bcm_force_session" value="<?= $_REQUEST["bcm_force_session"] ?>">
         <input type="hidden" name="bcm_output_type"   value="<?= $_REQUEST["bcm_output_type"] ?>">

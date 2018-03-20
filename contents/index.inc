@@ -116,6 +116,7 @@
     
     # BCM additions
     if( ! empty($_GET["bcm_platform"]) )      $url .= "&bcm_platform={$_GET["bcm_platform"]}";
+    if( ! empty($_GET["bcm_version"]) )       $url .= "&bcm_version={$_GET["bcm_version"]}";
     if( ! empty($_GET["bcm_access_token"]) )  $url .= "&bcm_access_token={$_GET["bcm_access_token"]}";
     if( ! empty($_GET["bcm_force_session"]) ) $url .= "&bcm_force_session={$_GET["bcm_force_session"]}";
     if( ! empty($_GET["bcm_output_type"]) )   $url .= "&bcm_output_type={$_GET["bcm_output_type"]}";
