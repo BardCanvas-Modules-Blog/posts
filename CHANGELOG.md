@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.28.4] - 2018-07-15
+
+- Language fixes.
+
 ## [1.28.3] - 2018-03-19
 
 - Passed BCM version on web requests.
