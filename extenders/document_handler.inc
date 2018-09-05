@@ -9,7 +9,7 @@
  * @var template $template
  * 
  * $_GET params:
- * @param handle
+ * @param "handle"
  */
 
 use hng2_base\config;
@@ -63,6 +63,8 @@ $template->set("current_post",           $post);
 $template->set("current_category_slug",  $post->main_category_slug);
 $template->set("current_category_title", $post->main_category_title);
 $template->set("current_category_id",    $post->main_category);
+
+$template->append("additional_body_attributes", " data-main-category-slug='{$post->main_category_slug}'");
 
 # @hack: The definition below is a hack that shouldn't be repeated unless strictly neccesary :P
 $template->page_contents_include = "../../templates/{$template->name}/segments/single_post_renderer.inc";
