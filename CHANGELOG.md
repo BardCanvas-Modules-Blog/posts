@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.28.5] - 2018-09-07
+
+- Refactored logic to add meta image.
+- Added "data-main-category-slug" body attribute to single posts.
+
 ## [1.28.4] - 2018-07-15
 
 - Language fixes.
