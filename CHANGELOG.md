@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.28.6] - 2018-12-11
+
+- Added filter for non-public posts on categories RSS feed.
+
 ## [1.28.5] - 2018-09-07
 
 - Refactored logic to add meta image.
