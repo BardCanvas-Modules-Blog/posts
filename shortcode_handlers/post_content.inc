@@ -63,7 +63,12 @@ if( is_null($post) )
     return;
 }
 
-if( $post->status != "published" ) return;
+if( $post->status != "published" )
+{
+    $contents = str_replace($matched_str, "", $contents);
+    
+    return;
+}
 
 $return = $attributes["processed"] != "false" ? $post->get_processed_content() : $post->content;
 $return = "<div class='{$attributes["class"]}' style='{$attributes["style"]}'>$return</div>";
