@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.29.0] - 2019-02-01
+
+- Added shortcodes.
+
 ## [1.28.6] - 2018-12-11
 
 - Added filter for non-public posts on categories RSS feed.
