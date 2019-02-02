@@ -75,7 +75,7 @@
         </handler>
         <handler name="post_content">
             <syntax>[post_content id="post_id" processed="true|false" class="css classes" style="css styles"]</syntax>
-            <file>shortcode_handlers/post_contents.inc</file>
+            <file>shortcode_handlers/post_content.inc</file>
         </handler>
     </shortcode_handlers>
     
