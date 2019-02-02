@@ -65,6 +65,18 @@
             <syntax>[post_family_tree reach="all|children" title="string" class="css classes" style="css styles"]</syntax>
             <file>shortcode_handlers/post_family_tree.inc</file>
         </handler>
+        <handler name="post_title">
+            <syntax>[post_title id="post_id" processed="true|false" include_autolinks="true|false" class="css classes" style="css styles"]</syntax>
+            <file>shortcode_handlers/post_title.inc</file>
+        </handler>
+        <handler name="post_excerpt">
+            <syntax>[post_excerpt id="post_id" processed="true|false" strip_block_tags="false|true" class="css classes" style="css styles"]</syntax>
+            <file>shortcode_handlers/post_excerpt.inc</file>
+        </handler>
+        <handler name="post_content">
+            <syntax>[post_content id="post_id" processed="true|false" class="css classes" style="css styles"]</syntax>
+            <file>shortcode_handlers/post_contents.inc</file>
+        </handler>
     </shortcode_handlers>
     
     <extends_to>
