@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.29.1] - 2019-02-01
+
+- Fixed typo in `post_content` shortcode file handler.
+- Added missing case in `post_content` shortcode converter.
+
 ## [1.29.0] - 2019-02-01
 
 - Added shortcodes.
