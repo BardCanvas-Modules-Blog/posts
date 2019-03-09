@@ -852,6 +852,14 @@
                         <option value="publishing_date asc">Newer first</option>
                     </options>
                 </specs>
+                <specs key="max_age">
+                    <title>Max age</title>
+                    <description><![CDATA[
+                        Enter the max age (in hours) for posts to be listed.<br>
+                        Default: <code>72</code> hours.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
                 <specs key="cache_ttl">
                     <title>Cache TTL</title>
                     <description><![CDATA[

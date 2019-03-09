@@ -867,6 +867,14 @@
                         <option value="publishing_date asc">Nuevos primero</option>
                     </options>
                 </specs>
+                <specs key="max_age">
+                    <title>Antiguedad máxima</title>
+                    <description><![CDATA[
+                        Introduce la antiguedad máxima (en horas) para las entradas a listar.
+                        Valor predeterminado: <code>72</code> horas.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
                 <specs key="cache_ttl">
                     <title>Tiempo de vida del caché</title>
                     <description><![CDATA[

@@ -36,8 +36,9 @@ $data = $toolbox->load_widget_data($placed_widget);
 if( empty($data["category_id"]) ) return "";
 
 $id        = trim($data["category_id"]);
-$limit     = $data["limit"];         if( empty($limit)   ) $limit = 5;
-$order     = $data["order"];         if( empty($order)   ) $order = "publishing_date asc";
+$limit     = $data["limit"];         if( empty($limit)   ) $limit   = 5;
+$order     = $data["order"];         if( empty($order)   ) $order   = "publishing_date asc";
+$max_age   = $data["max_age"];       if( empty($max_age) ) $max_age = 72;
 $version   = $data["cache_version"]; if( empty($version) ) $version = 1;
 $cache_ttl = $data["cache_ttl"] * 60;
 $cache_key = "modules:posts.posts_by_category_widget-v{$version}";
@@ -50,7 +51,8 @@ if( $cache_ttl > 0 )
 }
 
 $repository = new posts_repository();
-$where      = array("main_category = '$id'");
+$boundary   = date("Y-m-d H:i:s", strtotime("now - $max_age hours"));
+$where      = array("main_category = '$id'", "publishing_date >= '$boundary'");
 $posts      = $repository->lookup($where, $limit, 0, $order);
 
 if( empty($posts) )
