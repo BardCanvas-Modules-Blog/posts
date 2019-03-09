@@ -139,6 +139,9 @@
         <widget for="right_sidebar" id="posts_by_tag" type="php" is_clonable="true"
                 file="posts_by_tag.inc" />
         
+        <widget for="right_sidebar" id="posts_by_category" type="php" is_clonable="true"
+                file="posts_by_category.inc" />
+        
         <widget for="right_sidebar" id="popular_posts_fortnight" type="php" is_clonable="true"
                 file="popular_posts_fortnight.inc" />
         

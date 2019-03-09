@@ -837,6 +837,53 @@
                 </specs>
             </editable_specs>
         </posts_by_tag>
+        <posts_by_category>
+            <title>Entradas por categoría</title>
+            <info>Muestra un listado de entradas que tengan asignada cierta categoría</info>
+            <editable_specs>
+                <specs key="category_id">
+                    <title>Id de categoría</title>
+                    <description><![CDATA[
+                        Id de la categoría que se debe listar.
+                    ]]></description>
+                    <type>text</type>
+                </specs>
+                <specs key="limit">
+                    <title>Cantidad de entradas</title>
+                    <description><![CDATA[
+                        Cantidad de entradas a listar. Predeterminado: <code>5</code>
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="order">
+                    <title>Órden de muestreo</title>
+                    <description><![CDATA[
+                        Las entradas son ordenadas por fecha de publicación.
+                        Especifica el órden deseado.
+                    ]]></description>
+                    <type>list</type>
+                    <options>
+                        <option value="publishing_date desc">Viejos primero</option>
+                        <option value="publishing_date asc">Nuevos primero</option>
+                    </options>
+                </specs>
+                <specs key="cache_ttl">
+                    <title>Tiempo de vida del caché</title>
+                    <description><![CDATA[
+                        Especificado <b>en minutos</b>.<br>
+                        Valor predeterminado: <code>0</code> (caché desactivado).
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="cache_version">
+                    <title>Versión del caché</title>
+                    <description><![CDATA[
+                        Número de versión del caché. Si deseas refrescarlo, increméntalo por 1.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+            </editable_specs>
+        </posts_by_category>
         <popular_posts_fortnight>
             <title>Entradas populares</title>
             <info>Lista las entradas más vistas en la quincena actual</info>

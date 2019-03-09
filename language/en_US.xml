@@ -822,6 +822,53 @@
                 </specs>
             </editable_specs>
         </posts_by_tag>
+        <posts_by_category>
+            <title>Posts by category</title>
+            <info>Shows a list of matching posts against a category id</info>
+            <editable_specs>
+                <specs key="category_id">
+                    <title>Category id</title>
+                    <description><![CDATA[
+                        Type or paste the id of the category to list.
+                    ]]></description>
+                    <type>text</type>
+                </specs>
+                <specs key="limit">
+                    <title>Entries limit</title>
+                    <description><![CDATA[
+                        Amount of entries to list. Default: <code>5</code>
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="order">
+                    <title>Ordering</title>
+                    <description><![CDATA[
+                        Entries are ordered by publishing date.
+                        Specify the desired order.
+                    ]]></description>
+                    <type>list</type>
+                    <options>
+                        <option value="publishing_date desc">Older first</option>
+                        <option value="publishing_date asc">Newer first</option>
+                    </options>
+                </specs>
+                <specs key="cache_ttl">
+                    <title>Cache TTL</title>
+                    <description><![CDATA[
+                        Time to live (<b>in minutes</b>) for the listing cache.<br>
+                        Default: <code>0</code> (cache disabled).
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="cache_version">
+                    <title>Cache version</title>
+                    <description><![CDATA[
+                        Version of the cache. If you want to refresh it, increment it by 1.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+            </editable_specs>
+        </posts_by_category>
         <popular_posts_fortnight>
             <title>Popular posts</title>
             <info>Lists the most viewed posts in the current semimonth</info>
