@@ -77,7 +77,7 @@ ob_start(); ?>
         <? foreach($posts as $post): ?>
             <li>
                 <span class="pull-right"><?= number_format($post->views) ?></span>
-                <a class="title" href="<?= $config->full_root_path ?>/<?= $post->id_post ?>"><?= $post->get_processed_title(false) ?></a><br>
+                <a class="title" href="<?= $post->get_permalink() ?>"><?= $post->get_processed_title(false) ?></a><br>
                 <span class="date"><?= time_elapsed_string($post->publishing_date) ?></span>
                 <?= $post->main_category_title ?><br>
                 <span class="author user_display_name" data-user-level="<?= $post->author_level ?>">
