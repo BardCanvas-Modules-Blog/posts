@@ -66,10 +66,9 @@ $channel->description = replace_escaped_vars(
     array($settings->get("engine.website_name"), $author->display_name, $category->title)
 );
 
-if( $category->visibility !== "public" ) return;
-
 if( $content_key == "posts_by_author"   && is_null($author)   ) return;
 if( $content_key == "posts_by_category" && is_null($category) ) return;
+if( $content_key == "posts_by_category" && $category->visibility !== "public" ) return;
 
 if( $content_key == "posts_by_author" )
 {
