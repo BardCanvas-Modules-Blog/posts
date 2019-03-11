@@ -40,7 +40,7 @@ $limit     = $data["limit"];         if( empty($limit)   ) $limit = 10;
 $order     = $data["order"];         if( empty($order)   ) $order = "publishing_date asc";
 $version   = $data["cache_version"]; if( empty($version) ) $version = 1;
 $cache_ttl = $data["cache_ttl"] * 60;
-$cache_key = "modules:posts.posts_by_tag_widget-v{$version}";
+$cache_key = "modules:posts.posts_by_tag_widget/$data_key-v{$version}";
 
 if( $cache_ttl > 0 )
 {
