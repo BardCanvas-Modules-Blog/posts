@@ -801,8 +801,8 @@
                     ]]></description>
                     <type>list</type>
                     <options>
-                        <option value="publishing_date desc">Older first</option>
-                        <option value="publishing_date asc">Newer first</option>
+                        <option value="publishing_date asc">Older first</option>
+                        <option value="publishing_date desc">Newer first</option>
                     </options>
                 </specs>
                 <specs key="cache_ttl">
@@ -848,8 +848,8 @@
                     ]]></description>
                     <type>list</type>
                     <options>
-                        <option value="publishing_date desc">Older first</option>
-                        <option value="publishing_date asc">Newer first</option>
+                        <option value="publishing_date asc">Older first</option>
+                        <option value="publishing_date desc">Newer first</option>
                     </options>
                 </specs>
                 <specs key="max_age">

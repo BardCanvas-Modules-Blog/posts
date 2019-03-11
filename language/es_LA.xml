@@ -816,8 +816,8 @@
                     ]]></description>
                     <type>list</type>
                     <options>
-                        <option value="publishing_date desc">Viejos primero</option>
-                        <option value="publishing_date asc">Nuevos primero</option>
+                        <option value="publishing_date asc">Viejos primero</option>
+                        <option value="publishing_date desc">Nuevos primero</option>
                     </options>
                 </specs>
                 <specs key="cache_ttl">
@@ -863,8 +863,8 @@
                     ]]></description>
                     <type>list</type>
                     <options>
-                        <option value="publishing_date desc">Viejos primero</option>
-                        <option value="publishing_date asc">Nuevos primero</option>
+                        <option value="publishing_date asc">Viejos primero</option>
+                        <option value="publishing_date desc">Nuevos primero</option>
                     </options>
                 </specs>
                 <specs key="max_age">
