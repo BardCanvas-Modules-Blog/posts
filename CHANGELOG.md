@@ -1,6 +1,13 @@
 
 # Posts Module Change Log
 
+## [1.30.0] - 2019-03-11
+
+- Added filtering that caused empty root feeds.
+- Added category listing widget for the right sidebar.
+- Fixed permalink issues on all widgets.
+- Fixed wrong ordering issues.
+
 ## [1.29.1] - 2019-02-01
 
 - Fixed typo in `post_content` shortcode file handler.
