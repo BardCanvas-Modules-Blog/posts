@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.30.1] - 2019-03-19
+
+- Added support for `og:video` injection over the first video on the contents if available.
+
 ## [1.30.0] - 2019-03-11
 
 - Added filtering that caused empty root feeds.
