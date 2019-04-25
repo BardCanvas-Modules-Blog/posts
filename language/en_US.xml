@@ -389,6 +389,15 @@
             <type>code</type>
         </specs>
         
+        <specs key="slider_limit">
+            <title>Home slider posts limit</title>
+            <description><![CDATA[
+                Specify the maximum of posts to show on the slider.<br>
+                Set a zero or leave it empty to include all the matching posts.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
         <specs key="home_excluded_categories">
             <title>Categories to exclude from the main index</title>
             <description><![CDATA[
@@ -489,6 +498,15 @@
                 <min>0</min>
                 <max>255</max>
             </options>
+        </specs>
+        
+        <specs key="featured_posts_limit">
+            <title>Featured posts limit</title>
+            <description><![CDATA[
+                Specify the maximum of posts to show on the featured area.<br>
+                Set a zero or leave it empty to include all the matching posts.
+            ]]></description>
+            <type>number</type>
         </specs>
         
         <!-- =================================== -->

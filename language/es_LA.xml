@@ -395,6 +395,16 @@
             <type>code</type>
         </specs>
         
+        <specs key="slider_limit">
+            <title>Límite de entradas en el carrusel</title>
+            <description><![CDATA[
+                Especifica el máximo de entradas a mostrar en el carrusel.<br>
+                Especifica un cero o deja el campo vacío para incluír
+                todas las entradas encontradas.
+            ]]></description>
+            <type>number</type>
+        </specs>
+        
         <specs key="home_excluded_categories">
             <title>Categorías a excluír de índice principal</title>
             <description><![CDATA[
@@ -498,6 +508,16 @@
                 <min>0</min>
                 <max>255</max>
             </options>
+        </specs>
+        
+        <specs key="featured_posts_limit">
+            <title>Límite de entradas destacadas</title>
+            <description><![CDATA[
+                Especifica el máximo de entradas a mostrar en el área de destacadas.<br>
+                Especifica un cero o deja el campo vacío para incluír
+                todas las entradas encontradas.
+            ]]></description>
+            <type>number</type>
         </specs>
         
         <!-- ================================== -->

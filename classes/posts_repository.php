@@ -984,7 +984,7 @@ class posts_repository extends abstract_repository
         $modules["posts"]->load_extensions("posts_repository", "home_prebuilding");
         $find_params = $config->globals["posts_repository/home_index_find_params"];
         unset( $config->globals["posts_repository/home_index_find_params"] );
-    
+        
         $posts_data = new posts_data();
         if( ! $config->globals["modules:posts.avoid_preloading_posts_for_home_index"] )
             $posts_data = $this->get_posts_data($find_params, "index_builders", "home");
@@ -993,15 +993,17 @@ class posts_repository extends abstract_repository
         {
             $find_params = $this->build_find_params_for_featured_posts();
             if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date desc";
-            $posts_data->featured_posts = $this->find($find_params->where, 0, 0, $find_params->order);
+            $limit = (int) $settings->get("modules:posts.featured_posts_limit");
+            $posts_data->featured_posts = $this->find($find_params->where, $limit, 0, $find_params->order);
             
             $posts_data->slider_posts = array();
             if( $settings->get("modules:posts.slider_categories") != "" && $template->get("exclude_home_slider") != "true" )
             {
+                $limit = (int) $settings->get("modules:posts.slider_limit");
                 $find_params = $this->build_find_params_for_posts_slider();
                 if( $pinned_first ) $find_params->order = "pin_to_home desc, publishing_date asc";
                 else                $find_params->order = "publishing_date asc";
-                $posts_data->slider_posts = $this->find($find_params->where, 0, 0, $find_params->order);
+                $posts_data->slider_posts = $this->find($find_params->where, $limit, 0, $find_params->order);
             }
         }
         
