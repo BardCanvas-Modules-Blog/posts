@@ -376,28 +376,6 @@
             <type>boolean</type>
         </specs>
         
-        <specs key="slider_categories">
-            <title>Post categories for the home slider</title>
-            <description><![CDATA[
-                Specify the category slugs and the amount of hours that you want to show up on the home slider,
-                one per line, using the next syntax: <code>category_slug - time_to_live</code>.<br>
-                Set <code>time_to_live</code> to <code>0</code> to show them always (not recommended).<br>
-                <span class="fa fa-info-circle"></span>
-                Hint: you may opt to enforce an expiration time for the posts here if you want to take
-                them out of the site AND the slider when the time runs out.
-            ]]></description>
-            <type>code</type>
-        </specs>
-        
-        <specs key="slider_limit">
-            <title>Home slider posts limit</title>
-            <description><![CDATA[
-                Specify the maximum of posts to show on the slider.<br>
-                Set a zero or leave it empty to include all the matching posts.
-            ]]></description>
-            <type>number</type>
-        </specs>
-        
         <specs key="home_excluded_categories">
             <title>Categories to exclude from the main index</title>
             <description><![CDATA[
@@ -447,6 +425,32 @@
                 Note: this setting may be affected by module extenders.
             ]]></description>
             <type>boolean</type>
+        </specs>
+        
+        <!-- ===================================== -->
+        <specs is_separator="true">Home slider</specs>
+        <!-- ===================================== -->
+        
+        <specs key="slider_categories">
+            <title>Post categories for the home slider</title>
+            <description><![CDATA[
+                Specify the category slugs and the amount of hours that you want to show up on the home slider,
+                one per line, using the next syntax: <code>category_slug - time_to_live</code>.<br>
+                Set <code>time_to_live</code> to <code>0</code> to show them always (not recommended).<br>
+                <span class="fa fa-info-circle"></span>
+                Hint: you may opt to enforce an expiration time for the posts here if you want to take
+                them out of the site AND the slider when the time runs out.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
+        <specs key="slider_limit">
+            <title>Home slider posts limit</title>
+            <description><![CDATA[
+                Specify the maximum of posts to show on the slider.<br>
+                Set a zero or leave it empty to include all the matching posts.
+            ]]></description>
+            <type>number</type>
         </specs>
         
         <!-- ======================================== -->

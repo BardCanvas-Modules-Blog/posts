@@ -379,32 +379,6 @@
             <type>boolean</type>
         </specs>
         
-        <specs key="slider_categories">
-            <title>Categorías para el carrusel</title>
-            <description><![CDATA[
-                Especifica las categorías y la cantidad de horas que las entradas permanecerán en el carrusel
-                de la página principal, usando la siguiente sintaxis, una por línea:<br>
-                <code>slug_de_categoria - horas</code><br>
-                Establece <code>horas</code> a cero para mostrar las entradas hasta que manualmente las edites y les
-                remuevas la categoría.<br>
-                <span class="fa fa-info-circle"></span>
-                Nota: puedes establecer la expiración forzada para las entradas en las mismas
-                categorías que especifiques aquí si quieres que, al expirar, desaparezcan tanto del
-                carrusel como del sitio.
-            ]]></description>
-            <type>code</type>
-        </specs>
-        
-        <specs key="slider_limit">
-            <title>Límite de entradas en el carrusel</title>
-            <description><![CDATA[
-                Especifica el máximo de entradas a mostrar en el carrusel.<br>
-                Especifica un cero o deja el campo vacío para incluír
-                todas las entradas encontradas.
-            ]]></description>
-            <type>number</type>
-        </specs>
-        
         <specs key="home_excluded_categories">
             <title>Categorías a excluír de índice principal</title>
             <description><![CDATA[
@@ -454,6 +428,36 @@
                 Nota: esta opción puede ser reescrita por otros módulos.
             ]]></description>
             <type>boolean</type>
+        </specs>
+        
+        <!-- ====================================================== -->
+        <specs is_separator="true">Carrusel en página principal</specs>
+        <!-- ====================================================== -->
+        
+        <specs key="slider_categories">
+            <title>Categorías para el carrusel</title>
+            <description><![CDATA[
+                Especifica las categorías y la cantidad de horas que las entradas permanecerán en el carrusel
+                de la página principal, usando la siguiente sintaxis, una por línea:<br>
+                <code>slug_de_categoria - horas</code><br>
+                Establece <code>horas</code> a cero para mostrar las entradas hasta que manualmente las edites y les
+                remuevas la categoría.<br>
+                <span class="fa fa-info-circle"></span>
+                Nota: puedes establecer la expiración forzada para las entradas en las mismas
+                categorías que especifiques aquí si quieres que, al expirar, desaparezcan tanto del
+                carrusel como del sitio.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
+        <specs key="slider_limit">
+            <title>Límite de entradas en el carrusel</title>
+            <description><![CDATA[
+                Especifica el máximo de entradas a mostrar en el carrusel.<br>
+                Especifica un cero o deja el campo vacío para incluír
+                todas las entradas encontradas.
+            ]]></description>
+            <type>number</type>
         </specs>
         
         <!-- ============================================= -->
