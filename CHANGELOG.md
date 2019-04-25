@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.31.0] - 2019-04-25
+
+- Added optional limits to slider and featured posts.
+- Tuned post fields on the settings editor.
+
 ## [1.30.1] - 2019-03-19
 
 - Added support for `og:video` injection over the first video on the contents if available.
