@@ -59,7 +59,7 @@ else
 
 $repository = new posts_repository();
 $where      = array("publishing_date >= '$min_date' and publishing_date <= '$max_date'");
-$posts      = $repository->lookup($where, 10, 0, "views desc");
+$posts      = $repository->lookup($where, $limit, 0, "views desc");
 
 if( empty($posts) )
 {
