@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.31.1] - 2019-06-01
+
+- Added missing limits on the popular posts widget.
+
 ## [1.31.0] - 2019-04-25
 
 - Added optional limits to slider and featured posts.
