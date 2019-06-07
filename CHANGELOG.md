@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.31.2] - 2019-06-06
+
+- Tuned user profile home sections.
+
 ## [1.31.1] - 2019-06-01
 
 - Added missing limits on the popular posts widget.
