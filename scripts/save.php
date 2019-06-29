@@ -127,6 +127,8 @@ if( $account->level >= $custom_fields_editing_level )
         $post->set_meta($name, $value);
 }
 
+$current_module->load_extensions("save_post", "after_setting_metas");
+
 //if( is_array($media_deletions) && ! empty($media_deletions) )
 //    $media_repository->delete_multiple_if_unused($media_deletions);
 

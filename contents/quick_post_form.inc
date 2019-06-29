@@ -173,6 +173,8 @@ if( ! $config->globals["show_quick_post_form"] ) return;
                           placeholder="<?= $this_module->language->form->fields->content->quick_form_placeholder ?>"></textarea>
             </div>
             
+            <? $modules["posts"]->load_extensions("quick_post_form", "below_editor"); ?>
+            
             <div class="field attachments"></div>
             
             <div class="field post_buttons clearfix">
