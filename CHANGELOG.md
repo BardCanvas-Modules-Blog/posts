@@ -1,6 +1,11 @@
 
 # Posts Module Change Log
 
+## [1.32.0] - 2019-06-30
+
+- Added extension point on the quick post form.
+- Added extension point after setting metas on saving.
+
 ## [1.31.2] - 2019-06-06
 
 - Tuned user profile home sections.
