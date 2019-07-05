@@ -532,6 +532,14 @@
             <type>yes/no</type>
         </specs>
         
+        <specs key="disable_quick_post_button">
+            <title>Disable quick posts button on mobiles?</title>
+            <description><![CDATA[
+                If disabled, the quick post button at the bottom on mobile devices will be unavailable.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        
         <specs key="time_allowed_for_editing_after_publishing">
             <title>Time allowed for editing after publishing</title>
             <description><![CDATA[

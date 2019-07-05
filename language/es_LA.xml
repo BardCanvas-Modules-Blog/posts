@@ -543,6 +543,14 @@
             <type>yes/no</type>
         </specs>
         
+        <specs key="disable_quick_post_button">
+            <title>¿Desactivar botón de acceso a posteo rápido en móviles?</title>
+            <description><![CDATA[
+                Si se desactiva, el botón te acceso a creación rápida de entradas en dispositivos móviles no se mostrará.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        
         <specs key="time_allowed_for_editing_after_publishing">
             <title>Tiempo de gracia para edición tras publicar</title>
             <description><![CDATA[

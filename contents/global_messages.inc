@@ -13,6 +13,7 @@ if( ! $account->_exists ) return;
 if( basename(__FILE__) == "quick_single.php" ) return;
 if( $template->layout == "popup" ) return;
 if( $template->layout == "admin" ) return;
+if( $settings->get("modules:posts.disable_quick_post_button") == "true" ) return;
 ?>
 
 <!-- Quick single button -->
