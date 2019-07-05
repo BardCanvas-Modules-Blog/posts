@@ -454,10 +454,31 @@ class posts_repository extends abstract_repository
      */
     public function validate_record($record)
     {
+        global $account, $modules;
+        
         if( ! $record instanceof post_record )
             throw new \Exception(
                 "Invalid object class! Expected: {$this->row_class}, received: " . get_class($record)
             );
+        
+        if( empty($record->creation_date) ) $record->creation_date = date("Y-m-d H:i:s");
+        
+        if( empty($record->id_post) )
+        {
+            if( $this->get_record_count(array("id_post" => $record->id_post)) > 0 )
+            {
+                $this->delete($record->id_post);
+                $record->set_new_id();
+                
+                if( empty($record->id_author) ) $record->id_author = $account->id_account;
+                
+                throw new \Exception(trim($modules["posts"]->language->messages->critical_validation_error));
+            }
+        }
+        
+        if( empty($record->id_post) )   throw new \Exception(trim($modules["posts"]->language->messages->id_not_set));
+        
+        if( empty($record->id_author) ) throw new \Exception(trim($modules["posts"]->language->messages->author_not_set));
     }
     
     public function set_category($id_category, $id_post)

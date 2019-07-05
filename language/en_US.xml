@@ -310,6 +310,13 @@
         <cannot_change_others_posts>You cannot change posts from other users.</cannot_change_others_posts>
         <cannot_schedule_posts_with_expiration>Posts with expiration date cannot be scheduled.</cannot_schedule_posts_with_expiration>
         <saved_as_popup>Your post has been saved. Please close this window.</saved_as_popup>
+        <critical_validation_error><![CDATA[
+            Warning: the post had a bogus id, and it seems that it has been previously saved.<br>
+            <u>A new id has been set to the post</u> so indexes are unaffected.
+            Please <b>cancel edition now</b> and get to the posts browser, then edit the new copy.
+        ]]></critical_validation_error>
+        <id_not_set>Post id isn't set. This might be caused by a browser error. Please copy the post contents, paste them on a new post and abandon this one.</id_not_set>
+        <author_not_set>Post author isn't set. This might be caused by a browser error. Please copy the post contents, paste them on a new post and abandon this one.</author_not_set>
     </messages>
     
     <settings_data>

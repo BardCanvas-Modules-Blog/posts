@@ -465,7 +465,8 @@ function process_post_form_response(response, status, xhr, $form)
         return;
     }
     
-    id_post = response.replace('OK:', '');
+    var id_post = response.replace('OK:', '');
+    if( parseInt(id_post) === 0 ) id_post = '';
     if( id_post != '' ) $form.find('input[name="id_post"]').val( id_post );
     
     if( post_autosaver_working )

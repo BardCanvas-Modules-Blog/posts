@@ -313,6 +313,13 @@
         <cannot_change_others_posts>No puedes cambiar entradas de otros usuarios.</cannot_change_others_posts>
         <cannot_schedule_posts_with_expiration>Entradas con fecha de expiración no pueden programarse.</cannot_schedule_posts_with_expiration>
         <saved_as_popup>Tu entrada ha sido guardada con éxito. Por favor cierra esta ventana.</saved_as_popup>
+        <critical_validation_error><![CDATA[
+            Advertencia: la entrada tenía un identificador nulo, y al parecer se ha guardado con anterioridad.<br>
+            <u>Un nuevo identificador se le ha asignado</u> para que no se vean afectados los índices.
+            Por favor <b>cancela la edición ahora</b> y dirígete al navegador de entradas para editar la nueva copia.
+        ]]></critical_validation_error>
+        <id_not_set>No se ha definido el identificador de la entrada. Esto puede ser causado por un error en el navegador. Favor de copiar el contenido de la entrada, pegarlo en una nueva y abandonar esta.</id_not_set>
+        <author_not_set>No se ha definido el autor de la entrada. Esto puede ser causado por un error en el navegador. Favor de copiar el contenido de la entrada, pegarlo en una nueva y abandonar esta.</author_not_set>
     </messages>
     
     <settings_data>
