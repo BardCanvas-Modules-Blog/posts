@@ -24,7 +24,7 @@ use hng2_base\template;
     var abandon_post_question = '<?= $this_module->language->messages->abandon_post_question ?>';
     var toggle_post_category_message_callbacks;
 </script>
-<script type="text/javascript" src="<?= $this_module->get_url() ?>/media/global_functions~v1.3.1-2.js"></script>
+<script type="text/javascript" src="<?= $this_module->get_url() ?>/media/global_functions~v1.3.2-1.js"></script>
 
 <?
 #
