@@ -1,6 +1,12 @@
 
 # Posts Module Change Log
 
+## [1.33.0] - 2019-07-16
+
+- Added checks for incidental bogus post ids.
+- Moved rendering of the quick post button for mobiles to the pre-EOF area.
+- Added option to show/hide the quick post button for mobiles on the settings page.
+
 ## [1.32.0] - 2019-06-30
 
 - Added extension point on the quick post form.
