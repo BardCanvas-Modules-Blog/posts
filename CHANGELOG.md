@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.33.1] - 2019-07-27
+
+- Fixed issue in slug generator.
+
 ## [1.33.0] - 2019-07-16
 
 - Added checks for incidental bogus post ids.
