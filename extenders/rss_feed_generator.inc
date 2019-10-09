@@ -128,7 +128,7 @@ foreach($records as $row)
         }
     }
     
-    $item->author   = $row->author_user_name;
+    $item->author   = $row->author_display_name;
     $item->category = $row->main_category_title;
     $item->comments = $item->link;
     $item->pubDate  = gmdate('D, d M Y H:i:s T', strtotime($row->publishing_date) );
