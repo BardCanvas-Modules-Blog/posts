@@ -759,6 +759,15 @@
             <type>yes/no</type>
         </specs>
         
+        <specs key="export_contents_in_feeds">
+            <title>Exportar contenidos en feeds RSS?</title>
+            <description><![CDATA[
+                De forma predeterminada, los feeds RSS sólo contienen los extractos de las entradas.
+                Cambia esta opción para incluír los contenidos completos.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        
         <specs key="meta_table_created" disabled="true" />
         <specs key="meta_table_created_v2" disabled="true" />
     </settings_data>
@@ -963,15 +972,15 @@
     
     <rss_feed_generator>
         <all_posts>
-            <title>Feed de entradas de {$website_name}</title>
+            <title>{$website_name}</title>
             <description>Últimas entradas publicadas por todos los usuarios de {$website_name}</description>
         </all_posts>
         <posts_by_author>
-            <title>Feed de {$website_name}/{$author}</title>
+            <title>{$author} en {$website_name}</title>
             <description>Últimas entradas publicadas por {$author} en {$website_name}</description>
         </posts_by_author>
         <posts_by_category>
-            <title>Feed de la categoría {$category} de {$website_name}</title>
+            <title>{$website_name}: {$category}</title>
             <description>Entradas publicadas en la categoría {$category} por todos los usuarios de {$website_name}</description>
         </posts_by_category>
     </rss_feed_generator>

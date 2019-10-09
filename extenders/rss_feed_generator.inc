@@ -30,6 +30,8 @@ use hng2_rss\channel;
 use hng2_rss\enclosure;
 use hng2_rss\item;
 
+include_once ROOTPATH . "/lib/phpQuery-onefile.php";
+
 if( preg_match('#^(author|user)/#i', $handle) )
     $content_key = "posts_by_author";
 elseif( preg_match('#^category/#i', $handle) )
@@ -88,6 +90,7 @@ else
 if( empty($records) ) return;
 
 $media_repository = new media_repository();
+$include_contents = $settings->get("modules:posts.export_contents_in_feeds") == "true";
 
 foreach($records as $row)
 {
@@ -96,6 +99,21 @@ foreach($records as $row)
     $item->link        = "{$config->full_root_url}/{$row->id_post}";
     $item->description = strip_tags(html_entity_decode($row->excerpt, null, "UTF-8"));
     $item->guid        = "{$config->full_root_url}/{$row->id_post}";
+    
+    if( $include_contents )
+    {
+        $item->description = externalize_urls($row->get_processed_content());
+        $tmp = phpQuery::newDocumentHTML($item->description);
+        $tmp->find("*[data-media-type]")->each(function($e) { pq($e)->removeAttr("data-media-type"); });
+        $tmp->find("*[data-id-media]")->each(function($e) { pq($e)->removeAttr("data-id-media"); });
+        $tmp->find("video")->each(function($e) { pq($e)->removeAttr("poster")->removeAttr("style")->removeAttr("controls"); });
+        $tmp->find("*[style*='caret-color']")->each(function($e) { pq($e)->removeAttr("style"); });
+        $tmp->find('.play_trigger ')->remove();
+        $item->description = trim( $tmp->html() );
+        $item->description = str_replace("<p></p>",       "", $item->description);
+        $item->description = str_replace("<p>&nbsp;</p>", "", $item->description);
+        $item->description = str_replace("<p> </p>",      "", $item->description);
+    }
     
     if( ! empty($row->id_featured_image) )
     {

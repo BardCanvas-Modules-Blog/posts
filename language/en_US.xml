@@ -742,6 +742,15 @@
             <type>yes/no</type>
         </specs>
         
+        <specs key="export_contents_in_feeds">
+            <title>Export contents in RSS feeds?</title>
+            <description><![CDATA[
+                By default, RSS feeds contain summaries only. If you set this option to "Yes",
+                the full post contents will be included.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        
         <specs key="meta_table_created" disabled="true" />
         <specs key="meta_table_created_v2" disabled="true" />
     </settings_data>
@@ -946,15 +955,15 @@
     
     <rss_feed_generator>
         <all_posts>
-            <title>{$website_name} posts feed</title>
+            <title>{$website_name}</title>
             <description>Latest posts published by all authors of {$website_name}</description>
         </all_posts>
         <posts_by_author>
-            <title>{$website_name}/{$author}'s feed</title>
+            <title>{$author}'s feed on {$website_name}</title>
             <description>Latest posts published by {$author} on {$website_name}</description>
         </posts_by_author>
         <posts_by_category>
-            <title>{$website_name}/{$category} category feed</title>
+            <title>{$website_name}: {$category}</title>
             <description>Latest posts published in {$category} by all authors of {$website_name}</description>
         </posts_by_category>
     </rss_feed_generator>
