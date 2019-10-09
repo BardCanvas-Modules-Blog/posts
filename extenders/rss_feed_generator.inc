@@ -89,14 +89,17 @@ else
 
 if( empty($records) ) return;
 
-$media_repository = new media_repository();
-$include_contents = $settings->get("modules:posts.export_contents_in_feeds") == "true";
+$media_repository    = new media_repository();
+$include_contents    = $settings->get("modules:posts.export_contents_in_feeds") == "true";
+$permalinks_as_slugs = $settings->get("modules:posts.permalink_style") == "slug";
 
 foreach($records as $row)
 {
     $item              = new item();
     $item->title       = strip_tags(html_entity_decode($row->title, null, "UTF-8"));
-    $item->link        = "{$config->full_root_url}/{$row->id_post}";
+    $item->link        = $permalinks_as_slugs
+                       ? "{$config->full_root_url}/{$row->slug}"
+                       : "{$config->full_root_url}/{$row->id_post}";
     $item->description = strip_tags(html_entity_decode($row->excerpt, null, "UTF-8"));
     $item->guid        = "{$config->full_root_url}/{$row->id_post}";
     
