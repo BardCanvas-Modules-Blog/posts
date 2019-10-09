@@ -1,6 +1,12 @@
 
 # Posts Module Change Log
 
+## [1.34.0] - 2019-10-08
+
+- Added support for full contents output on RSS feeds.
+- Changed RSS author field from user name to display name.
+- Changed RSS links to settings based instead of post ids.
+
 ## [1.33.1] - 2019-07-27
 
 - Fixed issue in slug generator.
