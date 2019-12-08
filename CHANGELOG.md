@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.1] - 2019-12-08
+
+- Added login form for unauthenticated users accessing the records browser.
+
 ## [1.34.0] - 2019-10-08
 
 - Added support for full contents output on RSS feeds.
