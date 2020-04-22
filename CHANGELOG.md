@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.2] - 2020-04-22
+
+- Implemented record navigation injection to post feeds.
+
 ## [1.34.1] - 2019-12-08
 
 - Added login form for unauthenticated users accessing the records browser.
