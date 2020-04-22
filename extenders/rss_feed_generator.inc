@@ -49,7 +49,8 @@ $categories_repository = new categories_repository();
 
 $author   = new account_record();
 $category = new category_record();
-$item_key = end(explode("/", $handle));
+$array    = explode("/", $handle);
+$item_key = end($array);
 
 if( $content_key == "posts_by_author" )
     $author = $accounts_repository->get($item_key);
@@ -72,6 +73,7 @@ if( $content_key == "posts_by_author"   && is_null($author)   ) return;
 if( $content_key == "posts_by_category" && is_null($category) ) return;
 if( $content_key == "posts_by_category" && $category->visibility !== "public" ) return;
 
+$config->globals["build_find_params:inject_incoming_nav_params"] = true;
 if( $content_key == "posts_by_author" )
 {
     $res     = $posts_repository->get_for_author($author->id_account);

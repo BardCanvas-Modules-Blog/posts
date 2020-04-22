@@ -741,7 +741,7 @@ class posts_repository extends abstract_repository
      */
     protected function build_find_params($where = array(), $skip_date_checks = false)
     {
-        global $settings, $account;
+        global $settings, $account, $config;
         
         $today = date("Y-m-d H:i:s");
         $where[] = "status = 'published'";
@@ -778,6 +778,26 @@ class posts_repository extends abstract_repository
         
         if( empty($limit) ) $limit = 30;
         
+        if( $config->globals["build_find_params:inject_incoming_nav_params"] )
+        {
+            $xlimit  = (int) $_GET["limit"];
+            $xoffset = (int) $_GET["offset"];
+            $xsince  = trim(stripslashes($_GET["since"]));
+            
+            try
+            {
+                new \DateTime($xsince);
+            }
+            catch(\Exception $e)
+            {
+                $xsince = date("Y-m-d H:i:s", strtotime("now + 1 year"));
+            }
+            
+            if( ! empty($xlimit)  ) $limit   = $xlimit;
+            if( ! empty($xoffset) ) $offset  = $xoffset;
+            if( ! empty($xsince)  ) $where[] = "publishing_date > '$xsince'";
+        }
+        
         return (object) array(
             "where"  => $where,
             "limit"  => $limit,
@@ -790,6 +810,7 @@ class posts_repository extends abstract_repository
      * Returns find params for home EXCLUDING featured posts
      * 
      * @return object {where:array, limit:int, offset:int, order:string}
+     * @throws \Exception
      */
     protected function build_find_params_for_home()
     {
