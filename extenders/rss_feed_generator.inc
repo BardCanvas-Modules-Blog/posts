@@ -54,6 +54,18 @@ $category = new category_record();
 $array    = explode("/", $handle);
 $item_key = end($array);
 
+if( ! empty($item_key) )
+{
+    try
+    {
+        check_sql_injection(array($item_key));
+    }
+    catch(\Exception $e)
+    {
+        return;
+    }
+}
+
 if( $content_key == "posts_by_author" )
     $author = $accounts_repository->get($item_key);
 elseif( $content_key == "posts_by_category" )
