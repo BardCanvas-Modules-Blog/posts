@@ -1,6 +1,13 @@
 
 # Posts Module Change Log
 
+## [1.34.3] - 2020-04-28
+
+- Removed "since" parameter when invalid on record navigation injection to post feeds.
+- Added posts by tag feed.
+- Added SQL injection check on post feeds.
+- Added UTF-8 encoding check on post feeds to avoid fatal errors.
+
 ## [1.34.2] - 2020-04-22
 
 - Implemented record navigation injection to post feeds.
