@@ -790,7 +790,7 @@ class posts_repository extends abstract_repository
             }
             catch(\Exception $e)
             {
-                $xsince = date("Y-m-d H:i:s", strtotime("now + 1 year"));
+                $xsince = "";
             }
             
             if( ! empty($xlimit)  ) $limit   = $xlimit;
