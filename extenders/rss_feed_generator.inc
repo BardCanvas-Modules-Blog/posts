@@ -36,6 +36,8 @@ if( preg_match('#^(author|user)/#i', $handle) )
     $content_key = "posts_by_author";
 elseif( preg_match('#^category/#i', $handle) )
     $content_key = "posts_by_category";
+elseif( preg_match('#^tag/#i', $handle) )
+    $content_key = "posts_by_tag";
 else
     $content_key = "all_posts";
 
@@ -83,6 +85,10 @@ elseif( $content_key == "posts_by_category" )
 {
     $res     = $posts_repository->get_for_category($category->id_category);
     $records = $res->posts;
+}
+elseif( $content_key == "posts_by_tag" )
+{
+    $records = $posts_repository->get_for_feed_in_tag($item_key);
 }
 else
 {

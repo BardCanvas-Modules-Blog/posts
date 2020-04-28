@@ -1065,6 +1065,18 @@ class posts_repository extends abstract_repository
     }
     
     /**
+     * @return post_record[]
+     */
+    public function get_for_feed_in_tag($tag)
+    {
+        $find_params = $this->build_find_params_for_home();
+        $find_params->where[] = "id_post in (select pt.id_post from post_tags pt where pt.tag = '$tag')";
+        $posts_data  = $this->get_posts_data($find_params, "index_builders", "home");
+        
+        return $posts_data->posts;
+    }
+    
+    /**
      * @param $id_account
      *
      * @return posts_data
