@@ -160,5 +160,10 @@ foreach($records as $row)
     $config->globals["rss_feed_loop/current_item"] =& $item;
     $this_module->load_extensions("rss_feed_generator", "before_loop_iteration_ending");
     
+    $tmp = @json_encode($item->title);       if( ! $tmp ) $item->title       = utf8_encode($item->title);
+    $tmp = @json_encode($item->description); if( ! $tmp ) $item->description = utf8_encode($item->description);
+    $tmp = @json_encode($item->author);      if( ! $tmp ) $item->author      = utf8_encode($item->author);
+    $tmp = @json_encode($item->category);    if( ! $tmp ) $item->category    = utf8_encode($item->category);
+    
     $channel->items[] = $item;
 }
