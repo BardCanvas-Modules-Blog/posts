@@ -50,9 +50,25 @@ if( $cache_ttl > 0 )
     if( $contents == "none" ) return "";
 }
 
+
+$boundary = date("Y-m-d H:i:s", strtotime("now - $max_age hours"));
+$where    = array();
+
+if( stristr($id, ",") === false )
+{
+    $where["main_category"] = $id;
+}
+else
+{
+    $list  = array();
+    $parts = explode(",", $id);
+    foreach($parts as $part) $list[] = sprintf("'%s'", trim($part));
+    $list    = implode(", ", $list);
+    $where[] = "main_category in ($list)";
+}
+$where[] = "publishing_date >= '$boundary'";
+
 $repository = new posts_repository();
-$boundary   = date("Y-m-d H:i:s", strtotime("now - $max_age hours"));
-$where      = array("main_category = '$id'", "publishing_date >= '$boundary'");
 $posts      = $repository->lookup($where, $limit, 0, $order);
 
 if( empty($posts) )

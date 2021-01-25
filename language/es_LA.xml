@@ -887,12 +887,13 @@
         </posts_by_tag>
         <posts_by_category>
             <title>Entradas por categoría</title>
-            <info>Muestra un listado de entradas que tengan asignada cierta categoría</info>
+            <info>Muestra un listado de entradas que tengan asignadas ciertas categorías</info>
             <editable_specs>
                 <specs key="category_id">
-                    <title>Id de categoría</title>
+                    <title>Ids de categorías</title>
                     <description><![CDATA[
                         Id de la categoría que se debe listar.
+                        Puedes especificar múltiples categorías separándolas con comas.
                     ]]></description>
                     <type>text</type>
                 </specs>

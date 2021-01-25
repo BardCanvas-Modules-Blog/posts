@@ -870,12 +870,13 @@
         </posts_by_tag>
         <posts_by_category>
             <title>Posts by category</title>
-            <info>Shows a list of matching posts against a category id</info>
+            <info>Shows a list of matching posts against category ids</info>
             <editable_specs>
                 <specs key="category_id">
-                    <title>Category id</title>
+                    <title>Category ids</title>
                     <description><![CDATA[
                         Type or paste the id of the category to list.
+                        You can specify multiple categories by separating them with commas.
                     ]]></description>
                     <type>text</type>
                 </specs>
