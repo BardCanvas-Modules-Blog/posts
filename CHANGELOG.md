@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.4] - 2021-01-25
+
+- Allowed multiple category ids in the "posts by category" widget.
+
 ## [1.34.3] - 2020-04-28
 
 - Removed "since" parameter when invalid on record navigation injection to post feeds.
