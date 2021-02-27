@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.5] - 2021-02-27
+
+- Added identifiers to form segments for easing JS/CSS manipulation.
+
 ## [1.34.4] - 2021-01-25
 
 - Allowed multiple category ids in the "posts by category" widget.
