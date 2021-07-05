@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.6] - 2021-07-05
+
+- Added check to avoid generating numeric slugs.
+
 ## [1.34.5] - 2021-02-27
 
 - Added identifiers to form segments for easing JS/CSS manipulation.
