@@ -168,6 +168,8 @@ if( function_exists("extract_media_items") )
     $media_items = array_unique($media_items);
 }
 
+$current_module->load_extensions("save_post", "after_extracting_media_items");
+
 if( $post->status == "published"
     && (empty($post->publishing_date) || $post->publishing_date == "0000-00-00 00:00:00") )
     $post->publishing_date = date("Y-m-d H:i:s");
