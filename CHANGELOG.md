@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.7]
+
+- Added extension point on the posts saving script.
+
 ## [1.34.6] - 2021-07-05
 
 - Added check to avoid generating numeric slugs.
