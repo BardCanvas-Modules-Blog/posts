@@ -1,7 +1,11 @@
 
 # Posts Module Change Log
 
-## [1.34.7]
+## [1.34.8] - 2021-07-27
+
+- Added `render_post_cards` shortcode handler.
+
+## [1.34.7] - 2021-07-20
 
 - Added extension point on the posts saving script.
 
