@@ -80,7 +80,7 @@ if(
     $entries = explode("\n", $enforced_expiration);
     foreach($entries as $entry)
     {
-        list($slug, $hours) = preg_split('/\s*-\s*/', $entry);
+        list($slug, $hours) = preg_split('/\s+-\s+/', $entry);
         $id = $categories_repository->get_id_by_slug($slug);
         if( $post->main_category != $id ) continue;
         
