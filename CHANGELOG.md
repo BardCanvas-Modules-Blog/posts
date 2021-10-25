@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.9] - 2021-10-25
+
+- Tuned enforced expiration detection on save.
+
 ## [1.34.8] - 2021-07-27
 
 - Added `render_post_cards` shortcode handler.
