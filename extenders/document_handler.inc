@@ -21,6 +21,17 @@ if( empty($_GET["handle"]) ) return;
 
 $handle = trim(stripslashes($_GET["handle"]));
 
+try
+{
+    check_sql_injection($handle);
+}
+catch(\Exception $e)
+{
+    throw_fake_501();
+}
+
+if( preg_match("/[^a-z0-9.\-_]/i", $handle) ) throw_fake_501();
+
 $repository = new posts_repository();
 $post = $repository->get_by_id_or_slug($handle);
 if( is_null($post) ) return;
