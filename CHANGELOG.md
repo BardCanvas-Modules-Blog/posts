@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.10] - 2021-11-17
+
+- Added SQL injection check.
+
 ## [1.34.9] - 2021-10-25
 
 - Tuned enforced expiration detection on save.
