@@ -18,6 +18,9 @@ include "../includes/bootstrap.inc";
 use hng2_base\template;
 use hng2_modules\categories\categories_repository;
 
+try { check_sql_injection($_GET); }
+catch(\Exception $e) { throw_fake_501(); }
+
 $categories_repository = new categories_repository();
 
 if( empty($_GET["slug"]) ) throw_fake_404();

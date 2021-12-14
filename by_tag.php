@@ -20,6 +20,9 @@ use hng2_base\template;
 $tag = trim(stripslashes($_GET["tag"]));
 if( empty($tag) ) throw_fake_404();
 
+try { check_sql_injection($_GET); }
+catch(\Exception $e) { throw_fake_501(); }
+
 $template->set("page_tag",        "post_tag_index");
 $template->set("showing_archive", true);
 $template->set("current_tag",     $tag);

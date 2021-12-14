@@ -19,6 +19,9 @@ include "../includes/bootstrap.inc";
 
 if( strlen($_GET["date"]) > 10 ) throw_fake_404();
 
+try { check_sql_injection($_GET); }
+catch(\Exception $e) { throw_fake_501(); }
+
 $evaling_date = str_replace("/", "-", $_GET["date"]);
 
 if( strlen($evaling_date) == 10 ) # Day

@@ -20,6 +20,9 @@ include "../includes/bootstrap.inc";
 
 if( empty($_GET["slug"]) ) throw_fake_404();
 
+try { check_sql_injection($_GET); }
+catch(\Exception $e) { throw_fake_501(); }
+
 $author = new account($_GET["slug"]);
 if( ! $author->_exists ) throw_fake_404();
 
