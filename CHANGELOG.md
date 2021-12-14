@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.11] - 2021-12-13
+
+- Added SQL injection checks.
+
 ## [1.34.10] - 2021-11-17
 
 - Added SQL injection check.
