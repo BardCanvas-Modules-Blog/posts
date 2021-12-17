@@ -187,6 +187,7 @@ class posts_repository extends abstract_repository
      */
     public function get($id)
     {
+        $id = (int) $id;
         return parent::get($id);
     }
     
