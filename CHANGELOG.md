@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.12] - 2021-12-17
+
+- Input sanitization on the posts repository.
+
 ## [1.34.11] - 2021-12-13
 
 - Added SQL injection checks.
