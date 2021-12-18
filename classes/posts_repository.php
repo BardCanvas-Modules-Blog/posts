@@ -231,6 +231,10 @@ class posts_repository extends abstract_repository
     {
         global $database;
         
+        if( ! empty($limit)  && ! is_numeric($limit)  ) return array();
+        if( ! empty($offset) && ! is_numeric($offset) ) return array();
+        if( $limit < 0 || $offset < 0 ) return array();
+        
         $query_where = "";
         if( ! empty($where) ) $query_where = "where " . $this->convert_where($where);
         
