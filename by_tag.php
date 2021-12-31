@@ -19,6 +19,7 @@ use hng2_base\template;
 
 $tag = trim(stripslashes($_GET["tag"]));
 if( empty($tag) ) throw_fake_404();
+if( preg_match("/[^a-z0-9]/i", $tag) ) throw_fake_501();
 
 try { check_sql_injection($_GET); }
 catch(\Exception $e) { throw_fake_501(); }
