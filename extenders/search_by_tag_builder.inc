@@ -19,7 +19,7 @@ use hng2_modules\search\search_by_tag_item;
 
 global $config, $template;
 
-$tag        = $template->get("current_tag");
+$tag        = addslashes($template->get("current_tag"));
 $repository = new posts_repository();
 $posts_data = $repository->get_for_tag($tag);
 
