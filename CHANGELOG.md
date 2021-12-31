@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.14] - 2021-12-31
+
+- Input sanitization on the "search by tag" builder extender.
+
 ## [1.34.13] - 2021-12-17
 
 - Input sanitization on the posts repository.
