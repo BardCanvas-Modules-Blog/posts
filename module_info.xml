@@ -78,7 +78,7 @@
             <file>shortcode_handlers/post_content.inc</file>
         </handler>
         <handler name="render_post_cards">
-            <syntax>[render_post_cards category="slug" limit="10" order="latest|oldest" link_caption="Read more" left_icon="..." right_icon="..." class="css classes" style="css styles"]</syntax>
+            <syntax>[render_post_cards category="slug" limit="10" order="latest|oldest" link_caption="Read more" left_icon="..." right_icon="..." class="css classes" item_class="..." permalink_class="..." style="css styles"]</syntax>
             <file>shortcode_handlers/render_post_cards.inc</file>
         </handler>
     </shortcode_handlers>

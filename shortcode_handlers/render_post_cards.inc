@@ -21,14 +21,16 @@
  * @var array    $attributes
  *
  * Expected attributes:
- * • category     category slug, optional
- * • limit        10 by default
- * • order        latest|oldest, latests by default
- * • link_caption optional permalink caption. If empty, "View" will be rendered.
- * • left_icon    icon to show at the left of the permalink caption
- * • right_icon   icon to show at the left of the permalink caption
- * • class        empty or css class list
- * • style        empty or css styles
+ * • category        category slug, optional
+ * • limit           10 by default
+ * • order           latest|oldest, latests by default
+ * • link_caption    optional permalink caption. If empty, "View" will be rendered.
+ * • left_icon       icon to show at the left of the permalink caption
+ * • right_icon      icon to show at the left of the permalink caption
+ * • class           empty or css class list
+ * • style           empty or css styles
+ * • item_class      empty or css class list for each item
+ * • permalink_class empty or css class list for the permalink
  */
 
 use hng2_base\account;
@@ -38,6 +40,12 @@ use hng2_base\settings;
 use hng2_modules\posts\posts_repository;
 
 global $config, $settings;
+
+if( empty($attributes) || ! is_array($attributes) )
+{
+    $contents = str_replace($matched_str, "", $contents);
+    return;
+}
 
 $category     = trim($attributes["category"]);
 $limit        = (int) $attributes["limit"]; if( empty($limit) ) $limit = 10;
@@ -50,7 +58,6 @@ if( empty($link_caption) ) $link_caption = trim($this_module->language->read_mor
 if( empty($attributes["category"]) )
 {
     $contents = str_replace($matched_str, "", $contents);
-    
     return;
 }
 
@@ -70,7 +77,6 @@ $posts    = $posts_repository->find($filter, $limit, 0, $sqlorder);
 if( empty($posts) )
 {
     $contents = str_replace($matched_str, "", $contents);
-    
     return;
 }
 
@@ -84,14 +90,15 @@ foreach($posts as $post)
     if( empty($image) ) $image = "{$config->full_root_path}/media/missing_image.png";
     
     $return .= "
-        <card>
+        <card class='{$attributes["item_class"]}'>
             <title>{$post->get_processed_title(false)}</title>
             <excerpt>{$post->get_processed_excerpt(true)}</excerpt>
             <thumbnail><img src='{$image}'></thumbnail>
             <date><i class='fa fa-calendar'></i> {$post->publishing_date}</date>
             <date_ago><i class='fa fa-calendar'></i> {$date_ago}</date_ago>
             <mini_date><i class='fa fa-calendar'></i> {$mini_date}</mini_date>
-            <permalink><a href='{$post->get_permalink()}'>{$left_icon} $link_caption {$right_icon}</a></permalink>
+            <permalink><a href='{$post->get_permalink()}' 
+                class='{$attributes["permalink_class"]}'>{$left_icon} $link_caption {$right_icon}</a></permalink>
         </card>
     ";
 }
