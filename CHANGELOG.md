@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.16] - 2022-01-05
+
+- Added attributes to the `render_post_cards` shortcode.
+
 ## [1.34.15] - 2021-12-31
 
 - Input sanitization on the "search by tag" script.
