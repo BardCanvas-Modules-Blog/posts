@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.17] - 2022-03-16
+
+- Refactored IP Geolocation functions.
+
 ## [1.34.16] - 2022-01-05
 
 - Added attributes to the `render_post_cards` shortcode.
