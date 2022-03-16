@@ -153,7 +153,7 @@ class toolbox
                     ? "<p>{$current_module->language->email_templates->post_submitted->none_defined}</p>"
                     : "<img height='200' border='1' src='{$config->full_root_url}{$post->featured_image_thumbnail}'>",
                 $user_ip,
-                forge_geoip_location($user_ip),
+                get_geoip_location_with_isp($user_ip),
                 $_SERVER["HTTP_USER_AGENT"],
                 $other_posts_from_segment,
                 "{$config->full_root_url}/{$post->id_post}",

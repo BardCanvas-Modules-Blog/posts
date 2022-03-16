@@ -33,8 +33,8 @@ else
     $post->id_author         = $account->id_account;
     $post->creation_date     = date("Y-m-d H:i:s");
     $post->creation_ip       = get_remote_address();
-    $post->creation_host     = gethostbyaddr($post->creation_ip);
-    $post->creation_location = forge_geoip_location($post->creation_ip);
+    $post->creation_host     = @gethostbyaddr($post->creation_ip);
+    $post->creation_location = get_geoip_location_with_isp($post->creation_ip);
     $post->last_update       = date("Y-m-d H:i:s");
 }
 
