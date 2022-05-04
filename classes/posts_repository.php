@@ -340,7 +340,7 @@ class posts_repository extends abstract_repository
     public function get_by_id_or_slug($id_or_slug)
     {
         if( is_numeric($id_or_slug) ) $where = array("id_post" => $id_or_slug);
-        else                          $where = array("slug"    => $id_or_slug);
+        else                          $where = array("slug"    => addslashes(stripslashes($id_or_slug)));
         
         $res = $this->find($where, 0, 0, "");
         
