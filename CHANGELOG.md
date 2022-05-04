@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.18] - 2022-05-04
+
+- Added input sanitization on getter of the repository.
+
 ## [1.34.17] - 2022-03-16
 
 - Refactored IP Geolocation functions.
