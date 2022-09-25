@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.19] - 2022-09-24
+
+- Added checks against script injections.
+
 ## [1.34.18] - 2022-05-04
 
 - Added input sanitization on getter of the repository.
