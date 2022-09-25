@@ -30,6 +30,8 @@ if( $account->state != "enabled" ) die($language->errors->access_denied);
 if( $account->level < (int) $settings->get("modules:posts.required_level_to_post") )
     die($language->errors->access_denied);
 
+$_GET["id_post"] = $_GET["id_post"] + 0;
+
 if( ! in_array($_GET["action"], array("change_status", "untrash_for_review", "empty_trash", "remove_parent")) )
     die($current_module->language->messages->toolbox->invalid_action);
 

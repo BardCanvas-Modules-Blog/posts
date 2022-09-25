@@ -7,7 +7,7 @@
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  * 
  * $_GET params
- * @param string "id_post"
+ * @param int "id_post"
  */
 
 use hng2_modules\posts\posts_repository;
@@ -17,6 +17,8 @@ include "../../includes/bootstrap.inc";
 
 header("Content-Type: application/json; charset=utf-8");
 if( $account->state != "enabled" ) die(json_encode(array("message" => trim($language->errors->access_denied) )));
+
+$_GET["id_post"] = $_GET["id_post"] + 0;
 
 if( empty($_GET["id_post"]) ) die(json_encode(array("message" => $current_module->language->messages->missing->id )));
 

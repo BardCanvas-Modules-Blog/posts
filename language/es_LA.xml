@@ -321,6 +321,11 @@
         ]]></critical_validation_error>
         <id_not_set>No se ha definido el identificador de la entrada. Esto puede ser causado por un error en el navegador. Favor de copiar el contenido de la entrada, pegarlo en una nueva y abandonar esta.</id_not_set>
         <author_not_set>No se ha definido el autor de la entrada. Esto puede ser causado por un error en el navegador. Favor de copiar el contenido de la entrada, pegarlo en una nueva y abandonar esta.</author_not_set>
+        <invalid_title_contents>Contenidos inválidos en el título.</invalid_title_contents>
+        <invalid_slug_contents>Contenidos inválidos en el slug.</invalid_slug_contents>
+        <invalid_excerpt_contents>Contenidos inválidos en el resúmen.</invalid_excerpt_contents>
+        <invalid_contents>Contenidos inválidos en el cuerpo de la entrada.</invalid_contents>
+        <invalid_tag>Etiqueta inválida.</invalid_tag>
     </messages>
     
     <settings_data>

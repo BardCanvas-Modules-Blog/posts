@@ -7,8 +7,8 @@
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  * 
  * $_POST params
- * @param id_post
- * @param date
+ * @param int    id_post
+ * @param string date
  */
 
 use hng2_base\config;
@@ -19,6 +19,8 @@ include "../../includes/bootstrap.inc";
 
 header("Content-Type: text/plain; charset=utf-8");
 if( $account->state != "enabled" ) die($language->errors->access_denied);
+
+$_POST["id_post"] = $_POST["id_post"] + 0;
 
 if( empty($_POST["id_post"]) ) die($current_module->language->messages->missing->id);
 

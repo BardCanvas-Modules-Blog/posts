@@ -318,6 +318,11 @@
         ]]></critical_validation_error>
         <id_not_set>Post id isn't set. This might be caused by a browser error. Please copy the post contents, paste them on a new post and abandon this one.</id_not_set>
         <author_not_set>Post author isn't set. This might be caused by a browser error. Please copy the post contents, paste them on a new post and abandon this one.</author_not_set>
+        <invalid_title_contents>Invalid contents in title.</invalid_title_contents>
+        <invalid_slug_contents>Invalid contents in slug.</invalid_slug_contents>
+        <invalid_excerpt_contents>Invalid contents in excerpt.</invalid_excerpt_contents>
+        <invalid_contents>Invalid contents in post body.</invalid_contents>
+        <invalid_tag>Invalid tag.</invalid_tag>
     </messages>
     
     <settings_data>

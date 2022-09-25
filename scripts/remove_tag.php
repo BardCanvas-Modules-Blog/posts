@@ -7,8 +7,8 @@
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  * 
  * $_GET params
- * @param id_post
- * @param tag
+ * @param int    id_post
+ * @param string tag
  */
 
 use hng2_modules\posts\posts_repository;
@@ -21,8 +21,11 @@ if( $account->state != "enabled" ) die($language->errors->access_denied);
 if( $account->level < (int) $settings->get("modules:posts.required_level_to_post") )
     die($language->errors->access_denied);
 
+$_GET["id_post"] = $_GET["id_post"] + 0;
+
 if( empty($_GET["id_post"]) ) die($current_module->language->messages->missing->id);
 if( empty($_GET["tag"]) ) die($current_module->language->messages->missing->tag);
+if( has_injected_scripts($tag) ) die($current_module->language->messages->invalid_tag);
 
 $repository = new posts_repository();
 $post       = $repository->get($_GET["id_post"]);

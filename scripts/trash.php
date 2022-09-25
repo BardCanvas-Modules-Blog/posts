@@ -7,7 +7,7 @@
  * @author     Alejandro Caballero - lava.caballero@gmail.com
  * 
  * $_GET params
- * @param id_post
+ * @param int id_post
  */
 
 use hng2_media\media_repository;
@@ -18,6 +18,8 @@ include "../../includes/bootstrap.inc";
 
 header("Content-Type: text/plain; charset=utf-8");
 if( $account->state != "enabled" ) die($language->errors->access_denied);
+
+$_GET["id_post"] = $_GET["id_post"] + 0;
 
 if( empty($_GET["id_post"]) ) die($current_module->language->messages->missing->id);
 

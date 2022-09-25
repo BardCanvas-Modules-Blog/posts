@@ -37,6 +37,11 @@ if( $account->level < (int) $settings->get("modules:posts.required_level_to_post
 if( empty($_POST["title"]) )
     die($current_module->language->messages->missing->title);
 
+if( has_injected_scripts($_POST["title"]) )   die($current_module->language->messages->invalid_title_contents);
+if( has_injected_scripts($_POST["slug"]) )    die($current_module->language->messages->invalid_slug_contents);
+if( has_injected_scripts($_POST["excerpt"]) ) die($current_module->language->messages->invalid_excerpt_contents);
+if( has_injected_scripts($_POST["content"]) ) die($current_module->language->messages->invalid_contents);
+
 if( preg_match('/http|https|www\./i', stripslashes($_POST["title"])) )
     die($current_module->language->messages->no_urls_in_title);
 
