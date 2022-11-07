@@ -44,4 +44,12 @@ unset( $config->globals["posts:json_record_exporter/working_item"] );
 $custom_fields = $record->fetch_all_metas(false);
 if( ! empty($custom_fields) ) $data["custom_fields"] = $custom_fields;
 
+foreach($data as $key => $val)
+{
+    if( ! is_string($val) ) continue;
+    
+    $tmp = @json_encode($val);
+    if( empty($tmp) ) $data[$key] = utf8_encode($val);
+}
+
 echo json_encode(array("message" => "OK", "data" => $data));
