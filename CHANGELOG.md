@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.20] - 2022-11-07
+
+- Added checks for dodging encoding issues in the JSON posts deliverer.
+
 ## [1.34.19] - 2022-09-24
 
 - Added checks against script injections.
