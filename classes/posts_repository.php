@@ -1226,7 +1226,7 @@ class posts_repository extends abstract_repository
         }
         
         $config->globals["author_ids"] = $author_ids;
-        $modules["posts"]->load_extensions("posts_repository_class", "preload_authors");
+        if( is_object($modules["posts"]) ) $modules["posts"]->load_extensions("posts_repository_class", "preload_authors");
     }
     
     public function get_grouped_tag_counts($since = "", $min_hits = 10)
