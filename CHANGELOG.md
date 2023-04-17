@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.21] - 2023-04-16
+
+- Added check to avoid warning on the posts repository.
+
 ## [1.34.20] - 2022-11-07
 
 - Added checks for dodging encoding issues in the JSON posts deliverer.
