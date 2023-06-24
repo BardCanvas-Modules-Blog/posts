@@ -123,7 +123,7 @@ foreach($records as $row)
     $item->description = strip_tags(html_entity_decode($row->excerpt, null, "UTF-8"));
     $item->guid        = "{$config->full_root_url}/{$row->id_post}";
     
-    if( $include_contents )
+    if( $include_contents || $_GET["include_contents"] == "true" )
     {
         $item->description = externalize_urls($row->get_processed_content());
         $tmp = phpQuery::newDocumentHTML($item->description);
