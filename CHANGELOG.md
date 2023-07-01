@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.22] - 2023-07-01
+
+- Added GET var to allow full content instead of excerpts on RSS feed calls.
+
 ## [1.34.21] - 2023-04-16
 
 - Added check to avoid warning on the posts repository.
