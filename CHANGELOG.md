@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.23] - 2024-08-20
+
+- Added offending words list to the SQL injection detection notification on saving.
+
 ## [1.34.22] - 2023-07-01
 
 - Added GET var to allow full content instead of excerpts on RSS feed calls.
