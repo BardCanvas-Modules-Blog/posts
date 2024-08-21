@@ -42,6 +42,26 @@ if( has_injected_scripts($_POST["slug"]) )    die($current_module->language->mes
 if( has_injected_scripts($_POST["excerpt"]) ) die($current_module->language->messages->invalid_excerpt_contents);
 if( has_injected_scripts($_POST["content"]) ) die($current_module->language->messages->invalid_contents);
 
+try
+{
+    check_sql_injection(array($_POST["title"], $_POST["slug"], $_POST["excerpt"], $_POST["content"]));
+}
+catch(\Exception $e)
+{
+    die(
+        $current_module->language->messages->invalid_contents2 . (
+            empty($config->globals["!sql_injection.matches_list"])
+                ? ""
+                : (
+                    "\n{$current_module->language->offending_words} "
+                    . implode(", ", $config->globals["!sql_injection.matches_list"])
+                    . ".\n"
+                    . $current_module->language->replace_offending_words
+                  )
+        )
+    );
+}
+
 if( preg_match('/http|https|www\./i', stripslashes($_POST["title"])) )
     die($current_module->language->messages->no_urls_in_title);
 

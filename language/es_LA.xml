@@ -325,6 +325,7 @@
         <invalid_slug_contents>Contenidos inválidos en el slug.</invalid_slug_contents>
         <invalid_excerpt_contents>Contenidos inválidos en el resúmen.</invalid_excerpt_contents>
         <invalid_contents>Contenidos inválidos en el cuerpo de la entrada.</invalid_contents>
+        <invalid_contents2>Contenidos inválidos detectados.</invalid_contents2>
         <invalid_tag>Etiqueta inválida.</invalid_tag>
     </messages>
     
@@ -1153,5 +1154,8 @@
     </posts_by_tag_helper>
     
     <post_tree_index_caption>En esta trama:</post_tree_index_caption>
+    
+    <offending_words>Palabras ofensivas:</offending_words>
+    <replace_offending_words>Reemplázalas e intenta de nuevo.</replace_offending_words>
     
 </language>

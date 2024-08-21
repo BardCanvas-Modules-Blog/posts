@@ -322,6 +322,7 @@
         <invalid_slug_contents>Invalid contents in slug.</invalid_slug_contents>
         <invalid_excerpt_contents>Invalid contents in excerpt.</invalid_excerpt_contents>
         <invalid_contents>Invalid contents in post body.</invalid_contents>
+        <invalid_contents2>Invalid contents detected.</invalid_contents2>
         <invalid_tag>Invalid tag.</invalid_tag>
     </messages>
     
@@ -1136,5 +1137,8 @@
     </posts_by_tag_helper>
     
     <post_tree_index_caption>On this thread:</post_tree_index_caption>
+    
+    <offending_words>Offending words:</offending_words>
+    <replace_offending_words>Please replace them and try again.</replace_offending_words>
     
 </language>
