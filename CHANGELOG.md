@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.26] - 2025-02-11
+
+- Implemented custom SQL injection check from Security Module if available.
+
 ## [1.34.25] - 2024-10-17
 
 - Version bump.
