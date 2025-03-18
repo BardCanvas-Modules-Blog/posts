@@ -150,8 +150,8 @@ if( empty($custom_fields_editing_level) )
                     <div class="input">
                         <select name="visibility">
                             <? foreach($current_module->language->form->fields->visibility->options->option as $option): ?>
-                                <option value="<?= $option["value"] ?>">
-                                    <?= replace_escaped_vars(trim($option), '{$level}', $config->user_levels_by_level[$account->level] ) ?>
+                                <option value="<?= $option["value"] ?>" data-caption="<?= trim($option) ?>">
+                                    <?= trim($option) ?>
                                 </option>
                             <? endforeach; ?>
                         </select>

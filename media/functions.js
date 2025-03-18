@@ -111,6 +111,7 @@ function copy_post(id_post)
         record.status          = 'draft';
         record.publishing_date = '';
         record.expiration_date = '';
+        record.author_level    = $_CURRENT_USER_LEVEL;
         
         var $form  = $('#post_form');
         
@@ -178,6 +179,10 @@ function reset_post_form()
     $form.find('input[name="status"]').val('draft');
     $form.find('.subfield select[name="visibility"] option:first').prop('selected', true);
     
+    let $option = $form.find('.subfield select[name="visibility"] option[value="level_based"]');
+    let caption = $option.attr('data-caption');
+    $option.text(caption.replace('{$level}', $_CURRENT_USER_LEVEL));
+    
     toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="allow_comments"]'), true);
     toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="pin_to_home"]'), false);
     toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="pin_to_main_category_index"]'), false);
@@ -221,7 +226,13 @@ function fill_post_form($form, record)
     
     set_post_password(record.password);
     
-    $form.find('.subfield select[name="visibility"] option[value="' + record.visibility + '"]').prop('selected', true);
+    let $option = $form.find('.subfield select[name="visibility"] option[value="' + record.visibility + '"]');
+    $option.prop('selected', true);
+    if( record.visibility === 'level_based' )
+    {
+        let caption = $option.attr('data-caption');
+        $option.text(caption.replace('{$level}', record.author_level));
+    }
     
     var allow_comments = parseInt(record.allow_comments) == 1;
     toggle_fa_pseudo_switch($form.find('.subfield .fa-pseudo-switch[data-input-name="allow_comments"]'), allow_comments);

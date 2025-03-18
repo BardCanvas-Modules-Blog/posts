@@ -188,7 +188,7 @@
                     <!--<option value="private">Only me</option>-->
                     <option value="users">Only registered users (any level)</option>
                     <!--<option value="friends">Only people in my friends list</option>-->
-                    <option value="level_based">Users in my level ({$level}) and above</option>
+                    <option value="level_based">Users level {$level} and above</option>
                 </options>
             </visibility>
             <password>
