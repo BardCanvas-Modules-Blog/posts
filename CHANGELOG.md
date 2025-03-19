@@ -1,6 +1,10 @@
 
 # Posts Module Change Log
 
+## [1.34.27] - 2025-03-19
+
+- Fixed wrong caption for level based visibility option in the form.
+
 ## [1.34.26] - 2025-02-11
 
 - Implemented custom SQL injection check from Security Module if available.
